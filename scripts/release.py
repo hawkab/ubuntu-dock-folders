@@ -37,8 +37,8 @@ def signing_environment():
     return env
 
 
-def changelog(field, root=ROOT):
-    return run("dpkg-parsechangelog", "-S", field, cwd=root, capture=True).strip()
+def changelog(field, root=None):
+    return run("dpkg-parsechangelog", "-S", field, cwd=root or ROOT, capture=True).strip()
 
 
 def source_files():
@@ -281,23 +281,33 @@ def upload_launchpad(directory, manifest, settings, env):
     print("Source uploaded; Launchpad still needs to accept and build it", flush=True)
 
 
-def launchpad_binary_published(source, settings):
+def launchpad_binaries(source, settings):
     binaries = launchpad_json(source["self_link"] + "?ws.op=getPublishedBinaries")["entries"]
     architecture = f"/{settings['suite']}/{settings['architecture']}"
-    return any(
-        binary["status"] == "Published"
-        and binary["binary_package_name"] == PACKAGE
+    return [
+        binary
+        for binary in binaries
+        if binary["binary_package_name"] == PACKAGE
         and binary["binary_package_version"] == source["source_package_version"]
         and binary["distro_arch_series_link"].endswith(architecture)
-        for binary in binaries
-    )
+    ]
+
+
+def launchpad_binary_published(source, settings):
+    return any(binary["status"] == "Published" for binary in launchpad_binaries(source, settings))
 
 
 def wait_launchpad(settings, version, timeout):
+    if timeout <= 0:
+        raise ValueError("Launchpad stage timeout must be positive")
     deadline = time.monotonic() + timeout
+    stage = -1
+    labels = ("source acceptance", "build queue", "build", "binary import", "binary publication")
     while time.monotonic() < deadline:
+        progress = 0
         sources = launchpad_sources(settings, version)
         for source in sources:
+            progress = max(progress, 1)
             builds = launchpad_json(source["self_link"] + "?ws.op=getBuilds")["entries"]
             statuses = {build["buildstate"] for build in builds}
             if statuses & {
@@ -307,17 +317,26 @@ def wait_launchpad(settings, version, timeout):
                 "Failed to upload",
             }:
                 raise ValueError("Launchpad build needs attention: " + ", ".join(sorted(statuses)))
-            if (
-                source["status"] == "Published"
-                and builds
-                and statuses == {"Successfully built"}
-                and launchpad_binary_published(source, settings)
-            ):
-                print("Launchpad binary published", flush=True)
-                return
-        print("Waiting for Launchpad acceptance, build and binary publication", flush=True)
-        time.sleep(30)
-    raise ValueError("Launchpad publication pending; resume with the same --prepared directory")
+            if "Currently building" in statuses:
+                progress = max(progress, 2)
+            if builds and statuses == {"Successfully built"}:
+                progress = max(progress, 3)
+                binaries = launchpad_binaries(source, settings)
+                if binaries:
+                    progress = max(progress, 4)
+                if source["status"] == "Published" and any(
+                    binary["status"] == "Published" for binary in binaries
+                ):
+                    print("Launchpad binary published", flush=True)
+                    return
+        if progress > stage:
+            stage = progress
+            deadline = time.monotonic() + timeout
+            print(f"Waiting for Launchpad {labels[stage]} (up to {timeout}s)", flush=True)
+        time.sleep(min(30, max(0, deadline - time.monotonic())))
+    raise ValueError(
+        f"Launchpad {labels[stage]} pending; resume with the same --prepared directory"
+    )
 
 
 def apt_git_environment():
@@ -441,11 +460,14 @@ def publish_github(directory, manifest, settings):
 
 
 def main():
+    global ROOT
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--publish", action="store_true")
     parser.add_argument("--prepared", type=Path)
     parser.add_argument("--wait-seconds", type=int, default=1200)
+    parser.add_argument("--source-root", type=Path, default=ROOT, help="Clean checkout of the signed release tag")
     args = parser.parse_args()
+    ROOT = args.source_root.resolve()
     settings = config()
     env = signing_environment()
     if args.publish and run("git", "status", "--porcelain", cwd=ROOT, capture=True).strip():

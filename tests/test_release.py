@@ -135,6 +135,18 @@ class ReleaseTests(unittest.TestCase):
             with patch.object(release, "ROOT", root):
                 self.assertEqual(release.source_files(), [".gitignore", "public"])
 
+    def test_changelog_uses_the_requested_source_checkout(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "debian").mkdir()
+            (root / "debian/changelog").write_text(
+                "ubuntu-dock-folders (9.8.7-1ubuntu24.04.1) noble; urgency=medium\n\n"
+                "  * Source checkout fixture.\n\n"
+                " -- Example Author <example@example.invalid>  Mon, 05 Oct 2026 12:00:00 +0000\n"
+            )
+            with patch.object(release, "ROOT", root):
+                self.assertEqual(release.changelog("Version"), "9.8.7-1ubuntu24.04.1")
+
     def test_successful_source_build_waits_for_binary_publication(self):
         source = {"self_link": "https://example.invalid/source", "source_package_version": "1.0.3"}
         settings = {"suite": "noble", "architecture": "amd64"}
@@ -153,3 +165,61 @@ class ReleaseTests(unittest.TestCase):
             with self.subTest(entries=entries):
                 with patch.object(release, "launchpad_json", return_value={"entries": entries}):
                     self.assertEqual(release.launchpad_binary_published(source, settings), expected)
+
+    def test_launchpad_progress_renews_stage_timeout(self):
+        now = [0]
+        source = {"self_link": "https://example.invalid/source", "status": "Published", "source_package_version": "1.0.4"}
+        settings = {"suite": "noble", "architecture": "amd64"}
+        binary = {
+            "binary_package_name": release.PACKAGE,
+            "binary_package_version": "1.0.4",
+            "distro_arch_series_link": "https://api.launchpad.net/1.0/ubuntu/noble/amd64",
+        }
+
+        def response(url):
+            if url.endswith("getBuilds"):
+                state = "Currently building" if now[0] < 30 else "Successfully built"
+                return {"entries": [{"buildstate": state}]}
+            if now[0] < 60:
+                return {"entries": []}
+            status = "Pending" if now[0] < 90 else "Published"
+            return {"entries": [binary | {"status": status}]}
+
+        def sleep(seconds):
+            now[0] += seconds
+
+        with (
+            patch.object(release, "launchpad_sources", return_value=[source]),
+            patch.object(release, "launchpad_json", side_effect=response),
+            patch.object(release.time, "monotonic", side_effect=lambda: now[0]),
+            patch.object(release.time, "sleep", side_effect=sleep),
+        ):
+            release.wait_launchpad(settings, "1.0.4", 60)
+        self.assertEqual(now[0], 90)
+
+    def test_launchpad_stalled_stage_still_times_out(self):
+        now = [0]
+        source = {"self_link": "https://example.invalid/source", "status": "Published", "source_package_version": "1.0.4"}
+
+        def sleep(seconds):
+            now[0] += seconds
+
+        with (
+            patch.object(release, "launchpad_sources", return_value=[source]),
+            patch.object(release, "launchpad_json", return_value={"entries": [{"buildstate": "Currently building"}]}),
+            patch.object(release.time, "monotonic", side_effect=lambda: now[0]),
+            patch.object(release.time, "sleep", side_effect=sleep),
+        ):
+            with self.assertRaisesRegex(ValueError, "Launchpad build pending"):
+                release.wait_launchpad({}, "1.0.4", 60)
+        self.assertEqual(now[0], 60)
+
+    def test_launchpad_build_failure_is_reported_immediately(self):
+        with (
+            patch.object(release, "launchpad_sources", return_value=[{"self_link": "https://example.invalid/source"}]),
+            patch.object(release, "launchpad_json", return_value={"entries": [{"buildstate": "Failed to build"}]}),
+            patch.object(release.time, "sleep") as sleep,
+        ):
+            with self.assertRaisesRegex(ValueError, "Failed to build"):
+                release.wait_launchpad({}, "1.0.4", 60)
+        sleep.assert_not_called()
