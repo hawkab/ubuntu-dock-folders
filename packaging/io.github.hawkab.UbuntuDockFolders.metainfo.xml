@@ -4,8 +4,10 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <name>Ubuntu Dock Folders</name>
+  <name xml:lang="ru">Ubuntu Dock Folders</name>
   <summary>Group Ubuntu Dock applications into folders</summary>
   <icon type="stock">io.github.hawkab.UbuntuDockFolders</icon>
+  <icon type="remote" width="256" height="256">https://hawkab.github.io/apt/icons/io.github.hawkab.UbuntuDockFolders.png</icon>
   <supports>
     <control>keyboard</control>
     <control>pointing</control>
@@ -19,7 +21,15 @@
   </description>
   <developer id="io.github.hawkab">
     <name>Grigory Olshansky</name>
+    <name xml:lang="ru">Григорий Ольшанский</name>
   </developer>
+  <keywords>
+    <keyword>ubuntu-dock-folders</keyword>
+    <keyword>dock</keyword>
+    <keyword>folders</keyword>
+    <keyword>grouping</keyword>
+    <keyword>applications</keyword>
+  </keywords>
   <launchable type="desktop-id">io.github.hawkab.UbuntuDockFolders.desktop</launchable>
   <translation type="gettext">ubuntu-dock-folders</translation>
   <provides>
@@ -97,6 +107,9 @@
     <content_attribute id="violence-slavery">none</content_attribute>
   </content_rating>
   <releases>
+    <release version="1.0.4" date="2026-10-05">
+      <description><p>Show the project icon and author in Ubuntu App Center, and support searching by the package name.</p></description>
+    </release>
     <release version="1.0.3" date="2026-10-05">
       <description><p>Declare all dependencies required to build and test packages in minimal Ubuntu environments.</p></description>
     </release>

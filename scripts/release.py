@@ -499,9 +499,10 @@ def main():
     run("git", "verify-tag", tag, cwd=ROOT, env=env)
     publish_github(directory, manifest, settings)
     upload_launchpad(directory, manifest, settings, env)
-    wait_launchpad(settings, manifest["version"], args.wait_seconds)
     publish_apt(directory, settings, env)
     run("gh", "release", "edit", tag, "--repo", settings["github_repository"], "--draft=false")
+    print(f"Published {tag}: GitHub Releases and {settings['apt_url']}; source submitted to Launchpad", flush=True)
+    wait_launchpad(settings, manifest["version"], args.wait_seconds)
     print(f"Published {tag}: GitHub Releases, Launchpad PPA and {settings['apt_url']}", flush=True)
 
 

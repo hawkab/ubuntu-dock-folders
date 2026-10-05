@@ -4,6 +4,7 @@
 
 """Create signed APT indices and AppStream data without replacing package history."""
 
+import copy
 import gzip
 import hashlib
 import os
@@ -14,6 +15,10 @@ import tarfile
 import tempfile
 import xml.etree.ElementTree as ET
 from pathlib import Path
+
+import yaml
+
+from catalog import add_legacy_developer
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -72,14 +77,32 @@ def compose(deb, output, config):
         )
         xml = ET.fromstring(gzip.decompress(next(catalog.glob("*.xml.gz")).read_bytes()))
         xml.set("origin", origin)
+        metadata = ET.parse(
+            stage / "usr/share/metainfo/io.github.hawkab.UbuntuDockFolders.metainfo.xml"
+        ).getroot()
         for component in xml.findall("component"):
             if component.find("pkgname") is None:
                 ET.SubElement(component, "pkgname").text = "ubuntu-dock-folders"
+            add_legacy_developer(component)
+            for icon in metadata.findall("icon[@type='remote']"):
+                component.append(copy.deepcopy(icon))
         tree = temporary / "catalog.xml"
         ET.ElementTree(xml).write(tree, encoding="utf-8", xml_declaration=True)
-        yaml = output / f"Components-{config['architecture']}.yml"
-        run("appstreamcli", "convert", tree, yaml)
-        compressed(yaml)
+        catalog_yaml = output / f"Components-{config['architecture']}.yml"
+        run("appstreamcli", "convert", tree, catalog_yaml)
+        documents = list(yaml.safe_load_all(catalog_yaml.read_text()))
+        for document in documents:
+            developer = document.get("Developer")
+            if developer:
+                document["DeveloperName"] = developer["name"]
+        catalog_yaml.write_text(yaml.safe_dump_all(documents, allow_unicode=True, sort_keys=False))
+        compressed(catalog_yaml)
+        public_icon = output.parents[3] / "icons/io.github.hawkab.UbuntuDockFolders.png"
+        public_icon.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(
+            stage / "usr/share/icons/hicolor/256x256/apps/io.github.hawkab.UbuntuDockFolders.png",
+            public_icon,
+        )
         for size in ("48x48", "64x64", "64x64@2", "128x128", "128x128@2"):
             directory = icons / size
             if not directory.exists():

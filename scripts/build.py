@@ -12,6 +12,8 @@ import subprocess
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+from catalog import add_legacy_developer
+
 import gi
 
 gi.require_version("GdkPixbuf", "2.0")
@@ -166,6 +168,7 @@ def package(extension, stage_only=False):
     shutil.copytree(ROOT / "docs", documentation / "docs")
     catalog = ET.Element("components", {"version": "1.0", "origin": "ubuntu-dock-folders-local"})
     local = copy.deepcopy(component)
+    add_legacy_developer(local)
     ET.SubElement(local, "pkgname").text = "ubuntu-dock-folders"
     language_attribute = "{http://www.w3.org/XML/1998/namespace}lang"
     descriptions = {}
@@ -180,8 +183,6 @@ def package(extension, stage_only=False):
                 )
             descriptions[language].append(paragraph)
     local.remove(local.find("translation"))
-    for icon_element in local.findall("icon"):
-        local.remove(icon_element)
     ET.SubElement(
         local, "icon", {"type": "local"}
     ).text = f"/usr/share/icons/hicolor/128x128/apps/{APP_ID}.png"

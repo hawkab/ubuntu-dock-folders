@@ -11,7 +11,7 @@ git tag -s v1.0.3 -m 'Ubuntu Dock Folders 1.0.3'
 git push origin main v1.0.3
 ```
 
-The `Release` workflow runs the Debian build and test suite, signs the source package and checksums, uploads a draft GitHub release, submits the signed source through `dput` to Launchpad and waits up to an hour for its binary publication. It then publishes APT indices and makes the GitHub release public. Run the workflow manually with the same tag to resume an interrupted publication.
+The `Release` workflow runs the Debian build and test suite, signs the source package and checksums, uploads a draft GitHub release and submits the signed source through `dput` to Launchpad. It publishes the APT indices and GitHub release, then waits up to an hour for Launchpad's binary publication. A delayed PPA build does not hold back the other channels. Run the workflow manually with the same tag to resume an interrupted publication.
 
 The same pipeline runs locally:
 
@@ -21,7 +21,7 @@ python3 scripts/release.py
 python3 scripts/release.py --publish --prepared dist/releases/1.0.3
 ```
 
-Preparation alone builds, tests and signs without publishing. Publication requires a clean commit and a matching version tag. A previously published file cannot be replaced with different contents; use a new upstream version and corresponding Debian version for each publication. A Launchpad timeout leaves the draft and signed artifacts available for resuming.
+Preparation alone builds, tests and signs without publishing. Publication requires a clean commit and a matching version tag. A previously published file cannot be replaced with different contents; use a new upstream version and corresponding Debian version for each publication. A Launchpad timeout leaves the public APT and GitHub artifacts available; resuming checks the PPA state without replacing published files.
 
 ## Credentials and repository settings
 

@@ -8,4 +8,4 @@ Icon=io.github.hawkab.UbuntuDockFolders
 Terminal=false
 StartupNotify=true
 Categories=GNOME;GTK;Settings;DesktopSettings;
-Keywords=dock;folders;grouping;applications;
+Keywords=ubuntu-dock-folders;dock;folders;grouping;applications;

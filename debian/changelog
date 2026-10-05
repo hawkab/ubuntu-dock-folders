@@ -1,3 +1,11 @@
+ubuntu-dock-folders (1.0.4-1ubuntu24.04.1) noble; urgency=medium
+
+  * Provide an HTTPS icon for the confined Ubuntu App Center.
+  * Preserve author metadata for older AppStream readers.
+  * Add the package name to application search keywords.
+
+ -- Grigory Olshansky <hwakaba@ya.ru>  Mon, 05 Oct 2026 15:15:00 +0300
+
 ubuntu-dock-folders (1.0.3-1ubuntu24.04.1) noble; urgency=medium
 
   * Declare Git and GnuPG used by the release tests as build dependencies.
