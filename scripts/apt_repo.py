@@ -95,7 +95,9 @@ def compose(deb, output, config):
             developer = document.get("Developer")
             if developer:
                 document["DeveloperName"] = developer["name"]
-        catalog_yaml.write_text(yaml.safe_dump_all(documents, allow_unicode=True, sort_keys=False))
+        catalog_yaml.write_text(
+            yaml.safe_dump_all(documents, allow_unicode=True, sort_keys=False, explicit_start=True)
+        )
         compressed(catalog_yaml)
         public_icon = output.parents[3] / "icons/io.github.hawkab.UbuntuDockFolders.png"
         public_icon.parent.mkdir(parents=True, exist_ok=True)

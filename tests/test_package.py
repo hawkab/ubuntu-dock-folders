@@ -54,7 +54,9 @@ class PackageTests(unittest.TestCase):
                 output,
                 {"suite": "noble", "architecture": "amd64"},
             )
-            _, component = list(yaml.safe_load_all((output / "Components-amd64.yml").read_text()))
+            metadata = (output / "Components-amd64.yml").read_text()
+            self.assertTrue(metadata.startswith("---\nFile: DEP-11\n"))
+            _, component = list(yaml.safe_load_all(metadata))
             self.assertEqual(component["DeveloperName"], component["Developer"]["name"])
             remote = component["Icon"]["remote"][0]["url"]
             self.assertEqual(remote, f"https://hawkab.github.io/apt/icons/{APP_ID}.png")
