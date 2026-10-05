@@ -16,7 +16,7 @@ The `Release` workflow runs the Debian build and test suite, signs the source pa
 The same pipeline runs locally:
 
 ```sh
-sudo apt install build-essential debhelper devscripts dput apt-utils appstream-compose desktop-file-utils gettext libglib2.0-dev librsvg2-common pkg-config gnome-shell gnome-shell-extension-ubuntu-dock python3-gi python3-pil python3-cairo python3-gi-cairo python3-yaml gir1.2-gtk-4.0 gir1.2-gdkpixbuf-2.0 gir1.2-adw-1 nodejs dbus-daemon xvfb xauth gh
+sudo apt install build-essential debhelper devscripts dput apt-utils appstream-compose desktop-file-utils gettext git gnupg locales-all libglib2.0-dev librsvg2-common pkg-config gnome-shell gnome-shell-extension-ubuntu-dock python3-gi python3-pil python3-cairo python3-gi-cairo python3-yaml gir1.2-gtk-4.0 gir1.2-gdkpixbuf-2.0 gir1.2-adw-1 nodejs dbus-daemon xvfb xauth gh
 python3 scripts/release.py
 python3 scripts/release.py --publish --prepared dist/releases/1.0.3
 ```

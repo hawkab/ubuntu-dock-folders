@@ -1,7 +1,7 @@
 ubuntu-dock-folders (1.0.3-1ubuntu24.04.1) noble; urgency=medium
 
   * Declare Git and GnuPG used by the release tests as build dependencies.
-  * Use the always-available C.UTF-8 locale in translation tests.
+  * Declare the locale data required by GTK translation tests.
 
  -- Grigory Olshansky <hwakaba@ya.ru>  Mon, 05 Oct 2026 14:05:00 +0300
 
