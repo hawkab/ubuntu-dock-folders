@@ -45,6 +45,6 @@ The GitHub `release` environment accepts version tags matching `v*` and manual r
 
 GitHub Releases uses the workflow's short-lived `GITHUB_TOKEN`. The APT repository publishes Pages from `main` at `/`, with `.nojekyll`. Its signed `InRelease`, package hashes and AppStream catalog are checked using an isolated APT client before pushing. Packages and `by-hash` indices are retained for clients downloading an older index.
 
-The default Launchpad transport is FTP for public, signed source artifacts. Set `LAUNCHPAD_UPLOAD_TRANSPORT=sftp` to use the registered SSH key instead.
+Launchpad uploads use SFTP with the registered SSH key and pinned server host keys. Set `LAUNCHPAD_UPLOAD_TRANSPORT=ftp` to use FTP for public, signed source artifacts; temporary FTP server errors are retried up to three times.
 
 Local publishing reads `GNUPGHOME`, `LAUNCHPAD_SSH_KEY` and `APT_DEPLOY_KEY`. If unset, it uses the private publishing directory under `$XDG_STATE_HOME/ubuntu-dock-folders/publishing` (default `~/.local/state`). Never commit private keys. The archive key expires on 4 October 2029; renew it and update both the local keyring and CI secret before expiry.

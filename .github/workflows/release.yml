@@ -57,6 +57,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GNUPGHOME: ${{ runner.temp }}/release-gnupg
+          LAUNCHPAD_UPLOAD_TRANSPORT: sftp
           LAUNCHPAD_SSH_KEY: ${{ runner.temp }}/launchpad-upload
           APT_DEPLOY_KEY: ${{ runner.temp }}/apt-deploy
         run: python3 publisher/scripts/release.py --source-root "$GITHUB_WORKSPACE/source" --publish --wait-seconds 3600
