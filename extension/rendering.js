@@ -133,7 +133,8 @@ export class FolderRenderer extends Extension {
             menu._glassClone = null;
             return;
         }
-        if (![menu._glass.width, menu._glass.height].every(value => Number.isFinite(value) && value > 0)) {
+        const [width, height] = menu._glass.get_allocation_box().get_size();
+        if (![width, height].every(value => Number.isFinite(value) && value > 0)) {
             return;
         }
         if (!menu._glassClone) {
@@ -169,11 +170,14 @@ export class FolderRenderer extends Extension {
     _positionGlass(menu) {
         if (!menu._glassClone)
             return;
-        let x = menu.actor.x;
-        let y = menu.actor.y;
-        for (let actor = menu._glass; actor && actor !== menu.actor; actor = actor.get_parent()) {
-            x += actor.x;
-            y += actor.y;
+        let x = 0;
+        let y = 0;
+        for (let actor = menu._glass; actor; actor = actor.get_parent()) {
+            const box = actor.get_allocation_box();
+            x += box.x1;
+            y += box.y1;
+            if (actor === menu.actor)
+                break;
         }
         if ([x, y].every(Number.isFinite))
             menu._glassClone.set_position(-x, -y);
