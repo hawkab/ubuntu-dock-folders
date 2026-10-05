@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="286" height="48" viewBox="0 0 286 48" role="img" aria-labelledby="title">
-  <title id="title">Support this project · TON network</title>
-  <rect x=".5" y=".5" width="285" height="47" rx="14" fill="#087bb8" stroke="#329bd0"/>
-  <path d="M24 32 16.4 25a4.8 4.8 0 0 1 6.8-6.8L24 19l.8-.8a4.8 4.8 0 0 1 6.8 6.8Z" fill="#fff"/>
-  <text x="43" y="29" fill="#fff" font-family="Ubuntu,Segoe UI,Arial,sans-serif" font-size="14" font-weight="600">Support this project</text>
-  <path d="M184 13v22" stroke="#fff" stroke-opacity=".25"/>
-  <text x="199" y="29" fill="#e1f3ff" font-family="Ubuntu,Segoe UI,Arial,sans-serif" font-size="12">TON network</text>
-</svg>
