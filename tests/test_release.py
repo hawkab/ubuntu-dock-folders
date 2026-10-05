@@ -94,6 +94,45 @@ class ReleaseTests(unittest.TestCase):
                 apt_repo.immutable_copy(source, published)
             self.assertEqual(published.read_bytes(), b"first")
 
+    def test_current_apt_index_excludes_retained_old_packages(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            archive = root / "archive"
+            pool = archive / "pool/main/u/ubuntu-dock-folders"
+            packages = []
+            for version in ("1.0", "2.0"):
+                stage = root / version
+                (stage / "DEBIAN").mkdir(parents=True)
+                (stage / "DEBIAN/control").write_text(
+                    "Package: ubuntu-dock-folders\n"
+                    f"Version: {version}\nArchitecture: amd64\n"
+                    "Maintainer: Example <test@example.invalid>\n"
+                    "Description: Archive retention test\n"
+                )
+                deb = root / f"ubuntu-dock-folders_{version}_amd64.deb"
+                subprocess.run(["dpkg-deb", "--root-owner-group", "--build", str(stage), str(deb)],
+                               check=True, stdout=subprocess.DEVNULL)
+                packages.append(deb)
+            apt_repo.immutable_copy(packages[0], pool / packages[0].name)
+            settings = {
+                "suite": "noble", "architecture": "amd64",
+                "apt_url": "https://example.invalid/apt/",
+                "signing_fingerprint": self.fingerprint,
+            }
+            def compose(deb, output, config):
+                (output / "Components-amd64.yml").write_text("---\n")
+
+            with (
+                patch.object(apt_repo, "compose", side_effect=compose),
+                patch.object(apt_repo, "verify_archive"),
+            ):
+                apt_repo.update_archive(packages[1], archive, settings, self.env)
+            index = (archive / "dists/noble/main/binary-amd64/Packages").read_text()
+            self.assertIn("Version: 2.0\n", index)
+            self.assertNotIn("Version: 1.0\n", index)
+            for deb in packages:
+                self.assertEqual((pool / deb.name).read_bytes(), deb.read_bytes())
+
     def test_modified_artifact_is_rejected(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

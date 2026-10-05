@@ -130,7 +130,10 @@ def update_archive(deb, destination, config, env=None):
     binary.mkdir(parents=True, exist_ok=True)
     appstream.mkdir(parents=True, exist_ok=True)
     packages = binary / "Packages"
-    packages.write_text(run("apt-ftparchive", "packages", "pool", cwd=destination, capture=True))
+    packages.write_text(run(
+        "apt-ftparchive", "packages", (pool / deb.name).relative_to(destination),
+        cwd=destination, capture=True,
+    ))
     compressed(packages)
     compose(deb, appstream, config)
     for directory in (binary, appstream):

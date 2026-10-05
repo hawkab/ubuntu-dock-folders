@@ -43,7 +43,7 @@ The GitHub `release` environment accepts version tags matching `v*` and manual r
 | `LAUNCHPAD_UPLOAD_KEY` | Dedicated SSH key registered on the Launchpad account for SFTP uploads |
 | `APT_DEPLOY_KEY` | Write deploy key for `hawkab/apt` only |
 
-GitHub Releases uses the workflow's short-lived `GITHUB_TOKEN`. The APT repository publishes Pages from `main` at `/`, with `.nojekyll`. Its signed `InRelease`, package hashes and AppStream catalog are checked using an isolated APT client before pushing. Packages and `by-hash` indices are retained for clients downloading an older index.
+GitHub Releases uses the workflow's short-lived `GITHUB_TOKEN`. The APT repository publishes Pages from `main` at `/`, with `.nojekyll`. Its signed `InRelease`, package hashes and AppStream catalog are checked using an isolated APT client before pushing. The current index lists only the final package. Older package files and `by-hash` indices remain available for clients downloading a cached index.
 
 Launchpad uploads use SFTP with the registered SSH key and pinned server host keys. Set `LAUNCHPAD_UPLOAD_TRANSPORT=ftp` to use FTP for public, signed source artifacts; temporary FTP server errors are retried up to three times.
 
