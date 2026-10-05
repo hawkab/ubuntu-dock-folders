@@ -40,7 +40,7 @@ jobs:
       - name: Install build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends build-essential debhelper devscripts dput apt-utils appstream appstream-compose desktop-file-utils gettext git gnupg locales-all libglib2.0-dev librsvg2-common pkg-config gnome-shell gnome-shell-extension-ubuntu-dock gnome-control-center dconf-cli libgl1-mesa-dri libgtk-4-1 libadwaita-1-0 python3-gi python3-pil python3-cairo python3-gi-cairo python3-yaml gir1.2-gtk-4.0 gir1.2-gdkpixbuf-2.0 gir1.2-adw-1 nodejs dbus-daemon xvfb xauth xwayland
+          sudo apt-get install -y --no-install-recommends build-essential debhelper devscripts dput apt-utils appstream appstream-compose desktop-file-utils gettext git gnupg locales-all libglib2.0-dev librsvg2-common pkg-config gnome-shell gnome-shell-extension-ubuntu-dock gnome-control-center dconf-cli libgl1-mesa-dri libgtk-4-1 libadwaita-1-0 python3-gi python3-pil python3-cairo python3-gi-cairo python3-yaml python3-paramiko gir1.2-gtk-4.0 gir1.2-gdkpixbuf-2.0 gir1.2-adw-1 nodejs dbus-daemon xvfb xauth xwayland
       - name: Load publishing keys
         env:
           RELEASE_GPG_KEY: ${{ secrets.RELEASE_GPG_KEY }}

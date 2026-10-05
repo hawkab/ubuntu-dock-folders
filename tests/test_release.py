@@ -4,13 +4,15 @@
 """Check immutable artifacts and authenticated release manifests."""
 
 import json
+import io
 import os
 import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from contextlib import contextmanager
+from unittest.mock import MagicMock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import apt_repo
@@ -183,6 +185,7 @@ class ReleaseTests(unittest.TestCase):
                 return [{}] if target["suite"] == "noble" and status == "Pending" else []
 
             with (
+                patch.dict(os.environ, {"LAUNCHPAD_UPLOAD_TRANSPORT": "ftp"}),
                 patch.object(release, "launchpad_sources", side_effect=sources),
                 patch.object(release, "run", return_value=text) as run,
             ):
@@ -244,6 +247,7 @@ class ReleaseTests(unittest.TestCase):
                 if success:
                     responses.append("Successfully uploaded packages.\n")
                 with (
+                    patch.dict(os.environ, {"LAUNCHPAD_UPLOAD_TRANSPORT": "ftp"}),
                     patch.object(release, "launchpad_sources", return_value=[]),
                     patch.object(release, "run", side_effect=responses) as run,
                     patch.object(release.time, "sleep") as sleep,
@@ -255,6 +259,40 @@ class ReleaseTests(unittest.TestCase):
                             release.upload_launchpad_source(root, upload, settings, {})
                 self.assertEqual(len([c for c in run.call_args_list if c.args[0] == "dput"]), attempts)
                 self.assertEqual(sleep.call_count, attempts - 1)
+
+    def test_sftp_writes_to_virtual_paths_without_stat_or_directory_changes(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            files = [root / "source.dsc", root / "source.tar.xz", root / "source.changes"]
+            for file in files:
+                file.write_bytes(file.name.encode())
+            identity = root / "upload-key"
+            settings = {"launchpad_owner": "example", "launchpad_archive": "folders"}
+            paramiko = MagicMock()
+            client = paramiko.SSHClient.return_value.__enter__.return_value
+            remote = client.open_sftp.return_value.__enter__.return_value
+            sent = []
+
+            @contextmanager
+            def write(path, mode):
+                self.assertEqual(mode, "wb")
+                data = io.BytesIO()
+                yield data
+                sent.append((path, data.getvalue()))
+
+            remote.open.side_effect = write
+            with patch.dict(sys.modules, {"paramiko": paramiko}):
+                release.upload_sftp(files, settings, identity)
+            self.assertEqual(sent, [(f"~example/ubuntu/folders/{f.name}", f.read_bytes()) for f in files])
+            client.load_host_keys.assert_called_once_with(str(release.ROOT / "packaging/launchpad-known-hosts"))
+            client.set_missing_host_key_policy.assert_called_once_with(paramiko.RejectPolicy.return_value)
+            client.connect.assert_called_once_with(
+                "ppa.launchpad.net", username="example", key_filename=str(identity),
+                allow_agent=False, look_for_keys=False, timeout=15, auth_timeout=15, banner_timeout=15,
+            )
+            remote.chdir.assert_not_called()
+            remote.stat.assert_not_called()
+            remote.rename.assert_not_called()
 
     def test_successful_source_build_waits_for_binary_publication(self):
         source = {"self_link": "https://example.invalid/source", "source_package_version": "1.0.3"}

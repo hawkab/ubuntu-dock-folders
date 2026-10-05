@@ -346,35 +346,28 @@ def upload_launchpad_source(directory, upload, settings, env):
     identity = Path(os.environ.get("LAUNCHPAD_SSH_KEY", STATE / "launchpad-upload"))
     if not identity.is_file():
         raise ValueError("LAUNCHPAD_SSH_KEY must point to the registered upload key")
-    incoming = f"~{settings['launchpad_owner']}/ubuntu/{settings['launchpad_archive']}"
-    batch = (
-        "cd "
-        + incoming
-        + "\n"
-        + "".join(f'put "{file}" "{file.name}"\n' for file in [*files, changes])
-    )
-    subprocess.run(
-        [
-            "sftp",
-            "-i",
-            str(identity),
-            "-oIdentitiesOnly=yes",
-            "-oBatchMode=yes",
-            "-oConnectTimeout=15",
-            "-oServerAliveInterval=15",
-            "-oServerAliveCountMax=3",
-            "-oStrictHostKeyChecking=yes",
-            f"-oUserKnownHostsFile={ROOT / 'packaging/launchpad-known-hosts'}",
-            "-b",
-            "-",
-            f"{settings['launchpad_owner']}@ppa.launchpad.net",
-        ],
-        input=batch,
-        text=True,
-        check=True,
-        timeout=180,
-    )
+    upload_sftp([*files, changes], settings, identity)
     print(f"Source uploaded for {upload['suite']}; Launchpad still needs to accept and build it", flush=True)
+
+
+def upload_sftp(files, settings, identity):
+    import paramiko
+
+    incoming = f"~{settings['launchpad_owner']}/ubuntu/{settings['launchpad_archive']}"
+    with paramiko.SSHClient() as client:
+        client.load_host_keys(str(ROOT / "packaging/launchpad-known-hosts"))
+        client.set_missing_host_key_policy(paramiko.RejectPolicy())
+        client.connect(
+            "ppa.launchpad.net", username=settings["launchpad_owner"],
+            key_filename=str(identity), allow_agent=False, look_for_keys=False,
+            timeout=15, auth_timeout=15, banner_timeout=15,
+        )
+        with client.open_sftp() as remote:
+            remote.get_channel().settimeout(120)
+            for file in files:
+                with file.open("rb") as source, remote.open(f"{incoming}/{file.name}", "wb") as target:
+                    shutil.copyfileobj(source, target, 128 * 1024)
+                print(f"Uploaded {file.name}", flush=True)
 
 
 def launchpad_binaries(source, settings):
