@@ -67,6 +67,10 @@ def snapshot(destination):
 
 def build_release(settings, env):
     version = changelog("Version")
+    if not re.fullmatch(r"[0-9A-Za-z.-]+", version):
+        raise ValueError(
+            "Use an APT version with GitHub-safe filenames, for example 1.0.2-1ubuntu24.04.1"
+        )
     upstream = version.split("-")[0]
     if not re.fullmatch(r"\d+\.\d+\.\d+", upstream):
         raise ValueError("Release version must use major.minor.patch")
@@ -273,7 +277,7 @@ def upload_launchpad(directory, manifest, settings, env):
 def wait_launchpad(settings, version, timeout):
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
-        sources = launchpad_sources(settings, version, "Published")
+        sources = launchpad_sources(settings, version)
         for source in sources:
             with urllib.request.urlopen(
                 source["self_link"] + "?ws.op=getBuilds", timeout=30
@@ -287,7 +291,7 @@ def wait_launchpad(settings, version, timeout):
                 "Failed to upload",
             }:
                 raise ValueError("Launchpad build needs attention: " + ", ".join(sorted(statuses)))
-            if builds and statuses == {"Successfully built"}:
+            if source["status"] == "Published" and builds and statuses == {"Successfully built"}:
                 print("Launchpad build published", flush=True)
                 return
         print("Waiting for Launchpad acceptance/build", flush=True)

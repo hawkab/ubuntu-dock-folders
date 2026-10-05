@@ -97,6 +97,9 @@
     <content_attribute id="violence-slavery">none</content_attribute>
   </content_rating>
   <releases>
+    <release version="1.0.2" date="2026-10-05">
+      <description><p>Publish signed packages, source archives and checksums through APT, Launchpad and GitHub Releases.</p></description>
+    </release>
     <release version="1.0.1" date="2026-10-05">
       <description><p>Restore Material Glass when reopening folders and keep its backdrop aligned without animations. Add signed APT and Launchpad release channels.</p></description>
     </release>

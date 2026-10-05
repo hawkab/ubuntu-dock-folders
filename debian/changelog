@@ -1,3 +1,10 @@
+ubuntu-dock-folders (1.0.2-1ubuntu24.04.1) noble; urgency=medium
+
+  * Use release filenames supported by both GitHub and Launchpad.
+  * Include the SVG loader in clean-build dependencies.
+
+ -- Grigory Olshansky <hwakaba@ya.ru>  Mon, 05 Oct 2026 13:45:00 +0300
+
 ubuntu-dock-folders (1.0.1-1~noble1) noble; urgency=medium
 
   * Restore Material Glass blur when folders are reopened.
