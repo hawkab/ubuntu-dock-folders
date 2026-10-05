@@ -54,14 +54,14 @@ This extension adds grouping directly to Ubuntu Dock.
 
 Comparison follows the projects' published [extension listing](https://extensions.gnome.org/extension/5709/pin-app-folders-to-dash/) and [source](https://github.com/micheleg/dash-to-dock), checked in October 2026. Features marked “Not documented” are unverified. Ubuntu Dock's existing window-management features remain available outside folders.
 
-[![Support this project · TON network](docs/support-button.svg)](https://hawkab.github.io/support/)
+[![Support this project · TON network](https://hawkab.github.io/support/support-button.svg)](https://hawkab.github.io/support/)
 
 Optional contributions support maintenance and testing. The [support page](https://hawkab.github.io/support/) has a QR code, wallet link and copy buttons, and works on computers and phones. You choose the amount in your wallet.
 
 <details>
 <summary>QR code and wallet details</summary>
 
-<img src="docs/support-qr.png" width="212" height="212" alt="Scan this payment link in a compatible TON wallet">
+<img src="https://hawkab.github.io/support/support-qr.png" width="212" height="212" alt="Scan this payment link in a compatible TON wallet">
 
 **Recipient · TON network**
 
