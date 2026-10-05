@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: cs\nLanguage: cs\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, procent"
+
+msgid "All files"
+msgstr "Všechny soubory"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "Všechny obrázky — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "Vzhled a animace"
+
+msgid "Application folders, appearance, and animation"
+msgstr "Složky aplikací, vzhled a animace"
+
+msgid "Application launcher not found."
+msgstr "Spouštěč aplikace nebyl nalezen."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "Aplikace ve složce sdílejí jednu ikonu a indikátor spuštění"
+
+msgid "Background color"
+msgstr "Barva pozadí"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "Rozostří plochu a okna za složkou a přidá průsvitné zabarvení. Ikony zůstávají ostré. Může zvýšit využití GPU."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "Názvy, popisky, barvy a tapetu změníte pomocí ozubeného kola ve složce"
+
+msgid "Changes are saved automatically"
+msgstr "Změny se ukládají automaticky"
+
+msgid "Choose an application"
+msgstr "Vybrat aplikaci"
+
+msgid "Choose…"
+msgstr "Vybrat…"
+
+msgid "Close"
+msgstr "Zavřít"
+
+msgid "Could not launch the application."
+msgstr "Aplikaci se nepodařilo spustit."
+
+msgid "Could not open system settings"
+msgstr "Nepodařilo se otevřít nastavení systému"
+
+msgid "Could not open the application"
+msgstr "Nepodařilo se otevřít aplikaci"
+
+msgid "Could not open the image"
+msgstr "Nepodařilo se otevřít obrázek"
+
+msgid "Customize each folder"
+msgstr "Přizpůsobit každou složku"
+
+msgid "Dock folders"
+msgstr "Složky v doku"
+
+msgid "Dock icon background color"
+msgstr "Barva pozadí ikony v doku"
+
+msgid "Dock icon preview"
+msgstr "Náhled ikony v doku"
+
+msgid "Dock icon transparency"
+msgstr "Průhlednost ikony v doku"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "Přetažením ikony na jinou vytvoříte složku. Změňte pořadí aplikací ve složce nebo je přetáhněte ven a vraťte je do doku."
+
+msgid "Folder appearance"
+msgstr "Vzhled složky"
+
+msgid "Folder label size"
+msgstr "Velikost popisku složky"
+
+msgid "Folder not found."
+msgstr "Složka nebyla nalezena."
+
+msgid "Folder settings"
+msgstr "Nastavení složky"
+
+msgid "Folder wallpaper"
+msgstr "Tapeta složky"
+
+msgid "Folders on the dock"
+msgstr "Složky v doku"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "Velikost písma pod ikonami doku v pixelech"
+
+msgid "General folder settings"
+msgstr "Obecné nastavení složek"
+
+msgid "Genie effect"
+msgstr "Efekt džina"
+
+msgid "Glass tint transparency"
+msgstr "Průhlednost zabarvení skla"
+
+msgid "Icon preview"
+msgstr "Náhled ikony"
+
+msgid "Image selected"
+msgstr "Obrázek vybrán"
+
+msgid "Label below the icon"
+msgstr "Popisek pod ikonou"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — matné sklo"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: rozostřené pozadí, průsvitné zabarvení a ostré ikony."
+
+msgid "Name"
+msgstr "Název"
+
+msgid "New Folder"
+msgstr "Nová složka"
+
+msgid "On the dock"
+msgstr "V doku"
+
+msgid "Opaque"
+msgstr "Neprůhledné"
+
+#, python-format
+msgid "Open %s"
+msgstr "Otevřít %s"
+
+msgid "Open folder background color"
+msgstr "Barva pozadí otevřené složky"
+
+msgid "Open folder preview"
+msgstr "Náhled otevřené složky"
+
+msgid "Open folder transparency"
+msgstr "Průhlednost otevřené složky"
+
+msgid "Opening and closing animation"
+msgstr "Animace otevírání a zavírání"
+
+msgid "Remove wallpaper"
+msgstr "Odstranit tapetu"
+
+msgid "Replace…"
+msgstr "Nahradit…"
+
+msgid "Scale"
+msgstr "Změna velikosti"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "Nastavení → Plocha Ubuntu → Dok → Složky v doku"
+
+msgid "Transparency"
+msgstr "Průhlednost"
+
+msgid "Transparent"
+msgstr "Průhledné"
+
+msgid "Wallpaper"
+msgstr "Tapeta"
+
+msgid "When opened"
+msgstr "Při otevření"
+
+msgid "App-grid folders"
+msgstr "Složky v přehledu aplikací"
+
+msgid "Add an app-grid folder"
+msgstr "Přidat složku z přehledu aplikací"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "Synchronizovat názvy a aplikace s přehledem aplikací GNOME"
+
+msgid "Pin to dock"
+msgstr "Připnout k doku"
+
+msgid "Pinned"
+msgstr "Připnuto"
+
+msgid "No app-grid folders"
+msgstr "Žádné složky v přehledu aplikací"
+
+msgid "Create a folder in Show Apps first"
+msgstr "Nejprve vytvořte složku v nabídce „Zobrazit aplikace“"
+
+msgid "Folder updated"
+msgstr "Složka aktualizována"
+
+msgid "Undo"
+msgstr "Zpět"
+
+msgid "Undo last move"
+msgstr "Vrátit poslední přesunutí"
+
+msgid "Open windows"
+msgstr "Otevřená okna"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "Nelze otevřít %s"

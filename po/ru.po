@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ru\nLanguage: ru\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, в процентах"
+
+msgid "All files"
+msgstr "Все файлы"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "Все изображения — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "Внешний вид и анимация"
+
+msgid "Application folders, appearance, and animation"
+msgstr "Папки приложений, оформление и анимация"
+
+msgid "Application launcher not found."
+msgstr "Ярлык приложения не найден."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "Приложения в папке используют один значок с индикатором запуска"
+
+msgid "Background color"
+msgstr "Цвет фона"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "Размывает рабочий стол и окна за папкой, добавляет прозрачный оттенок. Значки остаются чёткими. Может увеличить нагрузку на GPU."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "Название, подпись, цвета и обои — через шестерёнку внутри папки"
+
+msgid "Changes are saved automatically"
+msgstr "Изменения сохраняются автоматически"
+
+msgid "Choose an application"
+msgstr "Выберите приложение"
+
+msgid "Choose…"
+msgstr "Выбрать…"
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid "Could not launch the application."
+msgstr "Не удалось запустить приложение."
+
+msgid "Could not open system settings"
+msgstr "Не удалось открыть системные настройки"
+
+msgid "Could not open the application"
+msgstr "Не удалось открыть приложение"
+
+msgid "Could not open the image"
+msgstr "Не удалось открыть изображение"
+
+msgid "Customize each folder"
+msgstr "Оформление каждой папки"
+
+msgid "Dock folders"
+msgstr "Группировка значков"
+
+msgid "Dock icon background color"
+msgstr "Цвет фона значка на панели"
+
+msgid "Dock icon preview"
+msgstr "Предпросмотр значка на панели"
+
+msgid "Dock icon transparency"
+msgstr "Прозрачность значка на панели"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "Перетащите значок на другой, чтобы создать папку. Меняйте порядок приложений внутри папки или перетаскивайте их наружу, чтобы вернуть на панель."
+
+msgid "Folder appearance"
+msgstr "Оформление папки"
+
+msgid "Folder label size"
+msgstr "Размер подписи папок"
+
+msgid "Folder not found."
+msgstr "Папка не найдена."
+
+msgid "Folder settings"
+msgstr "Настройки папки"
+
+msgid "Folder wallpaper"
+msgstr "Обои папки"
+
+msgid "Folders on the dock"
+msgstr "Папки на панели задач"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "Шрифт под значками на панели задач, в пикселях"
+
+msgid "General folder settings"
+msgstr "Общие настройки группировки"
+
+msgid "Genie effect"
+msgstr "Эффект «Джинн»"
+
+msgid "Glass tint transparency"
+msgstr "Прозрачность оттенка стекла"
+
+msgid "Icon preview"
+msgstr "Предпросмотр значка"
+
+msgid "Image selected"
+msgstr "Изображение выбрано"
+
+msgid "Label below the icon"
+msgstr "Подпись под значком"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — матовое стекло"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: размытый фон, прозрачный оттенок и чёткие значки."
+
+msgid "Name"
+msgstr "Название"
+
+msgid "New Folder"
+msgstr "Новая папка"
+
+msgid "On the dock"
+msgstr "На панели"
+
+msgid "Opaque"
+msgstr "Непрозрачный"
+
+#, python-format
+msgid "Open %s"
+msgstr "Открыть %s"
+
+msgid "Open folder background color"
+msgstr "Цвет фона раскрытой папки"
+
+msgid "Open folder preview"
+msgstr "Предпросмотр раскрытой папки"
+
+msgid "Open folder transparency"
+msgstr "Прозрачность раскрытой папки"
+
+msgid "Opening and closing animation"
+msgstr "Анимация открытия и закрытия"
+
+msgid "Remove wallpaper"
+msgstr "Убрать обои"
+
+msgid "Replace…"
+msgstr "Заменить…"
+
+msgid "Scale"
+msgstr "Масштабирование"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "Настройки → Рабочий стол Ubuntu → Панель задач → Группировка значков"
+
+msgid "Transparency"
+msgstr "Прозрачность"
+
+msgid "Transparent"
+msgstr "Прозрачный"
+
+msgid "Wallpaper"
+msgstr "Обои"
+
+msgid "When opened"
+msgstr "При открытии"
+
+msgid "App-grid folders"
+msgstr "Папки сетки приложений"
+
+msgid "Add an app-grid folder"
+msgstr "Добавить папку из сетки приложений"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "Синхронизировать названия и приложения с сеткой приложений GNOME"
+
+msgid "Pin to dock"
+msgstr "Закрепить на панели"
+
+msgid "Pinned"
+msgstr "Закреплено"
+
+msgid "No app-grid folders"
+msgstr "В сетке приложений нет папок"
+
+msgid "Create a folder in Show Apps first"
+msgstr "Сначала создайте папку в меню «Показать приложения»"
+
+msgid "Folder updated"
+msgstr "Папка обновлена"
+
+msgid "Undo"
+msgstr "Отменить"
+
+msgid "Undo last move"
+msgstr "Отменить последнее перемещение"
+
+msgid "Open windows"
+msgstr "Открытые окна"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "Не удалось открыть %s"

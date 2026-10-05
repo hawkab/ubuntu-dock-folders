@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: te\nLanguage: te\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, శాతం"
+
+msgid "All files"
+msgstr "అన్ని ఫైళ్లు"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "అన్ని చిత్రాలు — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "రూపం మరియు యానిమేషన్"
+
+msgid "Application folders, appearance, and animation"
+msgstr "అనువర్తన ఫోల్డర్లు, రూపం మరియు యానిమేషన్"
+
+msgid "Application launcher not found."
+msgstr "అనువర్తన లాంచర్ కనుగొనబడలేదు."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "ఫోల్డర్‌లోని అనువర్తనాలు ఒకే చిహ్నాన్ని, అమలు సూచికను పంచుకుంటాయి"
+
+msgid "Background color"
+msgstr "నేపథ్య రంగు"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "ఫోల్డర్ వెనుక ఉన్న డెస్క్‌టాప్, విండోలను మసకబార్చి అర్ధపారదర్శక రంగును జోడిస్తుంది. చిహ్నాలు స్పష్టంగా ఉంటాయి. GPU వినియోగం పెరగవచ్చు."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "ఫోల్డర్‌లోని గేర్ ద్వారా పేర్లు, లేబుళ్లు, రంగులు, వాల్‌పేపర్ మార్చండి"
+
+msgid "Changes are saved automatically"
+msgstr "మార్పులు స్వయంచాలకంగా సేవ్ అవుతాయి"
+
+msgid "Choose an application"
+msgstr "అనువర్తనాన్ని ఎంచుకోండి"
+
+msgid "Choose…"
+msgstr "ఎంచుకోండి…"
+
+msgid "Close"
+msgstr "మూసివేయండి"
+
+msgid "Could not launch the application."
+msgstr "అనువర్తనాన్ని ప్రారంభించలేకపోయాం."
+
+msgid "Could not open system settings"
+msgstr "వ్యవస్థ అమరికలను తెరవలేకపోయాం"
+
+msgid "Could not open the application"
+msgstr "అనువర్తనాన్ని తెరవలేకపోయాం"
+
+msgid "Could not open the image"
+msgstr "చిత్రాన్ని తెరవలేకపోయాం"
+
+msgid "Customize each folder"
+msgstr "ప్రతి ఫోల్డర్‌ను అనుకూలీకరించండి"
+
+msgid "Dock folders"
+msgstr "డాక్ ఫోల్డర్లు"
+
+msgid "Dock icon background color"
+msgstr "డాక్ చిహ్నం నేపథ్య రంగు"
+
+msgid "Dock icon preview"
+msgstr "డాక్ చిహ్నం ముందస్తు వీక్షణ"
+
+msgid "Dock icon transparency"
+msgstr "డాక్ చిహ్నం పారదర్శకత"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "ఫోల్డర్ సృష్టించడానికి ఒక చిహ్నాన్ని మరొకదానిపైకి లాగండి. ఫోల్డర్‌లోని అనువర్తనాల క్రమాన్ని మార్చండి లేదా వాటిని బయటకు లాగి డాక్‌కు తిరిగి తరలించండి."
+
+msgid "Folder appearance"
+msgstr "ఫోల్డర్ రూపం"
+
+msgid "Folder label size"
+msgstr "ఫోల్డర్ లేబుల్ పరిమాణం"
+
+msgid "Folder not found."
+msgstr "ఫోల్డర్ కనుగొనబడలేదు."
+
+msgid "Folder settings"
+msgstr "ఫోల్డర్ అమరికలు"
+
+msgid "Folder wallpaper"
+msgstr "ఫోల్డర్ వాల్‌పేపర్"
+
+msgid "Folders on the dock"
+msgstr "డాక్‌లోని ఫోల్డర్లు"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "డాక్ చిహ్నాల కింద ఫాంట్ పరిమాణం, పిక్సెల్లలో"
+
+msgid "General folder settings"
+msgstr "ఫోల్డర్ల సాధారణ అమరికలు"
+
+msgid "Genie effect"
+msgstr "జినీ ప్రభావం"
+
+msgid "Glass tint transparency"
+msgstr "గాజు రంగు పారదర్శకత"
+
+msgid "Icon preview"
+msgstr "చిహ్నం ముందస్తు వీక్షణ"
+
+msgid "Image selected"
+msgstr "చిత్రం ఎంచుకోబడింది"
+
+msgid "Label below the icon"
+msgstr "చిహ్నం కింద లేబుల్"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — మసక గాజు"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: మసక నేపథ్యం, అర్ధపారదర్శక రంగు, స్పష్టమైన చిహ్నాలు."
+
+msgid "Name"
+msgstr "పేరు"
+
+msgid "New Folder"
+msgstr "కొత్త ఫోల్డర్"
+
+msgid "On the dock"
+msgstr "డాక్‌లో"
+
+msgid "Opaque"
+msgstr "అపారదర్శకం"
+
+#, python-format
+msgid "Open %s"
+msgstr "%s తెరవండి"
+
+msgid "Open folder background color"
+msgstr "తెరిచిన ఫోల్డర్ నేపథ్య రంగు"
+
+msgid "Open folder preview"
+msgstr "తెరిచిన ఫోల్డర్ ముందస్తు వీక్షణ"
+
+msgid "Open folder transparency"
+msgstr "తెరిచిన ఫోల్డర్ పారదర్శకత"
+
+msgid "Opening and closing animation"
+msgstr "తెరవడం మరియు మూసివేయడం యానిమేషన్"
+
+msgid "Remove wallpaper"
+msgstr "వాల్‌పేపర్ తొలగించండి"
+
+msgid "Replace…"
+msgstr "మార్చండి…"
+
+msgid "Scale"
+msgstr "పరిమాణ మార్పు"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "అమరికలు → Ubuntu డెస్క్‌టాప్ → డాక్ → డాక్ ఫోల్డర్లు"
+
+msgid "Transparency"
+msgstr "పారదర్శకత"
+
+msgid "Transparent"
+msgstr "పారదర్శకం"
+
+msgid "Wallpaper"
+msgstr "వాల్‌పేపర్"
+
+msgid "When opened"
+msgstr "తెరిచినప్పుడు"
+
+msgid "App-grid folders"
+msgstr "యాప్ గ్రిడ్ ఫోల్డర్‌లు"
+
+msgid "Add an app-grid folder"
+msgstr "యాప్ గ్రిడ్ నుండి ఫోల్డర్‌ను జోడించండి"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "ఫోల్డర్ పేర్లు మరియు యాప్‌లను GNOME యాప్ గ్రిడ్‌తో సమకాలీకరించండి"
+
+msgid "Pin to dock"
+msgstr "డాక్‌కు పిన్ చేయండి"
+
+msgid "Pinned"
+msgstr "పిన్ చేయబడింది"
+
+msgid "No app-grid folders"
+msgstr "యాప్ గ్రిడ్‌లో ఫోల్డర్‌లు లేవు"
+
+msgid "Create a folder in Show Apps first"
+msgstr "ముందుగా «యాప్‌లను చూపించు»లో ఫోల్డర్‌ను సృష్టించండి"
+
+msgid "Folder updated"
+msgstr "ఫోల్డర్ నవీకరించబడింది"
+
+msgid "Undo"
+msgstr "చర్యరద్దు"
+
+msgid "Undo last move"
+msgstr "చివరి తరలింపును రద్దు చేయండి"
+
+msgid "Open windows"
+msgstr "తెరిచిన విండోలు"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "%s తెరవడం సాధ్యం కాలేదు"

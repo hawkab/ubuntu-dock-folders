@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="glass" x2="0.8" y2="1"><stop stop-color="#958aaa"/><stop offset="1" stop-color="#4b405d"/></linearGradient>
+    <linearGradient id="opera" x2="0.7" y2="1"><stop stop-color="#ff5670"/><stop offset="0.6" stop-color="#f01d42"/><stop offset="1" stop-color="#bc1234"/></linearGradient>
+    <linearGradient id="fox" x2="0.8" y2="1"><stop stop-color="#ffdb55"/><stop offset="0.45" stop-color="#ff9626"/><stop offset="1" stop-color="#ff4c54"/></linearGradient>
+    <radialGradient id="globe"><stop stop-color="#8465ef"/><stop offset="1" stop-color="#4c2bab"/></radialGradient>
+  </defs>
+  <circle cx="64" cy="68" r="51" fill="#201929" opacity="0.35"/>
+  <circle cx="64" cy="64" r="51" fill="url(#glass)"/>
+  <circle cx="64" cy="64" r="50.5" fill="none" stroke="#e5dbea" stroke-opacity="0.32"/>
+  <g transform="translate(33 39)">
+    <circle cy="2" r="26" fill="#201929" opacity="0.22"/>
+    <circle r="25" fill="#ea4335"/>
+    <path d="M0 0H25A25 25 0 0 1-12.5 21.65Z" fill="#fbbc05"/>
+    <path d="M0 0L-12.5 21.65A25 25 0 0 1-21.65-12.5Z" fill="#34a853"/>
+    <circle r="12" fill="#fff"/>
+    <circle r="10" fill="#4285f4"/>
+    <circle r="8.8" fill="none" stroke="#1b66cf" stroke-width="0.7"/>
+  </g>
+  <g transform="translate(94 40)">
+    <circle cy="2" r="26" fill="#201929" opacity="0.22"/>
+    <circle r="25" fill="url(#globe)"/>
+    <path d="M-18-19L-18-5C-31 8-19 30 3 25C25 21 29 0 17-18L9-25L10-15L2-18L-5-11L4-9L10-2C16 10 5 20-5 14C8 13 10 3 1 0C-9 10-19 4-18-8L-23-17Z" fill="url(#fox)"/>
+    <path d="M12-10C25 1 22 16 7 22C17 10 13 2 8-3Z" fill="#ffb531"/>
+  </g>
+  <g transform="translate(64 95)">
+    <ellipse cy="2" rx="25" ry="28" fill="#201929" opacity="0.22"/>
+    <path d="M0-27C-15-27-25-15-25 0S-15 27 0 27S25 15 25 0S15-27 0-27ZM0-18C8-18 13-10 13 0S8 18 0 18S-13 10-13 0S-8-18 0-18Z" fill="url(#opera)" fill-rule="evenodd"/>
+    <path d="M0-27C15-27 25-15 25 0S15 27 0 27C11 25 19 15 19 0S11-25 0-27Z" fill="#a9112f" opacity="0.32"/>
+  </g>
+</svg>

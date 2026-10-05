@@ -1,0 +1,9 @@
+/build/
+/dist/
+__pycache__/
+*.py[cod]
+gschemas.compiled
+/extension/locale/
+*.so
+.venv/
+.ruff_cache/

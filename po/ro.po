@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ro\nLanguage: ro\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, procente"
+
+msgid "All files"
+msgstr "Toate fișierele"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "Toate imaginile — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "Aspect și animație"
+
+msgid "Application folders, appearance, and animation"
+msgstr "Dosare de aplicații, aspect și animație"
+
+msgid "Application launcher not found."
+msgstr "Lansatorul aplicației nu a fost găsit."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "Aplicațiile dintr-un dosar au o pictogramă și un indicator de rulare comune"
+
+msgid "Background color"
+msgstr "Culoare de fundal"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "Estompează desktopul și ferestrele din spatele dosarului și adaugă o tentă translucidă. Pictogramele rămân clare. Poate crește utilizarea GPU."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "Schimbați numele, etichetele, culorile și imaginea de fundal folosind rotița din dosar"
+
+msgid "Changes are saved automatically"
+msgstr "Modificările sunt salvate automat"
+
+msgid "Choose an application"
+msgstr "Alegeți o aplicație"
+
+msgid "Choose…"
+msgstr "Alegeți…"
+
+msgid "Close"
+msgstr "Închideți"
+
+msgid "Could not launch the application."
+msgstr "Aplicația nu a putut fi pornită."
+
+msgid "Could not open system settings"
+msgstr "Setările sistemului nu au putut fi deschise"
+
+msgid "Could not open the application"
+msgstr "Aplicația nu a putut fi deschisă"
+
+msgid "Could not open the image"
+msgstr "Imaginea nu a putut fi deschisă"
+
+msgid "Customize each folder"
+msgstr "Personalizați fiecare dosar"
+
+msgid "Dock folders"
+msgstr "Dosare în dock"
+
+msgid "Dock icon background color"
+msgstr "Culoarea de fundal a pictogramei din dock"
+
+msgid "Dock icon preview"
+msgstr "Previzualizarea pictogramei din dock"
+
+msgid "Dock icon transparency"
+msgstr "Transparența pictogramei din dock"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "Trageți o pictogramă peste alta pentru a crea un dosar. Reordonați aplicațiile în dosar sau trageți-le în afară pentru a le muta înapoi în dock."
+
+msgid "Folder appearance"
+msgstr "Aspectul dosarului"
+
+msgid "Folder label size"
+msgstr "Dimensiunea etichetei dosarului"
+
+msgid "Folder not found."
+msgstr "Dosarul nu a fost găsit."
+
+msgid "Folder settings"
+msgstr "Setările dosarului"
+
+msgid "Folder wallpaper"
+msgstr "Imaginea de fundal a dosarului"
+
+msgid "Folders on the dock"
+msgstr "Dosare în dock"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "Dimensiunea fontului sub pictogramele din dock, în pixeli"
+
+msgid "General folder settings"
+msgstr "Setări generale ale dosarelor"
+
+msgid "Genie effect"
+msgstr "Efect de geniu"
+
+msgid "Glass tint transparency"
+msgstr "Transparența tentei sticlei"
+
+msgid "Icon preview"
+msgstr "Previzualizarea pictogramei"
+
+msgid "Image selected"
+msgstr "Imagine selectată"
+
+msgid "Label below the icon"
+msgstr "Etichetă sub pictogramă"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — sticlă mată"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: fundal estompat, tentă translucidă și pictograme clare."
+
+msgid "Name"
+msgstr "Nume"
+
+msgid "New Folder"
+msgstr "Dosar nou"
+
+msgid "On the dock"
+msgstr "În dock"
+
+msgid "Opaque"
+msgstr "Opac"
+
+#, python-format
+msgid "Open %s"
+msgstr "Deschideți %s"
+
+msgid "Open folder background color"
+msgstr "Culoarea de fundal a dosarului deschis"
+
+msgid "Open folder preview"
+msgstr "Previzualizarea dosarului deschis"
+
+msgid "Open folder transparency"
+msgstr "Transparența dosarului deschis"
+
+msgid "Opening and closing animation"
+msgstr "Animație de deschidere și închidere"
+
+msgid "Remove wallpaper"
+msgstr "Eliminați imaginea de fundal"
+
+msgid "Replace…"
+msgstr "Înlocuiți…"
+
+msgid "Scale"
+msgstr "Scalare"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "Setări → Desktop Ubuntu → Dock → Dosare în dock"
+
+msgid "Transparency"
+msgstr "Transparență"
+
+msgid "Transparent"
+msgstr "Transparent"
+
+msgid "Wallpaper"
+msgstr "Imagine de fundal"
+
+msgid "When opened"
+msgstr "La deschidere"
+
+msgid "App-grid folders"
+msgstr "Dosarele grilei de aplicații"
+
+msgid "Add an app-grid folder"
+msgstr "Adaugă un dosar din grilă"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "Sincronizează numele și aplicațiile cu grila GNOME"
+
+msgid "Pin to dock"
+msgstr "Fixează în dock"
+
+msgid "Pinned"
+msgstr "Fixat"
+
+msgid "No app-grid folders"
+msgstr "Niciun dosar în grilă"
+
+msgid "Create a folder in Show Apps first"
+msgstr "Creați mai întâi un dosar în „Arată aplicațiile”"
+
+msgid "Folder updated"
+msgstr "Dosar actualizat"
+
+msgid "Undo"
+msgstr "Anulează"
+
+msgid "Undo last move"
+msgstr "Anulează ultima mutare"
+
+msgid "Open windows"
+msgstr "Ferestre deschise"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "Nu s-a putut deschide %s"

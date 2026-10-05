@@ -1,0 +1,453 @@
+{
+  "author": {
+    "email": "14372308+hawkab@users.noreply.github.com",
+    "name": "Григорий Ольшанский"
+  },
+  "created_at": "2026-10-05T09:08:41Z",
+  "files": [
+    {
+      "mode": "100644",
+      "path": ".editorconfig",
+      "sha256": "4e6a1a57f8e98c472f21caf8b7b97d1efaca856559cf14c0bfae14432ddcfae0"
+    },
+    {
+      "mode": "100644",
+      "path": ".github/FUNDING.yml",
+      "sha256": "ce17adba0a8db0314fe429bb9856c9fa5f18630fd29f7cfd3d6559c796ce56f1"
+    },
+    {
+      "mode": "100644",
+      "path": ".github/workflows/check.yml",
+      "sha256": "9add77ae38322fc5891d8d33fdd9291abe14ceb94350ec32542a96e023cf0253"
+    },
+    {
+      "mode": "100644",
+      "path": ".gitignore",
+      "sha256": "5cdefc57e11f8cc9e15b88edb6a0752b169078c6597cc8567be6ccb6d23ac29b"
+    },
+    {
+      "mode": "100644",
+      "path": "AUTHORS",
+      "sha256": "28a28dc335c21dcf5aa000a0032c408e91ff3be5f38842abf7a16bec73630b09"
+    },
+    {
+      "mode": "100644",
+      "path": "LICENSE",
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+    },
+    {
+      "mode": "100644",
+      "path": "Makefile",
+      "sha256": "4596b30e237be424a6700d7ac103a582b3ee7a6af920bd567dc7e2156cafe9d1"
+    },
+    {
+      "mode": "100644",
+      "path": "README.md",
+      "sha256": "c65470fdf8930ce283184d9105befa62420162b1554bc06ee8098fa5507479fb"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/app-grid-folders.png",
+      "sha256": "21dc7164df4e4437b0d94077835a0c59f97d54d1769689cfe133009c54992e86"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/demo.gif",
+      "sha256": "aab4035fdcdc2d933ef8a188bd01ad2611e92364010c4f12077154d5333028fc"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/demo.mp4",
+      "sha256": "bbd03efc7c6053b6dea5cee066c73c5a53cac1c3c1eb5f074af70e984dd87d34"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/demo.webm",
+      "sha256": "8ad144b7d344f27bfc9c4dbbf196ee57ad7aae3ba3b443470178540a29466e1c"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/folder-settings-dock.png",
+      "sha256": "6f1dbcc15762254a3a80acdcb0d1c1e32c1f5bf43cde70dde9ab142a78aecad8"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/folder-settings-open.png",
+      "sha256": "2231def7f2591d36efb8c3cd963a3f6715f15a25aa631bab9277ac80682cd344"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/general-settings.png",
+      "sha256": "db85f463be7bc15c5017c97d0d32c209be0c4404d0cc960b70da52361f3bb2dc"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/screenshot.png",
+      "sha256": "e3b28d5f89dc0dc002e6e736f1f7802e1e4fc699294250bbf07d3a5f3d29ad7a"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/support-button.svg",
+      "sha256": "de53a5f9a0291dfdf13de4f4dec825d55957f1eda0098fda2a7304128bee35ce"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/support-qr.png",
+      "sha256": "edd32b2545418be408d30225edb5760b4a10e4cd7c539a9fbb6892359366698f"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/ubuntu-settings.png",
+      "sha256": "6753ad62209243b5e4d5149d859c440968a1bc1b2924fdf5739d6e803a82bf16"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/window-previews.png",
+      "sha256": "de97179728820d639ad71b488d6b58f535c9d3d17a5624473d8f087f7383bacf"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/app/folder_preview.py",
+      "sha256": "011086adb9f56060ff9f0c72a83e75b5ac29875d433bf5fbaf9294940e7e65c8"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/app/grid_folders.py",
+      "sha256": "646463d9fa22c7b1f406d92903371e59180c2d810447d690d793f7f41f32d80a"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/app/i18n.py",
+      "sha256": "5fa38c1aa2a830471c340322150e49d4bc43fc0f01ae69606001ec1ced6d04b8"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/app/launcher.py",
+      "sha256": "420d6d25faeb66b86c20188c0fa1bb2a4c00710935d0a8d35ef761c7535a3510"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/app/preferences.py",
+      "sha256": "088447dd45b548e34fcbb58af81e3b16ce8a4a5022b05575e4860148f62551d7"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/app/settings.py",
+      "sha256": "4e936525b433cb6ca57c98825706e82c6bb0cf896246eb4ef008210be9d53fa5"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/effects.js",
+      "sha256": "cb9674ab1a680f5ba09c9c1c8161274f2978082d8c77cf2b4366c838279afd94"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/extension.js",
+      "sha256": "d175361def85f0123ebe660090c86ce7273918d47a7b34919ce9ccd86db1d325"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/gridFolders.js",
+      "sha256": "8f63a2caf7052999d2452edbe0a78cf3a8682866ef758e10696f86e3fbbbff5c"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/groups.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/icons/folder.svg",
+      "sha256": "3abb7168df16e93fc0a744cece237ad4eac719dedcb8e1a6ef4e3b538cccd9c3"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/metadata.json",
+      "sha256": "cee4d8e1ff5e57b42d4d1f5f37e9c8fca8ee3a6c8e83847062dc1933f4be8d85"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/model.js",
+      "sha256": "f090c04ba4b7c9b42a3203738c58a46157d2c70168191f848c904822be8fafa1"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/preferences.ui",
+      "sha256": "74d1b3c2e604577ce18c7931735285d6c44e1af8389aaadf0b3cbfabe07a197b"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/prefs.js",
+      "sha256": "84f6e06715a8de2c0b5578c95fed9d8b73c7c22194d68595d6cb90c46c8d8c88"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/rendering.js",
+      "sha256": "83baed5c0e1a968e9c4f90f5743a55650e12d5cc52e3b42292f310abe11228c2"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/schemas/org.gnome.shell.extensions.dock-groups.gschema.xml",
+      "sha256": "2635803dba6ae80f5e4559360910e341ca8debf4d304a47cd7e1abe287ff5e3b"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/stylesheet.css",
+      "sha256": "d73378ad374d9db1293fdcd7fe0efd753bf22e89faefc5969696672d74decda2"
+    },
+    {
+      "mode": "100644",
+      "path": "extension/windowPreviews.js",
+      "sha256": "5ce1d88ede991e472559c54033f743c9e7da67765fae8f967c91262704f04d8a"
+    },
+    {
+      "mode": "100644",
+      "path": "integration/settings-integration.c",
+      "sha256": "16475ef04589741357ccab0fd5ceccadaee7c7f74325725d2141b731b2fc089a"
+    },
+    {
+      "mode": "100644",
+      "path": "integration/ubuntu-settings",
+      "sha256": "3da5d40d3d4713636dec42dcf940555a33b6946e249b428e39d8cd136d018d85"
+    },
+    {
+      "mode": "100644",
+      "path": "package.json",
+      "sha256": "2096d7e45270c00e2aa5ed862e67418a230ad1a3355dcf30045a3af53045d751"
+    },
+    {
+      "mode": "100644",
+      "path": "packaging/copyright",
+      "sha256": "7d675ce8d412db9569414dc67c78c6e75f768e4626cb56382b38fbe92ddc6230"
+    },
+    {
+      "mode": "100644",
+      "path": "packaging/io.github.hawkab.UbuntuDockFolders.desktop",
+      "sha256": "146e4819cf0880ca4727d49fcecca8a05f50142339329969ebd159eb93df729f"
+    },
+    {
+      "mode": "100644",
+      "path": "packaging/io.github.hawkab.UbuntuDockFolders.metainfo.xml",
+      "sha256": "3dddb387295e189047e473a6019c6480edf11e603f89ef2264161f3cb4241ea7"
+    },
+    {
+      "mode": "100644",
+      "path": "packaging/io.github.hawkab.UbuntuDockFolders.svg",
+      "sha256": "4ae62ab46a2f6a623e1623024058b3de652c3dd46f329720906e9a032de3332a"
+    },
+    {
+      "mode": "100644",
+      "path": "po/LINGUAS",
+      "sha256": "045019d60f682aad93e6210229a9add17b8e2d807d4fea84fb10db9db8b66513"
+    },
+    {
+      "mode": "100644",
+      "path": "po/ar.po",
+      "sha256": "c11e0f04ba66d9f1ec71f2eebfb1ea203d306171ac9c1952bbc9de0d25143b32"
+    },
+    {
+      "mode": "100644",
+      "path": "po/bn.po",
+      "sha256": "3b294c61ac55724433e41ebe45a867cb37ac87bbee51eff426deaf5cf7aee4a3"
+    },
+    {
+      "mode": "100644",
+      "path": "po/cs.po",
+      "sha256": "ab3903842405eaaa319dcc5847cf08443b86e429c512e0f2b7aad712371046d0"
+    },
+    {
+      "mode": "100644",
+      "path": "po/de.po",
+      "sha256": "26c8ffb59d05229e40f31dae99f74510fc3e9e425f27a9d2809313cdf1f4beb6"
+    },
+    {
+      "mode": "100644",
+      "path": "po/el.po",
+      "sha256": "af9464fb214e7c6dbcc2d0c838a76d8ed803a2d61258ba4d215fe61464427884"
+    },
+    {
+      "mode": "100644",
+      "path": "po/en.po",
+      "sha256": "eeb95ba81fec7e34bdb7c82c9be244b03058624c9349f79d4905f3f0258f4d20"
+    },
+    {
+      "mode": "100644",
+      "path": "po/es.po",
+      "sha256": "b4bffcf75209a0a1707b6fb779db8b9951e5a158d5ccac5ff06fe8f437f77c44"
+    },
+    {
+      "mode": "100644",
+      "path": "po/fr.po",
+      "sha256": "df304d1d1b85a95160b7c2328f43f40ae8e153d0817075c93c6765814deb463b"
+    },
+    {
+      "mode": "100644",
+      "path": "po/gu.po",
+      "sha256": "54fc35e8085320755683db3e5e7f57dbe4f06207390f3b48237d5e9b3a2b8919"
+    },
+    {
+      "mode": "100644",
+      "path": "po/hi.po",
+      "sha256": "9bc68fc1342c4d4c9e44a97a0959173979bcd936a61333b80dd6cf4870dcd2ef"
+    },
+    {
+      "mode": "100644",
+      "path": "po/hu.po",
+      "sha256": "6b1ed51501bc3e485a703192054df8afb0f636f3d24f4708d5c1414a224878e3"
+    },
+    {
+      "mode": "100644",
+      "path": "po/it.po",
+      "sha256": "8864b5592d2193b970b7e70623595dc28eae66e8f453ba3870614d1fe5faff77"
+    },
+    {
+      "mode": "100644",
+      "path": "po/kn.po",
+      "sha256": "287cb2ac6b0d4c3453f9cd353b1d09c58fdbb2608916e62897159dd09e7b65bc"
+    },
+    {
+      "mode": "100644",
+      "path": "po/ml.po",
+      "sha256": "4f6d61d2ee7e9c73930adf7bbae8f9310e280e23ba22053411b713ea988e5eab"
+    },
+    {
+      "mode": "100644",
+      "path": "po/mr.po",
+      "sha256": "858647ee951cee0df3199aca3eb465f577e0d5b3349d6809cc0b0c32538b2bc2"
+    },
+    {
+      "mode": "100644",
+      "path": "po/ms.po",
+      "sha256": "7b8058342c7f6c7a23b07a1313908df98eb0c3568c7a97c1f68325956aaa66c4"
+    },
+    {
+      "mode": "100644",
+      "path": "po/nl.po",
+      "sha256": "db832154e918a267c65b92b5fb6ca35666d1a59b374f352b4f4b7f6e71e85dee"
+    },
+    {
+      "mode": "100644",
+      "path": "po/or.po",
+      "sha256": "a060ddea0718f2f756d5d40fd07ea44f5607a3eeb91bf2658569da9fe92cae0d"
+    },
+    {
+      "mode": "100644",
+      "path": "po/pa.po",
+      "sha256": "28ddb6e2e034898665ba148b84b878c7e7f70e4fe220d7180fac9176fb9e0b25"
+    },
+    {
+      "mode": "100644",
+      "path": "po/pl.po",
+      "sha256": "728a121a12259099742d30d536c216ec08b4781ae5a5f00780f5b93b90856aaa"
+    },
+    {
+      "mode": "100644",
+      "path": "po/pt.po",
+      "sha256": "7a897fded0c2a0b75dd926fa69fb69e10609839212539ad40cc19912c950ab2e"
+    },
+    {
+      "mode": "100644",
+      "path": "po/ro.po",
+      "sha256": "56a0712feb71edf9610e014d038628982493e21009eb81c9dd25e9db0b7a87df"
+    },
+    {
+      "mode": "100644",
+      "path": "po/ru.po",
+      "sha256": "8a6e1dc9eafa211f9add592a21b78b518a1261fe43e09089c86961612c8b52c7"
+    },
+    {
+      "mode": "100644",
+      "path": "po/sv.po",
+      "sha256": "0d13091daa55f9336d96e848b2a82913a1126ea3450f6841c5deacf193c9fcef"
+    },
+    {
+      "mode": "100644",
+      "path": "po/ta.po",
+      "sha256": "f5376e4d3d8db35c3a376b2fe2b6e4709c693afd76c2a4f39d669824db72d2e1"
+    },
+    {
+      "mode": "100644",
+      "path": "po/te.po",
+      "sha256": "2a64bb196991dab57d471cf70e0dbb8f183aa16f9dd541d3cbeab9fdc81d79fc"
+    },
+    {
+      "mode": "100644",
+      "path": "po/tr.po",
+      "sha256": "c924b2ffa9fceb3b1caee0ee22042c8f5599134ee8bfbc7b645ecc9d09444d12"
+    },
+    {
+      "mode": "100644",
+      "path": "po/uk.po",
+      "sha256": "c8e36f068e129dcc25a8b4e3247c5efca27fdcf16513cfdf6147794050324fd4"
+    },
+    {
+      "mode": "100644",
+      "path": "po/ur.po",
+      "sha256": "66b56bf25c4876177c77006ea60cc0ae0aaae0231d0a0d711a81074d6b1e104a"
+    },
+    {
+      "mode": "100644",
+      "path": "po/zh.po",
+      "sha256": "d0955c89582ac18f497b4277b447c185ef0efc716a0a797724e0ed40a82f92fb"
+    },
+    {
+      "mode": "100644",
+      "path": "pyproject.toml",
+      "sha256": "1b57c182d39b9dabdf343ee007181a67bbbfe3256016fe6a6ed7da6f105e7a10"
+    },
+    {
+      "mode": "100644",
+      "path": "scripts/backup.py",
+      "sha256": "7b6fb84255590271b442d601750c8840561e382d492b8388f5c1289b7e7f4f5f"
+    },
+    {
+      "mode": "100644",
+      "path": "scripts/build.py",
+      "sha256": "df039362fe32f516175437301b25099067c780357c2f2e0557d7bbd587f543b6"
+    },
+    {
+      "mode": "100644",
+      "path": "scripts/manage.py",
+      "sha256": "a482415446eab473c32985a81530e81ed37c5d30fb7c6e58cdfce813b223cdc1"
+    },
+    {
+      "mode": "100644",
+      "path": "scripts/preview.py",
+      "sha256": "fd09f4ebfddc0c945e550c2ca060d01c0168478c513e91796b3e9e9d428e5f2b"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/drag.test.js",
+      "sha256": "1d551d972ceafd7004034ec5512de0a49d8bbe3765dd711d426860e8bfd1dcd5"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/model.test.js",
+      "sha256": "ace2b206655260e83e0d1b208aa4fa9718995cbfec5a54019beab0c31874323b"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/test_install.py",
+      "sha256": "77f77324788b8a8813d900dc6d8832904dc86f2443423ae89718b883665f7c94"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/test_package.py",
+      "sha256": "cab7ddacd0243c05921c2cd7517f0ceddd1960c782ab175036cbd39e348ed1b3"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/test_preferences.py",
+      "sha256": "ca8d93a6bdd57a28f1462b34709b0354b401b09957c748310ab48635307f911c"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/windows.test.js",
+      "sha256": "ddf32fb81bf41013d8000d028192ea4a17114fd582b42cf17cf21884ce11e36c"
+    }
+  ],
+  "repository": "https://github.com/hawkab/ubuntu-dock-folders",
+  "schema": 1,
+  "signing_key_fingerprint": "381C328312884317C10A7EB883C35310EBBAD77F",
+  "subject": "intitial commit"
+}

@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: it\nLanguage: it\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, per cento"
+
+msgid "All files"
+msgstr "Tutti i file"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "Tutte le immagini — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "Aspetto e animazione"
+
+msgid "Application folders, appearance, and animation"
+msgstr "Cartelle delle applicazioni, aspetto e animazione"
+
+msgid "Application launcher not found."
+msgstr "Lanciatore dell’applicazione non trovato."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "Le applicazioni in una cartella condividono un’icona e un indicatore di esecuzione"
+
+msgid "Background color"
+msgstr "Colore di sfondo"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "Sfoca la scrivania e le finestre dietro la cartella e aggiunge una tinta traslucida. Le icone restano nitide. Può aumentare l’utilizzo della GPU."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "Modifica nomi, etichette, colori e sfondo tramite l’ingranaggio nella cartella"
+
+msgid "Changes are saved automatically"
+msgstr "Le modifiche vengono salvate automaticamente"
+
+msgid "Choose an application"
+msgstr "Scegli un’applicazione"
+
+msgid "Choose…"
+msgstr "Scegli…"
+
+msgid "Close"
+msgstr "Chiudi"
+
+msgid "Could not launch the application."
+msgstr "Impossibile avviare l’applicazione."
+
+msgid "Could not open system settings"
+msgstr "Impossibile aprire le impostazioni di sistema"
+
+msgid "Could not open the application"
+msgstr "Impossibile aprire l’applicazione"
+
+msgid "Could not open the image"
+msgstr "Impossibile aprire l’immagine"
+
+msgid "Customize each folder"
+msgstr "Personalizza ogni cartella"
+
+msgid "Dock folders"
+msgstr "Cartelle del dock"
+
+msgid "Dock icon background color"
+msgstr "Colore di sfondo dell’icona nel dock"
+
+msgid "Dock icon preview"
+msgstr "Anteprima dell’icona nel dock"
+
+msgid "Dock icon transparency"
+msgstr "Trasparenza dell’icona nel dock"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "Trascina un’icona su un’altra per creare una cartella. Riordina le applicazioni nella cartella oppure trascinale fuori per riportarle nel dock."
+
+msgid "Folder appearance"
+msgstr "Aspetto della cartella"
+
+msgid "Folder label size"
+msgstr "Dimensione dell’etichetta della cartella"
+
+msgid "Folder not found."
+msgstr "Cartella non trovata."
+
+msgid "Folder settings"
+msgstr "Impostazioni della cartella"
+
+msgid "Folder wallpaper"
+msgstr "Sfondo della cartella"
+
+msgid "Folders on the dock"
+msgstr "Cartelle nel dock"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "Dimensione del carattere sotto le icone del dock, in pixel"
+
+msgid "General folder settings"
+msgstr "Impostazioni generali delle cartelle"
+
+msgid "Genie effect"
+msgstr "Effetto genio"
+
+msgid "Glass tint transparency"
+msgstr "Trasparenza della tinta del vetro"
+
+msgid "Icon preview"
+msgstr "Anteprima dell’icona"
+
+msgid "Image selected"
+msgstr "Immagine selezionata"
+
+msgid "Label below the icon"
+msgstr "Etichetta sotto l’icona"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — vetro satinato"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: sfondo sfocato, tinta traslucida e icone nitide."
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "New Folder"
+msgstr "Nuova cartella"
+
+msgid "On the dock"
+msgstr "Nel dock"
+
+msgid "Opaque"
+msgstr "Opaco"
+
+#, python-format
+msgid "Open %s"
+msgstr "Apri %s"
+
+msgid "Open folder background color"
+msgstr "Colore di sfondo della cartella aperta"
+
+msgid "Open folder preview"
+msgstr "Anteprima della cartella aperta"
+
+msgid "Open folder transparency"
+msgstr "Trasparenza della cartella aperta"
+
+msgid "Opening and closing animation"
+msgstr "Animazione di apertura e chiusura"
+
+msgid "Remove wallpaper"
+msgstr "Rimuovi sfondo"
+
+msgid "Replace…"
+msgstr "Sostituisci…"
+
+msgid "Scale"
+msgstr "Ridimensionamento"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "Impostazioni → Scrivania Ubuntu → Dock → Cartelle del dock"
+
+msgid "Transparency"
+msgstr "Trasparenza"
+
+msgid "Transparent"
+msgstr "Trasparente"
+
+msgid "Wallpaper"
+msgstr "Sfondo"
+
+msgid "When opened"
+msgstr "Quando aperta"
+
+msgid "App-grid folders"
+msgstr "Cartelle della griglia delle applicazioni"
+
+msgid "Add an app-grid folder"
+msgstr "Aggiungi una cartella dalla griglia"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "Sincronizza nomi e applicazioni con la griglia di GNOME"
+
+msgid "Pin to dock"
+msgstr "Fissa al dock"
+
+msgid "Pinned"
+msgstr "Fissata"
+
+msgid "No app-grid folders"
+msgstr "Nessuna cartella nella griglia"
+
+msgid "Create a folder in Show Apps first"
+msgstr "Crea prima una cartella in «Mostra applicazioni»"
+
+msgid "Folder updated"
+msgstr "Cartella aggiornata"
+
+msgid "Undo"
+msgstr "Annulla"
+
+msgid "Undo last move"
+msgstr "Annulla l’ultimo spostamento"
+
+msgid "Open windows"
+msgstr "Finestre aperte"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "Impossibile aprire %s"

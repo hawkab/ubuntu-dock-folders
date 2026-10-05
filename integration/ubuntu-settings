@@ -1,0 +1,8 @@
+#!/bin/sh
+DOCK_GROUPS_DATA="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
+export DOCK_GROUPS_DATA
+DOCK_GROUPS_PRELOAD_ORIGINAL="${LD_PRELOAD-}"
+export DOCK_GROUPS_PRELOAD_ORIGINAL
+LD_PRELOAD="$DOCK_GROUPS_DATA/integration/settings-integration.so${LD_PRELOAD:+:$LD_PRELOAD}"
+export LD_PRELOAD
+exec /usr/bin/gnome-control-center "$@"

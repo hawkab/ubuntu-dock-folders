@@ -1,0 +1,25 @@
+.dock-group-popup .popup-menu-content {
+    padding: 18px;
+    border-radius: 24px;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+.dock-group-background { border-radius: 24px; border: 1px solid rgba(255,255,255,.22); box-shadow: none; }
+.dock-group-header { spacing: 12px; }
+.dock-group-gear { padding: 8px; border-radius: 12px; color: #f6f5f4; }
+.dock-group-gear:hover, .dock-group-gear:focus { background-color: rgba(255,255,255,.15); }
+.dock-group-content { spacing: 14px; color: #f6f5f4; }
+.dock-group-title { font-size: 17px; font-weight: bold; padding: 0 4px; color: #f6f5f4; }
+.dock-group-apps { spacing: 6px; }
+.dock-group-tile { border-radius: 18px; padding: 12px 8px; width: 96px; }
+.dock-group-tile:hover, .dock-group-tile:focus { background-color: rgba(255, 255, 255, 0.10); }
+.dock-group-tile:active { background-color: rgba(255, 255, 255, 0.16); }
+.dock-group-tile-content { spacing: 9px; }
+.dock-group-app-label { font-size: 14px; text-align: center; height: 38px; color: #f6f5f4; }
+.dock-group-app-dot { width: 5px; height: 5px; border-radius: 5px; background-color: #ffffff; }
+.dock-group-dock-label { font-size: 10px; text-align: center; color: white; max-width: 68px; }
+.dock-group-light .dock-group-title, .dock-group-light .dock-group-app-label, .dock-group-light .dock-group-gear { color: #202124; }
+.dock-group-light .dock-group-app-dot { background-color: #202124; }
+.dock-group-drop-target { background-color: rgba(98,160,234,.30); box-shadow: inset 0 0 0 2px #62a0ea; border-radius: 18px; }
+.dock-group-window-previews .popup-menu-section { spacing: 12px; }

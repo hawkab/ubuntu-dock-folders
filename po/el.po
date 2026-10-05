@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: el\nLanguage: el\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, τοις εκατό"
+
+msgid "All files"
+msgstr "Όλα τα αρχεία"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "Όλες οι εικόνες — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "Εμφάνιση και κίνηση"
+
+msgid "Application folders, appearance, and animation"
+msgstr "Φάκελοι εφαρμογών, εμφάνιση και κίνηση"
+
+msgid "Application launcher not found."
+msgstr "Δεν βρέθηκε εκκινητής εφαρμογής."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "Οι εφαρμογές ενός φακέλου μοιράζονται ένα εικονίδιο και μια ένδειξη εκτέλεσης"
+
+msgid "Background color"
+msgstr "Χρώμα φόντου"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "Θολώνει την επιφάνεια εργασίας και τα παράθυρα πίσω από τον φάκελο και προσθέτει μια ημιδιαφανή απόχρωση. Τα εικονίδια παραμένουν ευκρινή. Μπορεί να αυξήσει τη χρήση της GPU."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "Αλλάξτε ονόματα, ετικέτες, χρώματα και ταπετσαρία με το γρανάζι μέσα στον φάκελο"
+
+msgid "Changes are saved automatically"
+msgstr "Οι αλλαγές αποθηκεύονται αυτόματα"
+
+msgid "Choose an application"
+msgstr "Επιλογή εφαρμογής"
+
+msgid "Choose…"
+msgstr "Επιλογή…"
+
+msgid "Close"
+msgstr "Κλείσιμο"
+
+msgid "Could not launch the application."
+msgstr "Δεν ήταν δυνατή η εκκίνηση της εφαρμογής."
+
+msgid "Could not open system settings"
+msgstr "Δεν ήταν δυνατό το άνοιγμα των ρυθμίσεων συστήματος"
+
+msgid "Could not open the application"
+msgstr "Δεν ήταν δυνατό το άνοιγμα της εφαρμογής"
+
+msgid "Could not open the image"
+msgstr "Δεν ήταν δυνατό το άνοιγμα της εικόνας"
+
+msgid "Customize each folder"
+msgstr "Προσαρμογή κάθε φακέλου"
+
+msgid "Dock folders"
+msgstr "Φάκελοι στο dock"
+
+msgid "Dock icon background color"
+msgstr "Χρώμα φόντου του εικονιδίου στο dock"
+
+msgid "Dock icon preview"
+msgstr "Προεπισκόπηση εικονιδίου στο dock"
+
+msgid "Dock icon transparency"
+msgstr "Διαφάνεια εικονιδίου στο dock"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "Σύρετε ένα εικονίδιο πάνω σε άλλο για να δημιουργήσετε φάκελο. Αλλάξτε τη σειρά των εφαρμογών μέσα στον φάκελο ή σύρετέ τες έξω για να επιστρέψουν στο dock."
+
+msgid "Folder appearance"
+msgstr "Εμφάνιση φακέλου"
+
+msgid "Folder label size"
+msgstr "Μέγεθος ετικέτας φακέλου"
+
+msgid "Folder not found."
+msgstr "Ο φάκελος δεν βρέθηκε."
+
+msgid "Folder settings"
+msgstr "Ρυθμίσεις φακέλου"
+
+msgid "Folder wallpaper"
+msgstr "Ταπετσαρία φακέλου"
+
+msgid "Folders on the dock"
+msgstr "Φάκελοι στο dock"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "Μέγεθος γραμματοσειράς κάτω από τα εικονίδια του dock, σε pixel"
+
+msgid "General folder settings"
+msgstr "Γενικές ρυθμίσεις φακέλων"
+
+msgid "Genie effect"
+msgstr "Εφέ τζίνι"
+
+msgid "Glass tint transparency"
+msgstr "Διαφάνεια της απόχρωσης του γυαλιού"
+
+msgid "Icon preview"
+msgstr "Προεπισκόπηση εικονιδίου"
+
+msgid "Image selected"
+msgstr "Επιλέχθηκε εικόνα"
+
+msgid "Label below the icon"
+msgstr "Ετικέτα κάτω από το εικονίδιο"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — ματ γυαλί"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: θολό φόντο, ημιδιαφανής απόχρωση και ευκρινή εικονίδια."
+
+msgid "Name"
+msgstr "Όνομα"
+
+msgid "New Folder"
+msgstr "Νέος φάκελος"
+
+msgid "On the dock"
+msgstr "Στο dock"
+
+msgid "Opaque"
+msgstr "Αδιαφανές"
+
+#, python-format
+msgid "Open %s"
+msgstr "Άνοιγμα του %s"
+
+msgid "Open folder background color"
+msgstr "Χρώμα φόντου του ανοιχτού φακέλου"
+
+msgid "Open folder preview"
+msgstr "Προεπισκόπηση ανοιχτού φακέλου"
+
+msgid "Open folder transparency"
+msgstr "Διαφάνεια ανοιχτού φακέλου"
+
+msgid "Opening and closing animation"
+msgstr "Κίνηση ανοίγματος και κλεισίματος"
+
+msgid "Remove wallpaper"
+msgstr "Αφαίρεση ταπετσαρίας"
+
+msgid "Replace…"
+msgstr "Αντικατάσταση…"
+
+msgid "Scale"
+msgstr "Κλιμάκωση"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "Ρυθμίσεις → Επιφάνεια εργασίας Ubuntu → Dock → Φάκελοι στο dock"
+
+msgid "Transparency"
+msgstr "Διαφάνεια"
+
+msgid "Transparent"
+msgstr "Διαφανές"
+
+msgid "Wallpaper"
+msgstr "Ταπετσαρία"
+
+msgid "When opened"
+msgstr "Όταν είναι ανοιχτός"
+
+msgid "App-grid folders"
+msgstr "Φάκελοι πλέγματος εφαρμογών"
+
+msgid "Add an app-grid folder"
+msgstr "Προσθήκη φακέλου από το πλέγμα"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "Συγχρονισμός ονομάτων και εφαρμογών με το πλέγμα του GNOME"
+
+msgid "Pin to dock"
+msgstr "Καρφίτσωμα στο dock"
+
+msgid "Pinned"
+msgstr "Καρφιτσωμένο"
+
+msgid "No app-grid folders"
+msgstr "Δεν υπάρχουν φάκελοι στο πλέγμα"
+
+msgid "Create a folder in Show Apps first"
+msgstr "Δημιουργήστε πρώτα φάκελο στην «Εμφάνιση εφαρμογών»"
+
+msgid "Folder updated"
+msgstr "Ο φάκελος ενημερώθηκε"
+
+msgid "Undo"
+msgstr "Αναίρεση"
+
+msgid "Undo last move"
+msgstr "Αναίρεση τελευταίας μετακίνησης"
+
+msgid "Open windows"
+msgstr "Ανοιχτά παράθυρα"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "Δεν ήταν δυνατό το άνοιγμα του %s"

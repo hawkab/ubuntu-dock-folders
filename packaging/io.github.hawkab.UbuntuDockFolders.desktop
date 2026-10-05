@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Ubuntu Dock Folders
+GenericName=Dock folders
+Comment=Configure application folders, appearance and animations on Ubuntu Dock
+Exec=gnome-extensions prefs dock-groups@local
+Icon=io.github.hawkab.UbuntuDockFolders
+Terminal=false
+StartupNotify=true
+Categories=GNOME;GTK;Settings;DesktopSettings;
+Keywords=dock;folders;grouping;applications;

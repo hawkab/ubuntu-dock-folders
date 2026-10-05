@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: mr\nLanguage: mr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, टक्के"
+
+msgid "All files"
+msgstr "सर्व फाइल्स"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "सर्व प्रतिमा — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "दिसणे आणि अॅनिमेशन"
+
+msgid "Application folders, appearance, and animation"
+msgstr "अॅप फोल्डर, दिसणे आणि अॅनिमेशन"
+
+msgid "Application launcher not found."
+msgstr "अॅपचा लाँचर सापडला नाही."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "फोल्डरमधील अॅप्स एकच चिन्ह आणि चालू असल्याचा निर्देशक वापरतात"
+
+msgid "Background color"
+msgstr "पार्श्वभूमीचा रंग"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "फोल्डरमागील डेस्कटॉप आणि खिडक्या धूसर करून अर्धपारदर्शक रंग जोडतो. चिन्हे स्पष्ट राहतात. GPU चा वापर वाढू शकतो."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "फोल्डरमधील गिअर वापरून नावे, लेबले, रंग आणि वॉलपेपर बदला"
+
+msgid "Changes are saved automatically"
+msgstr "बदल आपोआप जतन होतात"
+
+msgid "Choose an application"
+msgstr "अॅप निवडा"
+
+msgid "Choose…"
+msgstr "निवडा…"
+
+msgid "Close"
+msgstr "बंद करा"
+
+msgid "Could not launch the application."
+msgstr "अॅप सुरू करता आले नाही."
+
+msgid "Could not open system settings"
+msgstr "सिस्टम सेटिंग्ज उघडता आल्या नाहीत"
+
+msgid "Could not open the application"
+msgstr "अॅप उघडता आले नाही"
+
+msgid "Could not open the image"
+msgstr "प्रतिमा उघडता आली नाही"
+
+msgid "Customize each folder"
+msgstr "प्रत्येक फोल्डर सानुकूलित करा"
+
+msgid "Dock folders"
+msgstr "डॉक फोल्डर"
+
+msgid "Dock icon background color"
+msgstr "डॉक चिन्हाच्या पार्श्वभूमीचा रंग"
+
+msgid "Dock icon preview"
+msgstr "डॉक चिन्हाचे पूर्वावलोकन"
+
+msgid "Dock icon transparency"
+msgstr "डॉक चिन्हाची पारदर्शकता"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "फोल्डर तयार करण्यासाठी एक चिन्ह दुसऱ्यावर ओढा. फोल्डरमधील अॅप्सचा क्रम बदला किंवा त्यांना बाहेर ओढून डॉकवर परत आणा."
+
+msgid "Folder appearance"
+msgstr "फोल्डरचे दिसणे"
+
+msgid "Folder label size"
+msgstr "फोल्डर लेबलचा आकार"
+
+msgid "Folder not found."
+msgstr "फोल्डर सापडला नाही."
+
+msgid "Folder settings"
+msgstr "फोल्डर सेटिंग्ज"
+
+msgid "Folder wallpaper"
+msgstr "फोल्डरचा वॉलपेपर"
+
+msgid "Folders on the dock"
+msgstr "डॉकवरील फोल्डर"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "डॉक चिन्हांखालील फॉन्टचा आकार, पिक्सेलमध्ये"
+
+msgid "General folder settings"
+msgstr "फोल्डरच्या सामान्य सेटिंग्ज"
+
+msgid "Genie effect"
+msgstr "जिनी प्रभाव"
+
+msgid "Glass tint transparency"
+msgstr "काचेच्या रंगाची पारदर्शकता"
+
+msgid "Icon preview"
+msgstr "चिन्हाचे पूर्वावलोकन"
+
+msgid "Image selected"
+msgstr "प्रतिमा निवडली"
+
+msgid "Label below the icon"
+msgstr "चिन्हाखाली लेबल"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — धूसर काच"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: धूसर पार्श्वभूमी, अर्धपारदर्शक रंग आणि स्पष्ट चिन्हे."
+
+msgid "Name"
+msgstr "नाव"
+
+msgid "New Folder"
+msgstr "नवीन फोल्डर"
+
+msgid "On the dock"
+msgstr "डॉकवर"
+
+msgid "Opaque"
+msgstr "अपारदर्शक"
+
+#, python-format
+msgid "Open %s"
+msgstr "%s उघडा"
+
+msgid "Open folder background color"
+msgstr "उघड्या फोल्डरच्या पार्श्वभूमीचा रंग"
+
+msgid "Open folder preview"
+msgstr "उघड्या फोल्डरचे पूर्वावलोकन"
+
+msgid "Open folder transparency"
+msgstr "उघड्या फोल्डरची पारदर्शकता"
+
+msgid "Opening and closing animation"
+msgstr "उघडण्याचे आणि बंद करण्याचे अॅनिमेशन"
+
+msgid "Remove wallpaper"
+msgstr "वॉलपेपर काढा"
+
+msgid "Replace…"
+msgstr "बदला…"
+
+msgid "Scale"
+msgstr "आकार बदल"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "सेटिंग्ज → Ubuntu डेस्कटॉप → डॉक → डॉक फोल्डर"
+
+msgid "Transparency"
+msgstr "पारदर्शकता"
+
+msgid "Transparent"
+msgstr "पारदर्शक"
+
+msgid "Wallpaper"
+msgstr "वॉलपेपर"
+
+msgid "When opened"
+msgstr "उघडल्यावर"
+
+msgid "App-grid folders"
+msgstr "ॲप ग्रिडमधील फोल्डर"
+
+msgid "Add an app-grid folder"
+msgstr "ॲप ग्रिडमधून फोल्डर जोडा"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "फोल्डरची नावे आणि ॲप GNOME ॲप ग्रिडशी समक्रमित ठेवा"
+
+msgid "Pin to dock"
+msgstr "डॉकवर पिन करा"
+
+msgid "Pinned"
+msgstr "पिन केलेले"
+
+msgid "No app-grid folders"
+msgstr "ॲप ग्रिडमध्ये फोल्डर नाहीत"
+
+msgid "Create a folder in Show Apps first"
+msgstr "आधी «ॲप दाखवा» मध्ये फोल्डर तयार करा"
+
+msgid "Folder updated"
+msgstr "फोल्डर अद्यतनित झाले"
+
+msgid "Undo"
+msgstr "पूर्ववत करा"
+
+msgid "Undo last move"
+msgstr "शेवटचे हलवणे पूर्ववत करा"
+
+msgid "Open windows"
+msgstr "उघड्या विंडो"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "%s उघडता आले नाही"

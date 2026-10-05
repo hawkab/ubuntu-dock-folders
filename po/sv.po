@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: sv\nLanguage: sv\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, procent"
+
+msgid "All files"
+msgstr "Alla filer"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "Alla bilder — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "Utseende och animering"
+
+msgid "Application folders, appearance, and animation"
+msgstr "Programmappar, utseende och animering"
+
+msgid "Application launcher not found."
+msgstr "Programmets startfil hittades inte."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "Program i en mapp delar en ikon och en indikator för körande program"
+
+msgid "Background color"
+msgstr "Bakgrundsfärg"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "Gör skrivbordet och fönstren bakom mappen suddiga och lägger till en genomskinlig färgton. Ikonerna förblir skarpa. Kan öka GPU-användningen."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "Ändra namn, etiketter, färger och bakgrund med kugghjulet i mappen"
+
+msgid "Changes are saved automatically"
+msgstr "Ändringar sparas automatiskt"
+
+msgid "Choose an application"
+msgstr "Välj ett program"
+
+msgid "Choose…"
+msgstr "Välj…"
+
+msgid "Close"
+msgstr "Stäng"
+
+msgid "Could not launch the application."
+msgstr "Kunde inte starta programmet."
+
+msgid "Could not open system settings"
+msgstr "Kunde inte öppna systeminställningarna"
+
+msgid "Could not open the application"
+msgstr "Kunde inte öppna programmet"
+
+msgid "Could not open the image"
+msgstr "Kunde inte öppna bilden"
+
+msgid "Customize each folder"
+msgstr "Anpassa varje mapp"
+
+msgid "Dock folders"
+msgstr "Mappar i dockan"
+
+msgid "Dock icon background color"
+msgstr "Bakgrundsfärg för ikonen i dockan"
+
+msgid "Dock icon preview"
+msgstr "Förhandsvisning av ikonen i dockan"
+
+msgid "Dock icon transparency"
+msgstr "Genomskinlighet för ikonen i dockan"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "Dra en ikon till en annan för att skapa en mapp. Ändra ordningen på programmen i mappen eller dra ut dem för att flytta tillbaka dem till dockan."
+
+msgid "Folder appearance"
+msgstr "Mappens utseende"
+
+msgid "Folder label size"
+msgstr "Storlek på mappetiketten"
+
+msgid "Folder not found."
+msgstr "Mappen hittades inte."
+
+msgid "Folder settings"
+msgstr "Mappinställningar"
+
+msgid "Folder wallpaper"
+msgstr "Mappens bakgrund"
+
+msgid "Folders on the dock"
+msgstr "Mappar i dockan"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "Teckenstorlek under dockans ikoner, i bildpunkter"
+
+msgid "General folder settings"
+msgstr "Allmänna mappinställningar"
+
+msgid "Genie effect"
+msgstr "Andeeffekt"
+
+msgid "Glass tint transparency"
+msgstr "Glasfärgtonens genomskinlighet"
+
+msgid "Icon preview"
+msgstr "Ikonförhandsvisning"
+
+msgid "Image selected"
+msgstr "Bild vald"
+
+msgid "Label below the icon"
+msgstr "Etikett under ikonen"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — frostat glas"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: suddig bakgrund, genomskinlig färgton och skarpa ikoner."
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "New Folder"
+msgstr "Ny mapp"
+
+msgid "On the dock"
+msgstr "I dockan"
+
+msgid "Opaque"
+msgstr "Ogenomskinlig"
+
+#, python-format
+msgid "Open %s"
+msgstr "Öppna %s"
+
+msgid "Open folder background color"
+msgstr "Bakgrundsfärg för den öppna mappen"
+
+msgid "Open folder preview"
+msgstr "Förhandsvisning av den öppna mappen"
+
+msgid "Open folder transparency"
+msgstr "Genomskinlighet för den öppna mappen"
+
+msgid "Opening and closing animation"
+msgstr "Animering vid öppning och stängning"
+
+msgid "Remove wallpaper"
+msgstr "Ta bort bakgrund"
+
+msgid "Replace…"
+msgstr "Ersätt…"
+
+msgid "Scale"
+msgstr "Skalning"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "Inställningar → Ubuntu-skrivbord → Docka → Mappar i dockan"
+
+msgid "Transparency"
+msgstr "Genomskinlighet"
+
+msgid "Transparent"
+msgstr "Genomskinlig"
+
+msgid "Wallpaper"
+msgstr "Bakgrund"
+
+msgid "When opened"
+msgstr "När mappen är öppen"
+
+msgid "App-grid folders"
+msgstr "Mappar i programrutnätet"
+
+msgid "Add an app-grid folder"
+msgstr "Lägg till en mapp från programrutnätet"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "Synkronisera mappnamn och program med GNOME:s programrutnät"
+
+msgid "Pin to dock"
+msgstr "Fäst i dockan"
+
+msgid "Pinned"
+msgstr "Fäst"
+
+msgid "No app-grid folders"
+msgstr "Inga mappar i programrutnätet"
+
+msgid "Create a folder in Show Apps first"
+msgstr "Skapa först en mapp i ”Visa program”"
+
+msgid "Folder updated"
+msgstr "Mapp uppdaterad"
+
+msgid "Undo"
+msgstr "Ångra"
+
+msgid "Undo last move"
+msgstr "Ångra senaste flytten"
+
+msgid "Open windows"
+msgstr "Öppna fönster"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "Kunde inte öppna %s"

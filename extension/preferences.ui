@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<interface domain="ubuntu-dock-folders">
+  <object class="AdwPreferencesWindow" id="preferences_window">
+    <property name="title" translatable="yes">Dock folders</property>
+    <property name="default-width">620</property>
+    <property name="default-height">700</property>
+    <property name="modal">True</property>
+    <property name="search-enabled">False</property>
+    <child>
+      <object class="AdwPreferencesPage" id="preferences_page">
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title" translatable="yes">Folders on the dock</property>
+            <property name="description" translatable="yes">Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock.</property>
+            <child>
+              <object class="AdwSwitchRow" id="enabled_row">
+                <property name="title" translatable="yes">Dock folders</property>
+                <property name="subtitle" translatable="yes">Applications in a folder share one icon and a running indicator</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow" id="grid_folders_row">
+                <property name="title" translatable="yes">Add an app-grid folder</property>
+                <property name="subtitle" translatable="yes">Keep folder names and applications in sync with GNOME's app grid</property>
+                <property name="activatable">True</property>
+                <child type="suffix">
+                  <object class="GtkImage"><property name="icon-name">go-next-symbolic</property></object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSwitchRow" id="customization_row">
+                <property name="title" translatable="yes">Customize each folder</property>
+                <property name="subtitle" translatable="yes">Change names, labels, colors, and wallpaper using the gear inside a folder</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title" translatable="yes">Appearance and animation</property>
+            <child>
+              <object class="AdwSwitchRow" id="glass_row">
+                <property name="title" translatable="yes">Material Glass — frosted glass</property>
+                <property name="subtitle" translatable="yes">Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage.</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwComboRow" id="animation_row">
+                <property name="title" translatable="yes">Opening and closing animation</property>
+                <property name="model">
+                  <object class="GtkStringList">
+                    <items>
+                      <item translatable="yes">Scale</item>
+                      <item translatable="yes">Genie effect</item>
+                    </items>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSpinRow" id="font_size_row">
+                <property name="title" translatable="yes">Folder label size</property>
+                <property name="subtitle" translatable="yes">Font size below dock icons, in pixels</property>
+                <property name="adjustment">
+                  <object class="GtkAdjustment">
+                    <property name="lower">8</property>
+                    <property name="upper">24</property>
+                    <property name="step-increment">1</property>
+                    <property name="page-increment">2</property>
+                  </object>
+                </property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

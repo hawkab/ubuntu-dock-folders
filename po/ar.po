@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ar\nLanguage: ar\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s، بالنسبة المئوية"
+
+msgid "All files"
+msgstr "كل الملفات"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "كل الصور — PNG وJPEG وBMP وWebP وGIF وSVG"
+
+msgid "Appearance and animation"
+msgstr "المظهر والحركة"
+
+msgid "Application folders, appearance, and animation"
+msgstr "مجلدات التطبيقات والمظهر والحركة"
+
+msgid "Application launcher not found."
+msgstr "لم يتم العثور على مشغّل التطبيق."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "تشترك تطبيقات المجلد في أيقونة واحدة ومؤشر تشغيل"
+
+msgid "Background color"
+msgstr "لون الخلفية"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "يُموّه سطح المكتب والنوافذ خلف المجلد ويضيف لونًا شبه شفاف. تبقى الأيقونات واضحة. قد يزيد استهلاك وحدة معالجة الرسومات."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "غيّر الأسماء والتسميات والألوان وصورة الخلفية من زر الترس داخل المجلد"
+
+msgid "Changes are saved automatically"
+msgstr "تُحفظ التغييرات تلقائيًا"
+
+msgid "Choose an application"
+msgstr "اختر تطبيقًا"
+
+msgid "Choose…"
+msgstr "اختيار…"
+
+msgid "Close"
+msgstr "إغلاق"
+
+msgid "Could not launch the application."
+msgstr "تعذر تشغيل التطبيق."
+
+msgid "Could not open system settings"
+msgstr "تعذر فتح إعدادات النظام"
+
+msgid "Could not open the application"
+msgstr "تعذر فتح التطبيق"
+
+msgid "Could not open the image"
+msgstr "تعذر فتح الصورة"
+
+msgid "Customize each folder"
+msgstr "تخصيص كل مجلد"
+
+msgid "Dock folders"
+msgstr "مجلدات الشريط"
+
+msgid "Dock icon background color"
+msgstr "لون خلفية أيقونة الشريط"
+
+msgid "Dock icon preview"
+msgstr "معاينة أيقونة الشريط"
+
+msgid "Dock icon transparency"
+msgstr "شفافية أيقونة الشريط"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "اسحب أيقونة فوق أخرى لإنشاء مجلد. أعد ترتيب التطبيقات داخل المجلد، أو اسحبها خارجه لإعادتها إلى الشريط."
+
+msgid "Folder appearance"
+msgstr "مظهر المجلد"
+
+msgid "Folder label size"
+msgstr "حجم تسمية المجلد"
+
+msgid "Folder not found."
+msgstr "لم يتم العثور على المجلد."
+
+msgid "Folder settings"
+msgstr "إعدادات المجلد"
+
+msgid "Folder wallpaper"
+msgstr "صورة خلفية المجلد"
+
+msgid "Folders on the dock"
+msgstr "مجلدات على الشريط"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "حجم الخط أسفل أيقونات الشريط، بالبكسل"
+
+msgid "General folder settings"
+msgstr "الإعدادات العامة للمجلدات"
+
+msgid "Genie effect"
+msgstr "تأثير الجني"
+
+msgid "Glass tint transparency"
+msgstr "شفافية لون الزجاج"
+
+msgid "Icon preview"
+msgstr "معاينة الأيقونة"
+
+msgid "Image selected"
+msgstr "تم اختيار صورة"
+
+msgid "Label below the icon"
+msgstr "تسمية أسفل الأيقونة"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — زجاج مصنفر"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: خلفية ضبابية ولون شبه شفاف وأيقونات واضحة."
+
+msgid "Name"
+msgstr "الاسم"
+
+msgid "New Folder"
+msgstr "مجلد جديد"
+
+msgid "On the dock"
+msgstr "على الشريط"
+
+msgid "Opaque"
+msgstr "معتم"
+
+#, python-format
+msgid "Open %s"
+msgstr "فتح %s"
+
+msgid "Open folder background color"
+msgstr "لون خلفية المجلد المفتوح"
+
+msgid "Open folder preview"
+msgstr "معاينة المجلد المفتوح"
+
+msgid "Open folder transparency"
+msgstr "شفافية المجلد المفتوح"
+
+msgid "Opening and closing animation"
+msgstr "حركة الفتح والإغلاق"
+
+msgid "Remove wallpaper"
+msgstr "إزالة صورة الخلفية"
+
+msgid "Replace…"
+msgstr "استبدال…"
+
+msgid "Scale"
+msgstr "تكبير وتصغير"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "الإعدادات ← سطح مكتب Ubuntu ← الشريط ← مجلدات الشريط"
+
+msgid "Transparency"
+msgstr "الشفافية"
+
+msgid "Transparent"
+msgstr "شفاف"
+
+msgid "Wallpaper"
+msgstr "صورة الخلفية"
+
+msgid "When opened"
+msgstr "عند الفتح"
+
+msgid "App-grid folders"
+msgstr "مجلدات شبكة التطبيقات"
+
+msgid "Add an app-grid folder"
+msgstr "إضافة مجلد من شبكة التطبيقات"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "مزامنة أسماء المجلدات وتطبيقاتها مع شبكة تطبيقات جنوم"
+
+msgid "Pin to dock"
+msgstr "تثبيت في الشريط"
+
+msgid "Pinned"
+msgstr "مثبّت"
+
+msgid "No app-grid folders"
+msgstr "لا توجد مجلدات في شبكة التطبيقات"
+
+msgid "Create a folder in Show Apps first"
+msgstr "أنشئ مجلدًا في «عرض التطبيقات» أولًا"
+
+msgid "Folder updated"
+msgstr "تم تحديث المجلد"
+
+msgid "Undo"
+msgstr "تراجع"
+
+msgid "Undo last move"
+msgstr "التراجع عن آخر نقل"
+
+msgid "Open windows"
+msgstr "النوافذ المفتوحة"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "تعذّر فتح %s"

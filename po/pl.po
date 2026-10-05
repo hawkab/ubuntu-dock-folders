@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: pl\nLanguage: pl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, procent"
+
+msgid "All files"
+msgstr "Wszystkie pliki"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "Wszystkie obrazy — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "Wygląd i animacja"
+
+msgid "Application folders, appearance, and animation"
+msgstr "Foldery aplikacji, wygląd i animacja"
+
+msgid "Application launcher not found."
+msgstr "Nie znaleziono programu uruchamiającego aplikację."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "Aplikacje w folderze mają wspólną ikonę i wskaźnik działania"
+
+msgid "Background color"
+msgstr "Kolor tła"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "Rozmywa pulpit i okna za folderem oraz dodaje półprzezroczysty odcień. Ikony pozostają wyraźne. Może zwiększyć obciążenie GPU."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "Zmieniaj nazwy, podpisy, kolory i tapetę za pomocą koła zębatego w folderze"
+
+msgid "Changes are saved automatically"
+msgstr "Zmiany są zapisywane automatycznie"
+
+msgid "Choose an application"
+msgstr "Wybierz aplikację"
+
+msgid "Choose…"
+msgstr "Wybierz…"
+
+msgid "Close"
+msgstr "Zamknij"
+
+msgid "Could not launch the application."
+msgstr "Nie można uruchomić aplikacji."
+
+msgid "Could not open system settings"
+msgstr "Nie można otworzyć ustawień systemu"
+
+msgid "Could not open the application"
+msgstr "Nie można otworzyć aplikacji"
+
+msgid "Could not open the image"
+msgstr "Nie można otworzyć obrazu"
+
+msgid "Customize each folder"
+msgstr "Dostosuj każdy folder"
+
+msgid "Dock folders"
+msgstr "Foldery doku"
+
+msgid "Dock icon background color"
+msgstr "Kolor tła ikony w doku"
+
+msgid "Dock icon preview"
+msgstr "Podgląd ikony w doku"
+
+msgid "Dock icon transparency"
+msgstr "Przezroczystość ikony w doku"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "Przeciągnij ikonę na inną, aby utworzyć folder. Zmieniaj kolejność aplikacji w folderze lub przeciągaj je na zewnątrz, aby przenieść je z powrotem do doku."
+
+msgid "Folder appearance"
+msgstr "Wygląd folderu"
+
+msgid "Folder label size"
+msgstr "Rozmiar podpisu folderu"
+
+msgid "Folder not found."
+msgstr "Nie znaleziono folderu."
+
+msgid "Folder settings"
+msgstr "Ustawienia folderu"
+
+msgid "Folder wallpaper"
+msgstr "Tapeta folderu"
+
+msgid "Folders on the dock"
+msgstr "Foldery w doku"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "Rozmiar czcionki pod ikonami doku, w pikselach"
+
+msgid "General folder settings"
+msgstr "Ogólne ustawienia folderów"
+
+msgid "Genie effect"
+msgstr "Efekt dżina"
+
+msgid "Glass tint transparency"
+msgstr "Przezroczystość odcienia szkła"
+
+msgid "Icon preview"
+msgstr "Podgląd ikony"
+
+msgid "Image selected"
+msgstr "Wybrano obraz"
+
+msgid "Label below the icon"
+msgstr "Podpis pod ikoną"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — matowe szkło"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: rozmyte tło, półprzezroczysty odcień i wyraźne ikony."
+
+msgid "Name"
+msgstr "Nazwa"
+
+msgid "New Folder"
+msgstr "Nowy folder"
+
+msgid "On the dock"
+msgstr "W doku"
+
+msgid "Opaque"
+msgstr "Nieprzezroczyste"
+
+#, python-format
+msgid "Open %s"
+msgstr "Otwórz %s"
+
+msgid "Open folder background color"
+msgstr "Kolor tła otwartego folderu"
+
+msgid "Open folder preview"
+msgstr "Podgląd otwartego folderu"
+
+msgid "Open folder transparency"
+msgstr "Przezroczystość otwartego folderu"
+
+msgid "Opening and closing animation"
+msgstr "Animacja otwierania i zamykania"
+
+msgid "Remove wallpaper"
+msgstr "Usuń tapetę"
+
+msgid "Replace…"
+msgstr "Zastąp…"
+
+msgid "Scale"
+msgstr "Skalowanie"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "Ustawienia → Pulpit Ubuntu → Dok → Foldery doku"
+
+msgid "Transparency"
+msgstr "Przezroczystość"
+
+msgid "Transparent"
+msgstr "Przezroczyste"
+
+msgid "Wallpaper"
+msgstr "Tapeta"
+
+msgid "When opened"
+msgstr "Po otwarciu"
+
+msgid "App-grid folders"
+msgstr "Foldery siatki aplikacji"
+
+msgid "Add an app-grid folder"
+msgstr "Dodaj folder z siatki aplikacji"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "Synchronizuj nazwy i aplikacje z siatką aplikacji GNOME"
+
+msgid "Pin to dock"
+msgstr "Przypnij do doku"
+
+msgid "Pinned"
+msgstr "Przypięto"
+
+msgid "No app-grid folders"
+msgstr "Brak folderów w siatce aplikacji"
+
+msgid "Create a folder in Show Apps first"
+msgstr "Najpierw utwórz folder w „Wyświetl aplikacje”"
+
+msgid "Folder updated"
+msgstr "Folder zaktualizowany"
+
+msgid "Undo"
+msgstr "Cofnij"
+
+msgid "Undo last move"
+msgstr "Cofnij ostatnie przeniesienie"
+
+msgid "Open windows"
+msgstr "Otwarte okna"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "Nie można otworzyć %s"

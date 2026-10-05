@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.hawkab.UbuntuDockFolders.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>Ubuntu Dock Folders</name>
+  <summary>Group Ubuntu Dock applications into folders</summary>
+  <icon type="stock">io.github.hawkab.UbuntuDockFolders</icon>
+  <supports>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </supports>
+  <description>
+    <p>Organize Ubuntu Dock with application folders. Drag one icon onto another to create a folder, reorder its applications, or drag them back to the dock. Folders show real application icons and a shared running indicator.</p>
+    <p>Customize each folder with a name, colors, transparency and wallpaper. Choose scale or genie animations, and optionally enable frosted glass with a blurred background. The interface follows your system language.</p>
+    <p>Pin existing GNOME app-grid folders and synchronize their names and applications. Hover over an application inside a folder to preview, activate or close its windows. Running indicators appear when windows open, including during application startup. Undo the last grouping move from its notification, the folder header or Ctrl+Z.</p>
+    <p>Designed for desktop and laptop computers running Ubuntu 24.04 with GNOME Shell 46 and Ubuntu Dock. Keyboard, mouse and touch input are supported. This is a GNOME desktop extension; Android and iOS are not supported. After installation, enable the extension for your desktop account and log out and back in. The optional Settings integration adds Dock folders to Ubuntu Desktop settings.</p>
+  </description>
+  <developer id="io.github.hawkab">
+    <name>Grigory Olshansky</name>
+  </developer>
+  <launchable type="desktop-id">io.github.hawkab.UbuntuDockFolders.desktop</launchable>
+  <translation type="gettext">ubuntu-dock-folders</translation>
+  <provides>
+    <id>dock-groups@local</id>
+  </provides>
+  <url type="homepage">https://github.com/hawkab/ubuntu-dock-folders</url>
+  <url type="bugtracker">https://github.com/hawkab/ubuntu-dock-folders/issues</url>
+  <url type="donation">https://hawkab.github.io/support/</url>
+  <screenshots>
+    <screenshot type="default">
+      <caption>Application folders on Ubuntu Dock</caption>
+      <image type="source" width="832" height="468">https://raw.githubusercontent.com/hawkab/ubuntu-dock-folders/main/docs/screenshot.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Create a folder by dragging icons, then open and close it</caption>
+      <video container="webm" codec="vp9" width="832" height="468">https://raw.githubusercontent.com/hawkab/ubuntu-dock-folders/main/docs/demo.webm</video>
+    </screenshot>
+    <screenshot>
+      <caption>Dock folders entry highlighted in Ubuntu Desktop settings</caption>
+      <image type="source" width="1440" height="900">https://raw.githubusercontent.com/hawkab/ubuntu-dock-folders/main/docs/ubuntu-settings.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Grouping, Material Glass, animation and label size</caption>
+      <image type="source" width="1440" height="900">https://raw.githubusercontent.com/hawkab/ubuntu-dock-folders/main/docs/general-settings.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Folder name, dock color, transparency and label</caption>
+      <image type="source" width="1440" height="900">https://raw.githubusercontent.com/hawkab/ubuntu-dock-folders/main/docs/folder-settings-dock.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Open folder color, glass tint transparency and wallpaper</caption>
+      <image type="source" width="1440" height="900">https://raw.githubusercontent.com/hawkab/ubuntu-dock-folders/main/docs/folder-settings-open.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Pin and synchronize an existing GNOME application-grid folder</caption>
+      <image type="source" width="1440" height="900">https://raw.githubusercontent.com/hawkab/ubuntu-dock-folders/main/docs/app-grid-folders.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Hover over an application to preview, activate and close its windows</caption>
+      <image type="source" width="1440" height="900">https://raw.githubusercontent.com/hawkab/ubuntu-dock-folders/main/docs/window-previews.png</image>
+    </screenshot>
+  </screenshots>
+  <categories>
+    <category>Settings</category>
+    <category>DesktopSettings</category>
+  </categories>
+  <content_rating type="oars-1.1">
+    <content_attribute id="violence-cartoon">none</content_attribute>
+    <content_attribute id="violence-fantasy">none</content_attribute>
+    <content_attribute id="violence-realistic">none</content_attribute>
+    <content_attribute id="violence-bloodshed">none</content_attribute>
+    <content_attribute id="violence-sexual">none</content_attribute>
+    <content_attribute id="drugs-alcohol">none</content_attribute>
+    <content_attribute id="drugs-narcotics">none</content_attribute>
+    <content_attribute id="drugs-tobacco">none</content_attribute>
+    <content_attribute id="sex-nudity">none</content_attribute>
+    <content_attribute id="sex-themes">none</content_attribute>
+    <content_attribute id="language-profanity">none</content_attribute>
+    <content_attribute id="language-humor">none</content_attribute>
+    <content_attribute id="language-discrimination">none</content_attribute>
+    <content_attribute id="money-advertising">none</content_attribute>
+    <content_attribute id="money-gambling">none</content_attribute>
+    <content_attribute id="money-purchasing">none</content_attribute>
+    <content_attribute id="social-chat">none</content_attribute>
+    <content_attribute id="social-audio">none</content_attribute>
+    <content_attribute id="social-contacts">none</content_attribute>
+    <content_attribute id="social-info">none</content_attribute>
+    <content_attribute id="social-location">none</content_attribute>
+    <content_attribute id="sex-homosexuality">none</content_attribute>
+    <content_attribute id="sex-prostitution">none</content_attribute>
+    <content_attribute id="sex-adultery">none</content_attribute>
+    <content_attribute id="sex-appearance">none</content_attribute>
+    <content_attribute id="violence-worship">none</content_attribute>
+    <content_attribute id="violence-desecration">none</content_attribute>
+    <content_attribute id="violence-slavery">none</content_attribute>
+  </content_rating>
+  <releases>
+    <release version="1.0.0" date="2026-10-04">
+      <description><p>Initial release with dock folders, app-grid synchronization, window previews, undo, appearance controls and 30 interface languages.</p></description>
+    </release>
+  </releases>
+</component>

@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: bn\nLanguage: bn\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, শতাংশ"
+
+msgid "All files"
+msgstr "সব ফাইল"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "সব ছবি — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "চেহারা ও অ্যানিমেশন"
+
+msgid "Application folders, appearance, and animation"
+msgstr "অ্যাপের ফোল্ডার, চেহারা ও অ্যানিমেশন"
+
+msgid "Application launcher not found."
+msgstr "অ্যাপের লঞ্চার পাওয়া যায়নি।"
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "ফোল্ডারের অ্যাপগুলো একটি আইকন ও চলার সূচক ভাগ করে"
+
+msgid "Background color"
+msgstr "পটভূমির রং"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "ফোল্ডারের পেছনের ডেস্কটপ ও উইন্ডো ঝাপসা করে এবং একটি অর্ধস্বচ্ছ রং যোগ করে। আইকন স্পষ্ট থাকে। GPU-এর ব্যবহার বাড়তে পারে।"
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "ফোল্ডারের ভেতরের গিয়ার দিয়ে নাম, লেবেল, রং ও ওয়ালপেপার বদলান"
+
+msgid "Changes are saved automatically"
+msgstr "পরিবর্তন স্বয়ংক্রিয়ভাবে সংরক্ষিত হয়"
+
+msgid "Choose an application"
+msgstr "অ্যাপ বেছে নিন"
+
+msgid "Choose…"
+msgstr "বেছে নিন…"
+
+msgid "Close"
+msgstr "বন্ধ করুন"
+
+msgid "Could not launch the application."
+msgstr "অ্যাপ চালু করা যায়নি।"
+
+msgid "Could not open system settings"
+msgstr "সিস্টেম সেটিংস খোলা যায়নি"
+
+msgid "Could not open the application"
+msgstr "অ্যাপ খোলা যায়নি"
+
+msgid "Could not open the image"
+msgstr "ছবি খোলা যায়নি"
+
+msgid "Customize each folder"
+msgstr "প্রতিটি ফোল্ডার কাস্টমাইজ করুন"
+
+msgid "Dock folders"
+msgstr "ডকের ফোল্ডার"
+
+msgid "Dock icon background color"
+msgstr "ডকের আইকনের পটভূমির রং"
+
+msgid "Dock icon preview"
+msgstr "ডকের আইকনের পূর্বরূপ"
+
+msgid "Dock icon transparency"
+msgstr "ডকের আইকনের স্বচ্ছতা"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "ফোল্ডার তৈরি করতে একটি আইকন অন্যটির ওপর টেনে আনুন। ফোল্ডারের অ্যাপগুলোর ক্রম বদলান অথবা বাইরে টেনে ডকে ফিরিয়ে আনুন।"
+
+msgid "Folder appearance"
+msgstr "ফোল্ডারের চেহারা"
+
+msgid "Folder label size"
+msgstr "ফোল্ডারের লেবেলের আকার"
+
+msgid "Folder not found."
+msgstr "ফোল্ডার পাওয়া যায়নি।"
+
+msgid "Folder settings"
+msgstr "ফোল্ডারের সেটিংস"
+
+msgid "Folder wallpaper"
+msgstr "ফোল্ডারের ওয়ালপেপার"
+
+msgid "Folders on the dock"
+msgstr "ডকে ফোল্ডার"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "ডকের আইকনের নিচে ফন্টের আকার, পিক্সেলে"
+
+msgid "General folder settings"
+msgstr "ফোল্ডারের সাধারণ সেটিংস"
+
+msgid "Genie effect"
+msgstr "জিনি প্রভাব"
+
+msgid "Glass tint transparency"
+msgstr "কাচের রঙের স্বচ্ছতা"
+
+msgid "Icon preview"
+msgstr "আইকনের পূর্বরূপ"
+
+msgid "Image selected"
+msgstr "ছবি বেছে নেওয়া হয়েছে"
+
+msgid "Label below the icon"
+msgstr "আইকনের নিচে লেবেল"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — ঘষা কাচ"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: ঝাপসা পটভূমি, অর্ধস্বচ্ছ রং ও স্পষ্ট আইকন।"
+
+msgid "Name"
+msgstr "নাম"
+
+msgid "New Folder"
+msgstr "নতুন ফোল্ডার"
+
+msgid "On the dock"
+msgstr "ডকে"
+
+msgid "Opaque"
+msgstr "অস্বচ্ছ"
+
+#, python-format
+msgid "Open %s"
+msgstr "%s খুলুন"
+
+msgid "Open folder background color"
+msgstr "খোলা ফোল্ডারের পটভূমির রং"
+
+msgid "Open folder preview"
+msgstr "খোলা ফোল্ডারের পূর্বরূপ"
+
+msgid "Open folder transparency"
+msgstr "খোলা ফোল্ডারের স্বচ্ছতা"
+
+msgid "Opening and closing animation"
+msgstr "খোলা ও বন্ধ করার অ্যানিমেশন"
+
+msgid "Remove wallpaper"
+msgstr "ওয়ালপেপার সরান"
+
+msgid "Replace…"
+msgstr "বদলান…"
+
+msgid "Scale"
+msgstr "আকার পরিবর্তন"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "সেটিংস → Ubuntu ডেস্কটপ → ডক → ডকের ফোল্ডার"
+
+msgid "Transparency"
+msgstr "স্বচ্ছতা"
+
+msgid "Transparent"
+msgstr "স্বচ্ছ"
+
+msgid "Wallpaper"
+msgstr "ওয়ালপেপার"
+
+msgid "When opened"
+msgstr "খোলা অবস্থায়"
+
+msgid "App-grid folders"
+msgstr "অ্যাপ গ্রিডের ফোল্ডার"
+
+msgid "Add an app-grid folder"
+msgstr "অ্যাপ গ্রিড থেকে ফোল্ডার যোগ করুন"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "ফোল্ডারের নাম ও অ্যাপ GNOME অ্যাপ গ্রিডের সাথে সিঙ্ক রাখুন"
+
+msgid "Pin to dock"
+msgstr "ডকে পিন করুন"
+
+msgid "Pinned"
+msgstr "পিন করা হয়েছে"
+
+msgid "No app-grid folders"
+msgstr "অ্যাপ গ্রিডে কোনো ফোল্ডার নেই"
+
+msgid "Create a folder in Show Apps first"
+msgstr "আগে «অ্যাপ দেখান»-এ একটি ফোল্ডার তৈরি করুন"
+
+msgid "Folder updated"
+msgstr "ফোল্ডার হালনাগাদ হয়েছে"
+
+msgid "Undo"
+msgstr "পূর্বাবস্থায় ফেরান"
+
+msgid "Undo last move"
+msgstr "শেষ স্থানান্তর পূর্বাবস্থায় ফেরান"
+
+msgid "Open windows"
+msgstr "খোলা উইন্ডো"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "%s খোলা যায়নি"

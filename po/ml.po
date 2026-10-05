@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ml\nLanguage: ml\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, ശതമാനം"
+
+msgid "All files"
+msgstr "എല്ലാ ഫയലുകളും"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "എല്ലാ ചിത്രങ്ങളും — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "രൂപവും ആനിമേഷനും"
+
+msgid "Application folders, appearance, and animation"
+msgstr "ആപ്പ് ഫോൾഡറുകൾ, രൂപവും ആനിമേഷനും"
+
+msgid "Application launcher not found."
+msgstr "ആപ്പിന്റെ ലോഞ്ചർ കണ്ടെത്തിയില്ല."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "ഫോൾഡറിലെ ആപ്പുകൾ ഒരേ ഐക്കണും പ്രവർത്തന സൂചകവും പങ്കിടുന്നു"
+
+msgid "Background color"
+msgstr "പശ്ചാത്തല നിറം"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "ഫോൾഡറിനു പിന്നിലെ ഡെസ്ക്ടോപ്പും ജാലകങ്ങളും മങ്ങലാക്കി അർധസുതാര്യമായ നിറം ചേർക്കുന്നു. ഐക്കണുകൾ വ്യക്തമായി തുടരും. GPU ഉപയോഗം കൂടാം."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "ഫോൾഡറിനുള്ളിലെ ഗിയർ ഉപയോഗിച്ച് പേരുകൾ, ലേബലുകൾ, നിറങ്ങൾ, വാൾപേപ്പർ എന്നിവ മാറ്റുക"
+
+msgid "Changes are saved automatically"
+msgstr "മാറ്റങ്ങൾ സ്വയമേവ സംരക്ഷിക്കും"
+
+msgid "Choose an application"
+msgstr "ആപ്പ് തിരഞ്ഞെടുക്കുക"
+
+msgid "Choose…"
+msgstr "തിരഞ്ഞെടുക്കുക…"
+
+msgid "Close"
+msgstr "അടയ്ക്കുക"
+
+msgid "Could not launch the application."
+msgstr "ആപ്പ് ആരംഭിക്കാൻ കഴിഞ്ഞില്ല."
+
+msgid "Could not open system settings"
+msgstr "സിസ്റ്റം ക്രമീകരണങ്ങൾ തുറക്കാൻ കഴിഞ്ഞില്ല"
+
+msgid "Could not open the application"
+msgstr "ആപ്പ് തുറക്കാൻ കഴിഞ്ഞില്ല"
+
+msgid "Could not open the image"
+msgstr "ചിത്രം തുറക്കാൻ കഴിഞ്ഞില്ല"
+
+msgid "Customize each folder"
+msgstr "ഓരോ ഫോൾഡറും ഇഷ്ടാനുസൃതമാക്കുക"
+
+msgid "Dock folders"
+msgstr "ഡോക്ക് ഫോൾഡറുകൾ"
+
+msgid "Dock icon background color"
+msgstr "ഡോക്ക് ഐക്കണിന്റെ പശ്ചാത്തല നിറം"
+
+msgid "Dock icon preview"
+msgstr "ഡോക്ക് ഐക്കണിന്റെ പ്രിവ്യൂ"
+
+msgid "Dock icon transparency"
+msgstr "ഡോക്ക് ഐക്കണിന്റെ സുതാര്യത"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "ഫോൾഡർ സൃഷ്ടിക്കാൻ ഒരു ഐക്കൺ മറ്റൊന്നിനു മുകളിലേക്ക് വലിച്ചിടുക. ഫോൾഡറിലെ ആപ്പുകളുടെ ക്രമം മാറ്റുക അല്ലെങ്കിൽ പുറത്തേക്ക് വലിച്ച് ഡോക്കിലേക്ക് തിരികെ കൊണ്ടുവരിക."
+
+msgid "Folder appearance"
+msgstr "ഫോൾഡറിന്റെ രൂപം"
+
+msgid "Folder label size"
+msgstr "ഫോൾഡർ ലേബലിന്റെ വലുപ്പം"
+
+msgid "Folder not found."
+msgstr "ഫോൾഡർ കണ്ടെത്തിയില്ല."
+
+msgid "Folder settings"
+msgstr "ഫോൾഡർ ക്രമീകരണങ്ങൾ"
+
+msgid "Folder wallpaper"
+msgstr "ഫോൾഡറിന്റെ വാൾപേപ്പർ"
+
+msgid "Folders on the dock"
+msgstr "ഡോക്കിലെ ഫോൾഡറുകൾ"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "ഡോക്ക് ഐക്കണുകൾക്കു താഴെയുള്ള അക്ഷര വലുപ്പം, പിക്സലിൽ"
+
+msgid "General folder settings"
+msgstr "പൊതുവായ ഫോൾഡർ ക്രമീകരണങ്ങൾ"
+
+msgid "Genie effect"
+msgstr "ജീനി ഇഫക്റ്റ്"
+
+msgid "Glass tint transparency"
+msgstr "ഗ്ലാസിന്റെ നിറത്തിന്റെ സുതാര്യത"
+
+msgid "Icon preview"
+msgstr "ഐക്കൺ പ്രിവ്യൂ"
+
+msgid "Image selected"
+msgstr "ചിത്രം തിരഞ്ഞെടുത്തു"
+
+msgid "Label below the icon"
+msgstr "ഐക്കണിനു താഴെയുള്ള ലേബൽ"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — മങ്ങിയ ഗ്ലാസ്"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: മങ്ങിയ പശ്ചാത്തലം, അർധസുതാര്യമായ നിറം, വ്യക്തമായ ഐക്കണുകൾ."
+
+msgid "Name"
+msgstr "പേര്"
+
+msgid "New Folder"
+msgstr "പുതിയ ഫോൾഡർ"
+
+msgid "On the dock"
+msgstr "ഡോക്കിൽ"
+
+msgid "Opaque"
+msgstr "അതാര്യമായത്"
+
+#, python-format
+msgid "Open %s"
+msgstr "%s തുറക്കുക"
+
+msgid "Open folder background color"
+msgstr "തുറന്ന ഫോൾഡറിന്റെ പശ്ചാത്തല നിറം"
+
+msgid "Open folder preview"
+msgstr "തുറന്ന ഫോൾഡറിന്റെ പ്രിവ്യൂ"
+
+msgid "Open folder transparency"
+msgstr "തുറന്ന ഫോൾഡറിന്റെ സുതാര്യത"
+
+msgid "Opening and closing animation"
+msgstr "തുറക്കുന്നതിനും അടയ്ക്കുന്നതിനുമുള്ള ആനിമേഷൻ"
+
+msgid "Remove wallpaper"
+msgstr "വാൾപേപ്പർ നീക്കുക"
+
+msgid "Replace…"
+msgstr "മാറ്റുക…"
+
+msgid "Scale"
+msgstr "വലുപ്പ മാറ്റം"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "ക്രമീകരണങ്ങൾ → Ubuntu ഡെസ്ക്ടോപ്പ് → ഡോക്ക് → ഡോക്ക് ഫോൾഡറുകൾ"
+
+msgid "Transparency"
+msgstr "സുതാര്യത"
+
+msgid "Transparent"
+msgstr "സുതാര്യമായത്"
+
+msgid "Wallpaper"
+msgstr "വാൾപേപ്പർ"
+
+msgid "When opened"
+msgstr "തുറക്കുമ്പോൾ"
+
+msgid "App-grid folders"
+msgstr "ആപ്പ് ഗ്രിഡിലെ ഫോൾഡറുകൾ"
+
+msgid "Add an app-grid folder"
+msgstr "ആപ്പ് ഗ്രിഡിൽ നിന്ന് ഫോൾഡർ ചേർക്കുക"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "ഫോൾഡറുകളുടെ പേരുകളും ആപ്പുകളും GNOME ആപ്പ് ഗ്രിഡുമായി സമന്വയിപ്പിക്കുക"
+
+msgid "Pin to dock"
+msgstr "ഡോക്കിൽ പിൻ ചെയ്യുക"
+
+msgid "Pinned"
+msgstr "പിൻ ചെയ്തു"
+
+msgid "No app-grid folders"
+msgstr "ആപ്പ് ഗ്രിഡിൽ ഫോൾഡറുകളില്ല"
+
+msgid "Create a folder in Show Apps first"
+msgstr "ആദ്യം «ആപ്പുകൾ കാണിക്കുക»യിൽ ഫോൾഡർ സൃഷ്ടിക്കുക"
+
+msgid "Folder updated"
+msgstr "ഫോൾഡർ പുതുക്കി"
+
+msgid "Undo"
+msgstr "പഴയപടിയാക്കുക"
+
+msgid "Undo last move"
+msgstr "അവസാന നീക്കം പഴയപടിയാക്കുക"
+
+msgid "Open windows"
+msgstr "തുറന്ന ജാലകങ്ങൾ"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "%s തുറക്കാനായില്ല"

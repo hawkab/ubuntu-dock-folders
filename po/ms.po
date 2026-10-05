@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ms\nLanguage: ms\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, peratus"
+
+msgid "All files"
+msgstr "Semua fail"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "Semua imej — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "Rupa dan animasi"
+
+msgid "Application folders, appearance, and animation"
+msgstr "Folder aplikasi, rupa dan animasi"
+
+msgid "Application launcher not found."
+msgstr "Pelancar aplikasi tidak ditemui."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "Aplikasi dalam folder berkongsi satu ikon dan penunjuk aplikasi berjalan"
+
+msgid "Background color"
+msgstr "Warna latar belakang"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "Mengaburkan desktop dan tetingkap di belakang folder serta menambah rona lut sinar. Ikon kekal jelas. Mungkin meningkatkan penggunaan GPU."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "Ubah nama, label, warna dan kertas dinding menggunakan ikon gear dalam folder"
+
+msgid "Changes are saved automatically"
+msgstr "Perubahan disimpan secara automatik"
+
+msgid "Choose an application"
+msgstr "Pilih aplikasi"
+
+msgid "Choose…"
+msgstr "Pilih…"
+
+msgid "Close"
+msgstr "Tutup"
+
+msgid "Could not launch the application."
+msgstr "Tidak dapat melancarkan aplikasi."
+
+msgid "Could not open system settings"
+msgstr "Tidak dapat membuka tetapan sistem"
+
+msgid "Could not open the application"
+msgstr "Tidak dapat membuka aplikasi"
+
+msgid "Could not open the image"
+msgstr "Tidak dapat membuka imej"
+
+msgid "Customize each folder"
+msgstr "Sesuaikan setiap folder"
+
+msgid "Dock folders"
+msgstr "Folder dok"
+
+msgid "Dock icon background color"
+msgstr "Warna latar belakang ikon dok"
+
+msgid "Dock icon preview"
+msgstr "Pratonton ikon dok"
+
+msgid "Dock icon transparency"
+msgstr "Ketelusan ikon dok"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "Seret ikon ke atas ikon lain untuk mencipta folder. Susun semula aplikasi dalam folder atau seretnya keluar untuk mengembalikannya ke dok."
+
+msgid "Folder appearance"
+msgstr "Rupa folder"
+
+msgid "Folder label size"
+msgstr "Saiz label folder"
+
+msgid "Folder not found."
+msgstr "Folder tidak ditemui."
+
+msgid "Folder settings"
+msgstr "Tetapan folder"
+
+msgid "Folder wallpaper"
+msgstr "Kertas dinding folder"
+
+msgid "Folders on the dock"
+msgstr "Folder pada dok"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "Saiz fon di bawah ikon dok, dalam piksel"
+
+msgid "General folder settings"
+msgstr "Tetapan folder umum"
+
+msgid "Genie effect"
+msgstr "Kesan jin"
+
+msgid "Glass tint transparency"
+msgstr "Ketelusan rona kaca"
+
+msgid "Icon preview"
+msgstr "Pratonton ikon"
+
+msgid "Image selected"
+msgstr "Imej dipilih"
+
+msgid "Label below the icon"
+msgstr "Label di bawah ikon"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — kaca kabur"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: latar belakang kabur, rona lut sinar dan ikon yang jelas."
+
+msgid "Name"
+msgstr "Nama"
+
+msgid "New Folder"
+msgstr "Folder baharu"
+
+msgid "On the dock"
+msgstr "Pada dok"
+
+msgid "Opaque"
+msgstr "Legap"
+
+#, python-format
+msgid "Open %s"
+msgstr "Buka %s"
+
+msgid "Open folder background color"
+msgstr "Warna latar belakang folder terbuka"
+
+msgid "Open folder preview"
+msgstr "Pratonton folder terbuka"
+
+msgid "Open folder transparency"
+msgstr "Ketelusan folder terbuka"
+
+msgid "Opening and closing animation"
+msgstr "Animasi membuka dan menutup"
+
+msgid "Remove wallpaper"
+msgstr "Alih keluar kertas dinding"
+
+msgid "Replace…"
+msgstr "Ganti…"
+
+msgid "Scale"
+msgstr "Penskalaan"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "Tetapan → Desktop Ubuntu → Dok → Folder dok"
+
+msgid "Transparency"
+msgstr "Ketelusan"
+
+msgid "Transparent"
+msgstr "Telus"
+
+msgid "Wallpaper"
+msgstr "Kertas dinding"
+
+msgid "When opened"
+msgstr "Apabila dibuka"
+
+msgid "App-grid folders"
+msgstr "Folder grid aplikasi"
+
+msgid "Add an app-grid folder"
+msgstr "Tambah folder daripada grid aplikasi"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "Segerakkan nama folder dan aplikasi dengan grid aplikasi GNOME"
+
+msgid "Pin to dock"
+msgstr "Semat pada dok"
+
+msgid "Pinned"
+msgstr "Disemat"
+
+msgid "No app-grid folders"
+msgstr "Tiada folder dalam grid aplikasi"
+
+msgid "Create a folder in Show Apps first"
+msgstr "Cipta folder dalam “Tunjukkan Aplikasi” dahulu"
+
+msgid "Folder updated"
+msgstr "Folder dikemas kini"
+
+msgid "Undo"
+msgstr "Buat asal"
+
+msgid "Undo last move"
+msgstr "Buat asal pemindahan terakhir"
+
+msgid "Open windows"
+msgstr "Tetingkap terbuka"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "Tidak dapat membuka %s"

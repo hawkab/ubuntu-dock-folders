@@ -1,0 +1,12 @@
+{
+  "uuid": "dock-groups@local",
+  "name": "Ubuntu Dock Folders",
+  "description": "Application folders, shared running indicators and appearance controls for Ubuntu Dock",
+  "shell-version": [
+    "46"
+  ],
+  "version": 1,
+  "url": "https://github.com/hawkab/ubuntu-dock-folders",
+  "gettext-domain": "ubuntu-dock-folders",
+  "settings-schema": "org.gnome.shell.extensions.dock-groups"
+}

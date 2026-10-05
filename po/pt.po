@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: pt\nLanguage: pt\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, por cento"
+
+msgid "All files"
+msgstr "Todos os ficheiros"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "Todas as imagens — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "Aparência e animação"
+
+msgid "Application folders, appearance, and animation"
+msgstr "Pastas de aplicações, aparência e animação"
+
+msgid "Application launcher not found."
+msgstr "Lançador da aplicação não encontrado."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "As aplicações numa pasta partilham um ícone e um indicador de execução"
+
+msgid "Background color"
+msgstr "Cor de fundo"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "Desfoca o ambiente de trabalho e as janelas atrás da pasta e adiciona uma tonalidade translúcida. Os ícones permanecem nítidos. Pode aumentar a utilização da GPU."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "Altere nomes, legendas, cores e papel de parede com a engrenagem dentro da pasta"
+
+msgid "Changes are saved automatically"
+msgstr "As alterações são guardadas automaticamente"
+
+msgid "Choose an application"
+msgstr "Escolher uma aplicação"
+
+msgid "Choose…"
+msgstr "Escolher…"
+
+msgid "Close"
+msgstr "Fechar"
+
+msgid "Could not launch the application."
+msgstr "Não foi possível iniciar a aplicação."
+
+msgid "Could not open system settings"
+msgstr "Não foi possível abrir as definições do sistema"
+
+msgid "Could not open the application"
+msgstr "Não foi possível abrir a aplicação"
+
+msgid "Could not open the image"
+msgstr "Não foi possível abrir a imagem"
+
+msgid "Customize each folder"
+msgstr "Personalizar cada pasta"
+
+msgid "Dock folders"
+msgstr "Pastas do dock"
+
+msgid "Dock icon background color"
+msgstr "Cor de fundo do ícone no dock"
+
+msgid "Dock icon preview"
+msgstr "Pré-visualização do ícone no dock"
+
+msgid "Dock icon transparency"
+msgstr "Transparência do ícone no dock"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "Arraste um ícone sobre outro para criar uma pasta. Reordene as aplicações na pasta ou arraste-as para fora para as devolver ao dock."
+
+msgid "Folder appearance"
+msgstr "Aparência da pasta"
+
+msgid "Folder label size"
+msgstr "Tamanho da legenda da pasta"
+
+msgid "Folder not found."
+msgstr "Pasta não encontrada."
+
+msgid "Folder settings"
+msgstr "Definições da pasta"
+
+msgid "Folder wallpaper"
+msgstr "Papel de parede da pasta"
+
+msgid "Folders on the dock"
+msgstr "Pastas no dock"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "Tamanho da letra sob os ícones do dock, em píxeis"
+
+msgid "General folder settings"
+msgstr "Definições gerais das pastas"
+
+msgid "Genie effect"
+msgstr "Efeito génio"
+
+msgid "Glass tint transparency"
+msgstr "Transparência da tonalidade do vidro"
+
+msgid "Icon preview"
+msgstr "Pré-visualização do ícone"
+
+msgid "Image selected"
+msgstr "Imagem selecionada"
+
+msgid "Label below the icon"
+msgstr "Legenda sob o ícone"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — vidro fosco"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: fundo desfocado, tonalidade translúcida e ícones nítidos."
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "New Folder"
+msgstr "Nova pasta"
+
+msgid "On the dock"
+msgstr "No dock"
+
+msgid "Opaque"
+msgstr "Opaco"
+
+#, python-format
+msgid "Open %s"
+msgstr "Abrir %s"
+
+msgid "Open folder background color"
+msgstr "Cor de fundo da pasta aberta"
+
+msgid "Open folder preview"
+msgstr "Pré-visualização da pasta aberta"
+
+msgid "Open folder transparency"
+msgstr "Transparência da pasta aberta"
+
+msgid "Opening and closing animation"
+msgstr "Animação de abertura e fecho"
+
+msgid "Remove wallpaper"
+msgstr "Remover papel de parede"
+
+msgid "Replace…"
+msgstr "Substituir…"
+
+msgid "Scale"
+msgstr "Escala"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "Definições → Ambiente de trabalho Ubuntu → Dock → Pastas do dock"
+
+msgid "Transparency"
+msgstr "Transparência"
+
+msgid "Transparent"
+msgstr "Transparente"
+
+msgid "Wallpaper"
+msgstr "Papel de parede"
+
+msgid "When opened"
+msgstr "Quando aberta"
+
+msgid "App-grid folders"
+msgstr "Pastas da grelha de aplicações"
+
+msgid "Add an app-grid folder"
+msgstr "Adicionar uma pasta da grelha"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "Sincronizar nomes e aplicações com a grelha do GNOME"
+
+msgid "Pin to dock"
+msgstr "Fixar na dock"
+
+msgid "Pinned"
+msgstr "Fixada"
+
+msgid "No app-grid folders"
+msgstr "Sem pastas na grelha"
+
+msgid "Create a folder in Show Apps first"
+msgstr "Crie primeiro uma pasta em «Mostrar aplicações»"
+
+msgid "Folder updated"
+msgstr "Pasta atualizada"
+
+msgid "Undo"
+msgstr "Desfazer"
+
+msgid "Undo last move"
+msgstr "Desfazer a última movimentação"
+
+msgid "Open windows"
+msgstr "Janelas abertas"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "Não foi possível abrir %s"

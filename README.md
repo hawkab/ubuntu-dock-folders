@@ -1,0 +1,103 @@
+## Ubuntu Dock Folders
+
+Android-style application folders for **Ubuntu 24.04 / GNOME 46**. Drag one dock icon onto another to create a folder, rearrange its apps, and drag them out again. Each folder shows larger application icons that overlap the folder circle, plus a shared running indicator. Opening animations start at the folder's position on the dock.
+
+![Drag icons into a folder, then open and close it](docs/demo.gif)
+
+[Watch the video (MP4)](docs/demo.mp4) · [WebM](docs/demo.webm). The recording shows a folder being created by dragging icons, two more apps being added, and the folder opening and closing. Cursor movements are shown at four times the recording speed.
+
+**Reuse existing GNOME app-grid folders**, with names and membership synchronized in both directions. **Hover over an application inside a folder to preview its windows**, activate one or close it. Running indicators appear as soon as a window opens, including while Chrome or another application is still starting. **Undo the last grouping move** from its notification, the folder header or Ctrl+Z.
+
+Per-folder settings include names, labels, colors, transparency and wallpaper. Optional Material Glass blurs the desktop behind the folder while keeping its icons sharp. The interface follows the system language, with 30 translations and right-to-left layouts for Arabic and Urdu.
+
+<details>
+<summary>Settings screenshots</summary>
+
+**Settings → Ubuntu Desktop → Dock.** The added **Dock folders** entry is highlighted.
+
+![Dock folders entry in Ubuntu Settings](docs/ubuntu-settings.png)
+
+**General settings.** Enable grouping, add a synchronized app-grid folder, customize appearance, choose Material Glass, animation and label size.
+
+![General folder settings](docs/general-settings.png)
+
+**Folder appearance — On the dock.** Name, color, transparency and label visibility, with a live preview.
+
+![Folder appearance on the dock](docs/folder-settings-dock.png)
+
+**Folder appearance — When opened.** Background color, glass tint transparency and wallpaper, with a live preview.
+
+![Open folder appearance](docs/folder-settings-open.png)
+
+**Existing app-grid folders.** Pin a folder without recreating it.
+
+![Pin an app-grid folder](docs/app-grid-folders.png)
+
+**Window previews on hover.** Hover over an application to choose or close a window. Previews load only while needed.
+
+![Window previews shown when hovering over an application](docs/window-previews.png)
+
+</details>
+
+This extension adds grouping directly to Ubuntu Dock.
+
+| Feature | Ubuntu Dock Folders 1.0 | Pin App Folders to Dash | Dash to Dock |
+| --- | --- | --- | --- |
+| Create folders by dropping dock icons onto each other | Yes | Uses application-grid folders | No application folders |
+| Grouped running indicators without extra dock icons | Yes | Not documented | Indicators per application |
+| Folder colors, wallpaper and transparency | Per folder | Standard GNOME folder appearance | Dock-wide appearance |
+| Frosted background and genie animation for folders | Yes | Not documented | No application folders |
+| Reuse and synchronize GNOME application-grid folders | Yes, opt-in | Yes | No application folders |
+| Window previews with activation and close controls | On hover inside folders | Not documented | Yes |
+| Undo grouping changes | Last creation or move | Undo pin/unpin | No grouping |
+| Published GNOME support | 46 / Ubuntu 24.04 | 43 | Multiple versions |
+
+Comparison follows the projects' published [extension listing](https://extensions.gnome.org/extension/5709/pin-app-folders-to-dash/) and [source](https://github.com/micheleg/dash-to-dock), checked in October 2026. Features marked “Not documented” are unverified. Ubuntu Dock's existing window-management features remain available outside folders.
+
+[![Support this project · TON network](docs/support-button.svg)](https://hawkab.github.io/support/)
+
+Optional contributions support maintenance and testing. The [support page](https://hawkab.github.io/support/) has a QR code, wallet link and copy buttons, and works on computers and phones. You choose the amount in your wallet.
+
+<details>
+<summary>QR code and wallet details</summary>
+
+<img src="docs/support-qr.png" width="212" height="212" alt="Scan this payment link in a compatible TON wallet">
+
+**Recipient · TON network**
+
+```text
+UQAHqYcL2i1sls0c_R9o22r-m3zORIg2bzCC1gGW4rjK94G9
+```
+
+**Payment link** — copy into a compatible wallet:
+
+```text
+ton://transfer/UQAHqYcL2i1sls0c_R9o22r-m3zORIg2bzCC1gGW4rjK94G9?jetton=EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs
+```
+
+</details>
+
+## Install and configure
+
+Install the `.deb` with your package installer or `sudo apt install ./ubuntu-dock-folders_1.0.0_amd64.deb`. Then run `ubuntu-dock-folders enable --ubuntu-settings` as your desktop user. The package includes an application icon, an AppStream description and screenshot metadata. GNOME Software needs a published AppStream catalog to show the full card before installing a local `.deb`; standalone packages do not provide automatic APT updates.
+
+The extension supports desktop and laptop computers running Ubuntu 24.04 / GNOME 46, with keyboard, mouse or touch input.
+
+To build and install from this repository:
+
+```sh
+sudo apt install git make gcc pkg-config gettext libglib2.0-dev gnome-shell gnome-shell-extension-ubuntu-dock libgtk-4-1 libadwaita-1-0 python3-gi python3-pil python3-cairo python3-gi-cairo gir1.2-gtk-4.0 gir1.2-gdkpixbuf-2.0 gir1.2-adw-1
+git clone https://github.com/hawkab/ubuntu-dock-folders.git
+cd ubuntu-dock-folders
+make install
+```
+
+`make build` produces the `.deb` and standard GNOME extension ZIP in `dist/`. For an extension-only installation, install the ZIP with `gnome-extensions install --force`, then enable `dock-groups@local`. Log out and back in after installing or updating Shell code.
+
+Open **Settings → Ubuntu Desktop → Dock → Dock folders**, or **Ubuntu Dock Folders** in the application menu. The optional Ubuntu Settings integration adds a user-local launcher override; reopen Settings after enabling it. The standalone ZIP uses `gnome-extensions prefs dock-groups@local` instead.
+
+Enable grouping, then drag icons to create folders. Use **Add an app-grid folder** to pin an existing GNOME folder; subsequent name and membership changes stay synchronized. Linked folders remain pinned if emptied, so you can refill them in the app grid. Hover over an application in an open folder to preview its windows. You can move the pointer into a preview to activate or close a window; keyboard focus also opens previews. After grouping or moving an application, use **Undo** in the notification or the folder header; Ctrl+Z also works while the folder is open. The Undo button is visible only while a grouping action can be undone; undo history is cleared when you log out or restart GNOME Shell. Enable folder customization to use the gear inside each folder; changes save automatically. Glass blur can increase GPU usage. Wallpaper accepts PNG, JPEG, BMP, WebP, GIF and SVG; GIF is displayed as a still image.
+
+Installation saves a private backup under `$XDG_STATE_HOME/ubuntu-dock-folders/backups` (normally `~/.local/state`). Run `ubuntu-dock-folders uninstall` or `make uninstall` to remove the user installation and restore the Settings launchers. Folder settings and wallpaper are retained. Remove a system-wide `.deb` with `sudo apt remove ubuntu-dock-folders` after disabling it.
+
+Copyright © 2026 Grigory Olshansky. Licensed under [GPL-3.0-or-later](LICENSE).

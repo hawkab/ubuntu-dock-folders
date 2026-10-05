@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: tr\nLanguage: tr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, yüzde"
+
+msgid "All files"
+msgstr "Tüm dosyalar"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "Tüm görüntüler — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "Görünüm ve animasyon"
+
+msgid "Application folders, appearance, and animation"
+msgstr "Uygulama klasörleri, görünüm ve animasyon"
+
+msgid "Application launcher not found."
+msgstr "Uygulama başlatıcısı bulunamadı."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "Klasördeki uygulamalar tek bir simgeyi ve çalışma göstergesini paylaşır"
+
+msgid "Background color"
+msgstr "Arka plan rengi"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "Klasörün arkasındaki masaüstünü ve pencereleri bulanıklaştırır ve yarı saydam bir renk tonu ekler. Simgeler net kalır. GPU kullanımını artırabilir."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "Klasördeki dişli simgesinden adları, etiketleri, renkleri ve duvar kâğıdını değiştirin"
+
+msgid "Changes are saved automatically"
+msgstr "Değişiklikler otomatik kaydedilir"
+
+msgid "Choose an application"
+msgstr "Uygulama seçin"
+
+msgid "Choose…"
+msgstr "Seç…"
+
+msgid "Close"
+msgstr "Kapat"
+
+msgid "Could not launch the application."
+msgstr "Uygulama başlatılamadı."
+
+msgid "Could not open system settings"
+msgstr "Sistem ayarları açılamadı"
+
+msgid "Could not open the application"
+msgstr "Uygulama açılamadı"
+
+msgid "Could not open the image"
+msgstr "Görüntü açılamadı"
+
+msgid "Customize each folder"
+msgstr "Her klasörü özelleştir"
+
+msgid "Dock folders"
+msgstr "Dock klasörleri"
+
+msgid "Dock icon background color"
+msgstr "Dock simgesi arka plan rengi"
+
+msgid "Dock icon preview"
+msgstr "Dock simgesi ön izlemesi"
+
+msgid "Dock icon transparency"
+msgstr "Dock simgesi saydamlığı"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "Klasör oluşturmak için bir simgeyi diğerinin üzerine sürükleyin. Klasördeki uygulamaları yeniden sıralayın veya dock’a geri taşımak için dışarı sürükleyin."
+
+msgid "Folder appearance"
+msgstr "Klasör görünümü"
+
+msgid "Folder label size"
+msgstr "Klasör etiketi boyutu"
+
+msgid "Folder not found."
+msgstr "Klasör bulunamadı."
+
+msgid "Folder settings"
+msgstr "Klasör ayarları"
+
+msgid "Folder wallpaper"
+msgstr "Klasör duvar kâğıdı"
+
+msgid "Folders on the dock"
+msgstr "Dock üzerindeki klasörler"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "Dock simgelerinin altındaki yazı tipi boyutu, piksel olarak"
+
+msgid "General folder settings"
+msgstr "Genel klasör ayarları"
+
+msgid "Genie effect"
+msgstr "Cin efekti"
+
+msgid "Glass tint transparency"
+msgstr "Cam renk tonu saydamlığı"
+
+msgid "Icon preview"
+msgstr "Simge ön izlemesi"
+
+msgid "Image selected"
+msgstr "Görüntü seçildi"
+
+msgid "Label below the icon"
+msgstr "Simgenin altındaki etiket"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — buzlu cam"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: bulanık arka plan, yarı saydam renk tonu ve net simgeler."
+
+msgid "Name"
+msgstr "Ad"
+
+msgid "New Folder"
+msgstr "Yeni klasör"
+
+msgid "On the dock"
+msgstr "Dock üzerinde"
+
+msgid "Opaque"
+msgstr "Opak"
+
+#, python-format
+msgid "Open %s"
+msgstr "%s aç"
+
+msgid "Open folder background color"
+msgstr "Açık klasör arka plan rengi"
+
+msgid "Open folder preview"
+msgstr "Açık klasör ön izlemesi"
+
+msgid "Open folder transparency"
+msgstr "Açık klasör saydamlığı"
+
+msgid "Opening and closing animation"
+msgstr "Açılış ve kapanış animasyonu"
+
+msgid "Remove wallpaper"
+msgstr "Duvar kâğıdını kaldır"
+
+msgid "Replace…"
+msgstr "Değiştir…"
+
+msgid "Scale"
+msgstr "Ölçekleme"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "Ayarlar → Ubuntu Masaüstü → Dock → Dock klasörleri"
+
+msgid "Transparency"
+msgstr "Saydamlık"
+
+msgid "Transparent"
+msgstr "Saydam"
+
+msgid "Wallpaper"
+msgstr "Duvar kâğıdı"
+
+msgid "When opened"
+msgstr "Açıldığında"
+
+msgid "App-grid folders"
+msgstr "Uygulama ızgarası klasörleri"
+
+msgid "Add an app-grid folder"
+msgstr "Uygulama ızgarasından klasör ekle"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "Klasör adlarını ve uygulamaları GNOME uygulama ızgarasıyla eşitle"
+
+msgid "Pin to dock"
+msgstr "Dock'a sabitle"
+
+msgid "Pinned"
+msgstr "Sabitlendi"
+
+msgid "No app-grid folders"
+msgstr "Uygulama ızgarasında klasör yok"
+
+msgid "Create a folder in Show Apps first"
+msgstr "Önce “Uygulamaları Göster” içinde bir klasör oluşturun"
+
+msgid "Folder updated"
+msgstr "Klasör güncellendi"
+
+msgid "Undo"
+msgstr "Geri al"
+
+msgid "Undo last move"
+msgstr "Son taşımayı geri al"
+
+msgid "Open windows"
+msgstr "Açık pencereler"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "%s açılamadı"

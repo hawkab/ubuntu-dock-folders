@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: zh\nLanguage: zh\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s，百分比"
+
+msgid "All files"
+msgstr "所有文件"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "所有图像 — PNG、JPEG、BMP、WebP、GIF、SVG"
+
+msgid "Appearance and animation"
+msgstr "外观和动画"
+
+msgid "Application folders, appearance, and animation"
+msgstr "应用文件夹、外观和动画"
+
+msgid "Application launcher not found."
+msgstr "找不到应用启动器。"
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "文件夹中的应用共用一个图标和运行指示器"
+
+msgid "Background color"
+msgstr "背景颜色"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "模糊文件夹后方的桌面和窗口，并添加半透明色调。图标保持清晰。可能增加 GPU 使用率。"
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "通过文件夹中的齿轮修改名称、标签、颜色和壁纸"
+
+msgid "Changes are saved automatically"
+msgstr "更改会自动保存"
+
+msgid "Choose an application"
+msgstr "选择应用"
+
+msgid "Choose…"
+msgstr "选择…"
+
+msgid "Close"
+msgstr "关闭"
+
+msgid "Could not launch the application."
+msgstr "无法启动应用。"
+
+msgid "Could not open system settings"
+msgstr "无法打开系统设置"
+
+msgid "Could not open the application"
+msgstr "无法打开应用"
+
+msgid "Could not open the image"
+msgstr "无法打开图像"
+
+msgid "Customize each folder"
+msgstr "自定义每个文件夹"
+
+msgid "Dock folders"
+msgstr "程序坞文件夹"
+
+msgid "Dock icon background color"
+msgstr "程序坞图标背景颜色"
+
+msgid "Dock icon preview"
+msgstr "程序坞图标预览"
+
+msgid "Dock icon transparency"
+msgstr "程序坞图标透明度"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "将一个图标拖到另一个图标上即可创建文件夹。可在文件夹内调整应用顺序，也可将应用拖出并放回程序坞。"
+
+msgid "Folder appearance"
+msgstr "文件夹外观"
+
+msgid "Folder label size"
+msgstr "文件夹标签大小"
+
+msgid "Folder not found."
+msgstr "找不到文件夹。"
+
+msgid "Folder settings"
+msgstr "文件夹设置"
+
+msgid "Folder wallpaper"
+msgstr "文件夹壁纸"
+
+msgid "Folders on the dock"
+msgstr "程序坞上的文件夹"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "程序坞图标下方的字体大小，单位为像素"
+
+msgid "General folder settings"
+msgstr "文件夹常规设置"
+
+msgid "Genie effect"
+msgstr "精灵效果"
+
+msgid "Glass tint transparency"
+msgstr "玻璃色调透明度"
+
+msgid "Icon preview"
+msgstr "图标预览"
+
+msgid "Image selected"
+msgstr "已选择图像"
+
+msgid "Label below the icon"
+msgstr "图标下方的标签"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — 磨砂玻璃"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass：模糊背景、半透明色调和清晰图标。"
+
+msgid "Name"
+msgstr "名称"
+
+msgid "New Folder"
+msgstr "新建文件夹"
+
+msgid "On the dock"
+msgstr "在程序坞中"
+
+msgid "Opaque"
+msgstr "不透明"
+
+#, python-format
+msgid "Open %s"
+msgstr "打开 %s"
+
+msgid "Open folder background color"
+msgstr "已打开文件夹的背景颜色"
+
+msgid "Open folder preview"
+msgstr "已打开文件夹的预览"
+
+msgid "Open folder transparency"
+msgstr "已打开文件夹的透明度"
+
+msgid "Opening and closing animation"
+msgstr "打开和关闭动画"
+
+msgid "Remove wallpaper"
+msgstr "移除壁纸"
+
+msgid "Replace…"
+msgstr "更换…"
+
+msgid "Scale"
+msgstr "缩放"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "设置 → Ubuntu 桌面 → 程序坞 → 程序坞文件夹"
+
+msgid "Transparency"
+msgstr "透明度"
+
+msgid "Transparent"
+msgstr "透明"
+
+msgid "Wallpaper"
+msgstr "壁纸"
+
+msgid "When opened"
+msgstr "打开时"
+
+msgid "App-grid folders"
+msgstr "应用网格文件夹"
+
+msgid "Add an app-grid folder"
+msgstr "添加应用网格文件夹"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "将文件夹名称和应用与 GNOME 应用网格同步"
+
+msgid "Pin to dock"
+msgstr "固定到程序坞"
+
+msgid "Pinned"
+msgstr "已固定"
+
+msgid "No app-grid folders"
+msgstr "应用网格中没有文件夹"
+
+msgid "Create a folder in Show Apps first"
+msgstr "请先在“显示应用”中创建文件夹"
+
+msgid "Folder updated"
+msgstr "文件夹已更新"
+
+msgid "Undo"
+msgstr "撤销"
+
+msgid "Undo last move"
+msgstr "撤销上次移动"
+
+msgid "Open windows"
+msgstr "已打开的窗口"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "无法打开 %s"

@@ -1,0 +1,28 @@
+name: Check
+on: [push, pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      GSETTINGS_BACKEND: memory
+      GSK_RENDERER: cairo
+      GDK_DEBUG: no-portals
+      GTK_A11Y: none
+      ADW_DISABLE_PORTAL: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install build dependencies
+        run: sudo apt-get update && sudo apt-get install -y gettext libglib2.0-dev gnome-shell libgtk-4-1 libadwaita-1-0 python3-gi python3-pil python3-cairo python3-gi-cairo gir1.2-gtk-4.0 gir1.2-gdkpixbuf-2.0 gir1.2-adw-1 xvfb locales appstream desktop-file-utils && sudo locale-gen en_US.UTF-8
+      - name: Build extension and Ubuntu package
+        run: make build
+      - name: Run checks
+        run: dbus-run-session -- xvfb-run -a make check
+        timeout-minutes: 3
+      - name: Validate package metadata
+        run: |
+          appstreamcli validate --no-net build/package/usr/share/metainfo/*.metainfo.xml
+          desktop-file-validate build/package/usr/share/applications/*.desktop

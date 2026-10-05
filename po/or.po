@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: or\nLanguage: or\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, ପ୍ରତିଶତ"
+
+msgid "All files"
+msgstr "ସମସ୍ତ ଫାଇଲ୍"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "ସମସ୍ତ ଛବି — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "ଦୃଶ୍ୟ ଓ ଆନିମେସନ୍"
+
+msgid "Application folders, appearance, and animation"
+msgstr "ଆପ୍ ଫୋଲ୍ଡର୍, ଦୃଶ୍ୟ ଓ ଆନିମେସନ୍"
+
+msgid "Application launcher not found."
+msgstr "ଆପ୍ ଲଞ୍ଚର୍ ମିଳିଲା ନାହିଁ।"
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "ଫୋଲ୍ଡର୍‌ର ଆପ୍‌ଗୁଡ଼ିକ ଗୋଟିଏ ଆଇକନ୍ ଓ ଚାଲୁଥିବା ସୂଚକ ବ୍ୟବହାର କରନ୍ତି"
+
+msgid "Background color"
+msgstr "ପୃଷ୍ଠଭୂମି ରଙ୍ଗ"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "ଫୋଲ୍ଡର୍ ପଛର ଡେସ୍କଟପ୍ ଓ ୱିଣ୍ଡୋକୁ ଝାପସା କରି ଅର୍ଦ୍ଧସ୍ୱଚ୍ଛ ରଙ୍ଗ ଯୋଡ଼େ। ଆଇକନ୍ ସ୍ପଷ୍ଟ ରହେ। GPU ବ୍ୟବହାର ବଢ଼ିପାରେ।"
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "ଫୋଲ୍ଡର୍ ଭିତରର ଗିଅର୍ ଦ୍ୱାରା ନାମ, ଲେବଲ୍, ରଙ୍ଗ ଓ ୱାଲପେପର୍ ବଦଳାନ୍ତୁ"
+
+msgid "Changes are saved automatically"
+msgstr "ପରିବର୍ତ୍ତନ ସ୍ୱୟଂଚାଳିତ ଭାବେ ସଞ୍ଚୟ ହୁଏ"
+
+msgid "Choose an application"
+msgstr "ଆପ୍ ବାଛନ୍ତୁ"
+
+msgid "Choose…"
+msgstr "ବାଛନ୍ତୁ…"
+
+msgid "Close"
+msgstr "ବନ୍ଦ କରନ୍ତୁ"
+
+msgid "Could not launch the application."
+msgstr "ଆପ୍ ଆରମ୍ଭ କରିହେଲା ନାହିଁ।"
+
+msgid "Could not open system settings"
+msgstr "ସିଷ୍ଟମ୍ ସେଟିଂସ୍ ଖୋଲିହେଲା ନାହିଁ"
+
+msgid "Could not open the application"
+msgstr "ଆପ୍ ଖୋଲିହେଲା ନାହିଁ"
+
+msgid "Could not open the image"
+msgstr "ଛବି ଖୋଲିହେଲା ନାହିଁ"
+
+msgid "Customize each folder"
+msgstr "ପ୍ରତ୍ୟେକ ଫୋଲ୍ଡର୍ ସଜାନ୍ତୁ"
+
+msgid "Dock folders"
+msgstr "ଡକ୍ ଫୋଲ୍ଡର୍"
+
+msgid "Dock icon background color"
+msgstr "ଡକ୍ ଆଇକନ୍‌ର ପୃଷ୍ଠଭୂମି ରଙ୍ଗ"
+
+msgid "Dock icon preview"
+msgstr "ଡକ୍ ଆଇକନ୍‌ର ପୂର୍ବଦୃଶ୍ୟ"
+
+msgid "Dock icon transparency"
+msgstr "ଡକ୍ ଆଇକନ୍‌ର ସ୍ୱଚ୍ଛତା"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "ଫୋଲ୍ଡର୍ ତିଆରି କରିବାକୁ ଗୋଟିଏ ଆଇକନ୍‌କୁ ଅନ୍ୟଟି ଉପରକୁ ଟାଣନ୍ତୁ। ଫୋଲ୍ଡର୍‌ରେ ଆପ୍‌ର କ୍ରମ ବଦଳାନ୍ତୁ କିମ୍ବା ବାହାରକୁ ଟାଣି ଡକ୍‌କୁ ଫେରାନ୍ତୁ।"
+
+msgid "Folder appearance"
+msgstr "ଫୋଲ୍ଡର୍‌ର ଦୃଶ୍ୟ"
+
+msgid "Folder label size"
+msgstr "ଫୋଲ୍ଡର୍ ଲେବଲ୍‌ର ଆକାର"
+
+msgid "Folder not found."
+msgstr "ଫୋଲ୍ଡର୍ ମିଳିଲା ନାହିଁ।"
+
+msgid "Folder settings"
+msgstr "ଫୋଲ୍ଡର୍ ସେଟିଂସ୍"
+
+msgid "Folder wallpaper"
+msgstr "ଫୋଲ୍ଡର୍‌ର ୱାଲପେପର୍"
+
+msgid "Folders on the dock"
+msgstr "ଡକ୍‌ରେ ଫୋଲ୍ଡର୍"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "ଡକ୍ ଆଇକନ୍ ତଳେ ଫଣ୍ଟ ଆକାର, ପିକ୍ସେଲ୍‌ରେ"
+
+msgid "General folder settings"
+msgstr "ଫୋଲ୍ଡର୍‌ର ସାଧାରଣ ସେଟିଂସ୍"
+
+msgid "Genie effect"
+msgstr "ଜିନି ପ୍ରଭାବ"
+
+msgid "Glass tint transparency"
+msgstr "କାଚର ରଙ୍ଗର ସ୍ୱଚ୍ଛତା"
+
+msgid "Icon preview"
+msgstr "ଆଇକନ୍‌ର ପୂର୍ବଦୃଶ୍ୟ"
+
+msgid "Image selected"
+msgstr "ଛବି ବଛାଯାଇଛି"
+
+msgid "Label below the icon"
+msgstr "ଆଇକନ୍ ତଳେ ଲେବଲ୍"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — ଝାପସା କାଚ"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: ଝାପସା ପୃଷ୍ଠଭୂମି, ଅର୍ଦ୍ଧସ୍ୱଚ୍ଛ ରଙ୍ଗ ଓ ସ୍ପଷ୍ଟ ଆଇକନ୍।"
+
+msgid "Name"
+msgstr "ନାମ"
+
+msgid "New Folder"
+msgstr "ନୂଆ ଫୋଲ୍ଡର୍"
+
+msgid "On the dock"
+msgstr "ଡକ୍‌ରେ"
+
+msgid "Opaque"
+msgstr "ଅସ୍ୱଚ୍ଛ"
+
+#, python-format
+msgid "Open %s"
+msgstr "%s ଖୋଲନ୍ତୁ"
+
+msgid "Open folder background color"
+msgstr "ଖୋଲା ଫୋଲ୍ଡର୍‌ର ପୃଷ୍ଠଭୂମି ରଙ୍ଗ"
+
+msgid "Open folder preview"
+msgstr "ଖୋଲା ଫୋଲ୍ଡର୍‌ର ପୂର୍ବଦୃଶ୍ୟ"
+
+msgid "Open folder transparency"
+msgstr "ଖୋଲା ଫୋଲ୍ଡର୍‌ର ସ୍ୱଚ୍ଛତା"
+
+msgid "Opening and closing animation"
+msgstr "ଖୋଲିବା ଓ ବନ୍ଦ କରିବା ଆନିମେସନ୍"
+
+msgid "Remove wallpaper"
+msgstr "ୱାଲପେପର୍ ହଟାନ୍ତୁ"
+
+msgid "Replace…"
+msgstr "ବଦଳାନ୍ତୁ…"
+
+msgid "Scale"
+msgstr "ଆକାର ପରିବର୍ତ୍ତନ"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "ସେଟିଂସ୍ → Ubuntu ଡେସ୍କଟପ୍ → ଡକ୍ → ଡକ୍ ଫୋଲ୍ଡର୍"
+
+msgid "Transparency"
+msgstr "ସ୍ୱଚ୍ଛତା"
+
+msgid "Transparent"
+msgstr "ସ୍ୱଚ୍ଛ"
+
+msgid "Wallpaper"
+msgstr "ୱାଲପେପର୍"
+
+msgid "When opened"
+msgstr "ଖୋଲା ଥିବାବେଳେ"
+
+msgid "App-grid folders"
+msgstr "ଆପ୍ ଗ୍ରିଡ୍‌ର ଫୋଲ୍ଡର"
+
+msgid "Add an app-grid folder"
+msgstr "ଆପ୍ ଗ୍ରିଡ୍‌ରୁ ଫୋଲ୍ଡର ଯୋଗ କରନ୍ତୁ"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "ଫୋଲ୍ଡର ନାମ ଏବଂ ଆପ୍‌ଗୁଡ଼ିକୁ GNOME ଆପ୍ ଗ୍ରିଡ୍ ସହ ସମନ୍ୱୟ କରନ୍ତୁ"
+
+msgid "Pin to dock"
+msgstr "ଡକ୍‌ରେ ପିନ୍ କରନ୍ତୁ"
+
+msgid "Pinned"
+msgstr "ପିନ୍ ହୋଇଛି"
+
+msgid "No app-grid folders"
+msgstr "ଆପ୍ ଗ୍ରିଡ୍‌ରେ ଫୋଲ୍ଡର ନାହିଁ"
+
+msgid "Create a folder in Show Apps first"
+msgstr "ପ୍ରଥମେ «ଆପ୍ ଦେଖାନ୍ତୁ»ରେ ଫୋଲ୍ଡର ତିଆରି କରନ୍ତୁ"
+
+msgid "Folder updated"
+msgstr "ଫୋଲ୍ଡର ଅଦ୍ୟତନ ହୋଇଛି"
+
+msgid "Undo"
+msgstr "ପୂର୍ବବତ୍ କରନ୍ତୁ"
+
+msgid "Undo last move"
+msgstr "ଶେଷ ସ୍ଥାନାନ୍ତର ପୂର୍ବବତ୍ କରନ୍ତୁ"
+
+msgid "Open windows"
+msgstr "ଖୋଲା ୱିଣ୍ଡୋ"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "%s ଖୋଲି ହେଲା ନାହିଁ"

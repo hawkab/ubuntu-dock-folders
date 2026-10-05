@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ta\nLanguage: ta\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, சதவீதம்"
+
+msgid "All files"
+msgstr "அனைத்து கோப்புகளும்"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "அனைத்து படங்களும் — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "தோற்றம் மற்றும் அசைவூட்டம்"
+
+msgid "Application folders, appearance, and animation"
+msgstr "செயலி கோப்புறைகள், தோற்றம் மற்றும் அசைவூட்டம்"
+
+msgid "Application launcher not found."
+msgstr "செயலி துவக்கி கிடைக்கவில்லை."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "கோப்புறையில் உள்ள செயலிகள் ஒரே சின்னத்தையும் இயங்கும் குறிகாட்டியையும் பகிர்கின்றன"
+
+msgid "Background color"
+msgstr "பின்புல நிறம்"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "கோப்புறையின் பின்னால் உள்ள பணிமேசையையும் சாளரங்களையும் மங்கலாக்கி ஓரளவு ஒளிபுகும் நிறத்தைச் சேர்க்கிறது. சின்னங்கள் தெளிவாக இருக்கும். GPU பயன்பாடு அதிகரிக்கலாம்."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "கோப்புறையின் உள்ளே உள்ள பற்சக்கரம் மூலம் பெயர்கள், அடையாளங்கள், நிறங்கள் மற்றும் சுவர்ப்படத்தை மாற்றவும்"
+
+msgid "Changes are saved automatically"
+msgstr "மாற்றங்கள் தானாகச் சேமிக்கப்படும்"
+
+msgid "Choose an application"
+msgstr "செயலியைத் தேர்ந்தெடுக்கவும்"
+
+msgid "Choose…"
+msgstr "தேர்ந்தெடு…"
+
+msgid "Close"
+msgstr "மூடு"
+
+msgid "Could not launch the application."
+msgstr "செயலியைத் துவக்க முடியவில்லை."
+
+msgid "Could not open system settings"
+msgstr "கணினி அமைப்புகளைத் திறக்க முடியவில்லை"
+
+msgid "Could not open the application"
+msgstr "செயலியைத் திறக்க முடியவில்லை"
+
+msgid "Could not open the image"
+msgstr "படத்தைத் திறக்க முடியவில்லை"
+
+msgid "Customize each folder"
+msgstr "ஒவ்வொரு கோப்புறையையும் தனிப்பயனாக்கு"
+
+msgid "Dock folders"
+msgstr "டாக் கோப்புறைகள்"
+
+msgid "Dock icon background color"
+msgstr "டாக் சின்னத்தின் பின்புல நிறம்"
+
+msgid "Dock icon preview"
+msgstr "டாக் சின்னத்தின் முன்னோட்டம்"
+
+msgid "Dock icon transparency"
+msgstr "டாக் சின்னத்தின் ஒளிபுகுதன்மை"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "கோப்புறையை உருவாக்க ஒரு சின்னத்தை மற்றொன்றின் மீது இழுக்கவும். கோப்புறையில் உள்ள செயலிகளின் வரிசையை மாற்றவும் அல்லது அவற்றை வெளியே இழுத்து டாக்கிற்குத் திருப்பவும்."
+
+msgid "Folder appearance"
+msgstr "கோப்புறையின் தோற்றம்"
+
+msgid "Folder label size"
+msgstr "கோப்புறை அடையாளத்தின் அளவு"
+
+msgid "Folder not found."
+msgstr "கோப்புறை கிடைக்கவில்லை."
+
+msgid "Folder settings"
+msgstr "கோப்புறை அமைப்புகள்"
+
+msgid "Folder wallpaper"
+msgstr "கோப்புறையின் சுவர்ப்படம்"
+
+msgid "Folders on the dock"
+msgstr "டாக்கில் கோப்புறைகள்"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "டாக் சின்னங்களுக்குக் கீழே எழுத்துரு அளவு, பிக்செல்களில்"
+
+msgid "General folder settings"
+msgstr "பொதுவான கோப்புறை அமைப்புகள்"
+
+msgid "Genie effect"
+msgstr "ஜீனி விளைவு"
+
+msgid "Glass tint transparency"
+msgstr "கண்ணாடி நிறத்தின் ஒளிபுகுதன்மை"
+
+msgid "Icon preview"
+msgstr "சின்னத்தின் முன்னோட்டம்"
+
+msgid "Image selected"
+msgstr "படம் தேர்ந்தெடுக்கப்பட்டது"
+
+msgid "Label below the icon"
+msgstr "சின்னத்திற்குக் கீழே அடையாளம்"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — மங்கலான கண்ணாடி"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: மங்கலான பின்புலம், ஓரளவு ஒளிபுகும் நிறம் மற்றும் தெளிவான சின்னங்கள்."
+
+msgid "Name"
+msgstr "பெயர்"
+
+msgid "New Folder"
+msgstr "புதிய கோப்புறை"
+
+msgid "On the dock"
+msgstr "டாக்கில்"
+
+msgid "Opaque"
+msgstr "ஒளிபுகாதது"
+
+#, python-format
+msgid "Open %s"
+msgstr "%s திற"
+
+msgid "Open folder background color"
+msgstr "திறந்த கோப்புறையின் பின்புல நிறம்"
+
+msgid "Open folder preview"
+msgstr "திறந்த கோப்புறையின் முன்னோட்டம்"
+
+msgid "Open folder transparency"
+msgstr "திறந்த கோப்புறையின் ஒளிபுகுதன்மை"
+
+msgid "Opening and closing animation"
+msgstr "திறக்கும் மற்றும் மூடும் அசைவூட்டம்"
+
+msgid "Remove wallpaper"
+msgstr "சுவர்ப்படத்தை அகற்று"
+
+msgid "Replace…"
+msgstr "மாற்று…"
+
+msgid "Scale"
+msgstr "அளவு மாற்றம்"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "அமைப்புகள் → Ubuntu பணிமேசை → டாக் → டாக் கோப்புறைகள்"
+
+msgid "Transparency"
+msgstr "ஒளிபுகுதன்மை"
+
+msgid "Transparent"
+msgstr "ஒளிபுகுவது"
+
+msgid "Wallpaper"
+msgstr "சுவர்ப்படம்"
+
+msgid "When opened"
+msgstr "திறந்திருக்கும் போது"
+
+msgid "App-grid folders"
+msgstr "ஆப் கட்டத்தின் கோப்புறைகள்"
+
+msgid "Add an app-grid folder"
+msgstr "ஆப் கட்டத்திலிருந்து கோப்புறையைச் சேர்"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "கோப்புறைப் பெயர்களையும் ஆப்களையும் GNOME ஆப் கட்டத்துடன் ஒத்திசை"
+
+msgid "Pin to dock"
+msgstr "டாக்கில் பொருத்து"
+
+msgid "Pinned"
+msgstr "பொருத்தப்பட்டது"
+
+msgid "No app-grid folders"
+msgstr "ஆப் கட்டத்தில் கோப்புறைகள் இல்லை"
+
+msgid "Create a folder in Show Apps first"
+msgstr "முதலில் «ஆப்களைக் காட்டு» என்பதில் கோப்புறையை உருவாக்கவும்"
+
+msgid "Folder updated"
+msgstr "கோப்புறை புதுப்பிக்கப்பட்டது"
+
+msgid "Undo"
+msgstr "செயல்தவிர்"
+
+msgid "Undo last move"
+msgstr "கடைசி நகர்த்தலைச் செயல்தவிர்"
+
+msgid "Open windows"
+msgstr "திறந்த சாளரங்கள்"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "%s திறக்க முடியவில்லை"

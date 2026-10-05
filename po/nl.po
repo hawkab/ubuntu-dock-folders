@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: nl\nLanguage: nl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, procent"
+
+msgid "All files"
+msgstr "Alle bestanden"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "Alle afbeeldingen — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "Uiterlijk en animatie"
+
+msgid "Application folders, appearance, and animation"
+msgstr "Toepassingsmappen, uiterlijk en animatie"
+
+msgid "Application launcher not found."
+msgstr "Starter voor de toepassing niet gevonden."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "Toepassingen in een map delen één pictogram en een activiteitsindicator"
+
+msgid "Background color"
+msgstr "Achtergrondkleur"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "Vervaagt het bureaublad en de vensters achter de map en voegt een doorschijnende tint toe. Pictogrammen blijven scherp. Kan het GPU-gebruik verhogen."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "Wijzig namen, labels, kleuren en achtergrond via het tandwiel in de map"
+
+msgid "Changes are saved automatically"
+msgstr "Wijzigingen worden automatisch opgeslagen"
+
+msgid "Choose an application"
+msgstr "Kies een toepassing"
+
+msgid "Choose…"
+msgstr "Kiezen…"
+
+msgid "Close"
+msgstr "Sluiten"
+
+msgid "Could not launch the application."
+msgstr "Kan de toepassing niet starten."
+
+msgid "Could not open system settings"
+msgstr "Kan de systeeminstellingen niet openen"
+
+msgid "Could not open the application"
+msgstr "Kan de toepassing niet openen"
+
+msgid "Could not open the image"
+msgstr "Kan de afbeelding niet openen"
+
+msgid "Customize each folder"
+msgstr "Elke map aanpassen"
+
+msgid "Dock folders"
+msgstr "Dockmappen"
+
+msgid "Dock icon background color"
+msgstr "Achtergrondkleur van het dockpictogram"
+
+msgid "Dock icon preview"
+msgstr "Voorbeeld van het dockpictogram"
+
+msgid "Dock icon transparency"
+msgstr "Transparantie van het dockpictogram"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "Sleep een pictogram op een ander om een map te maken. Wijzig de volgorde van toepassingen in de map of sleep ze eruit om ze terug naar het dock te verplaatsen."
+
+msgid "Folder appearance"
+msgstr "Uiterlijk van de map"
+
+msgid "Folder label size"
+msgstr "Grootte van het maplabel"
+
+msgid "Folder not found."
+msgstr "Map niet gevonden."
+
+msgid "Folder settings"
+msgstr "Mapinstellingen"
+
+msgid "Folder wallpaper"
+msgstr "Mapachtergrond"
+
+msgid "Folders on the dock"
+msgstr "Mappen in het dock"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "Lettergrootte onder dockpictogrammen, in pixels"
+
+msgid "General folder settings"
+msgstr "Algemene mapinstellingen"
+
+msgid "Genie effect"
+msgstr "Geest-effect"
+
+msgid "Glass tint transparency"
+msgstr "Transparantie van de glastint"
+
+msgid "Icon preview"
+msgstr "Pictogramvoorbeeld"
+
+msgid "Image selected"
+msgstr "Afbeelding geselecteerd"
+
+msgid "Label below the icon"
+msgstr "Label onder het pictogram"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — matglas"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: vervaagde achtergrond, doorschijnende tint en scherpe pictogrammen."
+
+msgid "Name"
+msgstr "Naam"
+
+msgid "New Folder"
+msgstr "Nieuwe map"
+
+msgid "On the dock"
+msgstr "In het dock"
+
+msgid "Opaque"
+msgstr "Ondoorzichtig"
+
+#, python-format
+msgid "Open %s"
+msgstr "%s openen"
+
+msgid "Open folder background color"
+msgstr "Achtergrondkleur van de geopende map"
+
+msgid "Open folder preview"
+msgstr "Voorbeeld van de geopende map"
+
+msgid "Open folder transparency"
+msgstr "Transparantie van de geopende map"
+
+msgid "Opening and closing animation"
+msgstr "Animatie bij openen en sluiten"
+
+msgid "Remove wallpaper"
+msgstr "Achtergrond verwijderen"
+
+msgid "Replace…"
+msgstr "Vervangen…"
+
+msgid "Scale"
+msgstr "Schalen"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "Instellingen → Ubuntu-bureaublad → Dock → Dockmappen"
+
+msgid "Transparency"
+msgstr "Transparantie"
+
+msgid "Transparent"
+msgstr "Transparant"
+
+msgid "Wallpaper"
+msgstr "Achtergrond"
+
+msgid "When opened"
+msgstr "Bij openen"
+
+msgid "App-grid folders"
+msgstr "Mappen in het toepassingenraster"
+
+msgid "Add an app-grid folder"
+msgstr "Map uit het toepassingenraster toevoegen"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "Mapnamen en toepassingen synchroniseren met het GNOME-toepassingenraster"
+
+msgid "Pin to dock"
+msgstr "Vastmaken aan dock"
+
+msgid "Pinned"
+msgstr "Vastgemaakt"
+
+msgid "No app-grid folders"
+msgstr "Geen mappen in het toepassingenraster"
+
+msgid "Create a folder in Show Apps first"
+msgstr "Maak eerst een map in ‘Toepassingen tonen’"
+
+msgid "Folder updated"
+msgstr "Map bijgewerkt"
+
+msgid "Undo"
+msgstr "Ongedaan maken"
+
+msgid "Undo last move"
+msgstr "Laatste verplaatsing ongedaan maken"
+
+msgid "Open windows"
+msgstr "Open vensters"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "Kan %s niet openen"

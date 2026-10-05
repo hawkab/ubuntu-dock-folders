@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.dock-groups" path="/org/gnome/shell/extensions/dock-groups/">
+    <key name="enabled" type="b"><default>true</default><summary>Dock folders</summary></key>
+    <key name="customization" type="b"><default>false</default><summary>Customize each folder</summary></key>
+    <key name="glass" type="b"><default>false</default><summary>Material Glass</summary></key>
+    <key name="animation" type="s"><default>'scale'</default><choices><choice value="scale"/><choice value="flow"/></choices></key>
+    <key name="font-size" type="d"><default>10.0</default><range min="8" max="24"/><summary>Folder label size in pixels</summary></key>
+    <key name="groups" type="s"><default>'{}'</default><summary>Folder contents, order and appearance</summary></key>
+    <key name="initialized" type="b"><default>false</default><summary>Initial group migration completed</summary></key>
+  </schema>
+</schemalist>

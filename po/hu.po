@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: hu\nLanguage: hu\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, százalék"
+
+msgid "All files"
+msgstr "Minden fájl"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "Minden kép — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "Megjelenés és animáció"
+
+msgid "Application folders, appearance, and animation"
+msgstr "Alkalmazásmappák, megjelenés és animáció"
+
+msgid "Application launcher not found."
+msgstr "Az alkalmazásindító nem található."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "A mappában lévő alkalmazások közös ikont és futásjelzőt használnak"
+
+msgid "Background color"
+msgstr "Háttérszín"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "Elmosódottá teszi a mappa mögötti asztalt és ablakokat, és áttetsző árnyalatot ad hozzá. Az ikonok élesek maradnak. Növelheti a GPU terhelését."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "A mappában lévő fogaskerékkel módosíthatja a neveket, feliratokat, színeket és háttérképet"
+
+msgid "Changes are saved automatically"
+msgstr "A változtatások automatikusan mentésre kerülnek"
+
+msgid "Choose an application"
+msgstr "Alkalmazás kiválasztása"
+
+msgid "Choose…"
+msgstr "Kiválasztás…"
+
+msgid "Close"
+msgstr "Bezárás"
+
+msgid "Could not launch the application."
+msgstr "Az alkalmazás nem indítható el."
+
+msgid "Could not open system settings"
+msgstr "A rendszerbeállítások nem nyithatók meg"
+
+msgid "Could not open the application"
+msgstr "Az alkalmazás nem nyitható meg"
+
+msgid "Could not open the image"
+msgstr "A kép nem nyitható meg"
+
+msgid "Customize each folder"
+msgstr "Mappák egyéni beállítása"
+
+msgid "Dock folders"
+msgstr "Mappák a dokkon"
+
+msgid "Dock icon background color"
+msgstr "A dokkon lévő ikon háttérszíne"
+
+msgid "Dock icon preview"
+msgstr "A dokkon lévő ikon előnézete"
+
+msgid "Dock icon transparency"
+msgstr "A dokkon lévő ikon átlátszósága"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "Mappa létrehozásához húzzon egy ikont egy másikra. Rendezze át az alkalmazásokat a mappában, vagy húzza ki őket, hogy visszakerüljenek a dokkra."
+
+msgid "Folder appearance"
+msgstr "Mappa megjelenése"
+
+msgid "Folder label size"
+msgstr "Mappafelirat mérete"
+
+msgid "Folder not found."
+msgstr "A mappa nem található."
+
+msgid "Folder settings"
+msgstr "Mappabeállítások"
+
+msgid "Folder wallpaper"
+msgstr "Mappa háttérképe"
+
+msgid "Folders on the dock"
+msgstr "Mappák a dokkon"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "A dokk ikonjai alatti betűméret képpontban"
+
+msgid "General folder settings"
+msgstr "Általános mappabeállítások"
+
+msgid "Genie effect"
+msgstr "Dzsinnhatás"
+
+msgid "Glass tint transparency"
+msgstr "Az üveg színárnyalatának átlátszósága"
+
+msgid "Icon preview"
+msgstr "Ikon előnézete"
+
+msgid "Image selected"
+msgstr "Kép kiválasztva"
+
+msgid "Label below the icon"
+msgstr "Felirat az ikon alatt"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — matt üveg"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: elmosódott háttér, áttetsző árnyalat és éles ikonok."
+
+msgid "Name"
+msgstr "Név"
+
+msgid "New Folder"
+msgstr "Új mappa"
+
+msgid "On the dock"
+msgstr "A dokkon"
+
+msgid "Opaque"
+msgstr "Átlátszatlan"
+
+#, python-format
+msgid "Open %s"
+msgstr "%s megnyitása"
+
+msgid "Open folder background color"
+msgstr "A megnyitott mappa háttérszíne"
+
+msgid "Open folder preview"
+msgstr "A megnyitott mappa előnézete"
+
+msgid "Open folder transparency"
+msgstr "A megnyitott mappa átlátszósága"
+
+msgid "Opening and closing animation"
+msgstr "Megnyitási és bezárási animáció"
+
+msgid "Remove wallpaper"
+msgstr "Háttérkép eltávolítása"
+
+msgid "Replace…"
+msgstr "Csere…"
+
+msgid "Scale"
+msgstr "Méretezés"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "Beállítások → Ubuntu asztal → Dokk → Mappák a dokkon"
+
+msgid "Transparency"
+msgstr "Átlátszóság"
+
+msgid "Transparent"
+msgstr "Átlátszó"
+
+msgid "Wallpaper"
+msgstr "Háttérkép"
+
+msgid "When opened"
+msgstr "Megnyitáskor"
+
+msgid "App-grid folders"
+msgstr "Az alkalmazásrács mappái"
+
+msgid "Add an app-grid folder"
+msgstr "Mappa hozzáadása az alkalmazásrácsból"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "Mappanevek és alkalmazások szinkronizálása a GNOME alkalmazásrácsával"
+
+msgid "Pin to dock"
+msgstr "Rögzítés a dokkhoz"
+
+msgid "Pinned"
+msgstr "Rögzítve"
+
+msgid "No app-grid folders"
+msgstr "Nincsenek mappák az alkalmazásrácsban"
+
+msgid "Create a folder in Show Apps first"
+msgstr "Először hozzon létre mappát az „Alkalmazások megjelenítése” nézetben"
+
+msgid "Folder updated"
+msgstr "Mappa frissítve"
+
+msgid "Undo"
+msgstr "Visszavonás"
+
+msgid "Undo last move"
+msgstr "Utolsó áthelyezés visszavonása"
+
+msgid "Open windows"
+msgstr "Nyitott ablakok"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "A(z) %s nem nyitható meg"

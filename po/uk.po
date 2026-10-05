@@ -1,0 +1,210 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+msgid ""
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: uk\nLanguage: uk\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid "%s, percent"
+msgstr "%s, відсотків"
+
+msgid "All files"
+msgstr "Усі файли"
+
+msgid "All images — PNG, JPEG, BMP, WebP, GIF, SVG"
+msgstr "Усі зображення — PNG, JPEG, BMP, WebP, GIF, SVG"
+
+msgid "Appearance and animation"
+msgstr "Вигляд і анімація"
+
+msgid "Application folders, appearance, and animation"
+msgstr "Теки застосунків, вигляд і анімація"
+
+msgid "Application launcher not found."
+msgstr "Не знайдено засіб запуску застосунку."
+
+msgid "Applications in a folder share one icon and a running indicator"
+msgstr "Застосунки в теці мають спільну піктограму й індикатор роботи"
+
+msgid "Background color"
+msgstr "Колір тла"
+
+msgid "Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage."
+msgstr "Розмиває стільницю й вікна за текою та додає напівпрозорий відтінок. Піктограми залишаються чіткими. Може збільшити навантаження на GPU."
+
+msgid "Change names, labels, colors, and wallpaper using the gear inside a folder"
+msgstr "Змінюйте назви, підписи, кольори й шпалери за допомогою шестерні всередині теки"
+
+msgid "Changes are saved automatically"
+msgstr "Зміни зберігаються автоматично"
+
+msgid "Choose an application"
+msgstr "Виберіть застосунок"
+
+msgid "Choose…"
+msgstr "Вибрати…"
+
+msgid "Close"
+msgstr "Закрити"
+
+msgid "Could not launch the application."
+msgstr "Не вдалося запустити застосунок."
+
+msgid "Could not open system settings"
+msgstr "Не вдалося відкрити системні налаштування"
+
+msgid "Could not open the application"
+msgstr "Не вдалося відкрити застосунок"
+
+msgid "Could not open the image"
+msgstr "Не вдалося відкрити зображення"
+
+msgid "Customize each folder"
+msgstr "Налаштовувати кожну теку"
+
+msgid "Dock folders"
+msgstr "Теки на панелі"
+
+msgid "Dock icon background color"
+msgstr "Колір тла піктограми на панелі"
+
+msgid "Dock icon preview"
+msgstr "Перегляд піктограми на панелі"
+
+msgid "Dock icon transparency"
+msgstr "Прозорість піктограми на панелі"
+
+msgid "Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock."
+msgstr "Перетягніть піктограму на іншу, щоб створити теку. Змінюйте порядок застосунків усередині теки або перетягуйте їх назовні, щоб повернути на панель."
+
+msgid "Folder appearance"
+msgstr "Вигляд теки"
+
+msgid "Folder label size"
+msgstr "Розмір підпису теки"
+
+msgid "Folder not found."
+msgstr "Теку не знайдено."
+
+msgid "Folder settings"
+msgstr "Налаштування теки"
+
+msgid "Folder wallpaper"
+msgstr "Шпалери теки"
+
+msgid "Folders on the dock"
+msgstr "Теки на панелі"
+
+msgid "Font size below dock icons, in pixels"
+msgstr "Розмір шрифту під піктограмами панелі, у пікселях"
+
+msgid "General folder settings"
+msgstr "Загальні налаштування тек"
+
+msgid "Genie effect"
+msgstr "Ефект джина"
+
+msgid "Glass tint transparency"
+msgstr "Прозорість відтінку скла"
+
+msgid "Icon preview"
+msgstr "Перегляд піктограми"
+
+msgid "Image selected"
+msgstr "Зображення вибрано"
+
+msgid "Label below the icon"
+msgstr "Підпис під піктограмою"
+
+msgid "Material Glass — frosted glass"
+msgstr "Material Glass — матове скло"
+
+msgid "Material Glass: blurred background, translucent tint, and sharp icons."
+msgstr "Material Glass: розмите тло, напівпрозорий відтінок і чіткі піктограми."
+
+msgid "Name"
+msgstr "Назва"
+
+msgid "New Folder"
+msgstr "Нова тека"
+
+msgid "On the dock"
+msgstr "На панелі"
+
+msgid "Opaque"
+msgstr "Непрозоре"
+
+#, python-format
+msgid "Open %s"
+msgstr "Відкрити %s"
+
+msgid "Open folder background color"
+msgstr "Колір тла відкритої теки"
+
+msgid "Open folder preview"
+msgstr "Перегляд відкритої теки"
+
+msgid "Open folder transparency"
+msgstr "Прозорість відкритої теки"
+
+msgid "Opening and closing animation"
+msgstr "Анімація відкриття й закриття"
+
+msgid "Remove wallpaper"
+msgstr "Вилучити шпалери"
+
+msgid "Replace…"
+msgstr "Замінити…"
+
+msgid "Scale"
+msgstr "Масштабування"
+
+msgid "Settings → Ubuntu Desktop → Dock → Dock folders"
+msgstr "Налаштування → Стільниця Ubuntu → Панель → Теки на панелі"
+
+msgid "Transparency"
+msgstr "Прозорість"
+
+msgid "Transparent"
+msgstr "Прозоре"
+
+msgid "Wallpaper"
+msgstr "Шпалери"
+
+msgid "When opened"
+msgstr "Після відкриття"
+
+msgid "App-grid folders"
+msgstr "Папки сітки програм"
+
+msgid "Add an app-grid folder"
+msgstr "Додати папку із сітки програм"
+
+msgid "Keep folder names and applications in sync with GNOME's app grid"
+msgstr "Синхронізувати назви й програми із сіткою програм GNOME"
+
+msgid "Pin to dock"
+msgstr "Закріпити на панелі"
+
+msgid "Pinned"
+msgstr "Закріплено"
+
+msgid "No app-grid folders"
+msgstr "У сітці програм немає папок"
+
+msgid "Create a folder in Show Apps first"
+msgstr "Спочатку створіть папку в меню «Показати програми»"
+
+msgid "Folder updated"
+msgstr "Папку оновлено"
+
+msgid "Undo"
+msgstr "Скасувати"
+
+msgid "Undo last move"
+msgstr "Скасувати останнє переміщення"
+
+msgid "Open windows"
+msgstr "Відкриті вікна"
+
+#, python-format
+msgid "Could not open %s"
+msgstr "Не вдалося відкрити %s"
