@@ -98,12 +98,12 @@ def build_release(settings, env):
             source,
             ".",
         )
-        run("dpkg-buildpackage", "-b", "-us", "-uc", "-d", cwd=source, env=env)
+        run("dpkg-buildpackage", "-b", "-us", "-uc", cwd=source, env=env)
         for file in source.glob("dist/*.zip"):
             shutil.copy2(file, output / file.name)
         for file in temporary.glob("*.deb"):
             shutil.copy2(file, output / file.name)
-        run("dpkg-buildpackage", "-S", "-us", "-uc", "-d", cwd=source, env=env)
+        run("dpkg-buildpackage", "-S", "-us", "-uc", cwd=source, env=env)
         changes = next(temporary.glob("*_source.changes"))
         run("debsign", "--no-re-sign", "-k" + settings["signing_fingerprint"], changes, env=env)
         for pattern in ("*.dsc", "*.tar.xz", "*_source.changes", "*_source.buildinfo"):

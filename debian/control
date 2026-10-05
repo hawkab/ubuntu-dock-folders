@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Grigory Olshansky <hwakaba@ya.ru>
 Build-Depends: debhelper-compat (= 13), gettext, gcc, pkg-config,
  libglib2.0-dev, gnome-shell (>= 46), gnome-shell (<< 47),
- libgtk-4-1, libadwaita-1-0, python3, python3-gi, python3-pil,
+ libgtk-4-1, libadwaita-1-0, librsvg2-common, python3, python3-gi, python3-pil,
  python3-cairo, python3-gi-cairo, python3-yaml,
  gir1.2-gtk-4.0, gir1.2-gdkpixbuf-2.0, gir1.2-adw-1,
  nodejs, dbus-daemon, xvfb, xauth, appstream, desktop-file-utils
@@ -18,7 +18,7 @@ Package: ubuntu-dock-folders
 Architecture: amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, gnome-shell (>= 46),
  gnome-shell (<< 47), gnome-shell-extension-ubuntu-dock,
- libgtk-4-1, libadwaita-1-0, python3, python3-gi, python3-cairo,
+ libgtk-4-1, libadwaita-1-0, librsvg2-common, python3, python3-gi, python3-cairo,
  python3-gi-cairo, python3-pil, gir1.2-gtk-4.0, gir1.2-adw-1
 Description: Android-style application folders for Ubuntu Dock
  Group applications by dragging one dock icon onto another. Reorder them

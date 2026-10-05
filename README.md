@@ -97,7 +97,7 @@ The extension supports desktop and laptop computers running Ubuntu 24.04 / GNOME
 To build and install from this repository:
 
 ```sh
-sudo apt install git make dpkg-dev gcc pkg-config gettext libglib2.0-dev gnome-shell gnome-shell-extension-ubuntu-dock libgtk-4-1 libadwaita-1-0 python3-gi python3-pil python3-cairo python3-gi-cairo gir1.2-gtk-4.0 gir1.2-gdkpixbuf-2.0 gir1.2-adw-1
+sudo apt install git make dpkg-dev gcc pkg-config gettext libglib2.0-dev librsvg2-common gnome-shell gnome-shell-extension-ubuntu-dock libgtk-4-1 libadwaita-1-0 python3-gi python3-pil python3-cairo python3-gi-cairo gir1.2-gtk-4.0 gir1.2-gdkpixbuf-2.0 gir1.2-adw-1
 git clone https://github.com/hawkab/ubuntu-dock-folders.git
 cd ubuntu-dock-folders
 make install
