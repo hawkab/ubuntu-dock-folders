@@ -21,7 +21,7 @@ jobs:
   publish:
     if: ${{ github.event_name != 'push' || github.event.deleted != true }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 75
     environment: release
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -51,7 +51,7 @@ jobs:
           GNUPGHOME: ${{ runner.temp }}/release-gnupg
           LAUNCHPAD_SSH_KEY: ${{ runner.temp }}/launchpad-upload
           APT_DEPLOY_KEY: ${{ runner.temp }}/apt-deploy
-        run: python3 scripts/release.py --publish
+        run: python3 scripts/release.py --publish --wait-seconds 3600
       - name: Retain release artifacts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
