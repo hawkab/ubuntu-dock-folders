@@ -113,6 +113,10 @@ def update_archive(deb, destination, config, env=None):
             if not index.is_file():
                 continue
             immutable_copy(index, directory / "by-hash/SHA256" / sha256(index))
+        for cached in (directory / "by-hash/SHA256").iterdir():
+            with cached.open("rb") as stream:
+                digest = hashlib.file_digest(stream, "sha512").hexdigest()
+            immutable_copy(cached, directory / "by-hash/SHA512" / digest)
     public_key = ROOT / "packaging/archive-key.asc"
     shutil.copy2(public_key, destination / "archive-key.asc")
     run(

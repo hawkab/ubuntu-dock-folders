@@ -134,3 +134,22 @@ class ReleaseTests(unittest.TestCase):
             (root / "build/artifact").write_text("binary")
             with patch.object(release, "ROOT", root):
                 self.assertEqual(release.source_files(), [".gitignore", "public"])
+
+    def test_successful_source_build_waits_for_binary_publication(self):
+        source = {"self_link": "https://example.invalid/source", "source_package_version": "1.0.3"}
+        settings = {"suite": "noble", "architecture": "amd64"}
+        binary = {
+            "status": "Pending",
+            "binary_package_name": release.PACKAGE,
+            "binary_package_version": "1.0.3",
+            "distro_arch_series_link": "https://api.launchpad.net/1.0/ubuntu/noble/amd64",
+        }
+        for entries, expected in (
+            ([], False),
+            ([binary], False),
+            ([binary | {"status": "Published"}], True),
+            ([binary | {"status": "Published", "distro_arch_series_link": "/noble/arm64"}], False),
+        ):
+            with self.subTest(entries=entries):
+                with patch.object(release, "launchpad_json", return_value={"entries": entries}):
+                    self.assertEqual(release.launchpad_binary_published(source, settings), expected)

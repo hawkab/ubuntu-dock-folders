@@ -11,7 +11,7 @@ git tag -s v1.0.3 -m 'Ubuntu Dock Folders 1.0.3'
 git push origin main v1.0.3
 ```
 
-The `Release` workflow runs the Debian build and test suite, signs the source package and checksums, uploads a draft GitHub release, submits the signed source through `dput` to Launchpad and waits up to an hour for its build. After a successful build, it publishes APT indices and makes the GitHub release public. Run the workflow manually with the same tag to resume an interrupted publication.
+The `Release` workflow runs the Debian build and test suite, signs the source package and checksums, uploads a draft GitHub release, submits the signed source through `dput` to Launchpad and waits up to an hour for its binary publication. It then publishes APT indices and makes the GitHub release public. Run the workflow manually with the same tag to resume an interrupted publication.
 
 The same pipeline runs locally:
 

@@ -281,6 +281,18 @@ def upload_launchpad(directory, manifest, settings, env):
     print("Source uploaded; Launchpad still needs to accept and build it", flush=True)
 
 
+def launchpad_binary_published(source, settings):
+    binaries = launchpad_json(source["self_link"] + "?ws.op=getPublishedBinaries")["entries"]
+    architecture = f"/{settings['suite']}/{settings['architecture']}"
+    return any(
+        binary["status"] == "Published"
+        and binary["binary_package_name"] == PACKAGE
+        and binary["binary_package_version"] == source["source_package_version"]
+        and binary["distro_arch_series_link"].endswith(architecture)
+        for binary in binaries
+    )
+
+
 def wait_launchpad(settings, version, timeout):
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
@@ -295,12 +307,17 @@ def wait_launchpad(settings, version, timeout):
                 "Failed to upload",
             }:
                 raise ValueError("Launchpad build needs attention: " + ", ".join(sorted(statuses)))
-            if source["status"] == "Published" and builds and statuses == {"Successfully built"}:
-                print("Launchpad build published", flush=True)
+            if (
+                source["status"] == "Published"
+                and builds
+                and statuses == {"Successfully built"}
+                and launchpad_binary_published(source, settings)
+            ):
+                print("Launchpad binary published", flush=True)
                 return
-        print("Waiting for Launchpad acceptance/build", flush=True)
+        print("Waiting for Launchpad acceptance, build and binary publication", flush=True)
         time.sleep(30)
-    raise ValueError("Launchpad build pending; resume with the same --prepared directory")
+    raise ValueError("Launchpad publication pending; resume with the same --prepared directory")
 
 
 def apt_git_environment():
