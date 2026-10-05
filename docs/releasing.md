@@ -1,6 +1,8 @@
 # Release publication
 
-Ubuntu 26.04 (`resolute`) / GNOME 50 is the current supported runtime on amd64; Ubuntu 24.04 (`noble`) / GNOME 46 remains supported. Build the release binary on Ubuntu 24.04 so it works with both runtimes, then test both. The Launchpad publication target remains `noble`; a `resolute` PPA requires a separate source upload. The signed APT repository and GitHub Releases supply packages for both supported runtimes. Use a Debian version such as `1.1.1-1ubuntu24.04.1`; `~` is excluded because GitHub renames it in asset filenames. The Debian version in `debian/changelog` is shared by the PPA, GitHub Releases and the signed [APT repository](https://hawkab.github.io/apt/). The PPA builds its binary on Launchpad; the other channels use the locally tested binary.
+Ubuntu 26.04 (`resolute`) / GNOME 50 is the current supported runtime on amd64; Ubuntu 24.04 (`noble`) / GNOME 46 remains supported. Build the common release binary on Ubuntu 24.04 so it works with both runtimes, then test both. GitHub Releases and the signed [APT repository](https://hawkab.github.io/apt/) use that binary. Launchpad builds separate binaries for both series from signed source packages.
+
+The base Debian version in `debian/changelog`, such as `1.1.1-1ubuntu24.04.1`, identifies the common binary and the Noble PPA source. Each `launchpad_targets` entry in `packaging/release.toml` specifies a series and version suffix. The publisher creates the Resolute source with version `1.1.1-1ubuntu26.04.1` and `Distribution: resolute`, sharing the same upstream archive. Both signed uploads are recorded in `release.json`. The `~` character is excluded because GitHub renames it in asset filenames. Users adding the PPA receive the package for their Ubuntu series automatically.
 
 ## Publish
 
@@ -15,7 +17,7 @@ git tag -s v1.1.1 -m 'Ubuntu Dock Folders 1.1.1'
 git push origin main v1.1.1
 ```
 
-The `Release` workflow runs the Debian build and test suite, signs the source package and checksums, uploads a draft GitHub release and submits the signed source through `dput` to Launchpad. It publishes the APT indices and GitHub release, then waits for Launchpad's acceptance, build queue, build, binary import and publication. Each stage has up to an hour; advancing to the next stage resets the timeout. A stalled stage or failed build fails the workflow. A delayed PPA build does not hold back the other channels. Run the workflow manually with the same tag to resume an interrupted publication.
+The `Release` workflow runs the Debian build and test suite, signs both source packages and checksums, uploads a draft GitHub release and submits each signed source through `dput` to Launchpad. It publishes the APT indices and GitHub release, then checks acceptance, build queue, build, binary import and publication for both Launchpad series. Each stage has up to an hour; advancing to the next stage resets the timeout. A stalled stage or failed build fails the workflow. A delayed PPA build does not hold back the other channels. Run the workflow manually with the same tag to resume an interrupted publication.
 
 Manual runs from `main` use its current publisher with a separate checkout of the requested signed tag. This applies publishing fixes to an existing release without rebuilding or replacing its artifacts. The equivalent local option is `--source-root PATH`, pointing to a clean checkout of that tag.
 

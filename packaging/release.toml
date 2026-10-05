@@ -8,3 +8,11 @@ suite = "noble"
 architecture = "amd64"
 signing_fingerprint = "D4FE96494637320FCA25DD35E94D1A6D97CE2319"
 launchpad_transport = "ftp"
+
+[[launchpad_targets]]
+suite = "noble"
+version_suffix = "1ubuntu24.04.1"
+
+[[launchpad_targets]]
+suite = "resolute"
+version_suffix = "1ubuntu26.04.1"

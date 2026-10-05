@@ -147,6 +147,85 @@ class ReleaseTests(unittest.TestCase):
             with patch.object(release, "ROOT", root):
                 self.assertEqual(release.changelog("Version"), "9.8.7-1ubuntu24.04.1")
 
+    def test_series_have_distinct_versions_and_include_the_common_binary(self):
+        settings = {"suite": "noble", "launchpad_targets": [
+            {"suite": "noble", "version_suffix": "1ubuntu24.04.1"},
+            {"suite": "resolute", "version_suffix": "1ubuntu26.04.1"},
+        ]}
+        self.assertEqual(release.launchpad_targets(settings, "9.8.7-1ubuntu24.04.1"), [
+            {"suite": "noble", "version": "9.8.7-1ubuntu24.04.1"},
+            {"suite": "resolute", "version": "9.8.7-1ubuntu26.04.1"},
+        ])
+        with self.assertRaisesRegex(ValueError, "include the release binary"):
+            release.launchpad_targets(settings, "9.8.7-2ubuntu24.04.1")
+        settings["launchpad_targets"][1]["version_suffix"] = "1ubuntu24.04.1"
+        with self.assertRaisesRegex(ValueError, "distinct source versions"):
+            release.launchpad_targets(settings, "9.8.7-1ubuntu24.04.1")
+
+    def test_resume_uploads_only_the_missing_series(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            version = "9.8.7-1ubuntu24.04.1"
+            uploads = [{
+                "suite": suite,
+                "version": f"9.8.7-1ubuntu{ubuntu}.1",
+                "changes": f"ubuntu-dock-folders_9.8.7-1ubuntu{ubuntu}.1_source.changes",
+            } for suite, ubuntu in (("noble", "24.04"), ("resolute", "26.04"))]
+            manifest = {"suite": "noble", "version": version, "upstream": "9.8.7", "launchpad": uploads}
+            settings = {"launchpad_transport": "ftp", "launchpad_owner": "example", "launchpad_archive": "folders"}
+            payload = root / "source.tar.xz"
+            payload.write_bytes(b"source")
+            for upload in uploads:
+                (root / upload["changes"]).write_text("signed source fixture")
+            text = f"Checksums-Sha256:\n {apt_repo.sha256(payload)} {payload.stat().st_size} {payload.name}\n\n"
+
+            def sources(target, requested, status=None):
+                return [{}] if target["suite"] == "noble" and status == "Pending" else []
+
+            with (
+                patch.object(release, "launchpad_sources", side_effect=sources),
+                patch.object(release, "run", return_value=text) as run,
+            ):
+                release.upload_launchpad(root, manifest, settings, {})
+            uploads_sent = [call.args for call in run.call_args_list if call.args[0] == "dput"]
+            self.assertEqual(len(uploads_sent), 1)
+            self.assertEqual(uploads_sent[0][-1], root / uploads[1]["changes"])
+
+    def test_pending_source_build_is_tracked_before_publication(self):
+        now = [0]
+        settings = {"suite": "noble", "architecture": "amd64"}
+        source = {"self_link": "https://example.invalid/source", "source_package_version": "9.8.7"}
+        binary = {
+            "binary_package_name": release.PACKAGE,
+            "binary_package_version": "9.8.7",
+            "distro_arch_series_link": "https://api.launchpad.net/1.0/ubuntu/noble/amd64",
+        }
+
+        def sources(target, version, status=None):
+            published = now[0] >= 90
+            if (status == "Pending") == published:
+                return []
+            return [source | {"status": "Published" if published else "Pending"}]
+
+        def response(url):
+            if url.endswith("getBuilds"):
+                return {"entries": [{"buildstate": "Currently building" if now[0] < 30 else "Successfully built"}]}
+            if now[0] < 60:
+                return {"entries": []}
+            return {"entries": [binary | {"status": "Published" if now[0] >= 90 else "Pending"}]}
+
+        def sleep(seconds):
+            now[0] += seconds
+
+        with (
+            patch.object(release, "launchpad_sources", side_effect=sources),
+            patch.object(release, "launchpad_json", side_effect=response),
+            patch.object(release.time, "monotonic", side_effect=lambda: now[0]),
+            patch.object(release.time, "sleep", side_effect=sleep),
+        ):
+            release.wait_launchpad(settings, "9.8.7", 60)
+        self.assertEqual(now[0], 90)
+
     def test_successful_source_build_waits_for_binary_publication(self):
         source = {"self_link": "https://example.invalid/source", "source_package_version": "1.0.3"}
         settings = {"suite": "noble", "architecture": "amd64"}

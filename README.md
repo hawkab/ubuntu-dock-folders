@@ -90,9 +90,9 @@ sudo apt install ubuntu-dock-folders
 ubuntu-dock-folders enable --ubuntu-settings
 ```
 
-On Ubuntu 24.04, you can alternatively use the [Launchpad PPA](https://launchpad.net/~hwakaba/+archive/ubuntu/ubuntu-dock-folders): `sudo add-apt-repository ppa:hwakaba/ubuntu-dock-folders`, then update and install the package. Choose one APT source. For manual installation on either supported Ubuntu version, download the `.deb` from [GitHub Releases](https://github.com/hawkab/ubuntu-dock-folders/releases) and open it with your package installer, or run `sudo apt install ./ubuntu-dock-folders_*.deb`. Enable it with the command above.
+Alternatively, use the [Launchpad PPA](https://launchpad.net/~hwakaba/+archive/ubuntu/ubuntu-dock-folders): `sudo add-apt-repository ppa:hwakaba/ubuntu-dock-folders`, then update and install the package. Ubuntu selects the matching distribution automatically. Choose one APT source. For manual installation, download the `.deb` from [GitHub Releases](https://github.com/hawkab/ubuntu-dock-folders/releases) and open it with your package installer, or run `sudo apt install ./ubuntu-dock-folders_*.deb`. Enable it with the command above.
 
-The extension supports desktop and laptop computers running Ubuntu 26.04 / GNOME 50, with backward compatibility for Ubuntu 24.04 / GNOME 46. Keyboard, mouse and touch input are supported. Install version 1.1.0 or later for GNOME 50 through the signed APT repository or GitHub Releases. The Launchpad PPA targets Ubuntu 24.04.
+The extension supports desktop and laptop computers running Ubuntu 26.04 / GNOME 50, with backward compatibility for Ubuntu 24.04 / GNOME 46. Keyboard, mouse and touch input are supported.
 
 | Desktop | Wayland session | X11 session | X11 apps through Xwayland |
 | --- | --- | --- | --- |

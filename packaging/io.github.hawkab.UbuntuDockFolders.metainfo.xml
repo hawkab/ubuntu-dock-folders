@@ -108,7 +108,7 @@
   </content_rating>
   <releases>
     <release version="1.1.1" date="2026-10-05">
-      <description><p>Update installation instructions, package descriptions and repository metadata for Ubuntu 26.04 and GNOME Shell 50. Keep Ubuntu 24.04 and GNOME Shell 46 compatibility.</p></description>
+      <description><p>Update installation instructions, package descriptions and repository metadata for Ubuntu 26.04 and GNOME Shell 50. Publish PPA packages for both supported Ubuntu versions.</p></description>
     </release>
     <release version="1.1.0" date="2026-10-05">
       <description><p>Support Ubuntu 26.04 and GNOME Shell 50 while retaining compatibility with Ubuntu 24.04 and GNOME Shell 46. Restore Settings launchers during removal and keep stock Settings available if the package is removed first.</p></description>

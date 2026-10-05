@@ -66,6 +66,70 @@ def snapshot(destination):
         shutil.copy2(source, target)
 
 
+def launchpad_targets(settings, version):
+    targets = settings.get("launchpad_targets")
+    if targets is None:
+        return [{"suite": settings["suite"], "version": version}]
+    upstream = version.split("-")[0]
+    result = []
+    for target in targets:
+        suite = target["suite"]
+        suffix = target["version_suffix"]
+        if not re.fullmatch(r"[a-z][a-z0-9-]*", suite) or not re.fullmatch(r"[0-9A-Za-z.-]+", suffix):
+            raise ValueError("Invalid Launchpad target")
+        result.append({"suite": suite, "version": upstream + "-" + suffix})
+    if len({target["suite"] for target in result}) != len(result):
+        raise ValueError("Duplicate Launchpad series")
+    if len({target["version"] for target in result}) != len(result):
+        raise ValueError("Launchpad series need distinct source versions")
+    if {"suite": settings["suite"], "version": version} not in result:
+        raise ValueError("Launchpad targets must include the release binary's suite and version")
+    return result
+
+
+def build_source(source, target, output, settings, env):
+    file = source / "debian/changelog"
+    text = file.read_text()
+    header = f"{PACKAGE} ({target['version']}) {target['suite']};"
+    text, count = re.subn(r"\Aubuntu-dock-folders \([^\n]+\) [^;\n]+;", header, text, count=1)
+    if count != 1:
+        raise ValueError("Source changelog has an unexpected header")
+    file.write_text(text)
+    run("dpkg-buildpackage", "-S", "-sa", "-us", "-uc", cwd=source, env=env)
+    changes = source.parent / f"{PACKAGE}_{target['version']}_source.changes"
+    run("debsign", "--no-re-sign", "-k" + settings["signing_fingerprint"], changes, env=env)
+    for pattern in ("*.dsc", "*.tar.xz", "*_source.changes", "*_source.buildinfo"):
+        for artifact in source.parent.glob(pattern):
+            destination = output / artifact.name
+            if destination.exists() and sha256(destination) != sha256(artifact):
+                raise ValueError(f"Source artifact collision: {artifact.name}")
+            shutil.copy2(artifact, destination)
+    return target | {"changes": changes.name}
+
+
+def source_uploads(manifest):
+    uploads = manifest.get("launchpad", [{
+        "suite": manifest["suite"],
+        "version": manifest["version"],
+        "changes": f"{PACKAGE}_{manifest['version']}_source.changes",
+    }])
+    for upload in uploads:
+        if (
+            not re.fullmatch(r"[a-z][a-z0-9-]*", upload["suite"])
+            or not re.fullmatch(r"[0-9A-Za-z.-]+", upload["version"])
+            or upload["version"].split("-")[0] != manifest["upstream"]
+            or upload["changes"] != f"{PACKAGE}_{upload['version']}_source.changes"
+        ):
+            raise ValueError("Invalid Launchpad source manifest")
+    if (
+        not uploads
+        or len({upload["suite"] for upload in uploads}) != len(uploads)
+        or len({upload["version"] for upload in uploads}) != len(uploads)
+    ):
+        raise ValueError("Invalid Launchpad source targets")
+    return uploads
+
+
 def build_release(settings, env):
     version = changelog("Version")
     if not re.fullmatch(r"[0-9A-Za-z.-]+", version):
@@ -79,6 +143,7 @@ def build_release(settings, env):
         raise ValueError("Changelog suite differs from release configuration")
     if run("dpkg", "--print-architecture", capture=True).strip() != settings["architecture"]:
         raise ValueError("Build architecture differs from release configuration")
+    targets = launchpad_targets(settings, version)
     output = ROOT / "dist/releases" / upstream
     if output.exists():
         raise ValueError(f"{output} already exists; use --prepared to resume it or move it aside")
@@ -108,26 +173,26 @@ def build_release(settings, env):
             shutil.copy2(file, output / file.name)
         for file in temporary.glob("*.deb"):
             shutil.copy2(file, output / file.name)
-        run("dpkg-buildpackage", "-S", "-us", "-uc", cwd=source, env=env)
-        changes = next(temporary.glob("*_source.changes"))
-        run("debsign", "--no-re-sign", "-k" + settings["signing_fingerprint"], changes, env=env)
-        for pattern in ("*.dsc", "*.tar.xz", "*_source.changes", "*_source.buildinfo"):
-            for file in temporary.glob(pattern):
-                shutil.copy2(file, output / file.name)
-        with tempfile.TemporaryDirectory(prefix="dock-folders-unpack-") as unpack:
-            run(
-                "dpkg-source",
-                "--no-check",
-                "-x",
-                next(output.glob("*.dsc")),
-                Path(unpack) / "source",
-            )
+        uploads = []
+        for target in targets:
+            target_source = source
+            if target["suite"] != settings["suite"]:
+                parent = temporary / target["suite"]
+                parent.mkdir()
+                target_source = parent / source.name
+                snapshot(target_source)
+                shutil.copy2(orig, parent / orig.name)
+            uploads.append(build_source(target_source, target, output, settings, env))
+        for dsc in output.glob("*.dsc"):
+            with tempfile.TemporaryDirectory(prefix="dock-folders-unpack-") as unpack:
+                run("dpkg-source", "--no-check", "-x", dsc, Path(unpack) / "source")
     shutil.copy2(ROOT / "packaging/archive-key.asc", output / "archive-key.asc")
     manifest = {
         "version": version,
         "upstream": upstream,
         "suite": settings["suite"],
         "architecture": settings["architecture"],
+        "launchpad": uploads,
         "commit": run("git", "rev-parse", "HEAD", cwd=ROOT, capture=True).strip(),
         "dirty": bool(run("git", "status", "--porcelain", cwd=ROOT, capture=True).strip()),
         "files": {file.name: sha256(file) for file in sorted(output.iterdir()) if file.is_file()},
@@ -187,7 +252,15 @@ def verify_release(directory, settings, env):
             raise ValueError(f"Release {field} differs from current configuration")
     for source in list(directory.glob("*.dsc")) + list(directory.glob("*_source.changes")):
         run("gpg", "--verify", source, env=env)
-    run("dput", "-o", next(directory.glob("*_source.changes")), cwd=directory, env=env)
+    for upload in source_uploads(manifest):
+        changes = directory / upload["changes"]
+        if upload["changes"] not in manifest["files"]:
+            raise ValueError("Launchpad upload is missing from the release manifest")
+        text = run("gpg", "--batch", "--decrypt", changes, env=env, capture=True)
+        for field, value in (("Distribution", upload["suite"]), ("Version", upload["version"])):
+            if not re.search(rf"^{field}: {re.escape(value)}$", text, re.MULTILINE):
+                raise ValueError(f"Source upload {field} differs from its manifest")
+        run("dput", "-o", changes, cwd=directory, env=env)
     verify_local_media(next(directory.glob("*.deb")))
     return manifest
 
@@ -213,14 +286,22 @@ def launchpad_sources(settings, version, status=None):
     }
     if status:
         query["status"] = status
+    if settings.get("suite"):
+        query["distro_series"] = f"https://api.launchpad.net/1.0/ubuntu/{settings['suite']}"
     return launchpad_json(base + "?" + urllib.parse.urlencode(query))["entries"]
 
 
 def upload_launchpad(directory, manifest, settings, env):
-    if launchpad_sources(settings, manifest["version"]):
-        print("Launchpad already has this source version", flush=True)
+    for upload in source_uploads(manifest):
+        target_settings = settings | {"suite": upload["suite"]}
+        upload_launchpad_source(directory, upload, target_settings, env)
+
+
+def upload_launchpad_source(directory, upload, settings, env):
+    if launchpad_sources(settings, upload["version"]) or launchpad_sources(settings, upload["version"], "Pending"):
+        print(f"Launchpad already has {upload['suite']} source {upload['version']}", flush=True)
         return
-    changes = next(directory.glob("*_source.changes"))
+    changes = directory / upload["changes"]
     text = run("gpg", "--batch", "--decrypt", changes, env=env, capture=True)
     section = text.split("Checksums-Sha256:\n", 1)[1].split("\n\n", 1)[0]
     files = []
@@ -245,7 +326,7 @@ def upload_launchpad(directory, manifest, settings, env):
             cwd=directory,
             env=env,
         )
-        print("Source submitted through dput; Launchpad acceptance/build is pending", flush=True)
+        print(f"Source submitted for {upload['suite']}; Launchpad acceptance/build is pending", flush=True)
         return
     if transport != "sftp":
         raise ValueError("Launchpad transport must be ftp or sftp")
@@ -280,7 +361,7 @@ def upload_launchpad(directory, manifest, settings, env):
         check=True,
         timeout=180,
     )
-    print("Source uploaded; Launchpad still needs to accept and build it", flush=True)
+    print(f"Source uploaded for {upload['suite']}; Launchpad still needs to accept and build it", flush=True)
 
 
 def launchpad_binaries(source, settings):
@@ -307,7 +388,7 @@ def wait_launchpad(settings, version, timeout):
     labels = ("source acceptance", "build queue", "build", "binary import", "binary publication")
     while time.monotonic() < deadline:
         progress = 0
-        sources = launchpad_sources(settings, version)
+        sources = launchpad_sources(settings, version) or launchpad_sources(settings, version, "Pending")
         for source in sources:
             progress = max(progress, 1)
             builds = launchpad_json(source["self_link"] + "?ws.op=getBuilds")["entries"]
@@ -329,12 +410,12 @@ def wait_launchpad(settings, version, timeout):
                 if source["status"] == "Published" and any(
                     binary["status"] == "Published" for binary in binaries
                 ):
-                    print("Launchpad binary published", flush=True)
+                    print(f"Launchpad {settings['suite']} binary published", flush=True)
                     return
         if progress > stage:
             stage = progress
             deadline = time.monotonic() + timeout
-            print(f"Waiting for Launchpad {labels[stage]} (up to {timeout}s)", flush=True)
+            print(f"Waiting for Launchpad {labels[stage]} [{settings.get('suite', '')}] (up to {timeout}s)", flush=True)
         time.sleep(min(30, max(0, deadline - time.monotonic())))
     raise ValueError(
         f"Launchpad {labels[stage]} pending; resume with the same --prepared directory"
@@ -526,7 +607,8 @@ def main():
     publish_apt(directory, settings, env)
     run("gh", "release", "edit", tag, "--repo", settings["github_repository"], "--draft=false")
     print(f"Published {tag}: GitHub Releases and {settings['apt_url']}; source submitted to Launchpad", flush=True)
-    wait_launchpad(settings, manifest["version"], args.wait_seconds)
+    for upload in source_uploads(manifest):
+        wait_launchpad(settings | {"suite": upload["suite"]}, upload["version"], args.wait_seconds)
     print(f"Published {tag}: GitHub Releases, Launchpad PPA and {settings['apt_url']}", flush=True)
 
 
