@@ -31,7 +31,7 @@ class InstallTests(unittest.TestCase):
             for value in ("GNOME Shell 45.0", "GNOME Shell 47.2", "GNOME Shell 49.0", "GNOME Shell 51.0"):
                 with self.subTest(version=value):
                     version.return_value = value
-                    with self.assertRaisesRegex(RuntimeError, "GNOME Shell 46 and 50"):
+                    with self.assertRaisesRegex(RuntimeError, "Ubuntu 26.04 / GNOME Shell 50.*Ubuntu 24.04 / GNOME Shell 46"):
                         manage.check_requirements()
 
     def test_settings_cleanup_handles_legacy_or_missing_install_state(self):

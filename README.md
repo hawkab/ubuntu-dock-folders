@@ -1,6 +1,6 @@
 ## Ubuntu Dock Folders
 
-Android-style application folders for **Ubuntu 24.04 / GNOME 46 and Ubuntu 26.04 / GNOME 50**. Drag one dock icon onto another to create a folder, rearrange its apps, and drag them out again. Each folder shows larger application icons that overlap the folder circle, plus a shared running indicator. Opening animations start at the folder's position on the dock.
+Android-style application folders for **Ubuntu 26.04 / GNOME 50**, also compatible with Ubuntu 24.04 / GNOME 46. Drag one dock icon onto another to create a folder, rearrange its apps, and drag them out again. Each folder shows larger application icons that overlap the folder circle, plus a shared running indicator. Opening animations start at the folder's position on the dock.
 
 ![Drag icons into a folder, then open and close it](docs/demo.gif)
 
@@ -50,7 +50,7 @@ This extension adds grouping directly to Ubuntu Dock.
 | Reuse and synchronize GNOME application-grid folders | Yes, opt-in | Yes | No application folders |
 | Window previews with activation and close controls | On hover inside folders | Not documented | Yes |
 | Undo grouping changes | Last creation or move | Undo pin/unpin | No grouping |
-| GNOME support | 46 / Ubuntu 24.04; 50 / Ubuntu 26.04 | 43 | Multiple versions |
+| GNOME support | 50 / Ubuntu 26.04; also 46 / Ubuntu 24.04 | 43 | Multiple versions |
 
 Comparison follows the projects' published [extension listing](https://extensions.gnome.org/extension/5709/pin-app-folders-to-dash/) and [source](https://github.com/micheleg/dash-to-dock), checked in October 2026. Features marked “Not documented” are unverified. Ubuntu Dock's existing window-management features remain available outside folders.
 
@@ -90,27 +90,27 @@ sudo apt install ubuntu-dock-folders
 ubuntu-dock-folders enable --ubuntu-settings
 ```
 
-Alternatively, use the [Launchpad PPA](https://launchpad.net/~hwakaba/+archive/ubuntu/ubuntu-dock-folders): `sudo add-apt-repository ppa:hwakaba/ubuntu-dock-folders`, then update and install the package. Choose one APT source. For manual installation, download the `.deb` from [GitHub Releases](https://github.com/hawkab/ubuntu-dock-folders/releases) and open it with your package installer, or run `sudo apt install ./ubuntu-dock-folders_*.deb`. Enable it with the command above.
+On Ubuntu 24.04, you can alternatively use the [Launchpad PPA](https://launchpad.net/~hwakaba/+archive/ubuntu/ubuntu-dock-folders): `sudo add-apt-repository ppa:hwakaba/ubuntu-dock-folders`, then update and install the package. Choose one APT source. For manual installation on either supported Ubuntu version, download the `.deb` from [GitHub Releases](https://github.com/hawkab/ubuntu-dock-folders/releases) and open it with your package installer, or run `sudo apt install ./ubuntu-dock-folders_*.deb`. Enable it with the command above.
 
-The extension supports desktop and laptop computers running Ubuntu 24.04 / GNOME 46 or Ubuntu 26.04 / GNOME 50, with keyboard, mouse or touch input. GNOME 50 support starts with version 1.1.0. The Launchpad PPA currently publishes builds for Ubuntu 24.04; on Ubuntu 26.04, use version 1.1.0 or later once published, or build from source.
+The extension supports desktop and laptop computers running Ubuntu 26.04 / GNOME 50, with backward compatibility for Ubuntu 24.04 / GNOME 46. Keyboard, mouse and touch input are supported. Install version 1.1.0 or later for GNOME 50 through the signed APT repository or GitHub Releases. The Launchpad PPA targets Ubuntu 24.04.
 
 | Desktop | Wayland session | X11 session | X11 apps through Xwayland |
 | --- | --- | --- | --- |
-| Ubuntu 24.04 / GNOME 46 | Supported | Supported | Supported |
 | Ubuntu 26.04 / GNOME 50 | Supported | Removed by GNOME | Supported |
+| Ubuntu 24.04 / GNOME 46 | Supported | Supported | Supported |
 
 [GNOME 50 removed X11 sessions](https://gjs.guide/extensions/upgrading/gnome-shell-50.html). X11 applications still work through Xwayland. This extension requires GNOME Shell and Ubuntu Dock; Xfce and other desktop environments use their own panels.
 
 To build and install from this repository:
 
 ```sh
-sudo apt install git make dpkg-dev gcc pkg-config gettext libglib2.0-dev librsvg2-common gnome-shell gnome-shell-extension-ubuntu-dock libgtk-4-1 libadwaita-1-0 python3-gi python3-pil python3-cairo python3-gi-cairo gir1.2-gtk-4.0 gir1.2-gdkpixbuf-2.0 gir1.2-adw-1
+sudo apt install git make dpkg-dev gcc pkg-config gettext libglib2.0-dev librsvg2-common gnome-shell gnome-shell-ubuntu-extensions libgtk-4-1 libadwaita-1-0 python3-gi python3-pil python3-cairo python3-gi-cairo gir1.2-gtk-4.0 gir1.2-gdkpixbuf-2.0 gir1.2-adw-1
 git clone https://github.com/hawkab/ubuntu-dock-folders.git
 cd ubuntu-dock-folders
 make install
 ```
 
-`make build` produces the `.deb` and standard GNOME extension ZIP in `dist/`. For an extension-only installation, install the ZIP with `gnome-extensions install --force`, then enable `dock-groups@local`. Log out and back in after installing or updating Shell code.
+On Ubuntu 24.04, replace `gnome-shell-ubuntu-extensions` with `gnome-shell-extension-ubuntu-dock` in the dependency command. `make build` produces the `.deb` and standard GNOME extension ZIP in `dist/`. For an extension-only installation, install the ZIP with `gnome-extensions install --force`, then enable `dock-groups@local`. Log out and back in after installing or updating Shell code.
 
 Open **Settings → Ubuntu Desktop → Dock → Dock folders**, or **Ubuntu Dock Folders** in the application menu. The optional Ubuntu Settings integration adds a user-local launcher override; reopen Settings after enabling it. The standalone ZIP uses `gnome-extensions prefs dock-groups@local` instead.
 

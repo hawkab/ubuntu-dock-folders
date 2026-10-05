@@ -1,6 +1,6 @@
 # Release publication
 
-Ubuntu 24.04 (`noble`) / GNOME 46 and Ubuntu 26.04 (`resolute`) / GNOME 50 are the supported runtimes on amd64. Build the release binary on Ubuntu 24.04 and test it on both runtimes. The Launchpad publication target remains `noble`; a `resolute` PPA requires a separate source upload. Use a Debian version such as `1.1.0-1ubuntu24.04.1`; `~` is excluded because GitHub renames it in asset filenames. The Debian version in `debian/changelog` is shared by the PPA, GitHub Releases and the signed [APT repository](https://hawkab.github.io/apt/). The PPA builds its binary on Launchpad; the other channels use the locally tested binary.
+Ubuntu 26.04 (`resolute`) / GNOME 50 is the current supported runtime on amd64; Ubuntu 24.04 (`noble`) / GNOME 46 remains supported. Build the release binary on Ubuntu 24.04 so it works with both runtimes, then test both. The Launchpad publication target remains `noble`; a `resolute` PPA requires a separate source upload. The signed APT repository and GitHub Releases supply packages for both supported runtimes. Use a Debian version such as `1.1.1-1ubuntu24.04.1`; `~` is excluded because GitHub renames it in asset filenames. The Debian version in `debian/changelog` is shared by the PPA, GitHub Releases and the signed [APT repository](https://hawkab.github.io/apt/). The PPA builds its binary on Launchpad; the other channels use the locally tested binary.
 
 ## Publish
 
@@ -11,8 +11,8 @@ Run `xvfb-run -a python3 scripts/test_shell.py --client-backend x11` to check Xw
 Update `debian/changelog`, the AppStream release entry and the extension metadata version. Commit the reviewed changes and create a version tag:
 
 ```sh
-git tag -s v1.0.3 -m 'Ubuntu Dock Folders 1.0.3'
-git push origin main v1.0.3
+git tag -s v1.1.1 -m 'Ubuntu Dock Folders 1.1.1'
+git push origin main v1.1.1
 ```
 
 The `Release` workflow runs the Debian build and test suite, signs the source package and checksums, uploads a draft GitHub release and submits the signed source through `dput` to Launchpad. It publishes the APT indices and GitHub release, then waits for Launchpad's acceptance, build queue, build, binary import and publication. Each stage has up to an hour; advancing to the next stage resets the timeout. A stalled stage or failed build fails the workflow. A delayed PPA build does not hold back the other channels. Run the workflow manually with the same tag to resume an interrupted publication.
@@ -24,7 +24,7 @@ The same pipeline runs locally:
 ```sh
 sudo apt install build-essential debhelper devscripts dput apt-utils appstream-compose desktop-file-utils gettext git gnupg locales-all libglib2.0-dev librsvg2-common pkg-config gnome-shell gnome-shell-extension-ubuntu-dock gnome-control-center dconf-cli python3-gi python3-pil python3-cairo python3-gi-cairo python3-yaml gir1.2-gtk-4.0 gir1.2-gdkpixbuf-2.0 gir1.2-adw-1 nodejs dbus-daemon xvfb xauth xwayland gh
 python3 scripts/release.py
-python3 scripts/release.py --publish --prepared dist/releases/1.0.3
+python3 scripts/release.py --publish --prepared dist/releases/1.1.1
 ```
 
 Preparation alone builds, tests and signs without publishing. Publication requires a clean commit and a matching version tag. A previously published file cannot be replaced with different contents; use a new upstream version and corresponding Debian version for each publication. A Launchpad timeout leaves the public APT and GitHub artifacts available; resuming checks the PPA state without replacing published files.

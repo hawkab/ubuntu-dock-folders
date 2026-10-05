@@ -278,7 +278,7 @@ def check_requirements():
         raise RuntimeError("GNOME Shell is required.")
     version = subprocess.check_output(["gnome-shell", "--version"], text=True)
     if not re.search(r"\b(?:46|50)\.", version):
-        raise RuntimeError("This release supports GNOME Shell 46 and 50 on Ubuntu 24.04 and 26.04.")
+        raise RuntimeError("This release supports Ubuntu 26.04 / GNOME Shell 50 and Ubuntu 24.04 / GNOME Shell 46.")
     dock = Path("/usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com")
     if not dock.exists():
         raise RuntimeError("Install gnome-shell-extension-ubuntu-dock first.")

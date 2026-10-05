@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright 2026 Grigory Olshansky
 
-"""Keep catalog metadata readable by Ubuntu 24.04 software centers."""
+"""Generate catalogs for Ubuntu software centers, including legacy readers."""
 
 import copy
 from pathlib import Path

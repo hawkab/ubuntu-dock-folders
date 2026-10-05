@@ -1,3 +1,11 @@
+ubuntu-dock-folders (1.1.1-1ubuntu24.04.1) noble; urgency=medium
+
+  * Update documentation and package descriptions for GNOME Shell 50.
+  * Clarify Ubuntu 26.04 installation and Ubuntu 24.04 compatibility.
+  * Refresh APT metadata and release instructions.
+
+ -- Grigory Olshansky <hwakaba@ya.ru>  Mon, 05 Oct 2026 21:40:49 +0300
+
 ubuntu-dock-folders (1.1.0-1ubuntu24.04.1) noble; urgency=medium
 
   * Support GNOME Shell 50 and Ubuntu Dock on Ubuntu 26.04.

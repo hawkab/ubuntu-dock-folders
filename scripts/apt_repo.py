@@ -169,7 +169,7 @@ def update_archive(deb, destination, config, env=None):
         "Architectures": config["architecture"],
         "Components": "main",
         "Acquire-By-Hash": "yes",
-        "Description": "Ubuntu Dock Folders for Ubuntu 24.04 and 26.04",
+        "Description": "Ubuntu Dock Folders for Ubuntu 26.04 / GNOME 50 and Ubuntu 24.04 / GNOME 46",
     }
     arguments = [
         part

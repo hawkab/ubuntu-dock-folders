@@ -70,7 +70,7 @@ def build_release(settings, env):
     version = changelog("Version")
     if not re.fullmatch(r"[0-9A-Za-z.-]+", version):
         raise ValueError(
-            "Use an APT version with GitHub-safe filenames, for example 1.0.2-1ubuntu24.04.1"
+            "Use an APT version with GitHub-safe filenames, for example 1.1.1-1ubuntu24.04.1"
         )
     upstream = version.split("-")[0]
     if not re.fullmatch(r"\d+\.\d+\.\d+", upstream):
@@ -407,7 +407,7 @@ def publish_github(directory, manifest, settings):
     )
     if lookup.returncode:
         notes = (
-            f"Ubuntu Dock Folders {manifest['upstream']} for Ubuntu 24.04 / GNOME 46 and Ubuntu 26.04 / GNOME 50.\n\n"
+            f"Ubuntu Dock Folders {manifest['upstream']} for Ubuntu 26.04 / GNOME 50, also compatible with Ubuntu 24.04 / GNOME 46.\n\n"
             f"Package version: `{manifest['version']}`.\n\n"
             f"Install and receive updates: {settings['apt_url']}\n\n"
             f"PPA: https://launchpad.net/~{settings['launchpad_owner']}"

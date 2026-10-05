@@ -30,6 +30,7 @@ Description: Android-style application folders for Ubuntu Dock
  or genie animations and optional frosted glass. The interface follows
  the system language and includes 30 translations.
  .
- Requires Ubuntu 24.04 / GNOME 46 or Ubuntu 26.04 / GNOME 50 and Ubuntu Dock. After installing,
+ Supports Ubuntu 26.04 / GNOME 50 and Ubuntu 24.04 / GNOME 46 with Ubuntu Dock.
+ After installing,
  run ubuntu-dock-folders enable --ubuntu-settings as your desktop user,
  then log out and back in.
