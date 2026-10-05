@@ -60,7 +60,7 @@ builder.get_object('preferences_window').destroy()
         for language in LANGUAGES + ["pt_BR", "zh_CN", "hi_IN", "ms_MY", "tr_TR", "ur_PK"]:
             with self.subTest(language=language):
                 env = dict(
-                    os.environ, LANGUAGE=language, LC_ALL="en_US.UTF-8", GSETTINGS_BACKEND="memory"
+                    os.environ, LANGUAGE=language, LC_ALL="C.UTF-8", GSETTINGS_BACKEND="memory"
                 )
                 result = subprocess.run(
                     ["/usr/bin/python3", "-c", code, str(BUILT / "app")],

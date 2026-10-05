@@ -1,14 +1,14 @@
 # Release publication
 
-Ubuntu 24.04 (`noble`), GNOME 46 and amd64 are the supported target. Use a Debian version such as `1.0.2-1ubuntu24.04.1`; `~` is excluded because GitHub renames it in asset filenames. The Debian version in `debian/changelog` is shared by the PPA, GitHub Releases and the signed [APT repository](https://hawkab.github.io/apt/). The PPA builds its binary on Launchpad; the other channels use the locally tested binary.
+Ubuntu 24.04 (`noble`), GNOME 46 and amd64 are the supported target. Use a Debian version such as `1.0.3-1ubuntu24.04.1`; `~` is excluded because GitHub renames it in asset filenames. The Debian version in `debian/changelog` is shared by the PPA, GitHub Releases and the signed [APT repository](https://hawkab.github.io/apt/). The PPA builds its binary on Launchpad; the other channels use the locally tested binary.
 
 ## Publish
 
 Update `debian/changelog`, the AppStream release entry and the extension metadata version. Commit the reviewed changes and create a version tag:
 
 ```sh
-git tag -s v1.0.2 -m 'Ubuntu Dock Folders 1.0.2'
-git push origin main v1.0.2
+git tag -s v1.0.3 -m 'Ubuntu Dock Folders 1.0.3'
+git push origin main v1.0.3
 ```
 
 The `Release` workflow runs the Debian build and test suite, signs the source package and checksums, uploads a draft GitHub release, submits the signed source through `dput` to Launchpad and waits for its build. After a successful build, it publishes APT indices and makes the GitHub release public. Run the workflow manually with the same tag to resume an interrupted publication.
@@ -18,7 +18,7 @@ The same pipeline runs locally:
 ```sh
 sudo apt install build-essential debhelper devscripts dput apt-utils appstream-compose desktop-file-utils gettext libglib2.0-dev librsvg2-common pkg-config gnome-shell gnome-shell-extension-ubuntu-dock python3-gi python3-pil python3-cairo python3-gi-cairo python3-yaml gir1.2-gtk-4.0 gir1.2-gdkpixbuf-2.0 gir1.2-adw-1 nodejs dbus-daemon xvfb xauth gh
 python3 scripts/release.py
-python3 scripts/release.py --publish --prepared dist/releases/1.0.2
+python3 scripts/release.py --publish --prepared dist/releases/1.0.3
 ```
 
 Preparation alone builds, tests and signs without publishing. Publication requires a clean commit and a matching version tag. A previously published file cannot be replaced with different contents; bump the Debian version for packaging changes and the upstream version for a new release. A Launchpad timeout leaves the draft and signed artifacts available for resuming.
@@ -27,7 +27,7 @@ Preparation alone builds, tests and signs without publishing. Publication requir
 
 Public destinations and the signing fingerprint are in `packaging/release.toml`. SSH host keys are pinned in `packaging/*-known-hosts`; Launchpad's RSA fingerprint follows its [official list](https://ubuntu.com/docs/launchpad/user/reference/ssh-fingerprints/), GitHub's keys follow the [Meta API](https://api.github.com/meta).
 
-The GitHub `release` environment uses three secrets:
+The GitHub `release` environment accepts version tags matching `v*` and manual runs from `main`. It uses three secrets:
 
 | Secret | Scope |
 | --- | --- |

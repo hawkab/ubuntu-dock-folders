@@ -7,7 +7,7 @@ Build-Depends: debhelper-compat (= 13), gettext, gcc, pkg-config,
  libgtk-4-1, libadwaita-1-0, librsvg2-common, python3, python3-gi, python3-pil,
  python3-cairo, python3-gi-cairo, python3-yaml,
  gir1.2-gtk-4.0, gir1.2-gdkpixbuf-2.0, gir1.2-adw-1,
- nodejs, dbus-daemon, xvfb, xauth, appstream, desktop-file-utils
+ nodejs, dbus-daemon, xvfb, xauth, appstream, desktop-file-utils, git, gnupg
 Standards-Version: 4.6.2
 Homepage: https://github.com/hawkab/ubuntu-dock-folders
 Vcs-Git: https://github.com/hawkab/ubuntu-dock-folders.git

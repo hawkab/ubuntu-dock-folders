@@ -97,6 +97,9 @@
     <content_attribute id="violence-slavery">none</content_attribute>
   </content_rating>
   <releases>
+    <release version="1.0.3" date="2026-10-05">
+      <description><p>Build and test the release in minimal Ubuntu environments without requiring generated language locales.</p></description>
+    </release>
     <release version="1.0.2" date="2026-10-05">
       <description><p>Publish signed packages, source archives and checksums through APT, Launchpad and GitHub Releases.</p></description>
     </release>
