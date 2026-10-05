@@ -2,11 +2,11 @@ Source: ubuntu-dock-folders
 Section: gnome
 Priority: optional
 Maintainer: Grigory Olshansky <hwakaba@ya.ru>
-Build-Depends: debhelper-compat (= 13), gettext, gcc, pkg-config,
+Build-Depends: debhelper-compat (= 13), gettext, gcc, pkg-config, apt-utils,
  libglib2.0-dev, gnome-shell (>= 46), gnome-shell (<< 47) | gnome-shell (>= 50), gnome-shell (<< 51),
  gnome-control-center, gnome-shell-extension-ubuntu-dock, dconf-cli, libgl1-mesa-dri, xwayland,
  libgtk-4-1, libadwaita-1-0, librsvg2-common, python3, python3-gi, python3-pil,
- python3-cairo, python3-gi-cairo, python3-yaml,
+ python3-cairo, python3-gi-cairo, python3-yaml, python3-paramiko,
  gir1.2-gtk-4.0, gir1.2-gdkpixbuf-2.0, gir1.2-adw-1,
  nodejs, dbus-daemon, xvfb, xauth, appstream, appstream-compose, desktop-file-utils, git, gnupg, locales-all
 Standards-Version: 4.6.2
