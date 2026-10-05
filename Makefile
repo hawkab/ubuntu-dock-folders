@@ -1,4 +1,4 @@
-.PHONY: build check test release install uninstall preview clean
+.PHONY: build check test test-shell release install uninstall preview clean
 
 build:
 	/usr/bin/python3 scripts/build.py
@@ -9,6 +9,9 @@ check: build
 test:
 	node --test tests/*.test.js
 	/usr/bin/python3 -m unittest discover -v -s tests -p 'test_*.py'
+
+test-shell: build
+	/usr/bin/python3 scripts/test_shell.py
 
 release:
 	/usr/bin/python3 scripts/release.py --publish

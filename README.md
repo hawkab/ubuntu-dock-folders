@@ -1,6 +1,6 @@
 ## Ubuntu Dock Folders
 
-Android-style application folders for **Ubuntu 24.04 / GNOME 46**. Drag one dock icon onto another to create a folder, rearrange its apps, and drag them out again. Each folder shows larger application icons that overlap the folder circle, plus a shared running indicator. Opening animations start at the folder's position on the dock.
+Android-style application folders for **Ubuntu 24.04 / GNOME 46 and Ubuntu 26.04 / GNOME 50**. Drag one dock icon onto another to create a folder, rearrange its apps, and drag them out again. Each folder shows larger application icons that overlap the folder circle, plus a shared running indicator. Opening animations start at the folder's position on the dock.
 
 ![Drag icons into a folder, then open and close it](docs/demo.gif)
 
@@ -41,7 +41,7 @@ Per-folder settings include names, labels, colors, transparency and wallpaper. O
 
 This extension adds grouping directly to Ubuntu Dock.
 
-| Feature | Ubuntu Dock Folders 1.0 | Pin App Folders to Dash | Dash to Dock |
+| Feature | Ubuntu Dock Folders 1.1 | Pin App Folders to Dash | Dash to Dock |
 | --- | --- | --- | --- |
 | Create folders by dropping dock icons onto each other | Yes | Uses application-grid folders | No application folders |
 | Grouped running indicators without extra dock icons | Yes | Not documented | Indicators per application |
@@ -50,7 +50,7 @@ This extension adds grouping directly to Ubuntu Dock.
 | Reuse and synchronize GNOME application-grid folders | Yes, opt-in | Yes | No application folders |
 | Window previews with activation and close controls | On hover inside folders | Not documented | Yes |
 | Undo grouping changes | Last creation or move | Undo pin/unpin | No grouping |
-| Published GNOME support | 46 / Ubuntu 24.04 | 43 | Multiple versions |
+| GNOME support | 46 / Ubuntu 24.04; 50 / Ubuntu 26.04 | 43 | Multiple versions |
 
 Comparison follows the projects' published [extension listing](https://extensions.gnome.org/extension/5709/pin-app-folders-to-dash/) and [source](https://github.com/micheleg/dash-to-dock), checked in October 2026. Features marked “Not documented” are unverified. Ubuntu Dock's existing window-management features remain available outside folders.
 
@@ -92,7 +92,14 @@ ubuntu-dock-folders enable --ubuntu-settings
 
 Alternatively, use the [Launchpad PPA](https://launchpad.net/~hwakaba/+archive/ubuntu/ubuntu-dock-folders): `sudo add-apt-repository ppa:hwakaba/ubuntu-dock-folders`, then update and install the package. Choose one APT source. For manual installation, download the `.deb` from [GitHub Releases](https://github.com/hawkab/ubuntu-dock-folders/releases) and open it with your package installer, or run `sudo apt install ./ubuntu-dock-folders_*.deb`. Enable it with the command above.
 
-The extension supports desktop and laptop computers running Ubuntu 24.04 / GNOME 46, with keyboard, mouse or touch input.
+The extension supports desktop and laptop computers running Ubuntu 24.04 / GNOME 46 or Ubuntu 26.04 / GNOME 50, with keyboard, mouse or touch input. GNOME 50 support starts with version 1.1.0. The Launchpad PPA currently publishes builds for Ubuntu 24.04; on Ubuntu 26.04, use version 1.1.0 or later once published, or build from source.
+
+| Desktop | Wayland session | X11 session | X11 apps through Xwayland |
+| --- | --- | --- | --- |
+| Ubuntu 24.04 / GNOME 46 | Supported | Supported | Supported |
+| Ubuntu 26.04 / GNOME 50 | Supported | Removed by GNOME | Supported |
+
+[GNOME 50 removed X11 sessions](https://gjs.guide/extensions/upgrading/gnome-shell-50.html). X11 applications still work through Xwayland. This extension requires GNOME Shell and Ubuntu Dock; Xfce and other desktop environments use their own panels.
 
 To build and install from this repository:
 
@@ -109,7 +116,7 @@ Open **Settings → Ubuntu Desktop → Dock → Dock folders**, or **Ubuntu Dock
 
 Enable grouping, then drag icons to create folders. Use **Add an app-grid folder** to pin an existing GNOME folder; subsequent name and membership changes stay synchronized. Linked folders remain pinned if emptied, so you can refill them in the app grid. Hover over an application in an open folder to preview its windows. You can move the pointer into a preview to activate or close a window; keyboard focus also opens previews. After grouping or moving an application, use **Undo** in the notification or the folder header; Ctrl+Z also works while the folder is open. The Undo button is visible only while a grouping action can be undone; undo history is cleared when you log out or restart GNOME Shell. Enable folder customization to use the gear inside each folder; changes save automatically. Glass blur can increase GPU usage. Wallpaper accepts PNG, JPEG, BMP, WebP, GIF and SVG; GIF is displayed as a still image.
 
-Installation saves a private backup under `$XDG_STATE_HOME/ubuntu-dock-folders/backups` (normally `~/.local/state`). Run `ubuntu-dock-folders uninstall` or `make uninstall` to remove the user installation and restore the Settings launchers. Folder settings and wallpaper are retained. Remove a system-wide `.deb` with `sudo apt remove ubuntu-dock-folders` after disabling it.
+Installation saves a private backup under `$XDG_STATE_HOME/ubuntu-dock-folders/backups` (normally `~/.local/state`). Run `ubuntu-dock-folders uninstall` or `make uninstall` to remove the user installation, expand pinned folders back into applications, and restore Settings launchers. Cleanup also works after an incompatible GNOME upgrade or package removal. Folder settings and wallpaper are retained. Before removing a system-wide `.deb`, run `ubuntu-dock-folders uninstall`, then `sudo apt remove ubuntu-dock-folders`. If the package is removed first, the persistent Settings launcher opens stock Ubuntu Settings without the companion.
 
 Maintainers: [build and publish a release](docs/releasing.md).
 

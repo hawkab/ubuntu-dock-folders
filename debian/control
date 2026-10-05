@@ -3,7 +3,8 @@ Section: gnome
 Priority: optional
 Maintainer: Grigory Olshansky <hwakaba@ya.ru>
 Build-Depends: debhelper-compat (= 13), gettext, gcc, pkg-config,
- libglib2.0-dev, gnome-shell (>= 46), gnome-shell (<< 47),
+ libglib2.0-dev, gnome-shell (>= 46), gnome-shell (<< 47) | gnome-shell (>= 50), gnome-shell (<< 51),
+ gnome-control-center, gnome-shell-extension-ubuntu-dock, dconf-cli, libgl1-mesa-dri, xwayland,
  libgtk-4-1, libadwaita-1-0, librsvg2-common, python3, python3-gi, python3-pil,
  python3-cairo, python3-gi-cairo, python3-yaml,
  gir1.2-gtk-4.0, gir1.2-gdkpixbuf-2.0, gir1.2-adw-1,
@@ -17,7 +18,7 @@ Rules-Requires-Root: no
 Package: ubuntu-dock-folders
 Architecture: amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, gnome-shell (>= 46),
- gnome-shell (<< 47), gnome-shell-extension-ubuntu-dock,
+ gnome-shell (<< 47) | gnome-shell (>= 50), gnome-shell (<< 51), gnome-shell-extension-ubuntu-dock,
  libgtk-4-1, libadwaita-1-0, librsvg2-common, python3, python3-gi, python3-cairo,
  python3-gi-cairo, python3-pil, gir1.2-gtk-4.0, gir1.2-adw-1
 Description: Android-style application folders for Ubuntu Dock
@@ -29,6 +30,6 @@ Description: Android-style application folders for Ubuntu Dock
  or genie animations and optional frosted glass. The interface follows
  the system language and includes 30 translations.
  .
- Requires Ubuntu 24.04 with GNOME Shell 46 and Ubuntu Dock. After installing,
+ Requires Ubuntu 24.04 / GNOME 46 or Ubuntu 26.04 / GNOME 50 and Ubuntu Dock. After installing,
  run ubuntu-dock-folders enable --ubuntu-settings as your desktop user,
  then log out and back in.

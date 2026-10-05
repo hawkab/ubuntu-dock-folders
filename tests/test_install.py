@@ -17,6 +17,209 @@ import manage
 
 
 class InstallTests(unittest.TestCase):
+    def test_supported_shell_versions(self):
+        with (
+            patch.object(manage.os, "geteuid", return_value=1000),
+            patch.object(manage.shutil, "which", return_value="/usr/bin/gnome-extensions"),
+            patch.object(manage.Path, "exists", return_value=True),
+            patch.object(manage.subprocess, "check_output") as version,
+        ):
+            for value in ("GNOME Shell 46.0", "GNOME Shell 50.1"):
+                with self.subTest(version=value):
+                    version.return_value = value
+                    manage.check_requirements()
+            for value in ("GNOME Shell 45.0", "GNOME Shell 47.2", "GNOME Shell 49.0", "GNOME Shell 51.0"):
+                with self.subTest(version=value):
+                    version.return_value = value
+                    with self.assertRaisesRegex(RuntimeError, "GNOME Shell 46 and 50"):
+                        manage.check_requirements()
+
+    def test_settings_cleanup_handles_legacy_or_missing_install_state(self):
+        import json
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            applications = root / "applications"
+            applications.mkdir()
+            service = root / "dbus-1/services/org.gnome.Settings.service"
+            service.parent.mkdir(parents=True)
+            owned = "[Desktop Entry]\nExec=/usr/share/gnome-shell/extensions/dock-groups@local/integration/ubuntu-settings network\n"
+            settings = applications / "org.gnome.Settings.desktop"
+            network = applications / "gnome-network-panel.desktop"
+            wifi = applications / "gnome-wifi-panel.desktop"
+            custom = applications / "gnome-power-panel.desktop"
+            untouched = "[Desktop Entry]\nExec=/usr/bin/gnome-control-center power\nName=My power settings\n"
+            stock = "[Desktop Entry]\nExec=gnome-control-center network\n"
+            for file in (settings, network, wifi, service):
+                file.write_text(owned)
+            custom.write_text(untouched)
+            data = root / "launcher-groups"
+            data.mkdir()
+            state = data / "install-state.json"
+            state.write_text(json.dumps({"desktop_backups": {
+                str(network): stock, str(wifi): owned,
+                str(custom): "older custom entry", str(applications / "absent-panel.desktop"): owned,
+            }, "ubuntu_settings": True}))
+            with (
+                patch.object(manage, "DATA", data),
+                patch.object(manage, "STATE", state),
+                patch.object(manage, "APPLICATIONS", applications),
+                patch.object(manage, "SERVICE", service),
+                patch.object(manage, "refresh_desktop_database"),
+                patch.object(manage, "reload_settings_service") as reload,
+            ):
+                manage.remove_integration()
+                manage.remove_integration()
+                self.assertFalse(settings.exists())
+                self.assertFalse(service.exists())
+                self.assertFalse(wifi.exists())
+                self.assertEqual(network.read_text(), stock)
+                self.assertEqual(custom.read_text(), untouched)
+                self.assertFalse((applications / "absent-panel.desktop").exists())
+                self.assertEqual(json.loads(state.read_text())["desktop_backups"], {})
+                self.assertEqual(reload.call_count, 2)
+
+    def test_old_launchers_migrate_to_a_persistent_settings_wrapper(self):
+        import shutil
+
+        if not shutil.which("gnome-control-center"):
+            self.skipTest("GNOME Settings is not installed")
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            data = root / "launcher-groups"
+            applications = root / "applications"
+            applications.mkdir()
+            desktop = applications / "org.gnome.Settings.desktop"
+            desktop.write_text("[Desktop Entry]\nExec=/usr/share/gnome-shell/extensions/dock-groups@local/integration/ubuntu-settings\n")
+            extension = root / "extension"
+            integration = extension / "integration"
+            integration.mkdir(parents=True)
+            (integration / "settings-integration.so").write_bytes(b"fixture")
+            shutil.copy2(ROOT / "integration/ubuntu-settings", integration / "ubuntu-settings")
+            service = root / "dbus-1/services/org.gnome.Settings.service"
+            with (
+                patch.object(manage, "DATA", data),
+                patch.object(manage, "STATE", data / "install-state.json"),
+                patch.object(manage, "APPLICATIONS", applications),
+                patch.object(manage, "SERVICE", service),
+                patch.object(manage, "installed_extension", return_value=extension),
+                patch.object(manage, "refresh_desktop_database"),
+                patch.object(manage, "reload_settings_service"),
+            ):
+                manage.migrate_integration()
+                self.assertTrue((data / "ubuntu-settings").is_file())
+                self.assertIn(str(data / "ubuntu-settings"), desktop.read_text())
+                self.assertNotIn("/gnome-shell/extensions/", desktop.read_text())
+                self.assertIn(" --gapplication-service", service.read_text())
+                inode = desktop.stat().st_ino
+                manage.migrate_integration()
+                self.assertEqual(desktop.stat().st_ino, inode)
+                manage.remove_integration()
+                self.assertFalse(desktop.exists())
+                self.assertFalse(service.exists())
+                self.assertFalse((data / "ubuntu-settings").exists())
+                desktop.write_text("[Desktop Entry]\nExec=/usr/share/gnome-shell/extensions/dock-groups@local/integration/ubuntu-settings\n")
+                (integration / "settings-integration.so").unlink()
+                with patch.object(manage, "SYSTEM_EXTENSION", root / "missing-system-extension"):
+                    manage.migrate_integration()
+                self.assertFalse(desktop.exists())
+
+    def test_disabling_without_a_working_shell_keeps_cleanup_possible(self):
+        values = {"enabled-extensions": [manage.UUID, "other"], "disabled-extensions": []}
+
+        class Settings:
+            def get_strv(self, key):
+                return values[key][:]
+
+            def set_strv(self, key, value):
+                values[key] = value[:]
+
+        with (
+            patch.object(manage.Gio.Settings, "new", return_value=Settings()),
+            patch.object(manage.shutil, "which", return_value="/usr/bin/gnome-extensions"),
+            patch.object(manage, "shell_available", return_value=True),
+            patch.object(manage.subprocess, "run") as run,
+        ):
+            run.side_effect = [subprocess.CompletedProcess([], 0), subprocess.CompletedProcess([], 1)]
+            manage.set_extension_enabled(False)
+            self.assertEqual(values["enabled-extensions"], ["other"])
+            self.assertEqual(values["disabled-extensions"], [manage.UUID])
+            self.assertFalse(run.call_args.kwargs["check"])
+
+    def test_uninstall_after_package_removal_preserves_settings_and_expands_favorites(self):
+        import os
+
+        code = """
+import json,sys
+from pathlib import Path
+from unittest.mock import patch
+sys.path.insert(0,sys.argv[1])
+import manage
+from gi.repository import Gio
+root=Path(sys.argv[3])
+manage.ROOT=root
+schema=root/'extension/schemas/org.gnome.shell.extensions.dock-groups.gschema.xml'
+schema.parent.mkdir(parents=True)
+schema.write_bytes((Path(sys.argv[2])/'schemas'/schema.name).read_bytes())
+settings=manage.read_settings(Path(sys.argv[2]))
+groups={'test':{'id':'local.groups.Test','name':'Tools','icon':'folder','apps':[
+ {'desktop':'first.desktop','label':'First'},{'desktop':'second.desktop','label':'Second'}]}}
+settings.set_string('groups',json.dumps(groups))
+shell=Gio.Settings.new('org.gnome.shell')
+shell.set_strv('favorite-apps',['local.groups.Test.desktop','second.desktop','other.desktop'])
+shell.set_strv('enabled-extensions',[manage.UUID,'other'])
+manage.SYSTEM_EXTENSION=root/'missing-system-extension'
+manage.APPLICATIONS.mkdir(parents=True)
+desktop=manage.APPLICATIONS/'org.gnome.Settings.desktop'
+desktop.write_text('[Desktop Entry]\\nExec=/usr/share/gnome-shell/extensions/dock-groups@local/integration/ubuntu-settings\\n')
+group=manage.APPLICATIONS/'local.groups.Test.desktop'
+group.write_text('[Desktop Entry]\\nExec=/usr/bin/python3 /usr/share/gnome-shell/extensions/dock-groups@local/app/launcher.py test\\n')
+with patch.object(manage.os,'geteuid',return_value=1000), patch.object(sys,'argv',['manage.py','uninstall']), patch.object(manage,'check_requirements',side_effect=AssertionError('uninstall gated on Shell version')):
+ manage.main()
+ manage.main()
+assert not desktop.exists() and not group.exists()
+assert shell.get_strv('favorite-apps')==['first.desktop','second.desktop','other.desktop']
+assert shell.get_strv('enabled-extensions')==['other']
+assert json.loads(settings.get_string('groups'))==groups
+print('UNINSTALL_OK')
+"""
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            result = subprocess.run(
+                ["/usr/bin/python3", "-c", code, str(ROOT / "scripts"),
+                 str(ROOT / "build/extension"), str(root / "source")],
+                env=dict(os.environ, GSETTINGS_BACKEND="memory", XDG_DATA_HOME=str(root / "data"),
+                         XDG_CONFIG_HOME=str(root / "config"), XDG_STATE_HOME=str(root / "state")),
+                capture_output=True, text=True, timeout=30,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("UNINSTALL_OK", result.stdout)
+
+    def test_settings_launcher_falls_back_after_companion_removal(self):
+        import os
+        import shutil
+
+        if not shutil.which("gnome-control-center"):
+            self.skipTest("GNOME Settings is not installed")
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            data = root / "data"
+            companion = data / "gnome-shell/extensions" / manage.UUID / "integration"
+            companion.mkdir(parents=True)
+            wrapper = data / "launcher-groups/ubuntu-settings"
+            wrapper.parent.mkdir()
+            wrapper.write_bytes((ROOT / "integration/ubuntu-settings").read_bytes())
+            wrapper.chmod(0o755)
+            shutil.rmtree(companion.parent)
+            result = subprocess.run(
+                [str(wrapper), "--version"],
+                env=dict(os.environ, XDG_DATA_HOME=str(data)),
+                capture_output=True, text=True, timeout=15,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("gnome-control-center", result.stdout.lower())
+            self.assertNotIn("cannot be preloaded", result.stderr)
+
     def test_running_extension_is_updated_without_hot_reload(self):
         class Settings:
             def get_strv(self, key):

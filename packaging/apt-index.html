@@ -5,7 +5,7 @@
 <style>
 :root{color-scheme:dark light;font:17px/1.6 system-ui;background:#171b26;color:#edf1fb}body{max-width:760px;margin:8vh auto;padding:24px}h1{line-height:1.2;font-size:2.6rem}a{color:#b5baff}pre{background:#272d3d;border:1px solid #404960;border-radius:14px;padding:22px;overflow:auto;font:14px/1.65 monospace}.badge{background:#313849;border-radius:24px;padding:7px 14px;display:inline-block}button{background:#aeb4ff;color:#171b26;border:0;border-radius:8px;padding:9px 16px;font:inherit;cursor:pointer}footer{margin-top:48px;color:#b5bfd0}
 </style>
-<p class="badge">Signed APT repository · Ubuntu 24.04 · amd64</p>
+<p class="badge">Signed APT repository · Ubuntu 24.04 / 26.04 · amd64</p>
 <h1>Ubuntu Dock Folders</h1>
 <p>Organize Ubuntu Dock with application folders. Drag icons into groups, preview open windows and customize each folder.</p>
 <p><a href="https://github.com/hawkab/ubuntu-dock-folders">Screenshots &amp; source</a> · <a href="https://github.com/hawkab/ubuntu-dock-folders/releases">Download a release</a> · <a href="https://launchpad.net/~hwakaba/+archive/ubuntu/ubuntu-dock-folders">Launchpad PPA</a></p>
@@ -18,7 +18,7 @@ sudo apt update
 sudo apt install ubuntu-dock-folders
 ubuntu-dock-folders enable --ubuntu-settings</pre>
 <button id="copy" type="button">Copy commands</button>
-<p>Log out and back in after installing or updating GNOME Shell code. Choose either this APT source or the PPA; both carry the same package version.</p>
+<p>Log out and back in after installing or updating GNOME Shell code. This APT source supports Ubuntu 24.04 and 26.04. The PPA currently targets Ubuntu 24.04; choose one package source.</p>
 <p>Archive signing key: <code>D4FE96494637320FCA25DD35E94D1A6D97CE2319</code>. <a href="archive-key.asc">Download public key</a>.</p>
 <footer>© 2026 Grigory Olshansky · <a href="https://github.com/hawkab/ubuntu-dock-folders/blob/main/LICENSE">GPL-3.0-or-later</a> · <a href="https://hawkab.github.io/support/">Support the project</a></footer>
 <script>document.getElementById('copy').addEventListener('click',async function(){try{await navigator.clipboard.writeText(document.getElementById('install').textContent);this.textContent='Copied'}catch{this.textContent='Select and copy the commands above'}})</script>

@@ -5,6 +5,7 @@
 
 import json
 import shutil
+import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -39,6 +40,12 @@ def backup(destination=None):
         "disabled_extensions": list(shell.get_strv("disabled-extensions")),
         "files": [],
     }
+    if shutil.which("dconf"):
+        result = subprocess.run(["dconf", "dump", "/org/gnome/shell/extensions/dock-groups/"],
+                                capture_output=True, text=True, check=True)
+        raw = destination / "dock-groups.dconf"
+        raw.write_text(result.stdout)
+        raw.chmod(0o600)
     extension = USER_EXTENSION if USER_EXTENSION.exists() else SYSTEM_EXTENSION
     if (extension / "schemas/gschemas.compiled").exists():
         settings = read_settings(extension)

@@ -17,7 +17,7 @@
     <p>Organize Ubuntu Dock with application folders. Drag one icon onto another to create a folder, reorder its applications, or drag them back to the dock. Folders show real application icons and a shared running indicator.</p>
     <p>Customize each folder with a name, colors, transparency and wallpaper. Choose scale or genie animations, and optionally enable frosted glass with a blurred background. The interface follows your system language.</p>
     <p>Pin existing GNOME app-grid folders and synchronize their names and applications. Hover over an application inside a folder to preview, activate or close its windows. Running indicators appear when windows open, including during application startup. Undo the last grouping move from its notification, the folder header or Ctrl+Z.</p>
-    <p>Designed for desktop and laptop computers running Ubuntu 24.04 with GNOME Shell 46 and Ubuntu Dock. Keyboard, mouse and touch input are supported. This is a GNOME desktop extension; Android and iOS are not supported. After installation, enable the extension for your desktop account and log out and back in. The optional Settings integration adds Dock folders to Ubuntu Desktop settings.</p>
+    <p>Designed for desktop and laptop computers running Ubuntu 24.04 with GNOME Shell 46 or Ubuntu 26.04 with GNOME Shell 50 and Ubuntu Dock. Keyboard, mouse and touch input are supported. This is a GNOME desktop extension; Android and iOS are not supported. After installation, enable the extension for your desktop account and log out and back in. The optional Settings integration adds Dock folders to Ubuntu Desktop settings.</p>
   </description>
   <developer id="io.github.hawkab">
     <name>Grigory Olshansky</name>
@@ -107,6 +107,9 @@
     <content_attribute id="violence-slavery">none</content_attribute>
   </content_rating>
   <releases>
+    <release version="1.1.0" date="2026-10-05">
+      <description><p>Support Ubuntu 26.04 and GNOME Shell 50 while retaining compatibility with Ubuntu 24.04 and GNOME Shell 46. Restore Settings launchers during removal and keep stock Settings available if the package is removed first.</p></description>
+    </release>
     <release version="1.0.4" date="2026-10-05">
       <description><p>Show the project icon and author in Ubuntu App Center, and support searching by the package name.</p></description>
     </release>

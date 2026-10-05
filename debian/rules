@@ -16,6 +16,9 @@ override_dh_auto_build:
 
 override_dh_auto_test:
 	dbus-run-session -- xvfb-run -a make test
+	/usr/bin/python3 scripts/test_shell.py
+	xvfb-run -a /usr/bin/python3 scripts/test_shell.py --client-backend x11
+	if gnome-shell --help | grep -q -- '--x11 '; then xvfb-run -a /usr/bin/python3 scripts/test_shell.py --backend x11; fi
 	appstreamcli validate --no-net build/package/usr/share/metainfo/*.metainfo.xml
 	desktop-file-validate build/package/usr/share/applications/*.desktop
 
@@ -28,3 +31,6 @@ override_dh_auto_clean:
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym
+
+override_dh_compress:
+	dh_compress -Xdocs/

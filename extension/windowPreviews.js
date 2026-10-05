@@ -8,6 +8,7 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 import * as BoxPointer from 'resource:///org/gnome/shell/ui/boxpointer.js';
 import {WindowPreviewMenuItem} from 'file:///usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com/windowPreview.js';
+import {setBoxOrientation} from './compat.js';
 
 // Share pointer and keyboard focus between a folder and its window previews.
 export class FolderMenuManager extends PopupMenu.PopupMenuManager {
@@ -172,7 +173,7 @@ export class WindowPreviews {
         this.maxWidth = Math.max(250, workArea.width / scale - 80);
         this.popup.actor.set_style(`max-width: ${this.maxWidth + 30}px;`);
         this.section = new PopupMenu.PopupMenuSection();
-        this.section.box.vertical = false;
+        setBoxOrientation(this.section.box, Clutter.Orientation.HORIZONTAL);
         this.section.actor = new St.ScrollView({
             hscrollbar_policy: St.PolicyType.AUTOMATIC,
             vscrollbar_policy: St.PolicyType.NEVER,

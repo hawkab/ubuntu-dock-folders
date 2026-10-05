@@ -10,7 +10,7 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Adw, Gio, GLib, Gtk
+from gi.repository import Adw, Gio, GioUnix, GLib, Gtk
 from i18n import _, set_ui_direction
 from settings import groups
 
@@ -54,7 +54,7 @@ class GroupLauncher(Adw.Application):
             )
             content.append(tiles)
             for entry in self.group["apps"]:
-                info = Gio.DesktopAppInfo.new(entry["desktop"])
+                info = GioUnix.DesktopAppInfo.new(entry["desktop"])
                 icon = info.get_icon() if info else Gio.ThemedIcon.new("application-x-executable")
                 label = entry["label"].replace("\n", " ")
                 tile = Gtk.Box(
@@ -75,7 +75,7 @@ class GroupLauncher(Adw.Application):
 
     def launch(self, _button, desktop):
         try:
-            info = Gio.DesktopAppInfo.new(desktop)
+            info = GioUnix.DesktopAppInfo.new(desktop)
             if info is None:
                 raise RuntimeError(_("Application launcher not found."))
             context = self.window.get_display().get_app_launch_context()

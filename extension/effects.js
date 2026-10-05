@@ -2,6 +2,7 @@
 // Copyright 2026 Grigory Olshansky
 
 import Clutter from 'gi://Clutter';
+import Cogl from 'gi://Cogl';
 import GObject from 'gi://GObject';
 import St from 'gi://St';
 
@@ -18,7 +19,7 @@ export function roundedPath(cr, x, y, width, height, radius) {
 export const RoundedBackdrop = GObject.registerClass({GTypeName: 'DockGroupsRoundedBackdropV1'},
 class RoundedBackdrop extends Clutter.ShaderEffect {
     _init() {
-        super._init({shader_type: Clutter.ShaderType.FRAGMENT_SHADER});
+        super._init({shader_type: Clutter.ShaderType?.FRAGMENT_SHADER ?? Cogl.ShaderType.FRAGMENT});
         this._values = new Map();
         this._dimensions = new Map();
         this.set_shader_source(`

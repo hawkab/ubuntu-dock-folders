@@ -4,6 +4,8 @@
 """Verify offline package metadata and the extension bundle."""
 
 import subprocess
+import gzip
+import shutil
 import sys
 import tempfile
 import unittest
@@ -19,6 +21,7 @@ STAGE = ROOT / "build/package"
 APP_ID = "io.github.hawkab.UbuntuDockFolders"
 sys.path.insert(0, str(ROOT / "scripts"))
 import apt_repo
+from catalog import verify_local_media
 
 
 class PackageTests(unittest.TestCase):
@@ -94,7 +97,24 @@ class PackageTests(unittest.TestCase):
     def test_extension_bundle_contains_hover_preview_module(self):
         with zipfile.ZipFile(ROOT / "dist/dock-groups@local.shell-extension.zip") as bundle:
             self.assertIn("windowPreviews.js", bundle.namelist())
+            self.assertIn("compat.js", bundle.namelist())
             self.assertIn("./windowPreviews.js", bundle.read("extension.js").decode())
+
+    def test_final_package_rejects_compressed_catalog_media(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            stage = root / "stage"
+            shutil.copytree(STAGE, stage)
+            package = root / "media.deb"
+            command = ["dpkg-deb", "--build", "--root-owner-group", stage, package]
+            subprocess.run(command, check=True, stdout=subprocess.DEVNULL)
+            verify_local_media(package)
+            video = stage / "usr/share/doc/ubuntu-dock-folders/docs/demo.webm"
+            video.with_suffix(".webm.gz").write_bytes(gzip.compress(video.read_bytes()))
+            video.unlink()
+            subprocess.run(command, check=True, stdout=subprocess.DEVNULL)
+            with self.assertRaisesRegex(ValueError, "Package media is missing.*demo.webm"):
+                verify_local_media(package)
 
 
 if __name__ == "__main__":

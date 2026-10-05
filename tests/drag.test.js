@@ -13,7 +13,7 @@ const source = readFileSync(new URL('../extension/extension.js', import.meta.url
 function extensionFor(onFavorites = () => {}) {
     const DockGroups = runInNewContext(`${source}\nDockGroups`, {
         FolderRenderer: class {},
-        Gio: {DesktopAppInfo: {new: () => null}},
+        GioUnix: {DesktopAppInfo: {new: () => null}},
         global: {settings: {set_strv: onFavorites}},
         St: {Side: {LEFT: 0, RIGHT: 1}},
         DND: {DragMotionResult: {CONTINUE: 0, MOVE_DROP: 1}},

@@ -53,6 +53,7 @@ def build():
         "app",
         "icons",
         "effects.js",
+        "compat.js",
         "rendering.js",
         "gridFolders.js",
         "windowPreviews.js",
@@ -201,7 +202,7 @@ def package(extension, stage_only=False):
     catalog_tree.write(catalog_path, encoding="UTF-8", xml_declaration=True)
     control = stage / "DEBIAN"
     control.mkdir()
-    dependencies = "gnome-shell (>= 46), gnome-shell (<< 47), gnome-shell-extension-ubuntu-dock, python3, python3-gi, python3-cairo, python3-gi-cairo, python3-pil, gir1.2-gtk-4.0, gir1.2-adw-1"
+    dependencies = "gnome-shell (>= 46), gnome-shell (<< 47) | gnome-shell (>= 50), gnome-shell (<< 51), gnome-shell-extension-ubuntu-dock, python3, python3-gi, python3-cairo, python3-gi-cairo, python3-pil, gir1.2-gtk-4.0, gir1.2-adw-1"
     installed_size = sum(
         path.stat().st_size for path in (stage / "usr").rglob("*") if path.is_file()
     )
@@ -217,7 +218,7 @@ def package(extension, stage_only=False):
         " Customize names, labels, colors, transparency and wallpaper. Choose scale\n"
         " or genie animations and optional frosted glass. The interface follows\n"
         " the system language and includes 30 translations.\n .\n"
-        " Requires Ubuntu 24.04 with GNOME Shell 46 and Ubuntu Dock. After installing,\n"
+        " Requires Ubuntu 24.04 / GNOME 46 or Ubuntu 26.04 / GNOME 50 and Ubuntu Dock. After installing,\n"
         " run ubuntu-dock-folders enable --ubuntu-settings as your desktop user,\n"
         " then log out and back in. Settings are available in Ubuntu Desktop\n"
         " settings or the Ubuntu Dock Folders application entry.\n .\n"

@@ -13,7 +13,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Gdk", "4.0")
 gi.require_version("Adw", "1")
 gi.require_version("GdkPixbuf", "2.0")
-from gi.repository import Gdk, GdkPixbuf, Gio, GLib, Gtk, Pango, PangoCairo
+from gi.repository import Gdk, GdkPixbuf, Gio, GioUnix, GLib, Gtk, Pango, PangoCairo
 from i18n import _
 
 
@@ -70,7 +70,7 @@ class FolderPreview(Gtk.DrawingArea):
     def icon(self, entry):
         desktop = entry["desktop"]
         if desktop not in self.icons:
-            info = Gio.DesktopAppInfo.new(desktop)
+            info = GioUnix.DesktopAppInfo.new(desktop)
             gicon = info.get_icon() if info else Gio.ThemedIcon.new("application-x-executable")
             theme = Gtk.IconTheme.get_for_display(self.get_display())
             paintable = theme.lookup_by_gicon(

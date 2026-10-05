@@ -1,8 +1,12 @@
 # Release publication
 
-Ubuntu 24.04 (`noble`), GNOME 46 and amd64 are the supported target. Use a Debian version such as `1.0.3-1ubuntu24.04.1`; `~` is excluded because GitHub renames it in asset filenames. The Debian version in `debian/changelog` is shared by the PPA, GitHub Releases and the signed [APT repository](https://hawkab.github.io/apt/). The PPA builds its binary on Launchpad; the other channels use the locally tested binary.
+Ubuntu 24.04 (`noble`) / GNOME 46 and Ubuntu 26.04 (`resolute`) / GNOME 50 are the supported runtimes on amd64. Build the release binary on Ubuntu 24.04 and test it on both runtimes. The Launchpad publication target remains `noble`; a `resolute` PPA requires a separate source upload. Use a Debian version such as `1.1.0-1ubuntu24.04.1`; `~` is excluded because GitHub renames it in asset filenames. The Debian version in `debian/changelog` is shared by the PPA, GitHub Releases and the signed [APT repository](https://hawkab.github.io/apt/). The PPA builds its binary on Launchpad; the other channels use the locally tested binary.
 
 ## Publish
+
+`make test-shell` checks grouping, both animations, glass blur, running indicators, window previews, reordering, extraction, undo and extension cleanup in a private headless GNOME Shell. It uses temporary settings, a private D-Bus session and software rendering. The `Check` workflow runs the package and Shell checks on Ubuntu 24.04 and 26.04.
+
+Run `xvfb-run -a python3 scripts/test_shell.py --client-backend x11` to check Xwayland applications. On GNOME 46, also run `xvfb-run -a python3 scripts/test_shell.py --backend x11` for a native X11 session. GNOME 50 no longer provides the X11 session backend. The package tests also remove the companion while the actual Ubuntu Settings panel and its folder dialog are open.
 
 Update `debian/changelog`, the AppStream release entry and the extension metadata version. Commit the reviewed changes and create a version tag:
 
@@ -18,7 +22,7 @@ Manual runs from `main` use its current publisher with a separate checkout of th
 The same pipeline runs locally:
 
 ```sh
-sudo apt install build-essential debhelper devscripts dput apt-utils appstream-compose desktop-file-utils gettext git gnupg locales-all libglib2.0-dev librsvg2-common pkg-config gnome-shell gnome-shell-extension-ubuntu-dock python3-gi python3-pil python3-cairo python3-gi-cairo python3-yaml gir1.2-gtk-4.0 gir1.2-gdkpixbuf-2.0 gir1.2-adw-1 nodejs dbus-daemon xvfb xauth gh
+sudo apt install build-essential debhelper devscripts dput apt-utils appstream-compose desktop-file-utils gettext git gnupg locales-all libglib2.0-dev librsvg2-common pkg-config gnome-shell gnome-shell-extension-ubuntu-dock gnome-control-center dconf-cli python3-gi python3-pil python3-cairo python3-gi-cairo python3-yaml gir1.2-gtk-4.0 gir1.2-gdkpixbuf-2.0 gir1.2-adw-1 nodejs dbus-daemon xvfb xauth xwayland gh
 python3 scripts/release.py
 python3 scripts/release.py --publish --prepared dist/releases/1.0.3
 ```

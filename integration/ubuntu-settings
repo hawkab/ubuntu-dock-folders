@@ -1,8 +1,18 @@
 #!/bin/sh
-DOCK_GROUPS_DATA="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
-export DOCK_GROUPS_DATA
-DOCK_GROUPS_PRELOAD_ORIGINAL="${LD_PRELOAD-}"
-export DOCK_GROUPS_PRELOAD_ORIGINAL
-LD_PRELOAD="$DOCK_GROUPS_DATA/integration/settings-integration.so${LD_PRELOAD:+:$LD_PRELOAD}"
-export LD_PRELOAD
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright 2026 Grigory Olshansky
+
+# Open stock Settings when the optional companion has been removed.
+DOCK_GROUPS_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/gnome-shell/extensions/dock-groups@local"
+if [ ! -r "$DOCK_GROUPS_DATA/integration/settings-integration.so" ]; then
+    DOCK_GROUPS_DATA=/usr/share/gnome-shell/extensions/dock-groups@local
+fi
+if [ -r "$DOCK_GROUPS_DATA/integration/settings-integration.so" ] &&
+   [ -r "$DOCK_GROUPS_DATA/preferences.ui" ]; then
+    export DOCK_GROUPS_DATA
+    DOCK_GROUPS_PRELOAD_ORIGINAL="${LD_PRELOAD-}"
+    export DOCK_GROUPS_PRELOAD_ORIGINAL
+    LD_PRELOAD="$DOCK_GROUPS_DATA/integration/settings-integration.so${LD_PRELOAD:+:$LD_PRELOAD}"
+    export LD_PRELOAD
+fi
 exec /usr/bin/gnome-control-center "$@"

@@ -3,6 +3,7 @@
 
 import Clutter from 'gi://Clutter';
 import Gio from 'gi://Gio';
+import GioUnix from 'gi://GioUnix';
 import GLib from 'gi://GLib';
 import Pango from 'gi://Pango';
 import Shell from 'gi://Shell';
@@ -15,6 +16,7 @@ import {FlowEffect} from './effects.js';
 import {AppGridFolders} from './gridFolders.js';
 import {FolderMenuManager, WindowPreviews} from './windowPreviews.js';
 import {moveEntry, pruneGroups, quoteDesktopArgument} from './model.js';
+import {createBoxLayout} from './compat.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 import * as BoxPointer from 'resource:///org/gnome/shell/ui/boxpointer.js';
@@ -46,6 +48,12 @@ export default class DockGroups extends FolderRenderer {
         this._enabled = true;
         this._settings = this.getSettings('org.gnome.shell.extensions.dock-groups');
         this._data = GLib.build_filenamev([GLib.get_user_data_dir(), 'launcher-groups']);
+        const repair = '/usr/share/ubuntu-dock-folders/scripts/manage.py';
+        if (!Gio.File.new_for_path(`${this._data}/ubuntu-settings`).query_exists(null) &&
+            Gio.File.new_for_path(repair).query_exists(null)) {
+            Gio.Subprocess.new(['/usr/bin/python3', repair, 'repair-settings'],
+                Gio.SubprocessFlags.STDOUT_SILENCE | Gio.SubprocessFlags.STDERR_SILENCE);
+        }
         this._configTimer = 0;
         this._dragging = false;
         this._dropIcons = new Set();
@@ -245,7 +253,7 @@ export default class DockGroups extends FolderRenderer {
             if (!app && Object.values(this._groups).some(group => `${group.id}.desktop` === id)) {
                 app = this._appSystem.lookup_app(id) ?? this._folderApps.get(id);
                 if (!app) {
-                    const info = Gio.DesktopAppInfo.new_from_filename(
+                    const info = GioUnix.DesktopAppInfo.new_from_filename(
                         `${GLib.get_user_data_dir()}/applications/${id}`);
                     if (info) {
                         app = new Shell.App({app_info: info});
@@ -284,7 +292,7 @@ export default class DockGroups extends FolderRenderer {
                 Object.defineProperty(entry, 'group', {value: group, configurable: true});
                 for (const id of [entry.desktop, ...(entry.aliases ?? [])])
                     this._entryIds.set(id, entry);
-                const wmClass = Gio.DesktopAppInfo.new(entry.desktop)?.get_startup_wm_class();
+                const wmClass = GioUnix.DesktopAppInfo.new(entry.desktop)?.get_startup_wm_class();
                 for (const cls of [...(entry.wmClasses ?? []), ...(wmClass ? [wmClass] : [])])
                     this._classes.set(cls.toLowerCase(), entry);
             }
@@ -461,7 +469,7 @@ export default class DockGroups extends FolderRenderer {
         button.groupEntry = entry;
         button._delegate = button;
         button.getDragActor = () => button.app?.create_icon_texture(64) ??
-            new St.Icon({gicon: Gio.DesktopAppInfo.new(entry.desktop)?.get_icon(), icon_size: 64});
+            new St.Icon({gicon: GioUnix.DesktopAppInfo.new(entry.desktop)?.get_icon(), icon_size: 64});
         button.getDragActorSource = () => button.get_child().get_first_child();
         button.handleDragOver = source => {
             if (!this._sourceEntry(source) || source === button)
@@ -726,7 +734,7 @@ export default class DockGroups extends FolderRenderer {
         icon.getWindows = () => this._windows(group);
         icon._updateRunningState = () => { icon.running = icon.windowsCount > 0; };
         icon._updateFocusState = () => {
-            if (!this._enabled || !dash._scrollView?.get_vscroll_bar())
+            if (!this._enabled || !dash._scrollView?.get_stage())
                 return;
             const window = global.display.focus_window;
             icon.focused = icon.mapped && icon.running &&
@@ -759,7 +767,8 @@ export default class DockGroups extends FolderRenderer {
         const manager = new FolderMenuManager(menu, previews);
 
         const item = new PopupMenu.PopupBaseMenuItem({reactive: false, can_focus: false});
-        const content = new St.BoxLayout({vertical: true, style_class: 'dock-group-content'});
+        const content = createBoxLayout(Clutter.Orientation.VERTICAL, {
+            style_class: 'dock-group-content'});
         const header = new St.BoxLayout({style_class: 'dock-group-header'});
         const title = new St.Label({text: group.name, style_class: 'dock-group-title', x_expand: true,
             y_align: Clutter.ActorAlign.CENTER});
@@ -792,10 +801,11 @@ export default class DockGroups extends FolderRenderer {
                 style_class: 'dock-group-tile', can_focus: true, reactive: true,
                 accessible_name: entry.label.replaceAll('\n', ' '),
             });
-            const tile = new St.BoxLayout({vertical: true, style_class: 'dock-group-tile-content'});
+            const tile = createBoxLayout(Clutter.Orientation.VERTICAL, {
+                style_class: 'dock-group-tile-content'});
             const app = this._appSystem.lookup_app(entry.desktop);
             tile.add_child(app?.create_icon_texture(64) ?? new St.Icon({
-                gicon: Gio.DesktopAppInfo.new(entry.desktop)?.get_icon(), icon_size: 64,
+                gicon: GioUnix.DesktopAppInfo.new(entry.desktop)?.get_icon(), icon_size: 64,
                 x_align: Clutter.ActorAlign.CENTER,
             }));
             tile.add_child(new St.Label({
@@ -990,7 +1000,7 @@ export default class DockGroups extends FolderRenderer {
             Main.activateWindow(windows[0]);
             return;
         }
-        const info = Gio.DesktopAppInfo.new(entry.desktop);
+        const info = GioUnix.DesktopAppInfo.new(entry.desktop);
         if (info) {
             try {
                 info.launch([], global.create_app_launch_context(0, -1));

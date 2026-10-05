@@ -23,6 +23,7 @@ extern GObject *gtk_builder_get_object(GtkBuilder *, const char *);
 extern void gtk_window_set_transient_for(GObject *, GObject *);
 extern void gtk_window_set_destroy_with_parent(GObject *, gboolean);
 extern void gtk_window_present(GObject *);
+extern void gtk_window_destroy(GObject *);
 extern GtkWidget *adw_action_row_new(void);
 extern void adw_preferences_row_set_title(GObject *, const char *);
 extern void adw_action_row_set_subtitle(GObject *, const char *);
@@ -73,6 +74,11 @@ static void open_grid_folders(GObject *row, gpointer unused) {
 
 static void open_preferences(GObject *row, gpointer unused) {
     (void) unused;
+    g_autofree char *filename = g_build_filename(g_getenv("DOCK_GROUPS_DATA"), "preferences.ui", NULL);
+    if (!g_file_test(filename, G_FILE_TEST_IS_REGULAR)) {
+        g_object_set(row, "visible", FALSE, NULL);
+        return;
+    }
     GWeakRef *window_ref = g_object_get_data(row, "dock-groups-window");
     if (window_ref) {
         g_autoptr(GObject) existing = g_weak_ref_get(window_ref);
@@ -80,7 +86,6 @@ static void open_preferences(GObject *row, gpointer unused) {
     }
     g_autoptr(GSettings) settings = settings_new();
     if (!settings) return;
-    g_autofree char *filename = g_build_filename(g_getenv("DOCK_GROUPS_DATA"), "preferences.ui", NULL);
     GtkBuilder *builder = gtk_builder_new();
     gtk_builder_set_translation_domain(builder, GETTEXT_DOMAIN);
     g_autoptr(GError) error = NULL;
@@ -133,6 +138,21 @@ static void subpage_changed(GObject *panel, GParamSpec *pspec, GObject *row) {
         g_object_ref(row), g_object_unref);
 }
 
+static void companion_changed(GFileMonitor *monitor, GFile *file, GFile *other,
+                              GFileMonitorEvent event, GObject *row) {
+    (void) monitor;
+    (void) other;
+    (void) event;
+    g_autofree char *filename = g_file_get_path(file);
+    if (g_file_test(filename, G_FILE_TEST_IS_REGULAR)) return;
+    g_object_set(row, "visible", FALSE, NULL);
+    GWeakRef *ref = g_object_get_data(row, "dock-groups-window");
+    if (ref) {
+        g_autoptr(GObject) window = g_weak_ref_get(ref);
+        if (window) gtk_window_destroy(window);
+    }
+}
+
 void gtk_widget_init_template(GtkWidget *widget) {
     static void (*original)(GtkWidget *) = NULL;
     if (!original) original = dlsym(RTLD_NEXT, "gtk_widget_init_template");
@@ -140,6 +160,8 @@ void gtk_widget_init_template(GtkWidget *widget) {
     if (g_strcmp0(G_OBJECT_TYPE_NAME(widget), "CcUbuntuPanel") != 0) return;
     const char *data = g_getenv("DOCK_GROUPS_DATA");
     if (!data) return;
+    g_autofree char *filename = g_build_filename(data, "preferences.ui", NULL);
+    if (!g_file_test(filename, G_FILE_TEST_IS_REGULAR)) return;
     g_autofree char *locale_directory = g_build_filename(data, "locale", NULL);
     bindtextdomain(GETTEXT_DOMAIN, locale_directory);
     bind_textdomain_codeset(GETTEXT_DOMAIN, "UTF-8");
@@ -152,6 +174,12 @@ void gtk_widget_init_template(GtkWidget *widget) {
     adw_action_row_add_suffix(row, gtk_image_new_from_icon_name("go-next-symbolic"));
     g_signal_connect(row, "activated", G_CALLBACK(open_preferences), NULL);
     adw_preferences_group_add(group, row);
+    g_autoptr(GFile) file = g_file_new_for_path(filename);
+    GFileMonitor *monitor = g_file_monitor_file(file, G_FILE_MONITOR_NONE, NULL, NULL);
+    if (monitor) {
+        g_signal_connect_object(monitor, "changed", G_CALLBACK(companion_changed), row, 0);
+        g_object_set_data_full(G_OBJECT(row), "dock-groups-monitor", monitor, g_object_unref);
+    }
     g_object_set_data(group, "dock-groups-added", GINT_TO_POINTER(1));
     g_signal_connect_object(widget, "notify::subpage", G_CALLBACK(subpage_changed), row, 0);
 }

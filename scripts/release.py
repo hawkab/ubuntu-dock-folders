@@ -19,6 +19,7 @@ import urllib.request
 from pathlib import Path
 
 from apt_repo import ROOT, run, sha256, update_archive
+from catalog import verify_local_media
 
 PACKAGE = "ubuntu-dock-folders"
 STATE = (
@@ -187,6 +188,7 @@ def verify_release(directory, settings, env):
     for source in list(directory.glob("*.dsc")) + list(directory.glob("*_source.changes")):
         run("gpg", "--verify", source, env=env)
     run("dput", "-o", next(directory.glob("*_source.changes")), cwd=directory, env=env)
+    verify_local_media(next(directory.glob("*.deb")))
     return manifest
 
 
@@ -405,7 +407,7 @@ def publish_github(directory, manifest, settings):
     )
     if lookup.returncode:
         notes = (
-            f"Ubuntu Dock Folders {manifest['upstream']} for Ubuntu 24.04 / GNOME 46.\n\n"
+            f"Ubuntu Dock Folders {manifest['upstream']} for Ubuntu 24.04 / GNOME 46 and Ubuntu 26.04 / GNOME 50.\n\n"
             f"Package version: `{manifest['version']}`.\n\n"
             f"Install and receive updates: {settings['apt_url']}\n\n"
             f"PPA: https://launchpad.net/~{settings['launchpad_owner']}"

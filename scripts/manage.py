@@ -76,11 +76,23 @@ def write_state(value):
     STATE.chmod(0o600)
 
 
+def preserve_settings_override(current, destination):
+    contents = destination.read_text() if destination.exists() else None
+    originals = current["desktop_backups"]
+    if not integration_override(contents):
+        originals[str(destination)] = contents
+    elif str(destination) not in originals or integration_override(originals[str(destination)]):
+        originals[str(destination)] = None
+
+
 def install_integration(extension):
     integration = extension / "integration"
     if not (integration / "settings-integration.so").exists():
         raise RuntimeError("Build the Ubuntu Settings companion first: make build")
-    wrapper = quote_exec(integration / "ubuntu-settings")
+    launcher = DATA / "ubuntu-settings"
+    atomic_copy(integration / "ubuntu-settings", launcher)
+    launcher.chmod(0o755)
+    wrapper = quote_exec(launcher)
     current = state()
     originals = [Path("/usr/share/applications/org.gnome.Settings.desktop")]
     originals.extend(Path("/usr/share/applications").glob("*panel.desktop"))
@@ -90,40 +102,93 @@ def install_integration(extension):
         if not re.search(r"^Exec=gnome-control-center(?: |$)", text, re.M):
             continue
         destination = APPLICATIONS / source.name
-        current["desktop_backups"].setdefault(
-            str(destination), destination.read_text() if destination.exists() else None
-        )
+        preserve_settings_override(current, destination)
         destination.write_text(
             re.sub(
                 r"^Exec=gnome-control-center", lambda _match: "Exec=" + wrapper, text, flags=re.M
             )
         )
-    current["desktop_backups"].setdefault(
-        str(SERVICE), SERVICE.read_text() if SERVICE.exists() else None
-    )
+    preserve_settings_override(current, SERVICE)
     SERVICE.parent.mkdir(parents=True, exist_ok=True)
     SERVICE.write_text(
         "[D-BUS Service]\nName=org.gnome.Settings\nExec="
-        + quote_exec(integration / "ubuntu-settings", field_codes=False)
-        + "\n"
+        + quote_exec(launcher, field_codes=False)
+        + " --gapplication-service\n"
     )
     current["ubuntu_settings"] = True
     write_state(current)
     refresh_desktop_database()
+    reload_settings_service()
+
+
+def integration_override(contents):
+    if not contents:
+        return False
+    return any(
+        "ubuntu-settings" in line
+        and ("dock-groups@local/integration/" in line or "launcher-groups/" in line)
+        for line in contents.splitlines() if line.startswith("Exec=")
+    )
 
 
 def remove_integration():
     current = state()
-    for filename, original in current["desktop_backups"].items():
-        path = Path(filename)
-        if original is None:
+    candidates = {SERVICE, APPLICATIONS / "org.gnome.Settings.desktop"}
+    candidates.update(APPLICATIONS.glob("*panel.desktop"))
+    for path in candidates:
+        if not path.is_file() or not integration_override(path.read_text()):
+            continue
+        original = current["desktop_backups"].get(str(path))
+        if original is None or integration_override(original):
             path.unlink(missing_ok=True)
         else:
-            path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(original)
+    current["desktop_backups"] = {}
     current["ubuntu_settings"] = False
     write_state(current)
+    (DATA / "ubuntu-settings").unlink(missing_ok=True)
     refresh_desktop_database()
+    reload_settings_service()
+
+
+def migrate_integration():
+    candidates = [SERVICE, APPLICATIONS / "org.gnome.Settings.desktop"]
+    candidates.extend(APPLICATIONS.glob("*panel.desktop"))
+    legacy = f"/gnome-shell/extensions/{UUID}/integration/ubuntu-settings"
+    if not any(path.is_file() and legacy in path.read_text() for path in candidates):
+        return
+    try:
+        extension = installed_extension()
+    except RuntimeError:
+        remove_integration()
+        return
+    for candidate in (extension, SYSTEM_EXTENSION):
+        if (candidate / "integration/settings-integration.so").exists():
+            install_integration(candidate)
+            return
+    remove_integration()
+
+
+def reload_settings_service():
+    try:
+        Gio.bus_get_sync(Gio.BusType.SESSION, None).call_sync(
+            "org.freedesktop.DBus", "/org/freedesktop/DBus", "org.freedesktop.DBus",
+            "ReloadConfig", None, None, Gio.DBusCallFlags.NONE, 1000, None,
+        )
+    except GLib.Error:
+        pass
+
+
+def shell_available():
+    try:
+        result = Gio.bus_get_sync(Gio.BusType.SESSION, None).call_sync(
+            "org.freedesktop.DBus", "/org/freedesktop/DBus", "org.freedesktop.DBus",
+            "NameHasOwner", GLib.Variant("(s)", ("org.gnome.Shell",)),
+            GLib.VariantType.new("(b)"), Gio.DBusCallFlags.NONE, 1000, None,
+        )
+        return result.unpack()[0]
+    except GLib.Error:
+        return False
 
 
 def install_presentation(extension):
@@ -212,8 +277,8 @@ def check_requirements():
     if not shutil.which("gnome-extensions"):
         raise RuntimeError("GNOME Shell is required.")
     version = subprocess.check_output(["gnome-shell", "--version"], text=True)
-    if not re.search(r"\b46\.", version):
-        raise RuntimeError("This release supports Ubuntu 24.04 with GNOME Shell 46.")
+    if not re.search(r"\b(?:46|50)\.", version):
+        raise RuntimeError("This release supports GNOME Shell 46 and 50 on Ubuntu 24.04 and 26.04.")
     dock = Path("/usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com")
     if not dock.exists():
         raise RuntimeError("Install gnome-shell-extension-ubuntu-dock first.")
@@ -275,21 +340,27 @@ def install_group_launchers(extension, groups):
 
 
 def set_extension_enabled(enabled):
-    known = (
-        subprocess.run(
-            ["gnome-extensions", "info", UUID], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
-        ).returncode
-        == 0
-    )
+    shell = Gio.Settings.new("org.gnome.shell")
+    wanted = [item for item in shell.get_strv("enabled-extensions") if item != UUID]
+    blocked = [item for item in shell.get_strv("disabled-extensions") if item != UUID]
+    (wanted if enabled else blocked).append(UUID)
+    shell.set_strv("enabled-extensions", wanted)
+    shell.set_strv("disabled-extensions", blocked)
+    known = False
+    if shutil.which("gnome-extensions") and shell_available():
+        try:
+            known = subprocess.run(
+                ["gnome-extensions", "info", UUID],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=5,
+            ).returncode == 0
+        except subprocess.TimeoutExpired:
+            pass
     if known:
-        subprocess.run(["gnome-extensions", "enable" if enabled else "disable", UUID], check=True)
-    else:
-        shell = Gio.Settings.new("org.gnome.shell")
-        wanted = [item for item in shell.get_strv("enabled-extensions") if item != UUID]
-        blocked = [item for item in shell.get_strv("disabled-extensions") if item != UUID]
-        (wanted if enabled else blocked).append(UUID)
-        shell.set_strv("enabled-extensions", wanted)
-        shell.set_strv("disabled-extensions", blocked)
+        try:
+            subprocess.run(["gnome-extensions", "enable" if enabled else "disable", UUID],
+                           check=enabled, timeout=5)
+        except subprocess.TimeoutExpired:
+            known = False
     return known
 
 
@@ -356,21 +427,39 @@ def install(ubuntu_settings=False, backup_directory=None):
     enable(ubuntu_settings, activate=not running)
 
 
+def cleanup_settings():
+    for extension in (USER_EXTENSION, SYSTEM_EXTENSION, ROOT / "build/extension"):
+        if (extension / "schemas/gschemas.compiled").exists():
+            return read_settings(extension)
+    schema = ROOT / "extension/schemas/org.gnome.shell.extensions.dock-groups.gschema.xml"
+    if not schema.exists():
+        return None
+    with tempfile.TemporaryDirectory(prefix="dock-folders-schema-") as directory:
+        extension = Path(directory)
+        (extension / "schemas").mkdir()
+        shutil.copy2(schema, extension / "schemas" / schema.name)
+        subprocess.run(["glib-compile-schemas", "--strict", str(extension / "schemas")], check=True)
+        return read_settings(extension)
+
+
 def uninstall(backup_directory=None):
-    extension = installed_extension()
     saved = backup(backup_directory)
     print("Backup:", saved)
-    settings = read_settings(extension)
+    settings = cleanup_settings()
     set_extension_enabled(False)
-    expand_favorites(settings)
+    if settings:
+        expand_favorites(settings)
     remove_integration()
     remove_presentation()
     if USER_EXTENSION.exists():
-        subprocess.run(["gnome-extensions", "uninstall", UUID], check=True)
-    groups = json.loads(settings.get_string("groups"))
-    for group in groups.values():
-        if re.fullmatch(r"local\.groups\.[A-Za-z0-9_-]+", group["id"]):
-            (APPLICATIONS / (group["id"] + ".desktop")).unlink(missing_ok=True)
+        shutil.rmtree(USER_EXTENSION)
+    for path in APPLICATIONS.glob("local.groups.*.desktop"):
+        if UUID in path.read_text() or "/launcher-groups/" in path.read_text():
+            path.unlink()
+    (DATA / "group-desktops.json").unlink(missing_ok=True)
+    for name in ("launcher.py", "preferences.py"):
+        (DATA / name).unlink(missing_ok=True)
+    refresh_desktop_database()
     print(
         "Removed the user extension. Folder settings and wallpaper were retained for reinstallation."
     )
@@ -380,7 +469,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Install, enable, or remove Ubuntu Dock Folders for the current user."
     )
-    parser.add_argument("command", choices=("install", "enable", "uninstall", "backup"))
+    parser.add_argument("command", choices=("install", "enable", "uninstall", "backup", "repair-settings"))
     parser.add_argument(
         "--ubuntu-settings",
         action="store_true",
@@ -392,13 +481,19 @@ def main():
         if args.command == "backup":
             print(backup(args.backup_directory))
             return
+        if args.command in ("uninstall", "repair-settings"):
+            if os.geteuid() == 0:
+                raise RuntimeError("Run this command as your desktop user, without sudo.")
+            if args.command == "uninstall":
+                uninstall(args.backup_directory)
+            else:
+                migrate_integration()
+            return
         check_requirements()
         if args.command == "install":
             install(args.ubuntu_settings, args.backup_directory)
         elif args.command == "enable":
             enable(args.ubuntu_settings)
-        else:
-            uninstall(args.backup_directory)
     except (RuntimeError, subprocess.CalledProcessError, GLib.Error) as error:
         parser.exit(1, f"{error}\n")
 
