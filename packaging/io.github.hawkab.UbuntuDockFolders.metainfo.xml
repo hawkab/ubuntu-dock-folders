@@ -97,6 +97,9 @@
     <content_attribute id="violence-slavery">none</content_attribute>
   </content_rating>
   <releases>
+    <release version="1.0.1" date="2026-10-05">
+      <description><p>Restore Material Glass when reopening folders and keep its backdrop aligned without animations. Add signed APT and Launchpad release channels.</p></description>
+    </release>
     <release version="1.0.0" date="2026-10-04">
       <description><p>Initial release with dock folders, app-grid synchronization, window previews, undo, appearance controls and 30 interface languages.</p></description>
     </release>

@@ -1,0 +1,7 @@
+ubuntu-dock-folders (1.0.1-1~noble1) noble; urgency=medium
+
+  * Restore Material Glass blur when folders are reopened.
+  * Keep the backdrop aligned when animations are disabled.
+  * Add signed APT, Launchpad PPA and GitHub release publication.
+
+ -- Grigory Olshansky <hwakaba@ya.ru>  Mon, 05 Oct 2026 13:00:00 +0300

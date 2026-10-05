@@ -79,14 +79,25 @@ ton://transfer/UQAHqYcL2i1sls0c_R9o22r-m3zORIg2bzCC1gGW4rjK94G9?jetton=EQCxE6mUt
 
 ## Install and configure
 
-Install the `.deb` with your package installer or `sudo apt install ./ubuntu-dock-folders_1.0.0_amd64.deb`. Then run `ubuntu-dock-folders enable --ubuntu-settings` as your desktop user. The package includes an application icon, an AppStream description and screenshot metadata. GNOME Software needs a published AppStream catalog to show the full card before installing a local `.deb`; standalone packages do not provide automatic APT updates.
+Use the [signed APT repository](https://hawkab.github.io/apt/) to receive updates through Ubuntu’s package manager:
+
+```sh
+sudo install -d -m 0755 /etc/apt/keyrings
+curl -fsSL https://hawkab.github.io/apt/archive-key.gpg | sudo tee /etc/apt/keyrings/hawkab-archive-keyring.gpg >/dev/null
+curl -fsSL https://hawkab.github.io/apt/hawkab.sources | sudo tee /etc/apt/sources.list.d/hawkab.sources >/dev/null
+sudo apt update
+sudo apt install ubuntu-dock-folders
+ubuntu-dock-folders enable --ubuntu-settings
+```
+
+Alternatively, use the [Launchpad PPA](https://launchpad.net/~hwakaba/+archive/ubuntu/ubuntu-dock-folders): `sudo add-apt-repository ppa:hwakaba/ubuntu-dock-folders`, then update and install the package. Choose one APT source. For manual installation, download the `.deb` from [GitHub Releases](https://github.com/hawkab/ubuntu-dock-folders/releases) and open it with your package installer, or run `sudo apt install ./ubuntu-dock-folders_*.deb`. Enable it with the command above.
 
 The extension supports desktop and laptop computers running Ubuntu 24.04 / GNOME 46, with keyboard, mouse or touch input.
 
 To build and install from this repository:
 
 ```sh
-sudo apt install git make gcc pkg-config gettext libglib2.0-dev gnome-shell gnome-shell-extension-ubuntu-dock libgtk-4-1 libadwaita-1-0 python3-gi python3-pil python3-cairo python3-gi-cairo gir1.2-gtk-4.0 gir1.2-gdkpixbuf-2.0 gir1.2-adw-1
+sudo apt install git make dpkg-dev gcc pkg-config gettext libglib2.0-dev gnome-shell gnome-shell-extension-ubuntu-dock libgtk-4-1 libadwaita-1-0 python3-gi python3-pil python3-cairo python3-gi-cairo gir1.2-gtk-4.0 gir1.2-gdkpixbuf-2.0 gir1.2-adw-1
 git clone https://github.com/hawkab/ubuntu-dock-folders.git
 cd ubuntu-dock-folders
 make install
@@ -99,5 +110,7 @@ Open **Settings → Ubuntu Desktop → Dock → Dock folders**, or **Ubuntu Dock
 Enable grouping, then drag icons to create folders. Use **Add an app-grid folder** to pin an existing GNOME folder; subsequent name and membership changes stay synchronized. Linked folders remain pinned if emptied, so you can refill them in the app grid. Hover over an application in an open folder to preview its windows. You can move the pointer into a preview to activate or close a window; keyboard focus also opens previews. After grouping or moving an application, use **Undo** in the notification or the folder header; Ctrl+Z also works while the folder is open. The Undo button is visible only while a grouping action can be undone; undo history is cleared when you log out or restart GNOME Shell. Enable folder customization to use the gear inside each folder; changes save automatically. Glass blur can increase GPU usage. Wallpaper accepts PNG, JPEG, BMP, WebP, GIF and SVG; GIF is displayed as a still image.
 
 Installation saves a private backup under `$XDG_STATE_HOME/ubuntu-dock-folders/backups` (normally `~/.local/state`). Run `ubuntu-dock-folders uninstall` or `make uninstall` to remove the user installation and restore the Settings launchers. Folder settings and wallpaper are retained. Remove a system-wide `.deb` with `sudo apt remove ubuntu-dock-folders` after disabling it.
+
+Maintainers: [build and publish a release](docs/releasing.md).
 
 Copyright © 2026 Grigory Olshansky. Licensed under [GPL-3.0-or-later](LICENSE).

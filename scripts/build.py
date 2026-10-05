@@ -22,7 +22,9 @@ BUILD = ROOT / "build"
 DIST = ROOT / "dist"
 DOMAIN = "ubuntu-dock-folders"
 UUID = "dock-groups@local"
-VERSION = "1.0.0"
+VERSION = subprocess.check_output(
+    ["dpkg-parsechangelog", "-S", "Version"], cwd=ROOT, text=True
+).strip()
 APP_ID = "io.github.hawkab.UbuntuDockFolders"
 
 
@@ -95,13 +97,14 @@ def build():
     return extension
 
 
-def package(extension):
+def package(extension, stage_only=False):
     architecture = subprocess.check_output(["dpkg", "--print-architecture"], text=True).strip()
     stage = BUILD / "package"
     if stage.exists():
         shutil.rmtree(stage)
     destination = stage / "usr/share/gnome-shell/extensions" / UUID
     shutil.copytree(extension, destination)
+    shutil.copytree(extension / "locale", stage / "usr/share/locale")
     shutil.copytree(BUILD / "integration", destination / "integration")
     scripts = stage / "usr/share/ubuntu-dock-folders/scripts"
     scripts.mkdir(parents=True)
@@ -232,6 +235,8 @@ def package(extension):
         text=True,
     )
     (control / "md5sums").write_text(md5sums)
+    if stage_only:
+        return
     run(
         "dpkg-deb",
         "--root-owner-group",
@@ -244,7 +249,8 @@ def package(extension):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Build the GNOME bundle and Ubuntu package.")
     parser.add_argument("--zip-only", action="store_true")
+    parser.add_argument("--stage-only", action="store_true")
     args = parser.parse_args()
     result = build()
     if not args.zip_only:
-        package(result)
+        package(result, stage_only=args.stage_only)

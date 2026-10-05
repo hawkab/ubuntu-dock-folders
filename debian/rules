@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright 2026 Grigory Olshansky
+
+export GSETTINGS_BACKEND = memory
+export GSK_RENDERER = cairo
+export GDK_DEBUG = no-portals
+export GTK_A11Y = none
+export ADW_DISABLE_PORTAL = 1
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	/usr/bin/python3 scripts/build.py --stage-only
+
+override_dh_auto_test:
+	dbus-run-session -- xvfb-run -a make test
+	appstreamcli validate --no-net build/package/usr/share/metainfo/*.metainfo.xml
+	desktop-file-validate build/package/usr/share/applications/*.desktop
+
+override_dh_auto_install:
+	mkdir -p debian/ubuntu-dock-folders
+	cp -a build/package/usr debian/ubuntu-dock-folders/
+
+override_dh_auto_clean:
+	rm -rf build dist
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
