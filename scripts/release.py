@@ -190,6 +190,14 @@ def verify_release(directory, settings, env):
     return manifest
 
 
+def launchpad_json(url):
+    request = urllib.request.Request(
+        url, headers={"Cache-Control": "no-cache", "Pragma": "no-cache"}
+    )
+    with urllib.request.urlopen(request, timeout=30) as response:
+        return json.load(response)
+
+
 def launchpad_sources(settings, version, status=None):
     base = (
         f"https://api.launchpad.net/1.0/~{settings['launchpad_owner']}"
@@ -203,8 +211,7 @@ def launchpad_sources(settings, version, status=None):
     }
     if status:
         query["status"] = status
-    with urllib.request.urlopen(base + "?" + urllib.parse.urlencode(query), timeout=30) as response:
-        return json.load(response)["entries"]
+    return launchpad_json(base + "?" + urllib.parse.urlencode(query))["entries"]
 
 
 def upload_launchpad(directory, manifest, settings, env):
@@ -279,10 +286,7 @@ def wait_launchpad(settings, version, timeout):
     while time.monotonic() < deadline:
         sources = launchpad_sources(settings, version)
         for source in sources:
-            with urllib.request.urlopen(
-                source["self_link"] + "?ws.op=getBuilds", timeout=30
-            ) as reply:
-                builds = json.load(reply)["entries"]
+            builds = launchpad_json(source["self_link"] + "?ws.op=getBuilds")["entries"]
             statuses = {build["buildstate"] for build in builds}
             if statuses & {
                 "Failed to build",

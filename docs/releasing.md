@@ -21,7 +21,7 @@ python3 scripts/release.py
 python3 scripts/release.py --publish --prepared dist/releases/1.0.3
 ```
 
-Preparation alone builds, tests and signs without publishing. Publication requires a clean commit and a matching version tag. A previously published file cannot be replaced with different contents; bump the Debian version for packaging changes and the upstream version for a new release. A Launchpad timeout leaves the draft and signed artifacts available for resuming.
+Preparation alone builds, tests and signs without publishing. Publication requires a clean commit and a matching version tag. A previously published file cannot be replaced with different contents; use a new upstream version and corresponding Debian version for each publication. A Launchpad timeout leaves the draft and signed artifacts available for resuming.
 
 ## Credentials and repository settings
 
