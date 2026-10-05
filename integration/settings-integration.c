@@ -127,15 +127,27 @@ static gboolean open_preferences_idle(gpointer row) {
     return G_SOURCE_REMOVE;
 }
 
-static void subpage_changed(GObject *panel, GParamSpec *pspec, GObject *row) {
-    (void) pspec;
-    g_autofree char *subpage = NULL;
-    g_object_get(panel, "subpage", &subpage, NULL);
-    if (g_strcmp0(subpage, "dock-groups") != 0 ||
-        g_object_get_data(row, "dock-groups-open-pending")) return;
-    g_object_set_data(row, "dock-groups-open-pending", GINT_TO_POINTER(1));
-    g_idle_add_full(G_PRIORITY_DEFAULT_IDLE, open_preferences_idle,
-        g_object_ref(row), g_object_unref);
+static void (*panel_set_property)(GObject *, guint, const GValue *, GParamSpec *);
+
+static void set_panel_property(GObject *panel, guint id, const GValue *value, GParamSpec *pspec) {
+    GObject *row = g_object_get_data(panel, "dock-groups-row");
+    if (row && g_str_equal(pspec->name, "parameters")) {
+        GVariant *parameters = g_value_get_variant(value);
+        if (parameters && g_variant_n_children(parameters)) {
+            g_autoptr(GVariant) first = g_variant_get_child_value(parameters, 0);
+            g_autoptr(GVariant) argument = g_variant_get_variant(first);
+            if (g_variant_is_of_type(argument, G_VARIANT_TYPE_STRING) &&
+                g_str_equal(g_variant_get_string(argument, NULL), "dock-groups")) {
+                if (!g_object_get_data(row, "dock-groups-open-pending")) {
+                    g_object_set_data(row, "dock-groups-open-pending", GINT_TO_POINTER(1));
+                    g_idle_add_full(G_PRIORITY_DEFAULT_IDLE, open_preferences_idle,
+                        g_object_ref(row), g_object_unref);
+                }
+                return;
+            }
+        }
+    }
+    panel_set_property(panel, id, value, pspec);
 }
 
 static void companion_changed(GFileMonitor *monitor, GFile *file, GFile *other,
@@ -181,5 +193,13 @@ void gtk_widget_init_template(GtkWidget *widget) {
         g_object_set_data_full(G_OBJECT(row), "dock-groups-monitor", monitor, g_object_unref);
     }
     g_object_set_data(group, "dock-groups-added", GINT_TO_POINTER(1));
-    g_signal_connect_object(widget, "notify::subpage", G_CALLBACK(subpage_changed), row, 0);
+    g_object_set_data(G_OBJECT(widget), "dock-groups-row", row);
+    if (!panel_set_property) {
+        GParamSpec *parameters = g_object_class_find_property(G_OBJECT_GET_CLASS(widget), "parameters");
+        if (parameters) {
+            GObjectClass *owner = g_type_class_peek(parameters->owner_type);
+            panel_set_property = owner->set_property;
+            owner->set_property = set_panel_property;
+        }
+    }
 }

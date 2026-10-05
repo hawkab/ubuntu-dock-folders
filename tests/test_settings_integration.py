@@ -15,6 +15,14 @@ ROOT = Path(__file__).resolve().parent.parent
 
 class SettingsIntegrationTests(unittest.TestCase):
     def test_open_panel_survives_companion_removal(self):
+        self.run_panel()
+
+    def test_general_settings_link_opens_and_reopens_the_modal(self):
+        for mode in ("cold", "warm"):
+            with self.subTest(mode=mode):
+                self.run_panel(mode)
+
+    def run_panel(self, mode=None):
         if not shutil.which("gnome-control-center"):
             self.skipTest("GNOME Settings is not installed")
         with tempfile.TemporaryDirectory() as directory:
@@ -36,16 +44,24 @@ class SettingsIntegrationTests(unittest.TestCase):
                        GSETTINGS_BACKEND="memory", GDK_BACKEND="x11", GSK_RENDERER="cairo",
                        GTK_A11Y="none", ADW_DISABLE_PORTAL="1", LANGUAGE="en", LC_ALL="en_US.UTF-8")
             env.pop("LD_PRELOAD", None)
+            if mode:
+                env["DOCK_GROUPS_TEST_LINK"] = mode
+            command = ["gnome-control-center", "ubuntu"]
+            if mode == "cold":
+                command.append("dock-groups")
             result = subprocess.run(
                 ["dbus-run-session", "--", "/bin/sh", "-c",
                  'export DBUS_SYSTEM_BUS_ADDRESS="$DBUS_SESSION_BUS_ADDRESS"; exec "$@"',
                  "settings-test", "env",
                  f"LD_PRELOAD={probe}:{ROOT / 'build/integration/settings-integration.so'}",
-                 "gnome-control-center", "ubuntu"],
+                 *command],
                 env=env, capture_output=True, text=True, timeout=20,
             )
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn("DOCK_FOLDERS_SETTINGS_REMOVE_OK", result.stdout)
+            if mode:
+                self.assertIn("DOCK_FOLDERS_SETTINGS_LINK_OK", result.stdout)
+                self.assertNotIn("Invalid subpage", result.stderr)
             self.assertFalse((extension / "preferences.ui").exists())
 
 

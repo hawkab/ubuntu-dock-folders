@@ -107,6 +107,9 @@
     <content_attribute id="violence-slavery">none</content_attribute>
   </content_rating>
   <releases>
+    <release version="1.1.2" date="2026-10-05">
+      <description><p>Open general folder settings directly from each folder, including when Ubuntu Settings is already running. Retry temporary Launchpad upload failures.</p></description>
+    </release>
     <release version="1.1.1" date="2026-10-05">
       <description><p>Update installation instructions, package descriptions and repository metadata for Ubuntu 26.04 and GNOME Shell 50. Publish PPA packages for both supported Ubuntu versions.</p></description>
     </release>

@@ -6,7 +6,7 @@
     "50",
     "46"
   ],
-  "version": 7,
+  "version": 8,
   "url": "https://github.com/hawkab/ubuntu-dock-folders",
   "gettext-domain": "ubuntu-dock-folders",
   "settings-schema": "org.gnome.shell.extensions.dock-groups"

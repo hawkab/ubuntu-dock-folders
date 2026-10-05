@@ -317,15 +317,28 @@ def upload_launchpad_source(directory, upload, settings, env):
         raise ValueError("Source changes file contains no artifacts")
     transport = os.environ.get("LAUNCHPAD_UPLOAD_TRANSPORT", settings["launchpad_transport"])
     if transport == "ftp":
-        run(
-            "dput",
-            "-P",
-            "-U",
-            f"ppa:{settings['launchpad_owner']}/{settings['launchpad_archive']}",
-            changes,
-            cwd=directory,
-            env=env,
-        )
+        for attempt in range(3):
+            try:
+                output = run(
+                    "dput", "-P", "-U",
+                    f"ppa:{settings['launchpad_owner']}/{settings['launchpad_archive']}",
+                    changes, cwd=directory, env=env, capture=True,
+                )
+                print(output, end="", flush=True)
+                break
+            except subprocess.CalledProcessError as error:
+                output = error.stdout or ""
+                print(output, end="", flush=True)
+                transient = re.search(
+                    r"internal server error|timed out|connection (reset|refused)|"
+                    r"temporary failure|\b(421|425|426|450|451|452)\b", output, re.I,
+                )
+                if not transient or attempt == 2:
+                    raise
+                print(f"Retrying Launchpad upload for {upload['suite']}", flush=True)
+                time.sleep(15 * (attempt + 1))
+                if launchpad_sources(settings, upload["version"]) or launchpad_sources(settings, upload["version"], "Pending"):
+                    break
         print(f"Source submitted for {upload['suite']}; Launchpad acceptance/build is pending", flush=True)
         return
     if transport != "sftp":

@@ -226,6 +226,36 @@ class ReleaseTests(unittest.TestCase):
             release.wait_launchpad(settings, "9.8.7", 60)
         self.assertEqual(now[0], 90)
 
+    def test_upload_retries_server_errors_but_rejects_permanent_errors(self):
+        for message, failures, attempts, success in (
+            ("550 Requested action not taken: internal server error\n", 1, 2, True),
+            ("550 Requested action not taken: internal server error\n", 3, 3, False),
+            ("Invalid signature\n", 1, 1, False),
+        ):
+            with self.subTest(message=message, failures=failures), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                payload = root / "source.tar.xz"
+                payload.write_bytes(b"source")
+                upload = {"suite": "resolute", "version": "9.8.7", "changes": "source.changes"}
+                (root / upload["changes"]).write_text("signed source fixture")
+                text = f"Checksums-Sha256:\n {apt_repo.sha256(payload)} {payload.stat().st_size} {payload.name}\n\n"
+                settings = {"launchpad_transport": "ftp", "launchpad_owner": "example", "launchpad_archive": "folders"}
+                responses = [text] + [subprocess.CalledProcessError(1, "dput", output=message)] * failures
+                if success:
+                    responses.append("Successfully uploaded packages.\n")
+                with (
+                    patch.object(release, "launchpad_sources", return_value=[]),
+                    patch.object(release, "run", side_effect=responses) as run,
+                    patch.object(release.time, "sleep") as sleep,
+                ):
+                    if success:
+                        release.upload_launchpad_source(root, upload, settings, {})
+                    else:
+                        with self.assertRaises(subprocess.CalledProcessError):
+                            release.upload_launchpad_source(root, upload, settings, {})
+                self.assertEqual(len([c for c in run.call_args_list if c.args[0] == "dput"]), attempts)
+                self.assertEqual(sleep.call_count, attempts - 1)
+
     def test_successful_source_build_waits_for_binary_publication(self):
         source = {"self_link": "https://example.invalid/source", "source_package_version": "1.0.3"}
         settings = {"suite": "noble", "architecture": "amd64"}

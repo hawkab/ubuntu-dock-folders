@@ -1,3 +1,11 @@
+ubuntu-dock-folders (1.1.2-1ubuntu24.04.1) noble; urgency=medium
+
+  * Open Dock folders preferences directly from each folder settings window.
+  * Handle repeated requests in an already running Ubuntu Settings process.
+  * Retry temporary Launchpad FTP upload failures.
+
+ -- Grigory Olshansky <hwakaba@ya.ru>  Mon, 05 Oct 2026 22:34:13 +0300
+
 ubuntu-dock-folders (1.1.1-1ubuntu24.04.1) noble; urgency=medium
 
   * Update documentation and package descriptions for GNOME Shell 50.
