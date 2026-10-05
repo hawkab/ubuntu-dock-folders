@@ -19,6 +19,7 @@ concurrency:
 
 jobs:
   publish:
+    if: ${{ github.event_name != 'push' || github.event.deleted != true }}
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     environment: release
