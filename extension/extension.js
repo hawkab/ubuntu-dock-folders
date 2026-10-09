@@ -15,7 +15,7 @@ import {FolderRenderer} from './rendering.js';
 import {FlowEffect} from './effects.js';
 import {AppGridFolders} from './gridFolders.js';
 import {FolderMenuManager, WindowPreviews} from './windowPreviews.js';
-import {moveEntry, pruneGroups, quoteDesktopArgument} from './model.js';
+import {moveEntry, pruneGroups, quoteDesktopArgument, removeUnavailableEntries} from './model.js';
 import {createBoxLayout} from './compat.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
@@ -69,6 +69,7 @@ export default class DockGroups extends FolderRenderer {
         this._icons = new Map();
         this._signals = [];
         this._timer = 0;
+        this._reconcileInstalledApps();
         this._indexGroups();
         this._dockLayout = this._groupLayout();
         this._grid = new AppGridFolders(this._settings, (groups, favorites) => this._commitGroups(groups, favorites));
@@ -96,9 +97,14 @@ export default class DockGroups extends FolderRenderer {
             const group = Object.values(extension._groups).find(
                 candidate => candidate.desktopId === app.get_id());
             if (extension._settings.get_boolean('enabled')) {
-                extension._decorateDrop(item.child, group, this);
-                if (group)
-                    extension._decorate(item.child, group, this);
+                try {
+                    extension._decorateDrop(item.child, group, this);
+                    if (group)
+                        extension._decorate(item.child, group, this);
+                } catch (error) {
+                    item.destroy();
+                    throw error;
+                }
             }
             return item;
         };
@@ -131,6 +137,7 @@ export default class DockGroups extends FolderRenderer {
         });
         this._connect(this._appSystem, 'installed-changed', () => {
             this._grid?.pull();
+            this._reconcileInstalledApps();
             this._refreshSettingsLauncher();
             this._queueUpdate();
         });
@@ -244,6 +251,19 @@ export default class DockGroups extends FolderRenderer {
     _groupLayout() {
         return JSON.stringify(Object.entries(this._groups).map(([key, group]) =>
             [key, group.id, group.apps.map(entry => entry.desktop).sort()]).sort());
+    }
+
+    _reconcileInstalledApps() {
+        const groups = JSON.parse(this._settings.get_string('groups'));
+        const favorites = global.settings.get_strv('favorite-apps');
+        const removed = removeUnavailableEntries(groups, favorites,
+            id => GioUnix.DesktopAppInfo.new(id) !== null);
+        if (!removed.length)
+            return;
+        this._undo = null;
+        this._notification?.destroy();
+        this._notification = null;
+        this._commitGroups(groups, favorites);
     }
 
     _favoriteMap(original) {
@@ -468,8 +488,7 @@ export default class DockGroups extends FolderRenderer {
         button.app = this._appSystem.lookup_app(entry.desktop);
         button.groupEntry = entry;
         button._delegate = button;
-        button.getDragActor = () => button.app?.create_icon_texture(64) ??
-            new St.Icon({gicon: GioUnix.DesktopAppInfo.new(entry.desktop)?.get_icon(), icon_size: 64});
+        button.getDragActor = () => this._appIcon(entry, 64);
         button.getDragActorSource = () => button.get_child().get_first_child();
         button.handleDragOver = source => {
             if (!this._sourceEntry(source) || source === button)
@@ -620,12 +639,16 @@ export default class DockGroups extends FolderRenderer {
     }
 
     _moveEntry(entry, key, before = null) {
+        if (!GioUnix.DesktopAppInfo.new(entry.desktop))
+            return;
         if (entry.group?.key !== key)
             this._closeMenus();
         this._editGroups((groups, favorites) => moveEntry(groups, favorites, entry, key, before));
     }
 
     _createGroup(source, target) {
+        if (![source, target].every(entry => GioUnix.DesktopAppInfo.new(entry.desktop)))
+            return;
         if (source.desktop === target.desktop)
             return;
         this._editGroups((groups, favorites) => {
@@ -759,6 +782,11 @@ export default class DockGroups extends FolderRenderer {
         menu.actor.add_style_class_name('dock-group-popup');
         Main.uiGroup.add_child(menu.actor);
         menu.actor.hide();
+        icon.connect('destroy', () => {
+            this._icons.delete(icon);
+            this._stopAnimation(menu);
+            menu.destroy();
+        });
         const previews = new WindowPreviews(menu, {
             getWindows: entry => this._windows(group, entry),
             isDragging: () => this._dragging,
@@ -803,11 +831,7 @@ export default class DockGroups extends FolderRenderer {
             });
             const tile = createBoxLayout(Clutter.Orientation.VERTICAL, {
                 style_class: 'dock-group-tile-content'});
-            const app = this._appSystem.lookup_app(entry.desktop);
-            tile.add_child(app?.create_icon_texture(64) ?? new St.Icon({
-                gicon: GioUnix.DesktopAppInfo.new(entry.desktop)?.get_icon(), icon_size: 64,
-                x_align: Clutter.ActorAlign.CENTER,
-            }));
+            tile.add_child(this._appIcon(entry, 64));
             tile.add_child(new St.Label({
                 text: entry.label, style_class: 'dock-group-app-label',
                 x_align: Clutter.ActorAlign.CENTER,
@@ -882,11 +906,6 @@ export default class DockGroups extends FolderRenderer {
         const record = {icon, group, menu, dots, row, tiles, title, dockLabel, undo, previews, manager};
         this._icons.set(icon, record);
         icon.connect('notify::mapped', () => this._queueUpdate());
-        icon.connect('destroy', () => {
-            this._icons.delete(icon);
-            this._stopAnimation(menu);
-            menu.destroy();
-        });
         this._queueUpdate();
     }
 
@@ -1034,24 +1053,28 @@ export default class DockGroups extends FolderRenderer {
         if (!this._enabled || this._timer)
             return;
         this._timer = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 60, () => {
-            this._timer = 0;
-            if (this._undo && (this._membership(JSON.parse(this._settings.get_string('groups'))) !==
-                this._undo.after.layout || JSON.stringify(global.settings.get_strv('favorite-apps')) !==
-                JSON.stringify(this._undo.after.favorites))) {
-                this._undo = null;
-                this._notification?.destroy();
+            try {
+                if (this._undo && (this._membership(JSON.parse(this._settings.get_string('groups'))) !==
+                    this._undo.after.layout || JSON.stringify(global.settings.get_strv('favorite-apps')) !==
+                    JSON.stringify(this._undo.after.favorites))) {
+                    this._undo = null;
+                    this._notification?.destroy();
+                }
+                for (const dock of this._docks())
+                    dock.dash._redisplay();
+                for (const record of this._icons.values()) {
+                    const {icon, dots, group} = record;
+                    if (!icon.mapped || !icon.get_stage())
+                        continue;
+                    icon._updateWindows();
+                    record.undo.visible = Boolean(this._undo);
+                    record.previews.update();
+                    for (const [entry, dot] of dots)
+                        dot.opacity = this._windows(group, entry).length ? 255 : 0;
+                }
+            } finally {
+                this._timer = 0;
             }
-            for (const record of this._icons.values()) {
-                const {icon, dots, group} = record;
-                icon._updateWindows();
-                record.undo.visible = Boolean(this._undo);
-                record.previews.update();
-                for (const [entry, dot] of dots)
-                    dot.opacity = this._windows(group, entry).length ? 255 : 0;
-            }
-            AppFavorites.getAppFavorites().reload();
-            for (const dock of this._docks())
-                dock.dash._redisplay();
             return GLib.SOURCE_REMOVE;
         });
     }

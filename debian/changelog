@@ -1,3 +1,12 @@
+ubuntu-dock-folders (1.1.3-1ubuntu24.04.1) noble; urgency=high
+
+  * Remove unavailable applications from folders at startup and after uninstall.
+  * Clean up partially constructed menus and use safe fallback icons.
+  * Avoid recursive dock updates and stale drag targets after app removal.
+  * Cover offline launcher removal and live uninstall in compositor tests.
+
+ -- Grigory Olshansky <hwakaba@ya.ru>  Fri, 09 Oct 2026 13:08:07 +0300
+
 ubuntu-dock-folders (1.1.2-1ubuntu24.04.1) noble; urgency=medium
 
   * Open Dock folders preferences directly from each folder settings window.

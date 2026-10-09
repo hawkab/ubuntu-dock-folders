@@ -5,6 +5,7 @@
 """Run extension integration checks in an isolated, headless GNOME Shell."""
 
 import argparse
+import json
 import os
 from pathlib import Path
 import shutil
@@ -44,18 +45,28 @@ def main():
         subprocess.run(["glib-compile-schemas", "--strict", str(extension / "schemas")], check=True)
         applications = data / "applications"
         applications.mkdir()
-        for name in ("org.gnome.Shell.PerfHelper", "local.test.Second", "local.test.Third"):
+        for name in ("org.gnome.Shell.PerfHelper", "local.test.Second", "local.test.Third", "local.test.NoIcon"):
             (applications / f"{name}.desktop").write_text(
                 "[Desktop Entry]\nType=Application\n"
-                f"Name={name}\nExec=/bin/true\nIcon=utilities-terminal\n"
+                f"Name={name}\nExec=/bin/true\n"
+                + ("Icon=utilities-terminal\n" if not name.endswith("NoIcon") else "")
                 + ("StartupWMClass=Gnome-shell-perf-helper\n" if name.endswith("PerfHelper") else "")
             )
         config = home / "config/glib-2.0/settings"
         config.mkdir(parents=True)
+        groups = {"stale": {
+            "id": "local.groups.Stale", "name": "Stale", "icon": "folder-symbolic",
+            "colors": ["#303030", "#505050"],
+            "apps": [{"desktop": f"local.test.{name}.desktop", "label": name}
+                     for name in ("Second", "Missing", "Third")],
+        }}
         (config / "keyfile").write_text(
             "[org/gnome/shell]\n"
             f"enabled-extensions=['ubuntu-dock@ubuntu.com', '{UUID}']\n"
-            "favorite-apps=['org.gnome.Shell.PerfHelper.desktop', 'local.test.Second.desktop', 'local.test.Third.desktop']\n"
+            "favorite-apps=['org.gnome.Shell.PerfHelper.desktop', 'local.groups.Stale.desktop']\n"
+            "[org/gnome/shell/extensions/dock-groups]\n"
+            "enabled=true\ninitialized=true\n"
+            f"groups='{json.dumps(groups)}'\n"
             "[org/gnome/shell/extensions/dash-to-dock]\n"
             "dock-fixed=true\nautohide=false\nintellihide=false\nshow-trash=false\nshow-mounts=false\n"
         )
@@ -77,13 +88,21 @@ def main():
                 backend.append("--no-x11")
         else:
             backend = ["--x11"]
-        subprocess.run(
+        result = subprocess.run(
             ["dbus-run-session", "--", "/bin/sh", "-c",
              'export DBUS_SYSTEM_BUS_ADDRESS="$DBUS_SESSION_BUS_ADDRESS"; exec "$@"',
              "shell-test", "gnome-shell", *backend, "--force-animations",
              "--automation-script", str(ROOT / "tests/shell.js")],
-            env=env, check=True, timeout=60,
+            env=env, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=60,
         )
+        print(result.stdout, end="", flush=True)
+        result.check_returncode()
+        failures = ("Invalid value 'undefined' for property gicon", "Actor not in scroll view",
+                    "clutter_actor_remove_child")
+        if any(message in result.stdout for message in failures):
+            raise RuntimeError("The compositor reported an invalid icon or detached dock actor")
+        if "DOCK_FOLDERS_SHELL_OK " not in result.stdout:
+            raise RuntimeError("The compositor did not complete its regression checks")
 
 
 if __name__ == "__main__":

@@ -18,6 +18,27 @@ export function pruneGroups(groups, favorites) {
     }
 }
 
+export function removeUnavailableEntries(groups, favorites, available) {
+    const removed = [];
+    for (const group of Object.values(groups)) {
+        group.apps = group.apps.filter(entry => {
+            if (available(entry.desktop))
+                return true;
+            removed.push(entry);
+            return false;
+        });
+    }
+    if (!removed.length)
+        return removed;
+    const ids = new Set(removed.flatMap(entry => [entry.desktop, ...(entry.aliases ?? [])]));
+    for (let index = favorites.length - 1; index >= 0; index--) {
+        if (ids.has(favorites[index]))
+            favorites.splice(index, 1);
+    }
+    pruneGroups(groups, favorites);
+    return removed;
+}
+
 export function moveEntry(groups, favorites, entry, key, before = null) {
     const target = groups[key];
     if (!target)

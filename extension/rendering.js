@@ -4,6 +4,7 @@
 import Cairo from 'cairo';
 import Clutter from 'gi://Clutter';
 import Gio from 'gi://Gio';
+import GioUnix from 'gi://GioUnix';
 import GLib from 'gi://GLib';
 import Meta from 'gi://Meta';
 import Pango from 'gi://Pango';
@@ -14,6 +15,17 @@ import {roundedPath, RoundedBackdrop} from './effects.js';
 
 // Render folder icons, popup backgrounds, and running indicators.
 export class FolderRenderer extends Extension {
+    _appIcon(entry, size) {
+        const app = this._appSystem.lookup_app(entry.desktop);
+        if (app)
+            return app.create_icon_texture(size);
+        const gicon = GioUnix.DesktopAppInfo.new(entry.desktop)?.get_icon();
+        return new St.Icon({
+            ...(gicon ? {gicon} : {icon_name: 'application-x-executable'}),
+            icon_size: size, x_align: Clutter.ActorAlign.CENTER,
+        });
+    }
+
     _color(value, fallback) {
         return /^#[0-9a-f]{6}$/i.test(value ?? '') ? value : fallback;
     }
@@ -38,9 +50,7 @@ export class FolderRenderer extends Extension {
             const bubble = new St.Bin({x: Math.round(size * x - diameter / 2),
                 y: Math.round(size * y - diameter / 2), width: diameter, height: diameter,
                 style: 'background-color: transparent;'});
-            const app = this._appSystem.lookup_app(entry.desktop);
-            bubble.set_child(app?.create_icon_texture(diameter) ??
-                new St.Icon({icon_name: 'application-x-executable', icon_size: diameter}));
+            bubble.set_child(this._appIcon(entry, diameter));
             actor.add_child(bubble);
         });
         return actor;
