@@ -25,7 +25,7 @@ def configure_source(source, suite, version, env):
 
 def build_source(source, target, output, settings, env):
     configure_source(source, target["suite"], target["version"], env)
-    run("dpkg-buildpackage", "-S", "-sa", "-us", "-uc", cwd=source, env=env)
+    run("dpkg-buildpackage", "-S", "-d", "-sa", "-us", "-uc", cwd=source, env=env)
     changes = source.parent / f"{context.PACKAGE}_{target['version']}_source.changes"
     run("debsign", "--no-re-sign", "-k" + settings["signing_fingerprint"], changes, env=env)
     for pattern in ("*.dsc", "*.tar.xz", "*_source.changes", "*_source.buildinfo"):

@@ -37,6 +37,8 @@ class ReleaseTargetTests(unittest.TestCase):
                     if command[0] == "/usr/bin/python3":
                         subprocess.run(command, check=True, cwd=source)
                     if command[0] == "dpkg-buildpackage":
+                        self.assertIn("-S", command)
+                        self.assertIn("-d", command)
                         self.assertEqual((source / "debian/build-target").read_text().strip(), target)
                         fields = list(Deb822.iter_paragraphs((source / "debian/control").read_text()))
                         self.assertEqual("kwin-dev" in fields[0]["Build-Depends"], target == "desktops")

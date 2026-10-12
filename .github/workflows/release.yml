@@ -51,12 +51,7 @@ jobs:
       - name: Install build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends build-essential devscripts dput git gnupg python3-debian
-          mkdir -p "$RUNNER_TEMP/build-dependencies"
-          cp -a source/debian source/scripts source/packaging "$RUNNER_TEMP/build-dependencies/"
-          cd "$RUNNER_TEMP/build-dependencies"
-          /usr/bin/python3 scripts/debian_target.py configure
-          sudo apt-get build-dep -y --no-install-recommends .
+          sudo apt-get install -y --no-install-recommends build-essential debhelper fakeroot devscripts dput git gnupg python3-debian python3-yaml python3-paramiko apt-utils appstream appstream-compose desktop-file-utils librsvg2-common
       - name: Verify reused checks
         if: ${{ inputs.checked_run }}
         env:
