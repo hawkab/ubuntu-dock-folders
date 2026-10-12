@@ -21,6 +21,17 @@ class ReleaseBinaryTests(unittest.TestCase):
     targets = [{"suite": "noble", "version": "9.8.7-1ubuntu24.04.1"},
                {"suite": "resolute", "version": "9.8.7-1ubuntu26.04.1"}]
 
+    def test_reuse_requires_completed_checks_for_the_same_commit_and_repository(self):
+        valid = {"head_sha": "reviewed", "status": "completed", "conclusion": "success",
+                 "path": ".github/workflows/check.yml", "head_repository": {"full_name": "example/project"}}
+        with patch.object(release_binaries, "run", return_value=json.dumps(valid)):
+            release_binaries.verify_run(123, "example/project", "reviewed")
+        for field, value in (("head_sha", "other"), ("status", "in_progress"), ("conclusion", "failure"),
+                             ("path", ".github/workflows/other.yml"), ("head_repository", {"full_name": "other/fork"})):
+            with self.subTest(field=field), patch.object(release_binaries, "run", return_value=json.dumps(valid | {field:value})):
+                with self.assertRaisesRegex(ValueError, "must have passed"):
+                    release_binaries.verify_run(123, "example/project", "reviewed")
+
     def bundles(self, root):
         for target in self.targets:
             directory = root / target["suite"]

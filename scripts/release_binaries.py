@@ -17,6 +17,17 @@ def package_fields(file):
                  for field in ("Package", "Version", "Architecture"))
 
 
+def verify_run(id, repository, commit):
+    """Require a successful Check run for this repository and release commit."""
+    if not repository or len(repository.split("/")) != 2 or id <= 0:
+        raise ValueError("Invalid checked workflow run")
+    result = json.loads(run("gh", "api", f"repos/{repository}/actions/runs/{id}", capture=True))
+    if (result["head_sha"] != commit or result["status"] != "completed"
+            or result["conclusion"] != "success" or result["path"] != ".github/workflows/check.yml"
+            or result["head_repository"]["full_name"] != repository):
+        raise ValueError("Checked workflow must have passed for this release commit")
+
+
 def record(suite, destination):
     version = context.changelog("Version")
     architecture = run("dpkg", "--print-architecture", capture=True).strip()
@@ -67,10 +78,18 @@ def checked(directory, targets, architecture, commit):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--suite", required=True)
-    parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--suite")
+    parser.add_argument("--output", type=Path)
+    parser.add_argument("--verify-run", type=int)
+    parser.add_argument("--repository")
+    parser.add_argument("--commit")
     args = parser.parse_args()
-    record(args.suite, args.output)
+    if args.verify_run:
+        verify_run(args.verify_run, args.repository, args.commit)
+    elif args.suite and args.output:
+        record(args.suite, args.output)
+    else:
+        parser.error("Use --suite and --output, or --verify-run with --repository and --commit")
 
 
 if __name__ == "__main__":

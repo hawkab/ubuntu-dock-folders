@@ -9,6 +9,10 @@ on:
         description: Existing version tag to publish or resume
         required: true
         type: string
+      checked_run:
+        description: Successful Check run for this tag, to resume publication
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -20,13 +24,13 @@ concurrency:
 
 jobs:
   validate:
-    if: ${{ github.event_name != 'push' || github.event.deleted != true }}
+    if: ${{ !inputs.checked_run && (github.event_name != 'push' || github.event.deleted != true) }}
     uses: ./.github/workflows/check.yml
     with:
       ref: ${{ inputs.tag || github.ref }}
   publish:
     needs: validate
-    if: ${{ github.event_name != 'push' || github.event.deleted != true }}
+    if: ${{ always() && (needs.validate.result == 'success' || (needs.validate.result == 'skipped' && inputs.checked_run)) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     environment: release
@@ -48,9 +52,17 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends build-essential devscripts dput git gnupg python3-debian
-          cd source
+          mkdir -p "$RUNNER_TEMP/build-dependencies"
+          cp -a source/debian source/scripts source/packaging "$RUNNER_TEMP/build-dependencies/"
+          cd "$RUNNER_TEMP/build-dependencies"
           /usr/bin/python3 scripts/debian_target.py configure
           sudo apt-get build-dep -y --no-install-recommends .
+      - name: Verify reused checks
+        if: ${{ inputs.checked_run }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CHECKED_RUN: ${{ inputs.checked_run }}
+        run: /usr/bin/python3 publisher/scripts/release_binaries.py --verify-run "$CHECKED_RUN" --repository "$GITHUB_REPOSITORY" --commit "$(git -C source rev-parse HEAD)"
       - name: Load publishing keys
         env:
           RELEASE_GPG_KEY: ${{ secrets.RELEASE_GPG_KEY }}
@@ -66,7 +78,8 @@ jobs:
       - name: Download checked binaries
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --pattern 'binary-*' --dir "$RUNNER_TEMP/checked-binaries"
+          CHECKED_RUN: ${{ inputs.checked_run || github.run_id }}
+        run: gh run download "$CHECKED_RUN" --repo "$GITHUB_REPOSITORY" --pattern 'binary-*' --dir "$RUNNER_TEMP/checked-binaries"
       - name: Build, test and publish
         env:
           GH_TOKEN: ${{ github.token }}
@@ -74,7 +87,7 @@ jobs:
           LAUNCHPAD_UPLOAD_TRANSPORT: sftp
           LAUNCHPAD_SSH_KEY: ${{ runner.temp }}/launchpad-upload
           APT_DEPLOY_KEY: ${{ runner.temp }}/apt-deploy
-        run: python3 publisher/scripts/release.py --source-root "$GITHUB_WORKSPACE/source" --binaries "$RUNNER_TEMP/checked-binaries" --publish --wait-seconds 3600
+        run: /usr/bin/python3 publisher/scripts/release.py --source-root "$GITHUB_WORKSPACE/source" --binaries "$RUNNER_TEMP/checked-binaries" --publish --wait-seconds 3600
       - name: Retain release artifacts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
