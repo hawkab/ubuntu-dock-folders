@@ -1,0 +1,7 @@
+{
+    "KPlugin": {
+        "Name": "Private painted frame probe",
+        "License": "GPL-3.0-or-later",
+        "EnabledByDefault": false
+    }
+}

@@ -1,0 +1,43 @@
+.TH UBUNTU-DOCK-FOLDERS 1 "October 2026" "Ubuntu Dock Folders"
+.SH NAME
+ubuntu-dock-folders \- manage application folders for the desktop user
+.SH SYNOPSIS
+.B ubuntu-dock-folders enable
+.RI [ --ubuntu-settings ]
+.RI [ --system ]
+.br
+.B ubuntu-dock-folders uninstall
+.br
+.B ubuntu-dock-folders disable
+.SH DESCRIPTION
+Ubuntu Dock Folders groups application launchers on a desktop panel.
+Run its commands from your desktop session as the logged-in user, without sudo.
+.SH COMMANDS
+.TP
+.B preferences
+Open the grouping settings for the current desktop.
+.TP
+.B enable
+Enable the installed desktop component.
+.TP
+.B uninstall
+Remove the user's component and restore managed panel entries.
+Folder settings and backups are retained. This does not remove the Debian package.
+.TP
+.B disable
+Disable the desktop component and restore its managed launchers.
+User files and folder settings are retained.
+.SH OPTIONS
+.TP
+.B --ubuntu-settings
+Add the grouping controls to Ubuntu Desktop settings in GNOME.
+.TP
+.B --system
+In GNOME, use the Debian package's extension after backing up an installer-owned
+user copy. Log out and back in to load the updated Shell code.
+.SH SETTINGS
+Open the Ubuntu Dock Folders application entry or the folder's gear button.
+.SH SEE ALSO
+.BR ubuntu-dock-folders-xfce (1)
+.br
+https://github.com/hawkab/ubuntu-dock-folders

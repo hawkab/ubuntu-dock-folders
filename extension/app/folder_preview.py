@@ -15,6 +15,8 @@ gi.require_version("Adw", "1")
 gi.require_version("GdkPixbuf", "2.0")
 from gi.repository import Gdk, GdkPixbuf, Gio, GioUnix, GLib, Gtk, Pango, PangoCairo
 from i18n import _
+from settings import SETTINGS
+from preferences_binding import CONTRACT
 
 
 def rounded(cr, x, y, width, height, radius):
@@ -51,8 +53,9 @@ def text(cr, value, x, y, width, size=10, bold=False, foreground="#ffffff"):
 
 
 class FolderPreview(Gtk.DrawingArea):
-    def __init__(self, group, mode, glass=False, font_size=10):
+    def __init__(self, group, mode, glass=False, font_size=10, *, core):
         super().__init__(hexpand=True, content_height=168)
+        self.core = core
         self.group = group
         self.mode = mode
         self.glass = glass
@@ -62,30 +65,45 @@ class FolderPreview(Gtk.DrawingArea):
         self.backdrop_cache = None
         self.set_draw_func(self.draw)
         self.set_tooltip_text(_("Icon preview") if mode == "dock" else _("Open folder preview"))
+        self.update(group)
 
     def update(self, group):
         self.group = group
+        self.appearance = self.core.call("surface", {"group":group, "blurStrength":SETTINGS.get_int("blur-strength"),
+            "legacyGlass":SETTINGS.get_boolean("glass"), "backdrop":"#3f354a"}) if self.core else group
+        self.glass = self.appearance.get("glass", False)
+        self.body = 72 * SETTINGS.get_int("group-icon-size") / 100
+        if self.core:
+            self.layout = self.core.call("miniatures", [self.body, len(group["apps"]),
+                SETTINGS.get_int("mini-icon-size") / 100, 100, True, group["id"],
+                group.get("iconRotation", 0), group.get("alwaysStack", False)])
+            self.body = self.layout["bodySize"]
         self.queue_draw()
 
     def icon(self, entry):
         desktop = entry["desktop"]
-        if desktop not in self.icons:
-            info = GioUnix.DesktopAppInfo.new(desktop)
+        scale = max(1, self.get_scale_factor())
+        key = (desktop, scale)
+        if key not in self.icons:
+            try:
+                info = GioUnix.DesktopAppInfo.new(desktop)
+            except (GLib.Error, TypeError):
+                info = None
             gicon = info.get_icon() if info else Gio.ThemedIcon.new("application-x-executable")
             theme = Gtk.IconTheme.get_for_display(self.get_display())
             paintable = theme.lookup_by_gicon(
-                gicon, 64, 1, Gtk.TextDirection.NONE, Gtk.IconLookupFlags.FORCE_REGULAR
+                gicon, 64, scale, Gtk.TextDirection.NONE, Gtk.IconLookupFlags.FORCE_REGULAR
             )
             file = paintable.get_file() if paintable else None
             try:
-                self.icons[desktop] = (
-                    GdkPixbuf.Pixbuf.new_from_stream_at_scale(file.read(None), 64, 64, True, None)
+                self.icons[key] = (
+                    GdkPixbuf.Pixbuf.new_from_stream_at_scale(file.read(None), 64 * scale, 64 * scale, True, None)
                     if file
                     else None
                 )
             except GLib.Error:
-                self.icons[desktop] = None
-        return self.icons[desktop]
+                self.icons[key] = None
+        return self.icons[key]
 
     def paint_icon(self, cr, entry, x, y, size):
         pixbuf = self.icon(entry)
@@ -128,7 +146,7 @@ class FolderPreview(Gtk.DrawingArea):
         cr.fill()
         cr.set_line_width(3)
         for y in range(48, 120, 14):
-            cr.set_source_rgba(0.88, 0.9, 0.91, 0.38)
+            cr.set_source_rgba(0.88, 0.9, 0.91, 0.42)
             cr.move_to(width * 0.60, y)
             cr.line_to(width * 0.87, y)
             cr.stroke()
@@ -137,14 +155,15 @@ class FolderPreview(Gtk.DrawingArea):
         cr.fill()
 
     def blurred_backdrop(self, width, height):
-        if self.backdrop_cache and self.backdrop_cache[:2] == (width, height):
-            return self.backdrop_cache[2]
+        key = (width, height, self.appearance["blurRadius"])
+        if self.backdrop_cache and self.backdrop_cache[0] == key:
+            return self.backdrop_cache[1]
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
         self.draw_backdrop(cairo.Context(surface), width, height)
         surface.flush()
         image = Image.frombuffer(
             "RGBA", (width, height), surface.get_data(), "raw", "BGRA", surface.get_stride(), 1
-        ).filter(ImageFilter.GaussianBlur(14))
+        ).filter(ImageFilter.GaussianBlur(self.appearance["blurRadius"]))
         pixbuf = GdkPixbuf.Pixbuf.new_from_bytes(
             GLib.Bytes.new(image.tobytes()),
             GdkPixbuf.Colorspace.RGB,
@@ -154,7 +173,7 @@ class FolderPreview(Gtk.DrawingArea):
             height,
             width * 4,
         )
-        self.backdrop_cache = (width, height, pixbuf)
+        self.backdrop_cache = (key, pixbuf)
         return pixbuf
 
     def draw_dock(self, cr, width, height):
@@ -162,38 +181,39 @@ class FolderPreview(Gtk.DrawingArea):
         rounded(cr, width / 2 - 55, 10, 110, height - 20, 20)
         cr.set_source_rgba(0.03, 0.04, 0.06, 0.5)
         cr.fill()
-        size = 72
-        x, y = width / 2 - size / 2, 35
-        opacity = group.get(
-            "dockOpacity",
-            (0 if group["transparentDock"] else 1) if "transparentDock" in group else 0.2,
-        )
-        cr.arc(x + size / 2, y + size / 2, size / 2, 0, math.tau)
-        color(cr, group.get("dockColor", group["colors"][1]), opacity)
+        size = self.body
+        x, y = width / 2 - size / 2, max(12, (height - size - 36) / 2)
+        opacity = self.appearance["dockOpacity"]
+        cr.arc(x + size / 2, y + size / 2, size * CONTRACT["layout"]["circleScale"] / 2, 0, math.tau)
+        color(cr, self.appearance["dockColor"], opacity)
         cr.fill_preserve()
         cr.set_source_rgba(1, 1, 1, opacity * 0.25)
         cr.set_line_width(1)
         cr.stroke()
-        apps = group["apps"][:4]
-        positions = {
-            1: ((0.5, 0.5),),
-            2: ((0.22, 0.5), (0.78, 0.5)),
-            3: ((0.25, 0.27), (0.75, 0.27), (0.5, 0.79)),
-        }.get(len(apps), ((0.24, 0.24), (0.76, 0.24), (0.24, 0.76), (0.76, 0.76)))
-        icon_size = size * (0.52 if len(apps) == 2 else 0.48)
-        for entry, (px, py) in zip(apps, positions):
-            self.paint_icon(
-                cr, entry, x + size * px - icon_size / 2, y + size * py - icon_size / 2, icon_size
-            )
-        if group.get("showLabel", False):
-            text(cr, group["name"], width / 2 - 51, 116, 102, size=self.font_size * 0.75)
+        layout = self.layout
+        icon_size = layout["size"]
+        for entry, item in zip(group["apps"], layout["items"]):
+            cr.save()
+            cr.translate(x+item["x"]+icon_size/2, y+item["y"]+icon_size/2)
+            cr.rotate(math.radians(item["rotation"]))
+            if layout["stacked"]:
+                rounded(cr, -icon_size/2, -icon_size/2, icon_size, icon_size, 4)
+                color(cr, self.appearance["dockColor"])
+                cr.fill_preserve()
+                cr.set_source_rgba(1, 1, 1, .25)
+                cr.stroke()
+            cr.rotate(math.radians(item["glyphRotation"]))
+            self.paint_icon(cr, entry, -icon_size/2, -icon_size/2, icon_size)
+            cr.restore()
+        if self.appearance["showLabel"]:
+            text(cr, group["name"], width / 2 - 51, y + size + 6, 102, size=self.font_size * 0.75)
 
     def draw_popup(self, cr, width, height):
         group = self.group
         apps = group["apps"][:4]
         card_width = min(width - 40, max(240, len(apps) * 100 + 36))
         x, y = (width - card_width) / 2, 12
-        opacity = group.get("glassOpacity", 0.38) if self.glass else group.get("popupOpacity", 0.98)
+        opacity = self.appearance["backgroundOpacity"]
         background = group.get("popupColor", "#26262a")
         rounded(cr, x, y + 5, card_width, height - 24, 20)
         cr.set_source_rgba(0, 0, 0, 0.16 * opacity)
@@ -209,7 +229,9 @@ class FolderPreview(Gtk.DrawingArea):
         color(cr, background, opacity)
         cr.fill()
         filename = group.get("wallpaper")
-        if filename != self.wallpaper[0]:
+        blend = self.appearance["blurAmount"]
+        cache_key = (filename, blend)
+        if cache_key != self.wallpaper[0]:
             try:
                 pixbuf = (
                     GdkPixbuf.Pixbuf.new_from_file_at_scale(filename, 640, 320, True)
@@ -218,7 +240,14 @@ class FolderPreview(Gtk.DrawingArea):
                 )
             except GLib.Error:
                 pixbuf = None
-            self.wallpaper = (filename, pixbuf)
+            if pixbuf and blend > 0:
+                channels = "RGBA" if pixbuf.get_has_alpha() else "RGB"
+                image = Image.frombytes(channels, (pixbuf.get_width(),pixbuf.get_height()),
+                    bytes(pixbuf.get_pixels()), "raw", channels, pixbuf.get_rowstride())
+                image = image.filter(ImageFilter.GaussianBlur(CONTRACT["layout"]["blurRadius"] * .65 * blend)).convert("RGBA")
+                pixbuf = GdkPixbuf.Pixbuf.new_from_bytes(GLib.Bytes.new(image.tobytes()),
+                    GdkPixbuf.Colorspace.RGB, True, 8, image.width, image.height, image.width * 4)
+            self.wallpaper = (cache_key, pixbuf)
         pixbuf = self.wallpaper[1]
         if pixbuf:
             cr.save()
@@ -231,16 +260,11 @@ class FolderPreview(Gtk.DrawingArea):
             )
             cr.scale(scale, scale)
             Gdk.cairo_set_source_pixbuf(cr, pixbuf, 0, 0)
-            cr.paint_with_alpha(opacity)
+            cr.paint_with_alpha(opacity * (1 - .2 * blend))
             cr.set_source_rgba(0, 0, 0, 0.42 * opacity)
             cr.paint()
             cr.restore()
-        rgba = Gdk.RGBA()
-        rgba.parse(background)
-        light = (
-            not pixbuf and rgba.red * 0.2126 + rgba.green * 0.7152 + rgba.blue * 0.0722 > 160 / 255
-        )
-        foreground = "#202124" if light else "#ffffff"
+        foreground = self.appearance["foreground"]
         text(
             cr,
             group["name"],

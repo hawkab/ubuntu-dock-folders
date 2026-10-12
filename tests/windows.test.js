@@ -6,16 +6,17 @@ import {readFileSync} from 'node:fs';
 import test from 'node:test';
 import {runInNewContext} from 'node:vm';
 
-const source = readFileSync(new URL('../extension/extension.js', import.meta.url), 'utf8')
+const source = readFileSync(new URL('../extension/dockWindows.js', import.meta.url), 'utf8')
     .replace(/^import .*;\n/gm, '')
-    .replace('export default class DockGroups', 'class DockGroups');
+    .replace('export class DockWindows', 'class DockWindows');
 
 function extensionFor(windows, entries) {
-    const DockGroups = runInNewContext(`${source}\nDockGroups`, {
+    const DockWindows = runInNewContext(`${source}\nDockWindows`, {
         FolderRenderer: class {},
         global: {get_window_actors: () => windows.map(meta_window => ({meta_window}))},
     });
-    const extension = new DockGroups();
+    const extension = {};
+    extension._windowsAdapter = new DockWindows(extension);
     extension._entryIds = new Map(entries.map(entry => [entry.desktop, entry]));
     extension._classes = new Map();
     extension._tracker = {get_window_app: window => window.app};
@@ -41,8 +42,8 @@ test('Chrome and tg windows count during STARTING before they enter get_running(
     const chromeWindow = windowFor(chrome.desktop);
     const tgWindow = windowFor(tg.desktop);
     const extension = extensionFor([chromeWindow, tgWindow], [chrome, tg]);
-    assert.deepEqual([...extension._windows(browsers)], [chromeWindow]);
-    assert.deepEqual([...extension._windows(messengers)], [tgWindow]);
+    assert.deepEqual([...extension._windowsAdapter._windows(browsers)], [chromeWindow]);
+    assert.deepEqual([...extension._windowsAdapter._windows(messengers)], [tgWindow]);
 });
 
 test('window counts include minimized members and exclude unrelated or taskbar-skipped windows', () => {
@@ -54,6 +55,6 @@ test('window counts include minimized members and exclude unrelated or taskbar-s
     const skipped = windowFor(first.desktop, {skip_taskbar: true});
     const unrelated = windowFor('unrelated.desktop');
     const extension = extensionFor([firstWindow, secondWindow, skipped, unrelated], [first, second]);
-    assert.deepEqual([...extension._windows(group)], [firstWindow, secondWindow]);
-    assert.deepEqual([...extension._windows(group, first)], [firstWindow]);
+    assert.deepEqual([...extension._windowsAdapter._windows(group)], [firstWindow, secondWindow]);
+    assert.deepEqual([...extension._windowsAdapter._windows(group, first)], [firstWindow]);
 });

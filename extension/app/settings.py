@@ -9,12 +9,16 @@ from pathlib import Path
 from gi.repository import Gio, GLib
 
 ROOT = Path(__file__).resolve().parent.parent
+APP_ID = "io.github.hawkab.UbuntuDockFolders"
 DATA = Path(GLib.get_user_data_dir()) / "launcher-groups"
 SCHEMA = "org.gnome.shell.extensions.dock-groups"
 source = Gio.SettingsSchemaSource.new_from_directory(
     str(ROOT / "schemas"), Gio.SettingsSchemaSource.get_default(), False
 )
-SETTINGS = Gio.Settings.new_full(source.lookup(SCHEMA, False), None, None)
+schema = source.lookup(SCHEMA, False)
+if schema is None:
+    raise RuntimeError("Dock folders settings schema is missing")
+SETTINGS = Gio.Settings.new_full(schema, None, None)
 
 
 def groups():

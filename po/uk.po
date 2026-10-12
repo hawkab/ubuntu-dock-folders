@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: uk\nLanguage: uk\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: uk\nLanguage: uk\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid "%s, percent"
@@ -173,13 +173,13 @@ msgid "When opened"
 msgstr "Після відкриття"
 
 msgid "App-grid folders"
-msgstr "Папки сітки програм"
+msgstr "Теки сітки застосунків"
 
 msgid "Add an app-grid folder"
-msgstr "Додати папку із сітки програм"
+msgstr "Додати теку із сітки застосунків"
 
 msgid "Keep folder names and applications in sync with GNOME's app grid"
-msgstr "Синхронізувати назви й програми із сіткою програм GNOME"
+msgstr "Синхронізувати назви та застосунки із сіткою застосунків GNOME"
 
 msgid "Pin to dock"
 msgstr "Закріпити на панелі"
@@ -188,13 +188,13 @@ msgid "Pinned"
 msgstr "Закріплено"
 
 msgid "No app-grid folders"
-msgstr "У сітці програм немає папок"
+msgstr "У сітці застосунків немає тек"
 
 msgid "Create a folder in Show Apps first"
-msgstr "Спочатку створіть папку в меню «Показати програми»"
+msgstr "Спочатку створіть теку в меню «Показати застосунки»"
 
 msgid "Folder updated"
-msgstr "Папку оновлено"
+msgstr "Теку оновлено"
 
 msgid "Undo"
 msgstr "Скасувати"
@@ -208,3 +208,120 @@ msgstr "Відкриті вікна"
 #, python-format
 msgid "Could not open %s"
 msgstr "Не вдалося відкрити %s"
+
+msgid "Folder icon size"
+msgstr "Розмір піктограми теки"
+
+
+msgid "No animation"
+msgstr "Без анімації"
+
+msgid "Magic Lamp"
+msgstr "Чарівна лампа"
+
+msgid "Fold"
+msgstr "Складання"
+
+
+msgid "Animation speed"
+msgstr "Швидкість анімації"
+
+msgid "Mini-icon size"
+msgstr "Розмір мініпіктограм"
+
+msgid "Unfold from edge"
+msgstr "Розгортання від краю"
+
+msgid "Sheet"
+msgstr "Аркуш (Sheet)"
+
+msgid "Icon rotation"
+msgstr "Поворот піктограм"
+
+msgid "Always use card stack"
+msgstr "Завжди використовувати стос карток"
+
+
+msgid "Fade"
+msgstr "Плавна поява"
+
+msgid "On hover"
+msgstr "При наведенні"
+
+msgid "No effect"
+msgstr "Без ефекту"
+
+msgid "Rotate by 30°"
+msgstr "Поворот на 30°"
+
+msgid "Fan out cards"
+msgstr "Розкриття карток"
+
+msgid "Open folder icon size"
+msgstr "Розмір піктограм у відкритій теці"
+
+msgid "Rotate on hover"
+msgstr "Поворот при наведенні"
+
+msgid "Hover rotation angle"
+msgstr "Кут повороту при наведенні"
+
+msgid "Hover animation speed"
+msgstr "Швидкість анімації при наведенні"
+
+msgid "Rotate and fan out cards"
+msgstr "Поворот і розкриття карток"
+
+msgid "Background blur"
+msgstr "Розмиття тла"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "0% — чітке тло. Прозорість налаштовується окремо для кожної теки."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "Прозорість впливає на колір тла; розмиття налаштовується окремо."
+
+msgid "Apply to all folders…"
+msgstr "Застосувати до всіх тек…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "Замінити вигляд решти тек?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "Індивідуальні налаштування вигляду всіх інших тек буде замінено. Назви та склад застосунків збережуться."
+
+msgid "Apply to all folders"
+msgstr "Застосувати до всіх тек"
+
+msgid "Cancel"
+msgstr "Скасувати"
+
+msgid "Existing folders"
+msgstr "Наявні теки"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "Виберіть збережені групи або теки із сітки програм GNOME"
+
+msgid "No folders available"
+msgstr "Немає доступних тек"
+
+msgid "Pin to panel"
+msgstr "Закріпити на панелі"
+
+msgid "Unpin from panel"
+msgstr "Відкріпити від панелі"
+
+msgid "Allow customizing each folder separately"
+msgstr "Дозволити налаштовувати оформлення кожної теки окремо"
+
+msgid "Preview animation"
+msgstr "Попередній перегляд анімації"
+
+msgid "Continuous rotation speed"
+msgstr "Швидкість постійного обертання"
+
+msgid "Rotation speed on hover"
+msgstr "Швидкість обертання при наведенні"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 вимикає відповідний режим. Під час наведення ненульова швидкість замінює швидкість постійного обертання. Від’ємна швидкість змінює напрямок обертання."

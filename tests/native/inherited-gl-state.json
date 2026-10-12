@@ -1,0 +1,7 @@
+{
+    "KPlugin": {
+        "Name": "Inherited GL state test fixture",
+        "License": "GPL-3.0-or-later",
+        "EnabledByDefault": false
+    }
+}

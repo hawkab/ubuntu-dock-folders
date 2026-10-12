@@ -15,6 +15,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlparse
 
 import yaml
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
 STAGE = ROOT / "build/package"
@@ -26,6 +27,19 @@ from catalog import verify_local_media
 
 class PackageTests(unittest.TestCase):
     """Check installed and repository catalogs against supported store formats."""
+
+    def test_package_payload_excludes_local_python_caches_and_build_paths(self):
+        upstream = subprocess.check_output(["dpkg-parsechangelog", "-SVersion"], cwd=ROOT, text=True).strip().split("-", 1)[0]
+        version = next(line.removeprefix("Version: ") for line in (STAGE / "DEBIAN/control").read_text().splitlines()
+                       if line.startswith("Version: "))
+        self.assertTrue(version.startswith(upstream + "-"), version)
+        for file in (STAGE / "usr").rglob("*"):
+            if not file.is_file():
+                continue
+            with self.subTest(file=str(file.relative_to(STAGE))):
+                self.assertNotEqual(file.suffix, ".pyc")
+                self.assertTrue(file.resolve().is_relative_to(STAGE), file)
+                self.assertNotIn(str(ROOT).encode(), file.read_bytes())
 
     def test_local_catalog_supports_confined_and_legacy_readers(self):
         component = ET.parse(STAGE / "usr/share/swcatalog/xml" / f"{APP_ID}.xml").find("component")
@@ -81,7 +95,8 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(component.findtext("pkgname"), "ubuntu-dock-folders")
         images = component.findall("screenshots/screenshot/image")
         videos = component.findall("screenshots/screenshot/video")
-        self.assertEqual(len(images), 7)
+        combined = (STAGE / "usr/share/ubuntu-dock-folders/desktops.json").exists()
+        self.assertEqual(len(images), 18 if combined else 8)
         self.assertEqual(len(videos), 1)
         for media in images + videos:
             with self.subTest(url=media.text):
@@ -89,8 +104,11 @@ class PackageTests(unittest.TestCase):
                 self.assertEqual(url.scheme, "file")
                 self.assertFalse(url.netloc)
                 path = Path(unquote(url.path))
-                self.assertEqual(path.parent, Path("/usr/share/doc/ubuntu-dock-folders/docs"))
+                self.assertTrue(path.is_relative_to("/usr/share/doc/ubuntu-dock-folders/docs"))
                 self.assertTrue((STAGE / path.relative_to("/")).is_file())
+                if media.tag == "image":
+                    with Image.open(STAGE / path.relative_to("/")) as image:
+                        self.assertEqual(image.size, (int(media.get("width")), int(media.get("height"))))
         icon = component.find("icon[@type='local']")
         self.assertTrue((STAGE / Path(icon.text).relative_to("/")).is_file())
 
@@ -98,7 +116,8 @@ class PackageTests(unittest.TestCase):
         with zipfile.ZipFile(ROOT / "dist/dock-groups@local.shell-extension.zip") as bundle:
             self.assertIn("windowPreviews.js", bundle.namelist())
             self.assertIn("compat.js", bundle.namelist())
-            self.assertIn("./windowPreviews.js", bundle.read("extension.js").decode())
+            self.assertIn("windowLifecycle.js", bundle.namelist())
+            self.assertIn("./windowPreviews.js", bundle.read("folderView.js").decode())
 
     def test_final_package_rejects_compressed_catalog_media(self):
         with tempfile.TemporaryDirectory() as directory:

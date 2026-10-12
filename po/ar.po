@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ar\nLanguage: ar\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ar\nLanguage: ar\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);\n"
 
 #, python-format
 msgid "%s, percent"
@@ -208,3 +208,120 @@ msgstr "النوافذ المفتوحة"
 #, python-format
 msgid "Could not open %s"
 msgstr "تعذّر فتح %s"
+
+msgid "Folder icon size"
+msgstr "حجم أيقونة المجلد"
+
+
+msgid "No animation"
+msgstr "بدون حركة"
+
+msgid "Magic Lamp"
+msgstr "المصباح السحري"
+
+msgid "Fold"
+msgstr "طي"
+
+
+msgid "Animation speed"
+msgstr "سرعة الحركة"
+
+msgid "Mini-icon size"
+msgstr "حجم الأيقونات المصغّرة"
+
+msgid "Unfold from edge"
+msgstr "فتح من الحافة"
+
+msgid "Sheet"
+msgstr "الورقة (Sheet)"
+
+msgid "Icon rotation"
+msgstr "تدوير الأيقونات"
+
+msgid "Always use card stack"
+msgstr "استخدام رزمة بطاقات دائمًا"
+
+
+msgid "Fade"
+msgstr "ظهور تدريجي"
+
+msgid "On hover"
+msgstr "عند تمرير المؤشر"
+
+msgid "No effect"
+msgstr "بدون تأثير"
+
+msgid "Rotate by 30°"
+msgstr "تدوير بمقدار 30°"
+
+msgid "Fan out cards"
+msgstr "فتح البطاقات بشكل مروحي"
+
+msgid "Open folder icon size"
+msgstr "حجم الأيقونات في المجلد المفتوح"
+
+msgid "Rotate on hover"
+msgstr "تدوير عند مرور المؤشر"
+
+msgid "Hover rotation angle"
+msgstr "زاوية التدوير عند مرور المؤشر"
+
+msgid "Hover animation speed"
+msgstr "سرعة الحركة عند مرور المؤشر"
+
+msgid "Rotate and fan out cards"
+msgstr "تدوير البطاقات وفردها"
+
+msgid "Background blur"
+msgstr "تمويه الخلفية"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "عند 0% تبقى الخلفية واضحة. تُضبط الشفافية لكل مجلد على حدة."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "تؤثر الشفافية على لون الخلفية؛ والتمويه مستقل عنها."
+
+msgid "Apply to all folders…"
+msgstr "تطبيق على جميع المجلدات…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "استبدال مظهر المجلدات الأخرى؟"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "سيؤدي هذا إلى استبدال إعدادات المظهر المخصصة لجميع المجلدات الأخرى. ستبقى الأسماء والتطبيقات كما هي."
+
+msgid "Apply to all folders"
+msgstr "تطبيق على جميع المجلدات"
+
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgid "Existing folders"
+msgstr "المجلدات الموجودة"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "اختر مجموعات محفوظة أو مجلدات من شبكة تطبيقات جنوم"
+
+msgid "No folders available"
+msgstr "لا توجد مجلدات متاحة"
+
+msgid "Pin to panel"
+msgstr "تثبيت على اللوحة"
+
+msgid "Unpin from panel"
+msgstr "إلغاء التثبيت من اللوحة"
+
+msgid "Allow customizing each folder separately"
+msgstr "السماح بتخصيص مظهر كل مجلد على حدة"
+
+msgid "Preview animation"
+msgstr "معاينة الحركة"
+
+msgid "Continuous rotation speed"
+msgstr "سرعة الدوران المستمر"
+
+msgid "Rotation speed on hover"
+msgstr "سرعة الدوران عند تمرير المؤشر"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "تعطّل القيمة 0 كل وضع. عند تمرير المؤشر، تحل سرعة التمرير غير الصفرية محل سرعة الدوران المستمر. السرعات السالبة تعكس اتجاه الدوران."

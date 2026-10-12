@@ -9,10 +9,17 @@ import copy
 import gettext
 import shutil
 import subprocess
+import sysconfig
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from catalog import add_legacy_developer
+from package_layout import finalize
+from native_build import compiler, flags as build_flags
+import build_core
+from localization import validate as validate_translations
+from publication_files import copy_media
+from package_control import description as package_description
 
 import gi
 
@@ -35,6 +42,8 @@ def run(*args):
 
 
 def build():
+    validate_translations()
+    build_core.generate()
     extension = BUILD / "extension"
     if extension.exists():
         shutil.rmtree(extension)
@@ -43,6 +52,7 @@ def build():
         extension,
         ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "gschemas.compiled", "locale"),
     )
+    build_core.install(extension / "core")
     DIST.mkdir(parents=True, exist_ok=True)
     for source in sorted((ROOT / "po").glob("*.po")):
         destination = extension / "locale" / source.stem / "LC_MESSAGES" / f"{DOMAIN}.mo"
@@ -50,16 +60,26 @@ def build():
         run("msgfmt", "--check", str(source), "-o", str(destination))
     run("glib-compile-schemas", "--strict", str(extension / "schemas"))
     extras = [
+        "groupStore.js",
+        "folderCommands.js",
+        "folderFeedback.js",
+        "dockAdapter.js",
+        "folderDetails.js",
+        "dockDragDrop.js",
+        "dockWindows.js",
+        "folderView.js",
+        "folderAnimation.js", "animationGeometry.js", "iconGeometry.js", "folderHover.js",
+        "core", "adapters", "settingsPreview.js", "previewPaint.js", "existingFolders.js", "windowLifecycle.js",
         "app",
         "icons",
         "effects.js",
         "compat.js",
-        "rendering.js",
+        "rendering.js", "popupSurface.js", "backdropContrast.js",
         "gridFolders.js",
         "windowPreviews.js",
         "model.js",
         "groups.json",
-        "preferences.ui",
+        "preferences.ui", "preferencesBinding.js",
     ]
     run(
         "gnome-extensions",
@@ -77,23 +97,28 @@ def build():
     native = BUILD / "integration"
     native.mkdir(parents=True, exist_ok=True)
     flags = subprocess.check_output(
-        ["pkg-config", "--cflags", "--libs", "gio-2.0"], text=True
+        ["pkg-config", "--cflags", "--libs", "gio-2.0", "gmodule-2.0", "pygobject-3.0", "python3-embed"], text=True
     ).split()
     run(
-        "cc",
+        *compiler(),
         "-shared",
         "-fPIC",
-        "-O2",
+        *build_flags("CPPFLAGS"),
+        *build_flags("CFLAGS"),
         "-Wall",
         "-Wextra",
         "-Werror",
+        "-I" + str(ROOT / "native"),
+        f'-DDOCK_FOLDERS_PYTHON_LIBRARY="{sysconfig.get_config_var("LDLIBRARY")}"',
         str(ROOT / "integration/settings-integration.c"),
+        str(ROOT / "integration/preferences-host.c"),
         "-o",
         str(native / "settings-integration.so"),
         *flags,
         "-l:libgtk-4.so.1",
         "-l:libadwaita-1.so.0",
         "-ldl",
+        *build_flags("LDFLAGS"),
     )
     shutil.copy2(ROOT / "integration/ubuntu-settings", native / "ubuntu-settings")
     (native / "ubuntu-settings").chmod(0o755)
@@ -106,12 +131,12 @@ def package(extension, stage_only=False):
     if stage.exists():
         shutil.rmtree(stage)
     destination = stage / "usr/share/gnome-shell/extensions" / UUID
-    shutil.copytree(extension, destination)
+    shutil.copytree(extension, destination, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
     shutil.copytree(extension / "locale", stage / "usr/share/locale")
     shutil.copytree(BUILD / "integration", destination / "integration")
     scripts = stage / "usr/share/ubuntu-dock-folders/scripts"
     scripts.mkdir(parents=True)
-    for name in ("manage.py", "backup.py"):
+    for name in ("manage.py", "gnome_provider.py", "backup.py", "install_context.py", "settings_integration.py", "desktop_presentation.py", "package_lifecycle.py"):
         shutil.copy2(ROOT / "scripts" / name, scripts / name)
     executable = stage / "usr/bin/ubuntu-dock-folders"
     executable.parent.mkdir(parents=True)
@@ -166,7 +191,7 @@ def package(extension, stage_only=False):
     shutil.copy2(ROOT / "packaging/copyright", documentation / "copyright")
     for name in ("README.md", "AUTHORS"):
         shutil.copy2(ROOT / name, documentation / name)
-    shutil.copytree(ROOT / "docs", documentation / "docs")
+    copy_media(ROOT / "docs", documentation / "docs")
     catalog = ET.Element("components", {"version": "1.0", "origin": "ubuntu-dock-folders-local"})
     local = copy.deepcopy(component)
     add_legacy_developer(local)
@@ -202,42 +227,20 @@ def package(extension, stage_only=False):
     catalog_tree.write(catalog_path, encoding="UTF-8", xml_declaration=True)
     control = stage / "DEBIAN"
     control.mkdir()
-    dependencies = "gnome-shell (>= 46), gnome-shell (<< 47) | gnome-shell (>= 50), gnome-shell (<< 51), gnome-shell-extension-ubuntu-dock, python3, python3-gi, python3-cairo, python3-gi-cairo, python3-pil, gir1.2-gtk-4.0, gir1.2-adw-1"
-    installed_size = sum(
-        path.stat().st_size for path in (stage / "usr").rglob("*") if path.is_file()
-    )
+    (control / "prerm").write_text((ROOT / "debian/ubuntu-dock-folders.prerm").read_text().replace("#DEBHELPER#\n", ""))
+    (control / "prerm").chmod(0o755)
+    dependencies = "gnome-shell (>= 46), gnome-shell (<< 47) | gnome-shell (>= 50), gnome-shell (<< 51), gnome-shell-extension-ubuntu-dock, gjs, python3, python3-gi, python3-cairo, python3-gi-cairo, python3-pil, gir1.2-gtk-4.0, gir1.2-adw-1"
+    dependencies += ", " + subprocess.check_output(
+        ["dpkg-shlibdeps", "-O", "-e" + str(destination / "integration/settings-integration.so")],
+        cwd=ROOT, text=True).strip().removeprefix("shlibs:Depends=")
     (control / "control").write_text(
         f"Package: ubuntu-dock-folders\nVersion: {VERSION}\nSection: gnome\nPriority: optional\nArchitecture: {architecture}\n"
         "Maintainer: Grigory Olshansky <hawkab@users.noreply.github.com>\n"
-        f"Installed-Size: {(installed_size + 1023) // 1024}\nDepends: {dependencies}\n"
+        f"Depends: {dependencies}\n"
         "Homepage: https://github.com/hawkab/ubuntu-dock-folders\n"
-        "Description: Android-style application folders for Ubuntu Dock\n"
-        " Group applications by dragging one dock icon onto another. Reorder them\n"
-        " inside folders or move them back to the dock. Each folder shows real\n"
-        " application icons and a shared running indicator.\n .\n"
-        " Customize names, labels, colors, transparency and wallpaper. Choose scale\n"
-        " or genie animations and optional frosted glass. The interface follows\n"
-        " the system language and includes 30 translations.\n .\n"
-        " Supports Ubuntu 26.04 / GNOME 50 and Ubuntu 24.04 / GNOME 46 with Ubuntu Dock.\n"
-        " After installing,\n"
-        " run ubuntu-dock-folders enable --ubuntu-settings as your desktop user,\n"
-        " then log out and back in. Settings are available in Ubuntu Desktop\n"
-        " settings or the Ubuntu Dock Folders application entry.\n .\n"
-        " Author: Grigory Olshansky. License: GPL-3.0-or-later.\n"
+        "Description: " + package_description() + "\n"
     )
-    md5sums = subprocess.check_output(
-        [
-            "md5sum",
-            *(
-                str(path.relative_to(stage))
-                for path in sorted((stage / "usr").rglob("*"))
-                if path.is_file()
-            ),
-        ],
-        cwd=stage,
-        text=True,
-    )
-    (control / "md5sums").write_text(md5sums)
+    finalize(stage, "ubuntu-dock-folders", strip_native=not stage_only)
     if stage_only:
         return
     run(

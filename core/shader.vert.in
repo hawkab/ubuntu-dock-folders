@@ -1,0 +1,30 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright 2026 Grigory Olshansky
+
+#version 440
+layout(location = 0) in vec4 qt_Vertex;
+layout(location = 1) in vec2 qt_MultiTexCoord0;
+layout(location = 0) out vec2 qt_TexCoord0;
+layout(std140, binding = 0) uniform buf {
+    mat4 qt_Matrix;
+    float qt_Opacity;
+    float progress;
+    vec2 anchor;
+    vec4 card;
+    float edge;
+    float style;
+} ubuf;
+
+vec2 deform(vec2 point)
+{
+    float progress = ubuf.progress, style = ubuf.style, edge = ubuf.edge;
+    float pointX = point.x, pointY = point.y, anchorX = ubuf.anchor.x, anchorY = ubuf.anchor.y;
+    float rectX = ubuf.card.x, rectY = ubuf.card.y, rectWidth = ubuf.card.z, rectHeight = ubuf.card.w;
+@DEFORMATION@
+}
+
+void main()
+{
+    qt_TexCoord0 = qt_MultiTexCoord0;
+    gl_Position = ubuf.qt_Matrix * vec4(deform(qt_Vertex.xy), qt_Vertex.zw);
+}

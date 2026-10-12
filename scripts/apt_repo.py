@@ -120,8 +120,9 @@ def compose(deb, output, config):
             compressed(archive_path)
 
 
-def update_archive(deb, destination, config, env=None):
+def update_archive(deb, destination, config, env=None, source_root=None):
     destination = Path(destination)
+    assets = Path(source_root) if source_root is not None else ROOT
     pool = destination / "pool/main/u/ubuntu-dock-folders"
     immutable_copy(deb, pool / deb.name)
     dist = destination / "dists" / config["suite"]
@@ -145,7 +146,7 @@ def update_archive(deb, destination, config, env=None):
             with cached.open("rb") as stream:
                 digest = hashlib.file_digest(stream, "sha512").hexdigest()
             immutable_copy(cached, directory / "by-hash/SHA512" / digest)
-    public_key = ROOT / "packaging/archive-key.asc"
+    public_key = assets / "packaging/archive-key.asc"
     shutil.copy2(public_key, destination / "archive-key.asc")
     run(
         "gpg",
@@ -161,9 +162,11 @@ def update_archive(deb, destination, config, env=None):
         f"Components: main\nArchitectures: {config['architecture']}\n"
         "Signed-By: /etc/apt/keyrings/hawkab-archive-keyring.gpg\n"
     )
-    (destination / "hawkab.sources").write_text(source)
+    (destination / f"{config['suite']}.sources").write_text(source)
+    if config["suite"] == "noble":
+        (destination / "hawkab.sources").write_text(source)
     (destination / ".nojekyll").touch()
-    (destination / "index.html").write_text((ROOT / "packaging/apt-index.html").read_text())
+    (destination / "index.html").write_text((assets / "packaging/apt-index.html").read_text())
     options = {
         "Origin": "hawkab",
         "Label": "hawkab Ubuntu packages",
@@ -172,7 +175,7 @@ def update_archive(deb, destination, config, env=None):
         "Architectures": config["architecture"],
         "Components": "main",
         "Acquire-By-Hash": "yes",
-        "Description": "Ubuntu Dock Folders for Ubuntu 26.04 / GNOME 50 and Ubuntu 24.04 / GNOME 46",
+        "Description": "Application folders for Ubuntu desktops",
     }
     arguments = [
         part

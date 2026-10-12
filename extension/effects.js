@@ -5,6 +5,8 @@ import Clutter from 'gi://Clutter';
 import Cogl from 'gi://Cogl';
 import GObject from 'gi://GObject';
 import St from 'gi://St';
+import {deform} from './animationGeometry.js';
+import {contract} from './core/contract.js';
 
 export function roundedPath(cr, x, y, width, height, radius) {
     cr.newSubPath();
@@ -15,7 +17,7 @@ export function roundedPath(cr, x, y, width, height, radius) {
     cr.closePath();
 }
 
-// Mask the blurred backdrop, rather than blurring the icons or the shadow.
+/** Clip a blurred backdrop to the folder outline. */
 export const RoundedBackdrop = GObject.registerClass({GTypeName: 'DockGroupsRoundedBackdropV1'},
 class RoundedBackdrop extends Clutter.ShaderEffect {
     _init() {
@@ -43,7 +45,7 @@ class RoundedBackdrop extends Clutter.ShaderEffect {
             actor.width <= 0 || actor.height <= 0)
             return;
         for (const [name, number] of [['width', actor.width], ['height', actor.height],
-            ['radius', Math.min(24, actor.width / 2, actor.height / 2)]]) {
+            ['radius', Math.min(contract.layout.radius, actor.width / 2, actor.height / 2)]]) {
             if (this._dimensions.get(name) === number)
                 continue;
             let value = this._values.get(name);
@@ -60,16 +62,17 @@ class RoundedBackdrop extends Clutter.ShaderEffect {
     }
 });
 
-// Deform only while animating: a tapered ribbon flows from the dock icon.
+/** Deform a folder mesh relative to its dock icon. */
 export const FlowEffect = GObject.registerClass({GTypeName: 'DockGroupsFlowV2'},
 class FlowEffect extends Clutter.DeformEffect {
-    _init(side) {
+    _init(side, style = 1) {
         super._init();
         this.side = side;
+        this.style = style;
         this.progress = 1;
         this.originX = 0;
         this.originY = 0;
-        this.set_n_tiles(12, 10);
+        this.set_n_tiles(24, 24);
     }
 
     vfunc_deform_vertex(width, height, vertex) {
@@ -93,24 +96,10 @@ class FlowEffect extends Clutter.DeformEffect {
         if (![this._textureX, this._textureY, vertex.x, vertex.y].every(Number.isFinite))
             return;
         const p = Math.max(0, Math.min(1, this.progress));
-        const horizontal = this.side === St.Side.LEFT || this.side === St.Side.RIGHT;
-        const reversed = this.side === St.Side.RIGHT || this.side === St.Side.BOTTOM;
-        const length = horizontal ? width : height;
-        const originalAlong = horizontal ? vertex.x : vertex.y;
-        const originalAcross = horizontal ? vertex.y : vertex.x;
-        const along = reversed ? length - originalAlong : originalAlong;
-        const t = along / Math.max(1, length);
-        const ribbon = Math.pow(p, 0.7 + 2.4 * (1 - t));
-        const sourceAlong = horizontal ? this._textureX : this._textureY;
-        const sourceAcross = horizontal ? this._textureY : this._textureX;
-        const deformedAlong = sourceAlong + (originalAlong - sourceAlong) * p;
-        const deformedAcross = sourceAcross + (originalAcross - sourceAcross) * ribbon;
-        if (horizontal) {
-            vertex.x = deformedAlong;
-            vertex.y = deformedAcross;
-        } else {
-            vertex.x = deformedAcross;
-            vertex.y = deformedAlong;
-        }
+        const edge = this.side === St.Side.TOP ? 1 : this.side === St.Side.LEFT ? 2 : this.side === St.Side.RIGHT ? 3 : 0;
+        const mapped = deform({x: vertex.x, y: vertex.y}, {x: 0, y: 0, width, height},
+            {x: this._textureX, y: this._textureY}, p, edge, this.style);
+        vertex.x = mapped.x;
+        vertex.y = mapped.y;
     }
 });

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: cs\nLanguage: cs\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: cs\nLanguage: cs\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid "%s, percent"
@@ -208,3 +208,120 @@ msgstr "Otevřená okna"
 #, python-format
 msgid "Could not open %s"
 msgstr "Nelze otevřít %s"
+
+msgid "Folder icon size"
+msgstr "Velikost ikony složky"
+
+
+msgid "No animation"
+msgstr "Bez animace"
+
+msgid "Magic Lamp"
+msgstr "Kouzelná lampa"
+
+msgid "Fold"
+msgstr "Skládání"
+
+
+msgid "Animation speed"
+msgstr "Rychlost animace"
+
+msgid "Mini-icon size"
+msgstr "Velikost miniikon"
+
+msgid "Unfold from edge"
+msgstr "Rozvinutí od okraje"
+
+msgid "Sheet"
+msgstr "List (Sheet)"
+
+msgid "Icon rotation"
+msgstr "Otočení ikon"
+
+msgid "Always use card stack"
+msgstr "Vždy používat balíček karet"
+
+
+msgid "Fade"
+msgstr "Plynulé zobrazení"
+
+msgid "On hover"
+msgstr "Při najetí myší"
+
+msgid "No effect"
+msgstr "Bez efektu"
+
+msgid "Rotate by 30°"
+msgstr "Otočit o 30°"
+
+msgid "Fan out cards"
+msgstr "Rozvinout karty"
+
+msgid "Open folder icon size"
+msgstr "Velikost ikon v otevřené složce"
+
+msgid "Rotate on hover"
+msgstr "Otočit při najetí myší"
+
+msgid "Hover rotation angle"
+msgstr "Úhel otočení při najetí myší"
+
+msgid "Hover animation speed"
+msgstr "Rychlost animace při najetí myší"
+
+msgid "Rotate and fan out cards"
+msgstr "Otočit a rozvinout karty"
+
+msgid "Background blur"
+msgstr "Rozostření pozadí"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "Při 0% zůstává pozadí ostré. Průhlednost se nastavuje pro každou složku zvlášť."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "Průhlednost ovlivňuje barvu pozadí; rozostření je nezávislé."
+
+msgid "Apply to all folders…"
+msgstr "Použít pro všechny složky…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "Nahradit vzhled ostatních složek?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "Tím se přepíše vlastní nastavení vzhledu všech ostatních složek. Názvy a aplikace zůstanou beze změny."
+
+msgid "Apply to all folders"
+msgstr "Použít pro všechny složky"
+
+msgid "Cancel"
+msgstr "Zrušit"
+
+msgid "Existing folders"
+msgstr "Existující složky"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "Vyberte uložené skupiny nebo složky z přehledu aplikací GNOME"
+
+msgid "No folders available"
+msgstr "Nejsou dostupné žádné složky"
+
+msgid "Pin to panel"
+msgstr "Připnout na panel"
+
+msgid "Unpin from panel"
+msgstr "Odepnout z panelu"
+
+msgid "Allow customizing each folder separately"
+msgstr "Povolit samostatné přizpůsobení vzhledu každé složky"
+
+msgid "Preview animation"
+msgstr "Náhled animace"
+
+msgid "Continuous rotation speed"
+msgstr "Rychlost nepřetržitého otáčení"
+
+msgid "Rotation speed on hover"
+msgstr "Rychlost otáčení při najetí myší"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 vypne daný režim. Nenulová rychlost při najetí ukazatele nahradí rychlost nepřetržitého otáčení. Záporné rychlosti obracejí směr otáčení."

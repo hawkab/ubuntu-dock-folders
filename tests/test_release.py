@@ -17,6 +17,9 @@ from unittest.mock import MagicMock, patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import apt_repo
 import release
+import release_context
+import release_artifacts
+import launchpad_publish
 
 
 class ReleaseTests(unittest.TestCase):
@@ -139,7 +142,7 @@ class ReleaseTests(unittest.TestCase):
             settings = self.manifest(root)
             (root / "package.deb").write_bytes(b"modified")
             with self.assertRaisesRegex(ValueError, "checksum mismatch"):
-                release.verify_release(root, settings, self.env)
+                release_artifacts.verify_release(root, settings, self.env)
 
     def test_unlisted_artifact_is_rejected(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -147,14 +150,14 @@ class ReleaseTests(unittest.TestCase):
             settings = self.manifest(root)
             (root / "unexpected").write_bytes(b"extra")
             with self.assertRaisesRegex(ValueError, "Unexpected release artifacts"):
-                release.verify_release(root, settings, self.env)
+                release_artifacts.verify_release(root, settings, self.env)
 
     def test_parent_path_is_rejected(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             settings = self.manifest(root, "0" * 64 + "  ../outside\n")
             with self.assertRaisesRegex(ValueError, "Invalid checksum manifest"):
-                release.verify_release(root, settings, self.env)
+                release_artifacts.verify_release(root, settings, self.env)
 
     def test_valid_signature_with_wrong_key_is_rejected(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -162,7 +165,7 @@ class ReleaseTests(unittest.TestCase):
             settings = self.manifest(root)
             settings["signing_fingerprint"] = "0" * 40
             with self.assertRaisesRegex(ValueError, "unexpected signing key"):
-                release.verify_release(root, settings, self.env)
+                release_artifacts.verify_release(root, settings, self.env)
 
     def test_private_and_ignored_files_are_not_in_snapshot(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -173,8 +176,30 @@ class ReleaseTests(unittest.TestCase):
             (root / "secret.asc").write_text("private")
             (root / "build").mkdir()
             (root / "build/artifact").write_text("binary")
-            with patch.object(release, "ROOT", root):
-                self.assertEqual(release.source_files(), [".gitignore", "public"])
+            with patch.object(release_context, "ROOT", root):
+                self.assertEqual(release_context.source_files(), [".gitignore", "public"])
+
+    def test_archive_uses_assets_from_the_selected_source_checkout(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "reviewed"
+            (source / "packaging").mkdir(parents=True)
+            (source / "packaging/archive-key.asc").write_text("reviewed public key")
+            (source / "packaging/apt-index.html").write_text("reviewed archive page")
+            package = root / "package.deb"
+            package.write_bytes(b"package")
+            archive = root / "archive"
+            settings = {"suite": "noble", "architecture": "amd64",
+                        "apt_url": "https://example.invalid/apt/", "signing_fingerprint": "test"}
+
+            def compose(deb, output, config):
+                (output / "Components-amd64.yml").write_text("---\n")
+
+            with patch.object(apt_repo, "run", return_value=""), patch.object(
+                    apt_repo, "compose", side_effect=compose), patch.object(apt_repo, "verify_archive"):
+                apt_repo.update_archive(package, archive, settings, source_root=source)
+            self.assertEqual((archive / "archive-key.asc").read_text(), "reviewed public key")
+            self.assertEqual((archive / "index.html").read_text(), "reviewed archive page")
 
     def test_changelog_uses_the_requested_source_checkout(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -185,227 +210,61 @@ class ReleaseTests(unittest.TestCase):
                 "  * Source checkout fixture.\n\n"
                 " -- Example Author <example@example.invalid>  Mon, 05 Oct 2026 12:00:00 +0000\n"
             )
-            with patch.object(release, "ROOT", root):
-                self.assertEqual(release.changelog("Version"), "9.8.7-1ubuntu24.04.1")
+            with patch.object(release_context, "ROOT", root):
+                self.assertEqual(release_context.changelog("Version"), "9.8.7-1ubuntu24.04.1")
+
+    def test_snapshot_preserves_shared_core_links(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "source"
+            target = Path(directory) / "snapshot"
+            (root / "extension").mkdir(parents=True)
+            (root / "core").mkdir()
+            (root / "core/api.js").write_text("export const api = 9;\n")
+            (root / "extension/core").symlink_to("../core")
+            with patch.object(release_context, "ROOT", root), patch.object(
+                    release_context, "source_files", return_value=["core/api.js", "extension/core"]):
+                release_context.snapshot(target)
+            self.assertTrue((target / "extension/core").is_symlink())
+            self.assertEqual((target / "extension/core/api.js").read_text(), "export const api = 9;\n")
+
+    def test_snapshot_rejects_external_and_missing_links(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "source"
+            root.mkdir()
+            outside = Path(directory) / "private"
+            outside.write_text("private data")
+            link = root / "link"
+            for destination in ("../private", "missing", str(outside)):
+                with self.subTest(destination=destination):
+                    link.symlink_to(destination)
+                    with patch.object(release_context, "ROOT", root), patch.object(
+                            release_context, "source_files", return_value=["link"]):
+                        with self.assertRaisesRegex(ValueError, "checkout|relative target"):
+                            release_context.snapshot(Path(directory) / "snapshot")
+                    link.unlink()
 
     def test_series_have_distinct_versions_and_include_the_common_binary(self):
         settings = {"suite": "noble", "launchpad_targets": [
             {"suite": "noble", "version_suffix": "1ubuntu24.04.1"},
             {"suite": "resolute", "version_suffix": "1ubuntu26.04.1"},
         ]}
-        self.assertEqual(release.launchpad_targets(settings, "9.8.7-1ubuntu24.04.1"), [
+        self.assertEqual(release_context.launchpad_targets(settings, "9.8.7-1ubuntu24.04.1"), [
             {"suite": "noble", "version": "9.8.7-1ubuntu24.04.1"},
             {"suite": "resolute", "version": "9.8.7-1ubuntu26.04.1"},
         ])
         with self.assertRaisesRegex(ValueError, "include the release binary"):
-            release.launchpad_targets(settings, "9.8.7-2ubuntu24.04.1")
+            release_context.launchpad_targets(settings, "9.8.7-2ubuntu24.04.1")
         settings["launchpad_targets"][1]["version_suffix"] = "1ubuntu24.04.1"
         with self.assertRaisesRegex(ValueError, "distinct source versions"):
-            release.launchpad_targets(settings, "9.8.7-1ubuntu24.04.1")
+            release_context.launchpad_targets(settings, "9.8.7-1ubuntu24.04.1")
 
-    def test_resume_uploads_only_the_missing_series(self):
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            version = "9.8.7-1ubuntu24.04.1"
-            uploads = [{
-                "suite": suite,
-                "version": f"9.8.7-1ubuntu{ubuntu}.1",
-                "changes": f"ubuntu-dock-folders_9.8.7-1ubuntu{ubuntu}.1_source.changes",
-            } for suite, ubuntu in (("noble", "24.04"), ("resolute", "26.04"))]
-            manifest = {"suite": "noble", "version": version, "upstream": "9.8.7", "launchpad": uploads}
-            settings = {"launchpad_transport": "ftp", "launchpad_owner": "example", "launchpad_archive": "folders"}
-            payload = root / "source.tar.xz"
-            payload.write_bytes(b"source")
-            for upload in uploads:
-                (root / upload["changes"]).write_text("signed source fixture")
-            text = f"Checksums-Sha256:\n {apt_repo.sha256(payload)} {payload.stat().st_size} {payload.name}\n\n"
-
-            def sources(target, requested, status=None):
-                return [{}] if target["suite"] == "noble" and status == "Pending" else []
-
-            with (
-                patch.dict(os.environ, {"LAUNCHPAD_UPLOAD_TRANSPORT": "ftp"}),
-                patch.object(release, "launchpad_sources", side_effect=sources),
-                patch.object(release, "run", return_value=text) as run,
-            ):
-                release.upload_launchpad(root, manifest, settings, {})
-            uploads_sent = [call.args for call in run.call_args_list if call.args[0] == "dput"]
-            self.assertEqual(len(uploads_sent), 1)
-            self.assertEqual(uploads_sent[0][-1], root / uploads[1]["changes"])
-
-    def test_pending_source_build_is_tracked_before_publication(self):
-        now = [0]
-        settings = {"suite": "noble", "architecture": "amd64"}
-        source = {"self_link": "https://example.invalid/source", "source_package_version": "9.8.7"}
-        binary = {
-            "binary_package_name": release.PACKAGE,
-            "binary_package_version": "9.8.7",
-            "distro_arch_series_link": "https://api.launchpad.net/1.0/ubuntu/noble/amd64",
-        }
-
-        def sources(target, version, status=None):
-            published = now[0] >= 90
-            if (status == "Pending") == published:
-                return []
-            return [source | {"status": "Published" if published else "Pending"}]
-
-        def response(url):
-            if url.endswith("getBuilds"):
-                return {"entries": [{"buildstate": "Currently building" if now[0] < 30 else "Successfully built"}]}
-            if now[0] < 60:
-                return {"entries": []}
-            return {"entries": [binary | {"status": "Published" if now[0] >= 90 else "Pending"}]}
-
-        def sleep(seconds):
-            now[0] += seconds
-
-        with (
-            patch.object(release, "launchpad_sources", side_effect=sources),
-            patch.object(release, "launchpad_json", side_effect=response),
-            patch.object(release.time, "monotonic", side_effect=lambda: now[0]),
-            patch.object(release.time, "sleep", side_effect=sleep),
-        ):
-            release.wait_launchpad(settings, "9.8.7", 60)
-        self.assertEqual(now[0], 90)
-
-    def test_upload_retries_server_errors_but_rejects_permanent_errors(self):
-        for message, failures, attempts, success in (
-            ("550 Requested action not taken: internal server error\n", 1, 2, True),
-            ("550 Requested action not taken: internal server error\n", 3, 3, False),
-            ("Invalid signature\n", 1, 1, False),
-        ):
-            with self.subTest(message=message, failures=failures), tempfile.TemporaryDirectory() as temporary:
-                root = Path(temporary)
-                payload = root / "source.tar.xz"
-                payload.write_bytes(b"source")
-                upload = {"suite": "resolute", "version": "9.8.7", "changes": "source.changes"}
-                (root / upload["changes"]).write_text("signed source fixture")
-                text = f"Checksums-Sha256:\n {apt_repo.sha256(payload)} {payload.stat().st_size} {payload.name}\n\n"
-                settings = {"launchpad_transport": "ftp", "launchpad_owner": "example", "launchpad_archive": "folders"}
-                responses = [text] + [subprocess.CalledProcessError(1, "dput", output=message)] * failures
-                if success:
-                    responses.append("Successfully uploaded packages.\n")
-                with (
-                    patch.dict(os.environ, {"LAUNCHPAD_UPLOAD_TRANSPORT": "ftp"}),
-                    patch.object(release, "launchpad_sources", return_value=[]),
-                    patch.object(release, "run", side_effect=responses) as run,
-                    patch.object(release.time, "sleep") as sleep,
-                ):
-                    if success:
-                        release.upload_launchpad_source(root, upload, settings, {})
-                    else:
-                        with self.assertRaises(subprocess.CalledProcessError):
-                            release.upload_launchpad_source(root, upload, settings, {})
-                self.assertEqual(len([c for c in run.call_args_list if c.args[0] == "dput"]), attempts)
-                self.assertEqual(sleep.call_count, attempts - 1)
-
-    def test_sftp_writes_to_virtual_paths_without_stat_or_directory_changes(self):
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            files = [root / "source.dsc", root / "source.tar.xz", root / "source.changes"]
-            for file in files:
-                file.write_bytes(file.name.encode())
-            identity = root / "upload-key"
-            settings = {"launchpad_owner": "example", "launchpad_archive": "folders"}
-            paramiko = MagicMock()
-            client = paramiko.SSHClient.return_value.__enter__.return_value
-            remote = client.open_sftp.return_value.__enter__.return_value
-            sent = []
-
-            @contextmanager
-            def write(path, mode):
-                self.assertEqual(mode, "wb")
-                data = io.BytesIO()
-                yield data
-                sent.append((path, data.getvalue()))
-
-            remote.open.side_effect = write
-            with patch.dict(sys.modules, {"paramiko": paramiko}):
-                release.upload_sftp(files, settings, identity)
-            self.assertEqual(sent, [(f"~example/ubuntu/folders/{f.name}", f.read_bytes()) for f in files])
-            client.load_host_keys.assert_called_once_with(str(release.ROOT / "packaging/launchpad-known-hosts"))
-            client.set_missing_host_key_policy.assert_called_once_with(paramiko.RejectPolicy.return_value)
-            client.connect.assert_called_once_with(
-                "ppa.launchpad.net", username="example", key_filename=str(identity),
-                allow_agent=False, look_for_keys=False, timeout=15, auth_timeout=15, banner_timeout=15,
-            )
-            remote.chdir.assert_not_called()
-            remote.stat.assert_not_called()
-            remote.rename.assert_not_called()
-
-    def test_successful_source_build_waits_for_binary_publication(self):
-        source = {"self_link": "https://example.invalid/source", "source_package_version": "1.0.3"}
-        settings = {"suite": "noble", "architecture": "amd64"}
-        binary = {
-            "status": "Pending",
-            "binary_package_name": release.PACKAGE,
-            "binary_package_version": "1.0.3",
-            "distro_arch_series_link": "https://api.launchpad.net/1.0/ubuntu/noble/amd64",
-        }
-        for entries, expected in (
-            ([], False),
-            ([binary], False),
-            ([binary | {"status": "Published"}], True),
-            ([binary | {"status": "Published", "distro_arch_series_link": "/noble/arm64"}], False),
-        ):
-            with self.subTest(entries=entries):
-                with patch.object(release, "launchpad_json", return_value={"entries": entries}):
-                    self.assertEqual(release.launchpad_binary_published(source, settings), expected)
-
-    def test_launchpad_progress_renews_stage_timeout(self):
-        now = [0]
-        source = {"self_link": "https://example.invalid/source", "status": "Published", "source_package_version": "1.0.4"}
-        settings = {"suite": "noble", "architecture": "amd64"}
-        binary = {
-            "binary_package_name": release.PACKAGE,
-            "binary_package_version": "1.0.4",
-            "distro_arch_series_link": "https://api.launchpad.net/1.0/ubuntu/noble/amd64",
-        }
-
-        def response(url):
-            if url.endswith("getBuilds"):
-                state = "Currently building" if now[0] < 30 else "Successfully built"
-                return {"entries": [{"buildstate": state}]}
-            if now[0] < 60:
-                return {"entries": []}
-            status = "Pending" if now[0] < 90 else "Published"
-            return {"entries": [binary | {"status": status}]}
-
-        def sleep(seconds):
-            now[0] += seconds
-
-        with (
-            patch.object(release, "launchpad_sources", return_value=[source]),
-            patch.object(release, "launchpad_json", side_effect=response),
-            patch.object(release.time, "monotonic", side_effect=lambda: now[0]),
-            patch.object(release.time, "sleep", side_effect=sleep),
-        ):
-            release.wait_launchpad(settings, "1.0.4", 60)
-        self.assertEqual(now[0], 90)
-
-    def test_launchpad_stalled_stage_still_times_out(self):
-        now = [0]
-        source = {"self_link": "https://example.invalid/source", "status": "Published", "source_package_version": "1.0.4"}
-
-        def sleep(seconds):
-            now[0] += seconds
-
-        with (
-            patch.object(release, "launchpad_sources", return_value=[source]),
-            patch.object(release, "launchpad_json", return_value={"entries": [{"buildstate": "Currently building"}]}),
-            patch.object(release.time, "monotonic", side_effect=lambda: now[0]),
-            patch.object(release.time, "sleep", side_effect=sleep),
-        ):
-            with self.assertRaisesRegex(ValueError, "Launchpad build pending"):
-                release.wait_launchpad({}, "1.0.4", 60)
-        self.assertEqual(now[0], 60)
-
-    def test_launchpad_build_failure_is_reported_immediately(self):
-        with (
-            patch.object(release, "launchpad_sources", return_value=[{"self_link": "https://example.invalid/source"}]),
-            patch.object(release, "launchpad_json", return_value={"entries": [{"buildstate": "Failed to build"}]}),
-            patch.object(release.time, "sleep") as sleep,
-        ):
-            with self.assertRaisesRegex(ValueError, "Failed to build"):
-                release.wait_launchpad({}, "1.0.4", 60)
-        sleep.assert_not_called()
+    def test_native_release_binary_requires_its_target_ubuntu_series(self):
+        with patch.object(release_context.platform, "freedesktop_os_release", return_value={
+                "ID": "ubuntu", "VERSION_CODENAME": "resolute"}):
+            release_context.validate_build_series({"suite": "resolute"})
+            with self.assertRaisesRegex(ValueError, "noble binary.*Ubuntu noble"):
+                release_context.validate_build_series({"suite": "noble"})
+        with patch.object(release_context.platform, "freedesktop_os_release", return_value={
+                "ID": "debian", "VERSION_CODENAME": "noble"}):
+            with self.assertRaisesRegex(ValueError, "native library dependencies"):
+                release_context.validate_build_series({"suite": "noble"})

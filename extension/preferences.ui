@@ -1,75 +1,337 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <interface domain="ubuntu-dock-folders">
   <object class="AdwPreferencesWindow" id="preferences_window">
     <property name="title" translatable="yes">Dock folders</property>
     <property name="default-width">620</property>
-    <property name="default-height">700</property>
+    <property name="default-height">800</property>
     <property name="modal">True</property>
     <property name="search-enabled">False</property>
     <child>
       <object class="AdwPreferencesPage" id="preferences_page">
         <child>
           <object class="AdwPreferencesGroup">
-            <property name="title" translatable="yes">Folders on the dock</property>
-            <property name="description" translatable="yes">Drag an icon onto another to create a folder. Reorder applications inside a folder, or drag them out to move them back to the dock.</property>
             <child>
               <object class="AdwSwitchRow" id="enabled_row">
                 <property name="title" translatable="yes">Dock folders</property>
-                <property name="subtitle" translatable="yes">Applications in a folder share one icon and a running indicator</property>
-              </object>
-            </child>
-            <child>
-              <object class="AdwActionRow" id="grid_folders_row">
-                <property name="title" translatable="yes">Add an app-grid folder</property>
-                <property name="subtitle" translatable="yes">Keep folder names and applications in sync with GNOME's app grid</property>
-                <property name="activatable">True</property>
-                <child type="suffix">
-                  <object class="GtkImage"><property name="icon-name">go-next-symbolic</property></object>
-                </child>
               </object>
             </child>
             <child>
               <object class="AdwSwitchRow" id="customization_row">
-                <property name="title" translatable="yes">Customize each folder</property>
-                <property name="subtitle" translatable="yes">Change names, labels, colors, and wallpaper using the gear inside a folder</property>
+                <property name="title" translatable="yes">Allow customizing each folder separately</property>
               </object>
             </child>
           </object>
         </child>
         <child>
           <object class="AdwPreferencesGroup">
-            <property name="title" translatable="yes">Appearance and animation</property>
             <child>
-              <object class="AdwSwitchRow" id="glass_row">
-                <property name="title" translatable="yes">Material Glass — frosted glass</property>
-                <property name="subtitle" translatable="yes">Blurs the desktop and windows behind a folder and adds a translucent tint. Icons stay sharp. May increase GPU usage.</property>
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <property name="spacing">16</property>
+                <child>
+                  <object class="GtkStackSwitcher" id="settings_tabs">
+                    <property name="stack">settings_stack</property>
+                    <property name="halign">center</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkStack" id="settings_stack">
+                    <property name="transition-type">crossfade</property>
+                    <property name="transition-duration">150</property>
+                    <property name="vhomogeneous">False</property>
+                    <child>
+                      <object class="GtkStackPage">
+                        <property name="name">dock</property>
+                        <property name="title" translatable="yes">On the dock</property>
+                        <property name="child">
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="spacing">12</property>
+                            <child>
+                              <object class="GtkBox" id="dock_preview_box">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">8</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwPreferencesGroup">
+                                <child>
+                                  <object class="AdwActionRow" id="group_icon_size_row">
+                                    <property name="title" translatable="yes">Folder icon size</property>
+                                    <child type="suffix">
+                                      <object class="GtkScale" id="group_icon_size_scale">
+                                        <property name="valign">center</property>
+                                        <property name="width-request">180</property>
+                                        <property name="draw-value">true</property>
+                                        <property name="digits">0</property>
+                                        <property name="adjustment">
+                                          <object class="GtkAdjustment" id="group_icon_size_adjustment">
+                                            <property name="lower">80</property>
+                                            <property name="upper">200</property>
+                                            <property name="step-increment">5</property>
+                                            <property name="page-increment">10</property>
+                                          </object>
+                                        </property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwActionRow" id="mini_icon_size_row">
+                                    <property name="title" translatable="yes">Mini-icon size</property>
+                                    <child type="suffix">
+                                      <object class="GtkScale" id="mini_icon_size_scale">
+                                        <property name="valign">center</property>
+                                        <property name="width-request">180</property>
+                                        <property name="draw-value">true</property>
+                                        <property name="digits">0</property>
+                                        <property name="adjustment">
+                                          <object class="GtkAdjustment" id="mini_icon_size_adjustment">
+                                            <property name="lower">80</property>
+                                            <property name="upper">300</property>
+                                            <property name="step-increment">5</property>
+                                            <property name="page-increment">10</property>
+                                          </object>
+                                        </property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwSpinRow" id="font_size_row">
+                                    <property name="title" translatable="yes">Folder label size</property>
+                                    <property name="subtitle" translatable="yes">Font size below dock icons, in pixels</property>
+                                    <property name="adjustment">
+                                      <object class="GtkAdjustment">
+                                        <property name="lower">8</property>
+                                        <property name="upper">24</property>
+                                        <property name="step-increment">1</property>
+                                        <property name="page-increment">2</property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwPreferencesGroup">
+                                <property name="title" translatable="yes">Icon rotation</property>
+                                <property name="description" translatable="yes">0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation.</property>
+                                <child>
+                                  <object class="AdwActionRow" id="orbit_speed_row">
+                                    <property name="title" translatable="yes">Continuous rotation speed</property>
+                                    <child type="suffix">
+                                      <object class="GtkScale" id="orbit_speed_scale">
+                                        <property name="valign">center</property>
+                                        <property name="width-request">180</property>
+                                        <property name="draw-value">true</property>
+                                        <property name="digits">0</property>
+                                        <property name="adjustment">
+                                          <object class="GtkAdjustment" id="orbit_speed_adjustment">
+                                            <property name="lower">0</property>
+                                            <property name="upper">360</property>
+                                            <property name="step-increment">5</property>
+                                            <property name="page-increment">30</property>
+                                          </object>
+                                        </property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwActionRow" id="hover_orbit_speed_row">
+                                    <property name="title" translatable="yes">Rotation speed on hover</property>
+                                    <child type="suffix">
+                                      <object class="GtkScale" id="hover_orbit_speed_scale">
+                                        <property name="valign">center</property>
+                                        <property name="width-request">180</property>
+                                        <property name="draw-value">true</property>
+                                        <property name="digits">0</property>
+                                        <property name="adjustment">
+                                          <object class="GtkAdjustment" id="hover_orbit_speed_adjustment">
+                                            <property name="lower">0</property>
+                                            <property name="upper">360</property>
+                                            <property name="step-increment">5</property>
+                                            <property name="page-increment">30</property>
+                                          </object>
+                                        </property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwPreferencesGroup">
+                                <property name="title" translatable="yes">On hover</property>
+                                <child>
+                                  <object class="AdwActionRow" id="hover_rotate_row">
+                                    <property name="title" translatable="yes">Rotate on hover</property>
+                                    <property name="activatable-widget">hover_rotate_check</property>
+                                    <child type="suffix">
+                                      <object class="GtkCheckButton" id="hover_rotate_check">
+                                        <property name="valign">center</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwActionRow" id="hover_cards_row">
+                                    <property name="title" translatable="yes">Fan out cards</property>
+                                    <property name="activatable-widget">hover_cards_check</property>
+                                    <child type="suffix">
+                                      <object class="GtkCheckButton" id="hover_cards_check">
+                                        <property name="valign">center</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwActionRow" id="hover_angle_row">
+                                    <property name="title" translatable="yes">Hover rotation angle</property>
+                                    <child type="suffix">
+                                      <object class="GtkScale" id="hover_angle_scale">
+                                        <property name="valign">center</property>
+                                        <property name="width-request">180</property>
+                                        <property name="draw-value">true</property>
+                                        <property name="digits">0</property>
+                                        <property name="adjustment">
+                                          <object class="GtkAdjustment" id="hover_angle_adjustment">
+                                            <property name="lower">0</property>
+                                            <property name="upper">180</property>
+                                            <property name="step-increment">5</property>
+                                          </object>
+                                        </property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwActionRow" id="hover_speed_row">
+                                    <property name="title" translatable="yes">Hover animation speed</property>
+                                    <child type="suffix">
+                                      <object class="GtkScale" id="hover_speed_scale">
+                                        <property name="valign">center</property>
+                                        <property name="width-request">180</property>
+                                        <property name="draw-value">true</property>
+                                        <property name="digits">0</property>
+                                        <property name="adjustment">
+                                          <object class="GtkAdjustment" id="hover_speed_adjustment">
+                                            <property name="lower">10</property>
+                                            <property name="upper">200</property>
+                                            <property name="step-increment">10</property>
+                                          </object>
+                                        </property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkStackPage">
+                        <property name="name">popup</property>
+                        <property name="title" translatable="yes">When opened</property>
+                        <property name="child">
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="spacing">12</property>
+                            <child>
+                              <object class="GtkBox" id="popup_preview_box">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">8</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwPreferencesGroup">
+                                <child>
+                                  <object class="AdwActionRow" id="popup_icon_size_row">
+                                    <property name="title" translatable="yes">Open folder icon size</property>
+                                    <child type="suffix">
+                                      <object class="GtkScale" id="popup_icon_size_scale">
+                                        <property name="valign">center</property>
+                                        <property name="width-request">180</property>
+                                        <property name="draw-value">true</property>
+                                        <property name="digits">0</property>
+                                        <property name="adjustment">
+                                          <object class="GtkAdjustment" id="popup_icon_size_adjustment">
+                                            <property name="lower">32</property>
+                                            <property name="upper">96</property>
+                                            <property name="step-increment">4</property>
+                                            <property name="page-increment">8</property>
+                                          </object>
+                                        </property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwComboRow" id="animation_row">
+                                    <property name="title" translatable="yes">Opening and closing animation</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwActionRow" id="animation_speed_row">
+                                    <property name="title" translatable="yes">Animation speed</property>
+                                    <child type="suffix">
+                                      <object class="GtkScale" id="animation_speed_scale">
+                                        <property name="valign">center</property>
+                                        <property name="width-request">180</property>
+                                        <property name="draw-value">true</property>
+                                        <property name="digits">0</property>
+                                        <property name="adjustment">
+                                          <object class="GtkAdjustment" id="animation_speed_adjustment">
+                                            <property name="lower">50</property>
+                                            <property name="upper">200</property>
+                                            <property name="step-increment">10</property>
+                                            <property name="page-increment">20</property>
+                                          </object>
+                                        </property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkStackPage">
+                        <property name="name">folders</property>
+                        <property name="title" translatable="yes">Existing folders</property>
+                        <property name="child">
+                          <object class="GtkBox" id="existing_folders_box">
+                            <property name="orientation">vertical</property>
+                            <property name="spacing">12</property>
+                            <child>
+                              <object class="AdwPreferencesGroup" id="existing_folders_group">
+                                <property name="description" translatable="yes">Choose saved groups or folders from GNOME's app grid</property>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
               </object>
             </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
             <child>
-              <object class="AdwComboRow" id="animation_row">
-                <property name="title" translatable="yes">Opening and closing animation</property>
-                <property name="model">
-                  <object class="GtkStringList">
-                    <items>
-                      <item translatable="yes">Scale</item>
-                      <item translatable="yes">Genie effect</item>
-                    </items>
-                  </object>
-                </property>
-              </object>
-            </child>
-            <child>
-              <object class="AdwSpinRow" id="font_size_row">
-                <property name="title" translatable="yes">Folder label size</property>
-                <property name="subtitle" translatable="yes">Font size below dock icons, in pixels</property>
-                <property name="adjustment">
-                  <object class="GtkAdjustment">
-                    <property name="lower">8</property>
-                    <property name="upper">24</property>
-                    <property name="step-increment">1</property>
-                    <property name="page-increment">2</property>
-                  </object>
-                </property>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Changes are saved automatically</property>
+                <style>
+                  <class name="dim-label" />
+                  <class name="caption" />
+                </style>
               </object>
             </child>
           </object>

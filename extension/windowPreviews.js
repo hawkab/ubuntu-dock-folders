@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright 2026 Grigory Olshansky
 
+import {contract} from './core/contract.js';
 import Clutter from 'gi://Clutter';
 import GLib from 'gi://GLib';
 import St from 'gi://St';
@@ -10,11 +11,12 @@ import * as BoxPointer from 'resource:///org/gnome/shell/ui/boxpointer.js';
 import {WindowPreviewMenuItem} from 'file:///usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com/windowPreview.js';
 import {setBoxOrientation} from './compat.js';
 
-// Share pointer and keyboard focus between a folder and its window previews.
+/** Share focus between a folder and its window previews. */
 export class FolderMenuManager extends PopupMenu.PopupMenuManager {
-    constructor(menu, previews) {
+    constructor(menu, previews, onFolderPress) {
         super(menu.sourceActor);
         this.previews = previews;
+        this.onFolderPress = onFolderPress;
         this.layer = new St.Widget({layout_manager: new Clutter.BinLayout()});
         this.layer.add_constraint(new Clutter.BindConstraint({source: global.stage,
             coordinate: Clutter.BindCoordinate.SIZE}));
@@ -24,7 +26,8 @@ export class FolderMenuManager extends PopupMenu.PopupMenuManager {
         this.layer.add_child(menu.actor);
         this.layer.hide();
         this.layer.connect('captured-event', (_actor, event) => {
-            if (menu.actor.contains(global.stage.get_event_actor(event)))
+            const target = global.stage.get_event_actor(event);
+            if (target && menu.actor.contains(target))
                 return Clutter.EVENT_PROPAGATE;
             return this._onCapturedEvent(menu.actor, event);
         });
@@ -53,11 +56,15 @@ export class FolderMenuManager extends PopupMenu.PopupMenuManager {
     _onCapturedEvent(actor, event) {
         if (this.previews.contains(global.stage.get_event_actor(event)))
             return Clutter.EVENT_PROPAGATE;
+        const primary = (event.type() === Clutter.EventType.BUTTON_PRESS && event.get_button() === 1) ||
+            event.type() === Clutter.EventType.TOUCH_BEGIN;
+        if (primary && this.onFolderPress?.(event.get_coords()))
+            return Clutter.EVENT_STOP;
         return super._onCapturedEvent(actor, event);
     }
 }
 
-// Show window thumbnails on hover, with activation and close controls.
+/** Show window thumbnails with activation and close controls. */
 export class WindowPreviews {
     constructor(menu, {getWindows, isDragging, onUndo}) {
         this.menu = menu;
@@ -69,6 +76,7 @@ export class WindowPreviews {
         this.openTimer = 0;
         this.closeTimer = 0;
         this.popup = null;
+        this.destroyed = false;
         this._connect(menu, 'open-state-changed', (_menu, open) => {
             if (!open)
                 this.clear();
@@ -123,9 +131,9 @@ export class WindowPreviews {
 
     _scheduleOpen(button, entry, keyboard = false) {
         this._cancelTimers();
-        if (!this.menu.isOpen || this.isDragging())
+        if (this.destroyed || !this.menu.isOpen || this.isDragging())
             return;
-        this.openTimer = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 250, () => {
+        this.openTimer = GLib.timeout_add(GLib.PRIORITY_DEFAULT, contract.layout.previewDelay, () => {
             this.openTimer = 0;
             if (this.menu.isOpen && !this.isDragging() && (button.hover || button.has_key_focus()))
                 this._open(button, entry, keyboard);
@@ -148,6 +156,8 @@ export class WindowPreviews {
     }
 
     _open(button, entry, keyboard) {
+        if (this.destroyed || !this.menu.isOpen || !button.mapped || !this.menu.actor.get_parent())
+            return;
         if (this.button === button && this.popup) {
             this.update();
             return;
@@ -215,7 +225,7 @@ export class WindowPreviews {
         if (!this.popup)
             return;
         const windows = this.getWindows(this.entry).sort((a, b) =>
-            a.get_stable_sequence() - b.get_stable_sequence());
+            a.get_stable_sequence() - b.get_stable_sequence()).slice(0,contract.layout.maxPreviews);
         if (!windows.length || this.isDragging()) {
             this.clear();
             return;
@@ -272,6 +282,7 @@ export class WindowPreviews {
     }
 
     destroy() {
+        this.destroyed = true;
         this.clear();
         for (const [id, popup] of this.pendingDestroy) {
             GLib.source_remove(id);

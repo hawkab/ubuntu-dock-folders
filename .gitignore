@@ -12,3 +12,9 @@ gschemas.compiled
 /debian/files
 /debian/*.debhelper.log
 /debian/*.substvars
+*.log
+*.md
+!/README.md
+/reports/
+/outputs/
+/backups/

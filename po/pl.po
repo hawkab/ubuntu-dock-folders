@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: pl\nLanguage: pl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: pl\nLanguage: pl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid "%s, percent"
@@ -208,3 +208,120 @@ msgstr "Otwarte okna"
 #, python-format
 msgid "Could not open %s"
 msgstr "Nie można otworzyć %s"
+
+msgid "Folder icon size"
+msgstr "Rozmiar ikony folderu"
+
+
+msgid "No animation"
+msgstr "Bez animacji"
+
+msgid "Magic Lamp"
+msgstr "Magiczna lampa"
+
+msgid "Fold"
+msgstr "Składanie"
+
+
+msgid "Animation speed"
+msgstr "Szybkość animacji"
+
+msgid "Mini-icon size"
+msgstr "Rozmiar miniikon"
+
+msgid "Unfold from edge"
+msgstr "Rozwijanie od krawędzi"
+
+msgid "Sheet"
+msgstr "Arkusz (Sheet)"
+
+msgid "Icon rotation"
+msgstr "Obrót ikon"
+
+msgid "Always use card stack"
+msgstr "Zawsze używaj stosu kart"
+
+
+msgid "Fade"
+msgstr "Płynne pojawianie"
+
+msgid "On hover"
+msgstr "Po najechaniu kursorem"
+
+msgid "No effect"
+msgstr "Bez efektu"
+
+msgid "Rotate by 30°"
+msgstr "Obróć o 30°"
+
+msgid "Fan out cards"
+msgstr "Rozłóż karty"
+
+msgid "Open folder icon size"
+msgstr "Rozmiar ikon w otwartym folderze"
+
+msgid "Rotate on hover"
+msgstr "Obracaj po najechaniu"
+
+msgid "Hover rotation angle"
+msgstr "Kąt obrotu po najechaniu"
+
+msgid "Hover animation speed"
+msgstr "Szybkość animacji po najechaniu"
+
+msgid "Rotate and fan out cards"
+msgstr "Obracaj i rozkładaj karty"
+
+msgid "Background blur"
+msgstr "Rozmycie tła"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "Przy 0% tło pozostaje ostre. Przezroczystość ustawia się osobno dla każdego folderu."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "Przezroczystość wpływa na kolor tła; rozmycie jest niezależne."
+
+msgid "Apply to all folders…"
+msgstr "Zastosuj do wszystkich folderów…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "Zastąpić wygląd pozostałych folderów?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "Spowoduje to nadpisanie indywidualnych ustawień wyglądu wszystkich pozostałych folderów. Nazwy i aplikacje pozostaną bez zmian."
+
+msgid "Apply to all folders"
+msgstr "Zastosuj do wszystkich folderów"
+
+msgid "Cancel"
+msgstr "Anuluj"
+
+msgid "Existing folders"
+msgstr "Istniejące foldery"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "Wybierz zapisane grupy lub foldery z siatki aplikacji GNOME"
+
+msgid "No folders available"
+msgstr "Brak dostępnych folderów"
+
+msgid "Pin to panel"
+msgstr "Przypnij do panelu"
+
+msgid "Unpin from panel"
+msgstr "Odepnij od panelu"
+
+msgid "Allow customizing each folder separately"
+msgstr "Zezwalaj na osobne dostosowanie wyglądu każdego folderu"
+
+msgid "Preview animation"
+msgstr "Podgląd animacji"
+
+msgid "Continuous rotation speed"
+msgstr "Szybkość ciągłego obrotu"
+
+msgid "Rotation speed on hover"
+msgstr "Szybkość obrotu po najechaniu"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 wyłącza dany tryb. Niezerowa prędkość po najechaniu zastępuje prędkość ciągłego obrotu, gdy wskaźnik znajduje się nad ikoną. Ujemne prędkości odwracają kierunek obrotu."

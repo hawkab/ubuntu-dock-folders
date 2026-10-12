@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: hi\nLanguage: hi\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: hi\nLanguage: hi\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid "%s, percent"
@@ -208,3 +208,120 @@ msgstr "खुली विंडो"
 #, python-format
 msgid "Could not open %s"
 msgstr "%s नहीं खोला जा सका"
+
+msgid "Folder icon size"
+msgstr "फ़ोल्डर आइकन का आकार"
+
+
+msgid "No animation"
+msgstr "बिना एनिमेशन"
+
+msgid "Magic Lamp"
+msgstr "जादुई चिराग"
+
+msgid "Fold"
+msgstr "तह करना"
+
+
+msgid "Animation speed"
+msgstr "एनिमेशन की गति"
+
+msgid "Mini-icon size"
+msgstr "छोटे आइकन का आकार"
+
+msgid "Unfold from edge"
+msgstr "किनारे से खोलना"
+
+msgid "Sheet"
+msgstr "पन्ना (Sheet)"
+
+msgid "Icon rotation"
+msgstr "आइकन घुमाव"
+
+msgid "Always use card stack"
+msgstr "हमेशा कार्ड का ढेर इस्तेमाल करें"
+
+
+msgid "Fade"
+msgstr "धीरे प्रकट होना"
+
+msgid "On hover"
+msgstr "कर्सर रखने पर"
+
+msgid "No effect"
+msgstr "कोई प्रभाव नहीं"
+
+msgid "Rotate by 30°"
+msgstr "30° घुमाएँ"
+
+msgid "Fan out cards"
+msgstr "कार्ड फैलाएँ"
+
+msgid "Open folder icon size"
+msgstr "खुले फ़ोल्डर में आइकन का आकार"
+
+msgid "Rotate on hover"
+msgstr "माउस रखने पर घुमाएँ"
+
+msgid "Hover rotation angle"
+msgstr "माउस रखने पर घुमाव का कोण"
+
+msgid "Hover animation speed"
+msgstr "माउस रखने पर ऐनिमेशन की गति"
+
+msgid "Rotate and fan out cards"
+msgstr "कार्ड घुमाएँ और फैलाएँ"
+
+msgid "Background blur"
+msgstr "पृष्ठभूमि का धुंधलापन"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "0% पर पृष्ठभूमि स्पष्ट रहती है। हर फ़ोल्डर की पारदर्शिता अलग से तय होती है।"
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "पारदर्शिता पृष्ठभूमि के रंग को बदलती है; धुंधलापन स्वतंत्र है।"
+
+msgid "Apply to all folders…"
+msgstr "सभी फ़ोल्डरों पर लागू करें…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "अन्य फ़ोल्डरों का रूप बदलें?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "इससे अन्य सभी फ़ोल्डरों के रूप की निजी सेटिंग बदल दी जाएँगी। नाम और ऐप्लिकेशन नहीं बदलेंगे।"
+
+msgid "Apply to all folders"
+msgstr "सभी फ़ोल्डरों पर लागू करें"
+
+msgid "Cancel"
+msgstr "रद्द करें"
+
+msgid "Existing folders"
+msgstr "मौजूदा फ़ोल्डर"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "सहेजे गए समूह या GNOME के ऐप ग्रिड से फ़ोल्डर चुनें"
+
+msgid "No folders available"
+msgstr "कोई फ़ोल्डर उपलब्ध नहीं है"
+
+msgid "Pin to panel"
+msgstr "पैनल पर पिन करें"
+
+msgid "Unpin from panel"
+msgstr "पैनल से अनपिन करें"
+
+msgid "Allow customizing each folder separately"
+msgstr "हर फ़ोल्डर का रूप अलग से बदलने की अनुमति दें"
+
+msgid "Preview animation"
+msgstr "ऐनिमेशन का पूर्वावलोकन"
+
+msgid "Continuous rotation speed"
+msgstr "निरंतर घुमाव की गति"
+
+msgid "Rotation speed on hover"
+msgstr "पॉइंटर रखने पर घुमाव की गति"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 संबंधित मोड बंद करता है। पॉइंटर ऊपर होने पर शून्य से अधिक होवर गति लगातार घूमने की गति की जगह लेती है। ऋणात्मक गति घुमाव की दिशा उलट देती है।"

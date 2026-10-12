@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: zh\nLanguage: zh\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: zh\nLanguage: zh\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\n"
 
 #, python-format
 msgid "%s, percent"
@@ -208,3 +208,120 @@ msgstr "已打开的窗口"
 #, python-format
 msgid "Could not open %s"
 msgstr "无法打开 %s"
+
+msgid "Folder icon size"
+msgstr "文件夹图标大小"
+
+
+msgid "No animation"
+msgstr "无动画"
+
+msgid "Magic Lamp"
+msgstr "魔灯"
+
+msgid "Fold"
+msgstr "折叠"
+
+
+msgid "Animation speed"
+msgstr "动画速度"
+
+msgid "Mini-icon size"
+msgstr "小图标大小"
+
+msgid "Unfold from edge"
+msgstr "从边缘展开"
+
+msgid "Sheet"
+msgstr "卷帘（Sheet）"
+
+msgid "Icon rotation"
+msgstr "图标旋转"
+
+msgid "Always use card stack"
+msgstr "始终使用卡片堆叠"
+
+
+msgid "Fade"
+msgstr "淡入淡出"
+
+msgid "On hover"
+msgstr "悬停时"
+
+msgid "No effect"
+msgstr "无效果"
+
+msgid "Rotate by 30°"
+msgstr "旋转 30°"
+
+msgid "Fan out cards"
+msgstr "展开卡片"
+
+msgid "Open folder icon size"
+msgstr "展开文件夹中的图标大小"
+
+msgid "Rotate on hover"
+msgstr "悬停时旋转"
+
+msgid "Hover rotation angle"
+msgstr "悬停旋转角度"
+
+msgid "Hover animation speed"
+msgstr "悬停动画速度"
+
+msgid "Rotate and fan out cards"
+msgstr "旋转并展开卡片"
+
+msgid "Background blur"
+msgstr "背景模糊"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "0% 时背景保持清晰。透明度可针对每个文件夹单独调整。"
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "透明度影响背景颜色；模糊程度独立调整。"
+
+msgid "Apply to all folders…"
+msgstr "应用到所有文件夹…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "替换其他文件夹的外观？"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "这将覆盖其他所有文件夹的自定义外观设置。名称和应用程序保持不变。"
+
+msgid "Apply to all folders"
+msgstr "应用到所有文件夹"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Existing folders"
+msgstr "现有文件夹"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "选择已保存的分组或 GNOME 应用程序网格中的文件夹"
+
+msgid "No folders available"
+msgstr "没有可用的文件夹"
+
+msgid "Pin to panel"
+msgstr "固定到面板"
+
+msgid "Unpin from panel"
+msgstr "从面板取消固定"
+
+msgid "Allow customizing each folder separately"
+msgstr "允许单独自定义每个文件夹的外观"
+
+msgid "Preview animation"
+msgstr "预览动画"
+
+msgid "Continuous rotation speed"
+msgstr "持续旋转速度"
+
+msgid "Rotation speed on hover"
+msgstr "悬停时的旋转速度"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 表示禁用相应模式。悬停速度非零时，鼠标悬停期间将取代持续旋转速度。 负速度会反转旋转方向。"

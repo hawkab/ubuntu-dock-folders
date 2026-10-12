@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ms\nLanguage: ms\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ms\nLanguage: ms\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid "%s, percent"
@@ -208,3 +208,120 @@ msgstr "Tetingkap terbuka"
 #, python-format
 msgid "Could not open %s"
 msgstr "Tidak dapat membuka %s"
+
+msgid "Folder icon size"
+msgstr "Saiz ikon folder"
+
+
+msgid "No animation"
+msgstr "Tiada animasi"
+
+msgid "Magic Lamp"
+msgstr "Lampu ajaib"
+
+msgid "Fold"
+msgstr "Lipat"
+
+
+msgid "Animation speed"
+msgstr "Kelajuan animasi"
+
+msgid "Mini-icon size"
+msgstr "Saiz ikon kecil"
+
+msgid "Unfold from edge"
+msgstr "Buka dari tepi"
+
+msgid "Sheet"
+msgstr "Helaian (Sheet)"
+
+msgid "Icon rotation"
+msgstr "Putaran ikon"
+
+msgid "Always use card stack"
+msgstr "Sentiasa gunakan tindanan kad"
+
+
+msgid "Fade"
+msgstr "Kemunculan beransur"
+
+msgid "On hover"
+msgstr "Apabila dituding"
+
+msgid "No effect"
+msgstr "Tiada kesan"
+
+msgid "Rotate by 30°"
+msgstr "Putar 30°"
+
+msgid "Fan out cards"
+msgstr "Kembangkan kad"
+
+msgid "Open folder icon size"
+msgstr "Saiz ikon dalam folder terbuka"
+
+msgid "Rotate on hover"
+msgstr "Putar apabila dituding"
+
+msgid "Hover rotation angle"
+msgstr "Sudut putaran apabila dituding"
+
+msgid "Hover animation speed"
+msgstr "Kelajuan animasi apabila dituding"
+
+msgid "Rotate and fan out cards"
+msgstr "Putar dan kembangkan kad"
+
+msgid "Background blur"
+msgstr "Kekaburan latar belakang"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "Pada 0% latar belakang kekal jelas. Ketelusan dilaraskan secara berasingan bagi setiap folder."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "Ketelusan mempengaruhi warna latar belakang; kekaburan adalah bebas."
+
+msgid "Apply to all folders…"
+msgstr "Terapkan pada semua folder…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "Gantikan rupa folder lain?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "Tetapan rupa tersuai bagi semua folder lain akan ditulis ganti. Nama dan aplikasi akan kekal sama."
+
+msgid "Apply to all folders"
+msgstr "Terapkan pada semua folder"
+
+msgid "Cancel"
+msgstr "Batal"
+
+msgid "Existing folders"
+msgstr "Folder sedia ada"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "Pilih kumpulan tersimpan atau folder daripada grid aplikasi GNOME"
+
+msgid "No folders available"
+msgstr "Tiada folder tersedia"
+
+msgid "Pin to panel"
+msgstr "Semat pada panel"
+
+msgid "Unpin from panel"
+msgstr "Nyahsemat daripada panel"
+
+msgid "Allow customizing each folder separately"
+msgstr "Benarkan penyesuaian rupa setiap folder secara berasingan"
+
+msgid "Preview animation"
+msgstr "Pratonton animasi"
+
+msgid "Continuous rotation speed"
+msgstr "Kelajuan putaran berterusan"
+
+msgid "Rotation speed on hover"
+msgstr "Kelajuan putaran semasa tuding"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 menyahaktifkan setiap mod. Kelajuan tuding bukan sifar menggantikan kelajuan putaran berterusan semasa penuding berada di atas ikon. Kelajuan negatif membalikkan arah putaran."

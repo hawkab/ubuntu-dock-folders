@@ -1,12 +1,115 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <schemalist>
   <schema id="org.gnome.shell.extensions.dock-groups" path="/org/gnome/shell/extensions/dock-groups/">
-    <key name="enabled" type="b"><default>true</default><summary>Dock folders</summary></key>
-    <key name="customization" type="b"><default>false</default><summary>Customize each folder</summary></key>
-    <key name="glass" type="b"><default>false</default><summary>Material Glass</summary></key>
-    <key name="animation" type="s"><default>'scale'</default><choices><choice value="scale"/><choice value="flow"/></choices></key>
-    <key name="font-size" type="d"><default>10.0</default><range min="8" max="24"/><summary>Folder label size in pixels</summary></key>
-    <key name="groups" type="s"><default>'{}'</default><summary>Folder contents, order and appearance</summary></key>
-    <key name="initialized" type="b"><default>false</default><summary>Initial group migration completed</summary></key>
+    <key name="groups" type="s">
+      <default>'{}'</default>
+      <summary>Folder contents, order and appearance</summary>
+    </key>
+    <key name="initialized" type="b">
+      <default>false</default>
+      <summary>Initial group migration completed</summary>
+    </key>
+    <key name="plasma-favorites" type="as">
+      <default>[]</default>
+      <summary>Plasma panel launchers and folder order</summary>
+    </key>
+    <key name="xfce-favorites" type="as">
+      <default>[]</default>
+      <summary>Xfce panel launcher order</summary>
+    </key>
+    <key name="xfce-initialized" type="b">
+      <default>false</default>
+      <summary>Xfce launcher migration completed</summary>
+    </key>
+    <key name="plasma-initialized" type="b">
+      <default>false</default>
+      <summary>Plasma panel launcher migration completed</summary>
+    </key>
+    <key name="glass" type="b">
+      <default>true</default>
+      <summary>Material Glass — frosted glass</summary>
+    </key>
+    <key name="enabled" type="b">
+      <default>true</default>
+      <summary>Dock folders</summary>
+    </key>
+    <key name="customization" type="b">
+      <default>true</default>
+      <summary>Allow customizing each folder separately</summary>
+    </key>
+    <key name="blur-strength" type="i">
+      <default>89</default>
+      <range min="-1" max="100" />
+      <summary>Background blur</summary>
+    </key>
+    <key name="animation" type="s">
+      <default>'flow'</default>
+      <choices>
+        <choice value="none" />
+        <choice value="fade" />
+        <choice value="scale" />
+        <choice value="flow" />
+        <choice value="lamp" />
+        <choice value="fold" />
+        <choice value="sheet" />
+        <choice value="unfold" />
+      </choices>
+      <summary>Opening and closing animation</summary>
+    </key>
+    <key name="animation-speed" type="i">
+      <default>180</default>
+      <range min="50" max="200" />
+      <summary>Animation speed</summary>
+    </key>
+    <key name="group-icon-size" type="i">
+      <default>120</default>
+      <range min="80" max="200" />
+      <summary>Folder icon size</summary>
+    </key>
+    <key name="mini-icon-size" type="i">
+      <default>230</default>
+      <range min="80" max="300" />
+      <summary>Mini-icon size</summary>
+    </key>
+    <key name="popup-icon-size" type="i">
+      <default>56</default>
+      <range min="32" max="96" />
+      <summary>Open folder icon size</summary>
+    </key>
+    <key name="font-size" type="d">
+      <default>13.0</default>
+      <range min="8" max="24" />
+      <summary>Folder label size</summary>
+    </key>
+    <key name="hover-effect" type="s">
+      <default>'none'</default>
+      <choices>
+        <choice value="none" />
+        <choice value="rotate" />
+        <choice value="cards" />
+        <choice value="rotate-cards" />
+      </choices>
+      <summary>On hover</summary>
+    </key>
+    <key name="hover-angle" type="i">
+      <default>45</default>
+      <range min="0" max="180" />
+      <summary>Hover rotation angle</summary>
+    </key>
+    <key name="hover-speed" type="i">
+      <default>50</default>
+      <range min="-999" max="999" />
+      <summary>Hover animation speed</summary>
+    </key>
+    <key name="orbit-speed" type="i">
+      <default>0</default>
+      <range min="-999" max="999" />
+      <summary>Continuous rotation speed</summary>
+    </key>
+    <key name="hover-orbit-speed" type="i">
+      <default>0</default>
+      <range min="-999" max="999" />
+      <summary>Rotation speed on hover</summary>
+    </key>
   </schema>
 </schemalist>

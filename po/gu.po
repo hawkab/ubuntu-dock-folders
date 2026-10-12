@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: gu\nLanguage: gu\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: gu\nLanguage: gu\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid "%s, percent"
@@ -208,3 +208,120 @@ msgstr "ખુલ્લી વિન્ડો"
 #, python-format
 msgid "Could not open %s"
 msgstr "%s ખોલી શકાયું નહીં"
+
+msgid "Folder icon size"
+msgstr "ફોલ્ડર ચિહ્નનું કદ"
+
+
+msgid "No animation"
+msgstr "એનિમેશન વિના"
+
+msgid "Magic Lamp"
+msgstr "જાદુઈ દીવો"
+
+msgid "Fold"
+msgstr "વાળવું"
+
+
+msgid "Animation speed"
+msgstr "એનિમેશનની ઝડપ"
+
+msgid "Mini-icon size"
+msgstr "નાના ચિહ્નોનું કદ"
+
+msgid "Unfold from edge"
+msgstr "કિનારેથી ખોલવું"
+
+msgid "Sheet"
+msgstr "પાનું (Sheet)"
+
+msgid "Icon rotation"
+msgstr "ચિહ્નોનું પરિભ્રમણ"
+
+msgid "Always use card stack"
+msgstr "હંમેશાં કાર્ડનો ઢગલો વાપરો"
+
+
+msgid "Fade"
+msgstr "ધીમે દેખાવું"
+
+msgid "On hover"
+msgstr "કર્સર રાખતાં"
+
+msgid "No effect"
+msgstr "કોઈ અસર નહીં"
+
+msgid "Rotate by 30°"
+msgstr "30° ફેરવો"
+
+msgid "Fan out cards"
+msgstr "કાર્ડ ફેલાવો"
+
+msgid "Open folder icon size"
+msgstr "ખુલ્લા ફોલ્ડરમાં ચિહ્નનું કદ"
+
+msgid "Rotate on hover"
+msgstr "માઉસ મૂકતાં ફેરવો"
+
+msgid "Hover rotation angle"
+msgstr "માઉસ મૂકતાં ફેરવવાનો કોણ"
+
+msgid "Hover animation speed"
+msgstr "માઉસ મૂકતાં એનિમેશનની ગતિ"
+
+msgid "Rotate and fan out cards"
+msgstr "કાર્ડ ફેરવો અને ફેલાવો"
+
+msgid "Background blur"
+msgstr "પૃષ્ઠભૂમિનું ધૂંધળાપણું"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "0% પર પૃષ્ઠભૂમિ સ્પષ્ટ રહે છે. દરેક ફોલ્ડરની પારદર્શિતા અલગથી ગોઠવાય છે."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "પારદર્શિતા પૃષ્ઠભૂમિના રંગને અસર કરે છે; ધૂંધળાપણું સ્વતંત્ર છે."
+
+msgid "Apply to all folders…"
+msgstr "બધા ફોલ્ડર પર લાગુ કરો…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "બીજા ફોલ્ડરનો દેખાવ બદલવો છે?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "આનાથી બીજા બધા ફોલ્ડરના દેખાવની વ્યક્તિગત સેટિંગ્સ બદલાઈ જશે. નામ અને એપ્લિકેશનો યથાવત રહેશે."
+
+msgid "Apply to all folders"
+msgstr "બધા ફોલ્ડર પર લાગુ કરો"
+
+msgid "Cancel"
+msgstr "રદ કરો"
+
+msgid "Existing folders"
+msgstr "હાલનાં ફોલ્ડરો"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "સાચવેલા જૂથો અથવા GNOMEના એપ્લિકેશન ગ્રિડમાંથી ફોલ્ડરો પસંદ કરો"
+
+msgid "No folders available"
+msgstr "કોઈ ફોલ્ડર ઉપલબ્ધ નથી"
+
+msgid "Pin to panel"
+msgstr "પેનલ પર પિન કરો"
+
+msgid "Unpin from panel"
+msgstr "પેનલ પરથી પિન દૂર કરો"
+
+msgid "Allow customizing each folder separately"
+msgstr "દરેક ફોલ્ડરનો દેખાવ અલગથી બદલવાની મંજૂરી આપો"
+
+msgid "Preview animation"
+msgstr "એનિમેશનનું પૂર્વદર્શન"
+
+msgid "Continuous rotation speed"
+msgstr "સતત પરિભ્રમણની ગતિ"
+
+msgid "Rotation speed on hover"
+msgstr "પોઇન્ટર રાખતાં પરિભ્રમણની ગતિ"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 સંબંધિત મોડ બંધ કરે છે. પોઇન્ટર ઉપર હોય ત્યારે શૂન્યથી વધુ હૉવર ઝડપ સતત પરિભ્રમણની ઝડપને બદલે છે. ઋણ ગતિ પરિભ્રમણની દિશા ઉલટાવે છે."

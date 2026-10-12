@@ -8,6 +8,7 @@ import argparse
 import json
 import os
 from pathlib import Path
+from session_runner import run_isolated
 import shutil
 import subprocess
 import tempfile
@@ -21,7 +22,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--backend", choices=("wayland", "x11"), default="wayland")
     parser.add_argument("--client-backend", choices=("wayland", "x11"))
+    parser.add_argument("--settings-backend", choices=("keyfile", "dconf"), default="keyfile")
     parser.add_argument("--extension-dir", type=Path, help="Check an installed extension in the isolated session")
+    parser.add_argument("--preferences-only", action="store_true", help="Check native settings windows and their dock tooltip")
     options = parser.parse_args()
     client = options.client_backend or options.backend
     help_text = subprocess.check_output(["gnome-shell", "--help"], text=True)
@@ -45,6 +48,9 @@ def main():
         subprocess.run(["glib-compile-schemas", "--strict", str(extension / "schemas")], check=True)
         applications = data / "applications"
         applications.mkdir()
+        shutil.copy2(ROOT / "packaging/io.github.hawkab.UbuntuDockFolders.desktop", applications)
+        (applications / "org.gnome.Software.desktop").write_text(
+            "[Desktop Entry]\nType=Application\nName=Software test service\nExec=/bin/true\n")
         for name in ("org.gnome.Shell.PerfHelper", "local.test.Second", "local.test.Third", "local.test.NoIcon"):
             (applications / f"{name}.desktop").write_text(
                 "[Desktop Entry]\nType=Application\n"
@@ -71,12 +77,15 @@ def main():
             "dock-fixed=true\nautohide=false\nintellihide=false\nshow-trash=false\nshow-mounts=false\n"
         )
         env = dict(os.environ, HOME=str(home), XDG_RUNTIME_DIR=str(runtime),
+                   PATH=str(ROOT / "build/package/usr/bin") + os.pathsep + os.environ.get("PATH", ""),
                    XDG_DATA_HOME=str(data), XDG_CONFIG_HOME=str(home / "config"),
-                   XDG_CACHE_HOME=str(home / "cache"), GSETTINGS_BACKEND="keyfile",
+                   XDG_CACHE_HOME=str(home / "cache"), GSETTINGS_BACKEND=options.settings_backend, XDG_CURRENT_DESKTOP="GNOME",
                    LIBGL_ALWAYS_SOFTWARE="1", LP_NUM_THREADS="2", GTK_A11Y="none",
                    GDK_BACKEND=client, GSK_RENDERER="cairo", GDK_DEBUG="no-portals",
                    ADW_DISABLE_PORTAL="1", GIO_USE_VFS="local",
                    DOCK_FOLDERS_TEST_BACKEND=f"{options.backend}/{client}")
+        if options.preferences_only:
+            env["DOCK_FOLDERS_TEST_PREFERENCES_ONLY"] = "1"
         env.pop("MUTTER_WM_CLASS_FILTER", None)
         for name in ("WAYLAND_DISPLAY", "DBUS_SESSION_BUS_ADDRESS"):
             env.pop(name, None)
@@ -88,17 +97,20 @@ def main():
                 backend.append("--no-x11")
         else:
             backend = ["--x11"]
-        result = subprocess.run(
-            ["dbus-run-session", "--", "/bin/sh", "-c",
-             'export DBUS_SYSTEM_BUS_ADDRESS="$DBUS_SESSION_BUS_ADDRESS"; exec "$@"',
+        result = run_isolated(
+            ["/bin/sh", "-c",
+             'export DBUS_SYSTEM_BUS_ADDRESS="$DBUS_SESSION_BUS_ADDRESS"; '
+             'if [ "$GSETTINGS_BACKEND" = dconf ]; then dconf load / < "$XDG_CONFIG_HOME/glib-2.0/settings/keyfile" || exit; fi; '
+             'exec "$@"',
              "shell-test", "gnome-shell", *backend, "--force-animations",
              "--automation-script", str(ROOT / "tests/shell.js")],
-            env=env, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=60,
+            env, 90, capture=True,
         )
         print(result.stdout, end="", flush=True)
         result.check_returncode()
         failures = ("Invalid value 'undefined' for property gicon", "Actor not in scroll view",
-                    "clutter_actor_remove_child")
+                    "clutter_actor_remove_child", "clutter_actor_set_allocation_internal",
+                    "cogl_framebuffer_set_viewport", "No signal connection")
         if any(message in result.stdout for message in failures):
             raise RuntimeError("The compositor reported an invalid icon or detached dock actor")
         if "DOCK_FOLDERS_SHELL_OK " not in result.stdout:

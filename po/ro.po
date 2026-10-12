@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ro\nLanguage: ro\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ro\nLanguage: ro\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid "%s, percent"
@@ -100,7 +100,7 @@ msgid "General folder settings"
 msgstr "Setări generale ale dosarelor"
 
 msgid "Genie effect"
-msgstr "Efect de geniu"
+msgstr "Efect de duh"
 
 msgid "Glass tint transparency"
 msgstr "Transparența tentei sticlei"
@@ -208,3 +208,120 @@ msgstr "Ferestre deschise"
 #, python-format
 msgid "Could not open %s"
 msgstr "Nu s-a putut deschide %s"
+
+msgid "Folder icon size"
+msgstr "Dimensiunea pictogramei dosarului"
+
+
+msgid "No animation"
+msgstr "Fără animație"
+
+msgid "Magic Lamp"
+msgstr "Lampă magică"
+
+msgid "Fold"
+msgstr "Pliere"
+
+
+msgid "Animation speed"
+msgstr "Viteza animației"
+
+msgid "Mini-icon size"
+msgstr "Dimensiunea minipictogramelor"
+
+msgid "Unfold from edge"
+msgstr "Desfășurare de la margine"
+
+msgid "Sheet"
+msgstr "Foaie (Sheet)"
+
+msgid "Icon rotation"
+msgstr "Rotirea pictogramelor"
+
+msgid "Always use card stack"
+msgstr "Folosește mereu un teanc de carduri"
+
+
+msgid "Fade"
+msgstr "Apariție treptată"
+
+msgid "On hover"
+msgstr "La trecerea cursorului"
+
+msgid "No effect"
+msgstr "Fără efect"
+
+msgid "Rotate by 30°"
+msgstr "Rotire cu 30°"
+
+msgid "Fan out cards"
+msgstr "Desfășurare a cardurilor"
+
+msgid "Open folder icon size"
+msgstr "Dimensiunea pictogramelor în dosarul deschis"
+
+msgid "Rotate on hover"
+msgstr "Rotire la trecerea cursorului"
+
+msgid "Hover rotation angle"
+msgstr "Unghi de rotire la trecerea cursorului"
+
+msgid "Hover animation speed"
+msgstr "Viteza animației la trecerea cursorului"
+
+msgid "Rotate and fan out cards"
+msgstr "Rotire și desfacere a cardurilor"
+
+msgid "Background blur"
+msgstr "Estomparea fundalului"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "La 0% fundalul rămâne clar. Transparența se reglează separat pentru fiecare dosar."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "Transparența afectează culoarea fundalului; estomparea este independentă."
+
+msgid "Apply to all folders…"
+msgstr "Aplică tuturor dosarelor…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "Înlocuiești aspectul celorlalte dosare?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "Aceasta va suprascrie setările de aspect personalizate ale tuturor celorlalte dosare. Numele și aplicațiile vor rămâne neschimbate."
+
+msgid "Apply to all folders"
+msgstr "Aplică tuturor dosarelor"
+
+msgid "Cancel"
+msgstr "Anulează"
+
+msgid "Existing folders"
+msgstr "Dosare existente"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "Alegeți grupuri salvate sau dosare din grila de aplicații GNOME"
+
+msgid "No folders available"
+msgstr "Nu există dosare disponibile"
+
+msgid "Pin to panel"
+msgstr "Fixează pe panou"
+
+msgid "Unpin from panel"
+msgstr "Desprinde de pe panou"
+
+msgid "Allow customizing each folder separately"
+msgstr "Permite personalizarea separată a aspectului fiecărui dosar"
+
+msgid "Preview animation"
+msgstr "Previzualizează animația"
+
+msgid "Continuous rotation speed"
+msgstr "Viteza rotației continue"
+
+msgid "Rotation speed on hover"
+msgstr "Viteza rotației la trecerea cursorului"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 dezactivează fiecare mod. O viteză diferită de zero la trecerea cursorului înlocuiește viteza de rotație continuă. Vitezele negative inversează sensul de rotație."

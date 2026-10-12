@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: it\nLanguage: it\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: it\nLanguage: it\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid "%s, percent"
@@ -208,3 +208,120 @@ msgstr "Finestre aperte"
 #, python-format
 msgid "Could not open %s"
 msgstr "Impossibile aprire %s"
+
+msgid "Folder icon size"
+msgstr "Dimensione dell’icona della cartella"
+
+
+msgid "No animation"
+msgstr "Senza animazione"
+
+msgid "Magic Lamp"
+msgstr "Lampada magica"
+
+msgid "Fold"
+msgstr "Piegatura"
+
+
+msgid "Animation speed"
+msgstr "Velocità dell’animazione"
+
+msgid "Mini-icon size"
+msgstr "Dimensione delle mini icone"
+
+msgid "Unfold from edge"
+msgstr "Apertura dal bordo"
+
+msgid "Sheet"
+msgstr "Foglio (Sheet)"
+
+msgid "Icon rotation"
+msgstr "Rotazione delle icone"
+
+msgid "Always use card stack"
+msgstr "Usa sempre una pila di schede"
+
+
+msgid "Fade"
+msgstr "Dissolvenza"
+
+msgid "On hover"
+msgstr "Al passaggio del mouse"
+
+msgid "No effect"
+msgstr "Nessun effetto"
+
+msgid "Rotate by 30°"
+msgstr "Ruota di 30°"
+
+msgid "Fan out cards"
+msgstr "Apri le schede a ventaglio"
+
+msgid "Open folder icon size"
+msgstr "Dimensione delle icone nella cartella aperta"
+
+msgid "Rotate on hover"
+msgstr "Ruota al passaggio del puntatore"
+
+msgid "Hover rotation angle"
+msgstr "Angolo di rotazione al passaggio"
+
+msgid "Hover animation speed"
+msgstr "Velocità dell’animazione al passaggio"
+
+msgid "Rotate and fan out cards"
+msgstr "Ruota e apri le schede a ventaglio"
+
+msgid "Background blur"
+msgstr "Sfocatura dello sfondo"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "A 0% lo sfondo rimane nitido. La trasparenza si regola separatamente per ogni cartella."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "La trasparenza modifica il colore di sfondo; la sfocatura è indipendente."
+
+msgid "Apply to all folders…"
+msgstr "Applica a tutte le cartelle…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "Sostituire l’aspetto delle altre cartelle?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "Le impostazioni di aspetto personalizzate di tutte le altre cartelle verranno sovrascritte. I nomi e le applicazioni rimarranno invariati."
+
+msgid "Apply to all folders"
+msgstr "Applica a tutte le cartelle"
+
+msgid "Cancel"
+msgstr "Annulla"
+
+msgid "Existing folders"
+msgstr "Cartelle esistenti"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "Scegli gruppi salvati o cartelle dalla griglia delle applicazioni di GNOME"
+
+msgid "No folders available"
+msgstr "Nessuna cartella disponibile"
+
+msgid "Pin to panel"
+msgstr "Fissa al pannello"
+
+msgid "Unpin from panel"
+msgstr "Rimuovi dal pannello"
+
+msgid "Allow customizing each folder separately"
+msgstr "Consenti di personalizzare l’aspetto di ogni cartella separatamente"
+
+msgid "Preview animation"
+msgstr "Anteprima dell’animazione"
+
+msgid "Continuous rotation speed"
+msgstr "Velocità di rotazione continua"
+
+msgid "Rotation speed on hover"
+msgstr "Velocità di rotazione al passaggio del puntatore"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 disattiva ciascuna modalità. Una velocità al passaggio del puntatore diversa da zero sostituisce la velocità di rotazione continua. Le velocità negative invertono il senso di rotazione."

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: te\nLanguage: te\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: te\nLanguage: te\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid "%s, percent"
@@ -208,3 +208,120 @@ msgstr "తెరిచిన విండోలు"
 #, python-format
 msgid "Could not open %s"
 msgstr "%s తెరవడం సాధ్యం కాలేదు"
+
+msgid "Folder icon size"
+msgstr "ఫోల్డర్ చిహ్నం పరిమాణం"
+
+
+msgid "No animation"
+msgstr "యానిమేషన్ లేకుండా"
+
+msgid "Magic Lamp"
+msgstr "మాయా దీపం"
+
+msgid "Fold"
+msgstr "మడత"
+
+
+msgid "Animation speed"
+msgstr "యానిమేషన్ వేగం"
+
+msgid "Mini-icon size"
+msgstr "చిన్న చిహ్నాల పరిమాణం"
+
+msgid "Unfold from edge"
+msgstr "అంచు నుండి విప్పడం"
+
+msgid "Sheet"
+msgstr "షీట్ (Sheet)"
+
+msgid "Icon rotation"
+msgstr "చిహ్నాల భ్రమణం"
+
+msgid "Always use card stack"
+msgstr "ఎల్లప్పుడూ కార్డుల కట్టను ఉపయోగించండి"
+
+
+msgid "Fade"
+msgstr "మెల్లగా కనిపించడం"
+
+msgid "On hover"
+msgstr "కర్సర్ ఉంచినప్పుడు"
+
+msgid "No effect"
+msgstr "ప్రభావం లేదు"
+
+msgid "Rotate by 30°"
+msgstr "30° తిప్పండి"
+
+msgid "Fan out cards"
+msgstr "కార్డులను విస్తరించండి"
+
+msgid "Open folder icon size"
+msgstr "తెరిచిన ఫోల్డర్‌లో చిహ్నాల పరిమాణం"
+
+msgid "Rotate on hover"
+msgstr "మౌస్ ఉంచినప్పుడు తిప్పండి"
+
+msgid "Hover rotation angle"
+msgstr "మౌస్ ఉంచినప్పుడు భ్రమణ కోణం"
+
+msgid "Hover animation speed"
+msgstr "మౌస్ ఉంచినప్పుడు యానిమేషన్ వేగం"
+
+msgid "Rotate and fan out cards"
+msgstr "కార్డ్‌లను తిప్పి విస్తరించండి"
+
+msgid "Background blur"
+msgstr "నేపథ్య మసక"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "0% వద్ద నేపథ్యం స్పష్టంగా ఉంటుంది. ప్రతి ఫోల్డర్ పారదర్శకతను విడిగా సర్దుబాటు చేయవచ్చు."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "పారదర్శకత నేపథ్య రంగాన్ని ప్రభావితం చేస్తుంది; మసక స్వతంత్రంగా ఉంటుంది."
+
+msgid "Apply to all folders…"
+msgstr "అన్ని ఫోల్డర్లకు వర్తింపజేయండి…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "ఇతర ఫోల్డర్ల రూపాన్ని మార్చాలా?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "ఇది ఇతర అన్ని ఫోల్డర్ల రూపానికి సంబంధించిన అనుకూల సెట్టింగులను భర్తీ చేస్తుంది. పేర్లు మరియు అనువర్తనాలు మారవు."
+
+msgid "Apply to all folders"
+msgstr "అన్ని ఫోల్డర్లకు వర్తింపజేయండి"
+
+msgid "Cancel"
+msgstr "రద్దు చేయండి"
+
+msgid "Existing folders"
+msgstr "ఇప్పటికే ఉన్న ఫోల్డర్‌లు"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "సేవ్ చేసిన సమూహాలు లేదా GNOME యాప్ గ్రిడ్‌లోని ఫోల్డర్‌లను ఎంచుకోండి"
+
+msgid "No folders available"
+msgstr "ఫోల్డర్‌లు అందుబాటులో లేవు"
+
+msgid "Pin to panel"
+msgstr "ప్యానెల్‌కు పిన్ చేయండి"
+
+msgid "Unpin from panel"
+msgstr "ప్యానెల్ నుండి పిన్ తీసివేయండి"
+
+msgid "Allow customizing each folder separately"
+msgstr "ప్రతి ఫోల్డర్ రూపాన్ని విడిగా మార్చడానికి అనుమతించండి"
+
+msgid "Preview animation"
+msgstr "యానిమేషన్ ముందుచూపు"
+
+msgid "Continuous rotation speed"
+msgstr "నిరంతర భ్రమణ వేగం"
+
+msgid "Rotation speed on hover"
+msgstr "పాయింటర్ ఉంచినప్పుడు భ్రమణ వేగం"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 సంబంధిత మోడ్‌ను ఆపివేస్తుంది. పాయింటర్ పైన ఉన్నప్పుడు సున్నా కంటే ఎక్కువ హోవర్ వేగం నిరంతర భ్రమణ వేగాన్ని భర్తీ చేస్తుంది. ఋణాత్మక వేగం భ్రమణ దిశను తిప్పుతుంది."

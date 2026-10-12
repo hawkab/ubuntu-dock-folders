@@ -1,569 +1,35 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright 2026 Grigory Olshansky
 
-"""Build, test, sign and publish one release to GitHub, APT and Launchpad."""
+"""Build, validate, and publish a reviewed release."""
 
 import argparse
-import json
-import os
-import re
-import shlex
-import shutil
 import subprocess
-import tempfile
-import time
-import tomllib
-import urllib.parse
-import urllib.request
 from pathlib import Path
 
-from apt_repo import ROOT, run, sha256, update_archive
-from catalog import verify_local_media
+from apt_repo import run
 
-PACKAGE = "ubuntu-dock-folders"
-STATE = (
-    Path(os.environ.get("XDG_STATE_HOME", Path.home() / ".local/state")) / PACKAGE / "publishing"
-)
-
-
-def config():
-    return tomllib.loads((ROOT / "packaging/release.toml").read_text())
-
-
-def signing_environment():
-    env = os.environ.copy()
-    if "GNUPGHOME" not in env and (STATE / "gnupg").is_dir():
-        env["GNUPGHOME"] = str(STATE / "gnupg")
-    return env
-
-
-def changelog(field, root=None):
-    return run("dpkg-parsechangelog", "-S", field, cwd=root or ROOT, capture=True).strip()
-
-
-def source_files():
-    files = run(
-        "git",
-        "ls-files",
-        "--cached",
-        "--others",
-        "--exclude-standard",
-        "-z",
-        cwd=ROOT,
-        capture=True,
-    ).split("\0")
-    return sorted(set(name for name in files if name and (ROOT / name).exists()))
-
-
-def snapshot(destination):
-    for name in source_files():
-        source = ROOT / name
-        if source.is_symlink():
-            raise ValueError(f"Source symlinks must be reviewed: {name}")
-        target = destination / name
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source, target)
-
-
-def launchpad_targets(settings, version):
-    targets = settings.get("launchpad_targets")
-    if targets is None:
-        return [{"suite": settings["suite"], "version": version}]
-    upstream = version.split("-")[0]
-    result = []
-    for target in targets:
-        suite = target["suite"]
-        suffix = target["version_suffix"]
-        if not re.fullmatch(r"[a-z][a-z0-9-]*", suite) or not re.fullmatch(r"[0-9A-Za-z.-]+", suffix):
-            raise ValueError("Invalid Launchpad target")
-        result.append({"suite": suite, "version": upstream + "-" + suffix})
-    if len({target["suite"] for target in result}) != len(result):
-        raise ValueError("Duplicate Launchpad series")
-    if len({target["version"] for target in result}) != len(result):
-        raise ValueError("Launchpad series need distinct source versions")
-    if {"suite": settings["suite"], "version": version} not in result:
-        raise ValueError("Launchpad targets must include the release binary's suite and version")
-    return result
-
-
-def build_source(source, target, output, settings, env):
-    file = source / "debian/changelog"
-    text = file.read_text()
-    header = f"{PACKAGE} ({target['version']}) {target['suite']};"
-    text, count = re.subn(r"\Aubuntu-dock-folders \([^\n]+\) [^;\n]+;", header, text, count=1)
-    if count != 1:
-        raise ValueError("Source changelog has an unexpected header")
-    file.write_text(text)
-    run("dpkg-buildpackage", "-S", "-sa", "-us", "-uc", cwd=source, env=env)
-    changes = source.parent / f"{PACKAGE}_{target['version']}_source.changes"
-    run("debsign", "--no-re-sign", "-k" + settings["signing_fingerprint"], changes, env=env)
-    for pattern in ("*.dsc", "*.tar.xz", "*_source.changes", "*_source.buildinfo"):
-        for artifact in source.parent.glob(pattern):
-            destination = output / artifact.name
-            if destination.exists() and sha256(destination) != sha256(artifact):
-                raise ValueError(f"Source artifact collision: {artifact.name}")
-            shutil.copy2(artifact, destination)
-    return target | {"changes": changes.name}
-
-
-def source_uploads(manifest):
-    uploads = manifest.get("launchpad", [{
-        "suite": manifest["suite"],
-        "version": manifest["version"],
-        "changes": f"{PACKAGE}_{manifest['version']}_source.changes",
-    }])
-    for upload in uploads:
-        if (
-            not re.fullmatch(r"[a-z][a-z0-9-]*", upload["suite"])
-            or not re.fullmatch(r"[0-9A-Za-z.-]+", upload["version"])
-            or upload["version"].split("-")[0] != manifest["upstream"]
-            or upload["changes"] != f"{PACKAGE}_{upload['version']}_source.changes"
-        ):
-            raise ValueError("Invalid Launchpad source manifest")
-    if (
-        not uploads
-        or len({upload["suite"] for upload in uploads}) != len(uploads)
-        or len({upload["version"] for upload in uploads}) != len(uploads)
-    ):
-        raise ValueError("Invalid Launchpad source targets")
-    return uploads
-
-
-def build_release(settings, env):
-    version = changelog("Version")
-    if not re.fullmatch(r"[0-9A-Za-z.-]+", version):
-        raise ValueError(
-            "Use an APT version with GitHub-safe filenames, for example 1.1.1-1ubuntu24.04.1"
-        )
-    upstream = version.split("-")[0]
-    if not re.fullmatch(r"\d+\.\d+\.\d+", upstream):
-        raise ValueError("Release version must use major.minor.patch")
-    if changelog("Distribution") != settings["suite"]:
-        raise ValueError("Changelog suite differs from release configuration")
-    if run("dpkg", "--print-architecture", capture=True).strip() != settings["architecture"]:
-        raise ValueError("Build architecture differs from release configuration")
-    targets = launchpad_targets(settings, version)
-    output = ROOT / "dist/releases" / upstream
-    if output.exists():
-        raise ValueError(f"{output} already exists; use --prepared to resume it or move it aside")
-    output.mkdir(parents=True)
-    env = env | {"SOURCE_DATE_EPOCH": changelog("Timestamp")}
-    with tempfile.TemporaryDirectory(prefix="dock-folders-release-") as temporary:
-        temporary = Path(temporary)
-        source = temporary / f"{PACKAGE}-{upstream}"
-        snapshot(source)
-        orig = temporary / f"{PACKAGE}_{upstream}.orig.tar.xz"
-        run(
-            "tar",
-            "--sort=name",
-            f"--mtime=@{env['SOURCE_DATE_EPOCH']}",
-            "--owner=0",
-            "--group=0",
-            "--numeric-owner",
-            "--exclude=debian",
-            "-cJf",
-            orig,
-            "-C",
-            source,
-            ".",
-        )
-        run("dpkg-buildpackage", "-b", "-us", "-uc", cwd=source, env=env)
-        for file in source.glob("dist/*.zip"):
-            shutil.copy2(file, output / file.name)
-        for file in temporary.glob("*.deb"):
-            shutil.copy2(file, output / file.name)
-        uploads = []
-        for target in targets:
-            target_source = source
-            if target["suite"] != settings["suite"]:
-                parent = temporary / target["suite"]
-                parent.mkdir()
-                target_source = parent / source.name
-                snapshot(target_source)
-                shutil.copy2(orig, parent / orig.name)
-            uploads.append(build_source(target_source, target, output, settings, env))
-        for dsc in output.glob("*.dsc"):
-            with tempfile.TemporaryDirectory(prefix="dock-folders-unpack-") as unpack:
-                run("dpkg-source", "--no-check", "-x", dsc, Path(unpack) / "source")
-    shutil.copy2(ROOT / "packaging/archive-key.asc", output / "archive-key.asc")
-    manifest = {
-        "version": version,
-        "upstream": upstream,
-        "suite": settings["suite"],
-        "architecture": settings["architecture"],
-        "launchpad": uploads,
-        "commit": run("git", "rev-parse", "HEAD", cwd=ROOT, capture=True).strip(),
-        "dirty": bool(run("git", "status", "--porcelain", cwd=ROOT, capture=True).strip()),
-        "files": {file.name: sha256(file) for file in sorted(output.iterdir()) if file.is_file()},
-    }
-    (output / "release.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    sums = output / "SHA256SUMS"
-    sums.write_text("".join(f"{sha256(file)}  {file.name}\n" for file in sorted(output.iterdir())))
-    run(
-        "gpg",
-        "--batch",
-        "--yes",
-        "--local-user",
-        settings["signing_fingerprint"],
-        "--armor",
-        "--detach-sign",
-        sums,
-        env=env,
-    )
-    return output
-
-
-def verify_release(directory, settings, env):
-    sums = directory / "SHA256SUMS"
-    result = run(
-        "gpg",
-        "--batch",
-        "--status-fd=1",
-        "--verify",
-        directory / "SHA256SUMS.asc",
-        sums,
-        env=env,
-        capture=True,
-    )
-    if f"[GNUPG:] VALIDSIG {settings['signing_fingerprint']} " not in result:
-        raise ValueError("Release has an unexpected signing key")
-    expected = set()
-    for line in sums.read_text().splitlines():
-        digest, name = line.split("  ", 1)
-        if Path(name).name != name or not re.fullmatch("[0-9a-f]{64}", digest):
-            raise ValueError("Invalid checksum manifest")
-        file = directory / name
-        if not file.is_file() or file.is_symlink() or sha256(file) != digest:
-            raise ValueError(f"Artifact checksum mismatch: {name}")
-        expected.add(name)
-    if expected | {"SHA256SUMS", "SHA256SUMS.asc"} != {p.name for p in directory.iterdir()}:
-        raise ValueError("Unexpected release artifacts")
-    manifest = json.loads((directory / "release.json").read_text())
-    for name, digest in manifest["files"].items():
-        if name not in expected or sha256(directory / name) != digest:
-            raise ValueError(f"Artifact missing from release manifest: {name}")
-    if manifest.get("version") != changelog("Version"):
-        raise ValueError("Prepared version differs from the changelog")
-    if manifest.get("upstream") != manifest["version"].split("-")[0]:
-        raise ValueError("Prepared upstream version differs from the package version")
-    for field in ("suite", "architecture"):
-        if manifest[field] != settings[field]:
-            raise ValueError(f"Release {field} differs from current configuration")
-    for source in list(directory.glob("*.dsc")) + list(directory.glob("*_source.changes")):
-        run("gpg", "--verify", source, env=env)
-    for upload in source_uploads(manifest):
-        changes = directory / upload["changes"]
-        if upload["changes"] not in manifest["files"]:
-            raise ValueError("Launchpad upload is missing from the release manifest")
-        text = run("gpg", "--batch", "--decrypt", changes, env=env, capture=True)
-        for field, value in (("Distribution", upload["suite"]), ("Version", upload["version"])):
-            if not re.search(rf"^{field}: {re.escape(value)}$", text, re.MULTILINE):
-                raise ValueError(f"Source upload {field} differs from its manifest")
-        run("dput", "-o", changes, cwd=directory, env=env)
-    verify_local_media(next(directory.glob("*.deb")))
-    return manifest
-
-
-def launchpad_json(url):
-    request = urllib.request.Request(
-        url, headers={"Cache-Control": "no-cache", "Pragma": "no-cache"}
-    )
-    with urllib.request.urlopen(request, timeout=30) as response:
-        return json.load(response)
-
-
-def launchpad_sources(settings, version, status=None):
-    base = (
-        f"https://api.launchpad.net/1.0/~{settings['launchpad_owner']}"
-        f"/+archive/ubuntu/{settings['launchpad_archive']}"
-    )
-    query = {
-        "ws.op": "getPublishedSources",
-        "source_name": PACKAGE,
-        "exact_match": "true",
-        "version": version,
-    }
-    if status:
-        query["status"] = status
-    if settings.get("suite"):
-        query["distro_series"] = f"https://api.launchpad.net/1.0/ubuntu/{settings['suite']}"
-    return launchpad_json(base + "?" + urllib.parse.urlencode(query))["entries"]
-
-
-def upload_launchpad(directory, manifest, settings, env):
-    for upload in source_uploads(manifest):
-        target_settings = settings | {"suite": upload["suite"]}
-        upload_launchpad_source(directory, upload, target_settings, env)
-
-
-def upload_launchpad_source(directory, upload, settings, env):
-    if launchpad_sources(settings, upload["version"]) or launchpad_sources(settings, upload["version"], "Pending"):
-        print(f"Launchpad already has {upload['suite']} source {upload['version']}", flush=True)
-        return
-    changes = directory / upload["changes"]
-    text = run("gpg", "--batch", "--decrypt", changes, env=env, capture=True)
-    section = text.split("Checksums-Sha256:\n", 1)[1].split("\n\n", 1)[0]
-    files = []
-    for line in section.splitlines():
-        if not line.startswith(" "):
-            break
-        digest, size, name = line.split()
-        file = directory / name
-        if Path(name).name != name or not file.is_file() or sha256(file) != digest:
-            raise ValueError("Source upload checksum mismatch")
-        files.append(file)
-    if not files:
-        raise ValueError("Source changes file contains no artifacts")
-    transport = os.environ.get("LAUNCHPAD_UPLOAD_TRANSPORT", settings["launchpad_transport"])
-    if transport == "ftp":
-        for attempt in range(3):
-            try:
-                output = run(
-                    "dput", "-P", "-U",
-                    f"ppa:{settings['launchpad_owner']}/{settings['launchpad_archive']}",
-                    changes, cwd=directory, env=env, capture=True,
-                )
-                print(output, end="", flush=True)
-                break
-            except subprocess.CalledProcessError as error:
-                output = error.stdout or ""
-                print(output, end="", flush=True)
-                transient = re.search(
-                    r"internal server error|timed out|connection (reset|refused)|"
-                    r"temporary failure|\b(421|425|426|450|451|452)\b", output, re.I,
-                )
-                if not transient or attempt == 2:
-                    raise
-                print(f"Retrying Launchpad upload for {upload['suite']}", flush=True)
-                time.sleep(15 * (attempt + 1))
-                if launchpad_sources(settings, upload["version"]) or launchpad_sources(settings, upload["version"], "Pending"):
-                    break
-        print(f"Source submitted for {upload['suite']}; Launchpad acceptance/build is pending", flush=True)
-        return
-    if transport != "sftp":
-        raise ValueError("Launchpad transport must be ftp or sftp")
-    identity = Path(os.environ.get("LAUNCHPAD_SSH_KEY", STATE / "launchpad-upload"))
-    if not identity.is_file():
-        raise ValueError("LAUNCHPAD_SSH_KEY must point to the registered upload key")
-    upload_sftp([*files, changes], settings, identity)
-    print(f"Source uploaded for {upload['suite']}; Launchpad still needs to accept and build it", flush=True)
-
-
-def upload_sftp(files, settings, identity):
-    import paramiko
-
-    incoming = f"~{settings['launchpad_owner']}/ubuntu/{settings['launchpad_archive']}"
-    with paramiko.SSHClient() as client:
-        client.load_host_keys(str(ROOT / "packaging/launchpad-known-hosts"))
-        client.set_missing_host_key_policy(paramiko.RejectPolicy())
-        client.connect(
-            "ppa.launchpad.net", username=settings["launchpad_owner"],
-            key_filename=str(identity), allow_agent=False, look_for_keys=False,
-            timeout=15, auth_timeout=15, banner_timeout=15,
-        )
-        with client.open_sftp() as remote:
-            remote.get_channel().settimeout(120)
-            for file in files:
-                with file.open("rb") as source, remote.open(f"{incoming}/{file.name}", "wb") as target:
-                    shutil.copyfileobj(source, target, 128 * 1024)
-                print(f"Uploaded {file.name}", flush=True)
-
-
-def launchpad_binaries(source, settings):
-    binaries = launchpad_json(source["self_link"] + "?ws.op=getPublishedBinaries")["entries"]
-    architecture = f"/{settings['suite']}/{settings['architecture']}"
-    return [
-        binary
-        for binary in binaries
-        if binary["binary_package_name"] == PACKAGE
-        and binary["binary_package_version"] == source["source_package_version"]
-        and binary["distro_arch_series_link"].endswith(architecture)
-    ]
-
-
-def launchpad_binary_published(source, settings):
-    return any(binary["status"] == "Published" for binary in launchpad_binaries(source, settings))
-
-
-def wait_launchpad(settings, version, timeout):
-    if timeout <= 0:
-        raise ValueError("Launchpad stage timeout must be positive")
-    deadline = time.monotonic() + timeout
-    stage = -1
-    labels = ("source acceptance", "build queue", "build", "binary import", "binary publication")
-    while time.monotonic() < deadline:
-        progress = 0
-        sources = launchpad_sources(settings, version) or launchpad_sources(settings, version, "Pending")
-        for source in sources:
-            progress = max(progress, 1)
-            builds = launchpad_json(source["self_link"] + "?ws.op=getBuilds")["entries"]
-            statuses = {build["buildstate"] for build in builds}
-            if statuses & {
-                "Failed to build",
-                "Dependency wait",
-                "Chroot problem",
-                "Failed to upload",
-            }:
-                raise ValueError("Launchpad build needs attention: " + ", ".join(sorted(statuses)))
-            if "Currently building" in statuses:
-                progress = max(progress, 2)
-            if builds and statuses == {"Successfully built"}:
-                progress = max(progress, 3)
-                binaries = launchpad_binaries(source, settings)
-                if binaries:
-                    progress = max(progress, 4)
-                if source["status"] == "Published" and any(
-                    binary["status"] == "Published" for binary in binaries
-                ):
-                    print(f"Launchpad {settings['suite']} binary published", flush=True)
-                    return
-        if progress > stage:
-            stage = progress
-            deadline = time.monotonic() + timeout
-            print(f"Waiting for Launchpad {labels[stage]} [{settings.get('suite', '')}] (up to {timeout}s)", flush=True)
-        time.sleep(min(30, max(0, deadline - time.monotonic())))
-    raise ValueError(
-        f"Launchpad {labels[stage]} pending; resume with the same --prepared directory"
-    )
-
-
-def apt_git_environment():
-    env = os.environ.copy()
-    identity = Path(os.environ.get("APT_DEPLOY_KEY", STATE / "apt-deploy"))
-    if identity.is_file():
-        hosts = ROOT / "packaging/github-known-hosts"
-        env["GIT_SSH_COMMAND"] = " ".join(
-            shlex.quote(part)
-            for part in (
-                "ssh",
-                "-i",
-                str(identity),
-                "-oIdentitiesOnly=yes",
-                "-oBatchMode=yes",
-                "-oStrictHostKeyChecking=yes",
-                f"-oUserKnownHostsFile={hosts}",
-            )
-        )
-    return env
-
-
-def publish_apt(directory, settings, env):
-    with tempfile.TemporaryDirectory(prefix="dock-folders-apt-publish-") as temporary:
-        checkout = Path(temporary) / "apt"
-        git_env = apt_git_environment()
-        run(
-            "git",
-            "clone",
-            "--branch",
-            settings["apt_branch"],
-            f"git@github.com:{settings['apt_repository']}.git",
-            checkout,
-            env=git_env,
-        )
-        update_archive(next(directory.glob("*.deb")), checkout, settings, env=env)
-        run("git", "add", "--all", cwd=checkout)
-        if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=checkout).returncode == 0:
-            return
-        run(
-            "git",
-            "-c",
-            "user.name=Grigory Olshansky",
-            "-c",
-            "user.email=14372308+hawkab@users.noreply.github.com",
-            "-c",
-            "commit.gpgsign=true",
-            "-c",
-            f"user.signingkey={settings['signing_fingerprint']}",
-            "commit",
-            "-m",
-            f"Publish Ubuntu Dock Folders {changelog('Version')}",
-            cwd=checkout,
-            env=env,
-        )
-        run("git", "push", "origin", settings["apt_branch"], cwd=checkout, env=git_env)
-
-
-def publish_github(directory, manifest, settings):
-    repository = settings["github_repository"]
-    tag = "v" + manifest["upstream"]
-    lookup = subprocess.run(
-        ["gh", "release", "view", tag, "--repo", repository, "--json", "isDraft,assets"],
-        capture_output=True,
-        text=True,
-    )
-    if lookup.returncode:
-        notes = (
-            f"Ubuntu Dock Folders {manifest['upstream']} for Ubuntu 26.04 / GNOME 50, also compatible with Ubuntu 24.04 / GNOME 46.\n\n"
-            f"Package version: `{manifest['version']}`.\n\n"
-            f"Install and receive updates: {settings['apt_url']}\n\n"
-            f"PPA: https://launchpad.net/~{settings['launchpad_owner']}"
-            f"/+archive/ubuntu/{settings['launchpad_archive']}\n\n"
-            + changelog("Changes")
-            + "\n\nChecksums and source packages are included below.\n"
-        )
-        with tempfile.NamedTemporaryFile("w", suffix=".md") as body:
-            body.write(notes)
-            body.flush()
-            run(
-                "gh",
-                "release",
-                "create",
-                tag,
-                "--repo",
-                repository,
-                "--verify-tag",
-                "--title",
-                f"Ubuntu Dock Folders {manifest['upstream']}",
-                "--notes-file",
-                body.name,
-                "--draft",
-            )
-        assets = {}
-    else:
-        assets = {asset["name"]: asset for asset in json.loads(lookup.stdout)["assets"]}
-    for file in sorted(directory.iterdir()):
-        if file.name in assets:
-            digest = assets[file.name].get("digest")
-            if digest:
-                if digest != "sha256:" + sha256(file):
-                    raise ValueError(f"GitHub asset differs: {file.name}")
-            else:
-                with tempfile.TemporaryDirectory() as download:
-                    run(
-                        "gh",
-                        "release",
-                        "download",
-                        tag,
-                        "--repo",
-                        repository,
-                        "--pattern",
-                        file.name,
-                        "--dir",
-                        download,
-                    )
-                    if sha256(Path(download) / file.name) != sha256(file):
-                        raise ValueError(f"GitHub asset differs: {file.name}")
-        else:
-            run("gh", "release", "upload", tag, file, "--repo", repository)
-
+import release_context as context
+from release_artifacts import source_uploads, build_release, verify_release
+from launchpad_publish import upload_launchpad, wait_launchpad
+from release_publish import publish_apt, publish_github
 
 def main():
-    global ROOT
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--publish", action="store_true")
     parser.add_argument("--prepared", type=Path)
+    parser.add_argument("--binaries", type=Path, help="Checked CI packages for all supported Ubuntu suites")
     parser.add_argument("--wait-seconds", type=int, default=1200)
-    parser.add_argument("--source-root", type=Path, default=ROOT, help="Clean checkout of the signed release tag")
+    parser.add_argument("--source-root", type=Path, default=context.ROOT, help="Clean checkout of the signed release tag")
     args = parser.parse_args()
-    ROOT = args.source_root.resolve()
-    settings = config()
-    env = signing_environment()
-    if args.publish and run("git", "status", "--porcelain", cwd=ROOT, capture=True).strip():
+    context.ROOT = args.source_root.resolve()
+    settings = context.config()
+    env = context.signing_environment()
+    if args.publish and run("git", "status", "--porcelain", cwd=context.ROOT, capture=True).strip():
         raise ValueError("Commit reviewed changes before publishing")
     directory = args.prepared.resolve() if args.prepared else None
     if directory is None and args.publish:
-        tag = "v" + changelog("Version").split("-")[0]
+        tag = "v" + context.changelog("Version").split("-")[0]
         existing = subprocess.run(
             [
                 "gh",
@@ -579,7 +45,7 @@ def main():
             text=True,
         )
         if existing.returncode == 0:
-            directory = ROOT / "dist/releases" / tag.removeprefix("v")
+            directory = context.ROOT / "dist/releases" / tag.removeprefix("v")
             directory.mkdir(parents=True, exist_ok=True)
             if not any(directory.iterdir()):
                 run(
@@ -593,21 +59,25 @@ def main():
                     directory,
                 )
     if directory is None:
-        directory = build_release(settings, env)
+        directory = build_release(settings, env, args.binaries)
     manifest = verify_release(directory, settings, env)
     if not args.publish:
         print(f"Validated release: {directory}", flush=True)
         return
+    targets = context.launchpad_targets(settings, manifest["version"])
+    if sorted((item["suite"], item["version"]) for item in manifest.get("binaries", [])) != sorted(
+            (item["suite"], item["version"]) for item in targets):
+        raise ValueError("Publish checked binaries for every supported Ubuntu suite with --binaries")
     if (
         manifest["dirty"]
-        or manifest["commit"] != run("git", "rev-parse", "HEAD", cwd=ROOT, capture=True).strip()
+        or manifest["commit"] != run("git", "rev-parse", "HEAD", cwd=context.ROOT, capture=True).strip()
     ):
         raise ValueError("Prepared artifacts must come from this clean commit")
     tag = "v" + manifest["upstream"]
-    if run("git", "rev-parse", tag + "^{}", cwd=ROOT, capture=True).strip() != manifest["commit"]:
+    if run("git", "rev-parse", tag + "^{}", cwd=context.ROOT, capture=True).strip() != manifest["commit"]:
         raise ValueError("Version tag must point to the prepared commit")
-    run("gpg", "--batch", "--import", ROOT / "provenance/signer.asc", env=env)
-    run("git", "verify-tag", tag, cwd=ROOT, env=env)
+    run("gpg", "--batch", "--import", context.ROOT / "provenance/signer.asc", env=env)
+    run("git", "verify-tag", tag, cwd=context.ROOT, env=env)
     publish_github(directory, manifest, settings)
     upload_launchpad(directory, manifest, settings, env)
     publish_apt(directory, settings, env)

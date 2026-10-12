@@ -22,10 +22,13 @@ def read_settings(extension):
     source = Gio.SettingsSchemaSource.new_from_directory(
         str(extension / "schemas"), Gio.SettingsSchemaSource.get_default(), False
     )
-    return Gio.Settings.new_full(source.lookup(SCHEMA, False), None, None)
+    schema = source.lookup(SCHEMA, False)
+    if schema is None:
+        raise RuntimeError("Dock folders settings schema is missing")
+    return Gio.Settings.new_full(schema, None, None)
 
 
-def backup(destination=None):
+def backup(destination=None, extension=None):
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     destination = (
         Path(destination)
@@ -33,11 +36,12 @@ def backup(destination=None):
         else Path(GLib.get_user_state_dir()) / "ubuntu-dock-folders/backups" / stamp
     )
     destination.mkdir(parents=True, mode=0o700)
-    shell = Gio.Settings.new("org.gnome.shell")
+    schema = Gio.SettingsSchemaSource.get_default().lookup("org.gnome.shell", True)
+    shell = Gio.Settings.new_full(schema, None, None) if schema else None
     snapshot = {
-        "favorites": list(shell.get_strv("favorite-apps")),
-        "enabled_extensions": list(shell.get_strv("enabled-extensions")),
-        "disabled_extensions": list(shell.get_strv("disabled-extensions")),
+        "favorites": list(shell.get_strv("favorite-apps")) if shell else [],
+        "enabled_extensions": list(shell.get_strv("enabled-extensions")) if shell else [],
+        "disabled_extensions": list(shell.get_strv("disabled-extensions")) if shell else [],
         "files": [],
     }
     if shutil.which("dconf"):
@@ -46,20 +50,12 @@ def backup(destination=None):
         raw = destination / "dock-groups.dconf"
         raw.write_text(result.stdout)
         raw.chmod(0o600)
-    extension = USER_EXTENSION if USER_EXTENSION.exists() else SYSTEM_EXTENSION
+    extension = extension or (USER_EXTENSION if USER_EXTENSION.exists() else SYSTEM_EXTENSION)
     if (extension / "schemas/gschemas.compiled").exists():
         settings = read_settings(extension)
         snapshot["settings"] = {
             key: settings.get_value(key).print_(True)
-            for key in (
-                "enabled",
-                "customization",
-                "glass",
-                "animation",
-                "font-size",
-                "groups",
-                "initialized",
-            )
+            for key in settings.props.settings_schema.list_keys()
         }
     for name, directory in (("data", DATA), ("extension", USER_EXTENSION)):
         if directory.exists():

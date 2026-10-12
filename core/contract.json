@@ -1,0 +1,443 @@
+{
+  "version": 9,
+  "preferences": [
+    {
+      "name": "enabled",
+      "key": "enabled",
+      "type": "bool",
+      "default": true,
+      "range": null,
+      "label": "Dock folders"
+    },
+    {
+      "name": "customization",
+      "key": "customization",
+      "type": "bool",
+      "default": true,
+      "range": null,
+      "label": "Allow customizing each folder separately"
+    },
+    {
+      "name": "blurStrength",
+      "key": "blur-strength",
+      "type": "int",
+      "default": 89,
+      "storageDefault": 89,
+      "range": [
+        0,
+        100,
+        1
+      ],
+      "label": "Background blur",
+      "hidden": true,
+      "storageMin": -1
+    },
+    {
+      "name": "animation",
+      "key": "animation",
+      "type": "enum",
+      "default": "flow",
+      "range": null,
+      "label": "Opening and closing animation"
+    },
+    {
+      "name": "animationSpeed",
+      "key": "animation-speed",
+      "type": "int",
+      "default": 180,
+      "range": [
+        50,
+        200,
+        10
+      ],
+      "label": "Animation speed"
+    },
+    {
+      "name": "groupIconSize",
+      "key": "group-icon-size",
+      "type": "int",
+      "default": 120,
+      "range": [
+        80,
+        200,
+        5
+      ],
+      "label": "Folder icon size"
+    },
+    {
+      "name": "groupMiniIconSize",
+      "key": "mini-icon-size",
+      "type": "int",
+      "default": 230,
+      "range": [
+        80,
+        300,
+        5
+      ],
+      "label": "Mini-icon size"
+    },
+    {
+      "name": "popupIconSize",
+      "key": "popup-icon-size",
+      "type": "int",
+      "default": 56,
+      "range": [
+        32,
+        96,
+        4
+      ],
+      "label": "Open folder icon size"
+    },
+    {
+      "name": "fontSize",
+      "key": "font-size",
+      "type": "double",
+      "default": 13,
+      "range": [
+        8,
+        24,
+        1
+      ],
+      "label": "Folder label size"
+    },
+    {
+      "name": "hoverEffect",
+      "key": "hover-effect",
+      "type": "enum",
+      "default": "none",
+      "range": null,
+      "label": "On hover"
+    },
+    {
+      "name": "hoverAngle",
+      "key": "hover-angle",
+      "type": "int",
+      "default": 45,
+      "range": [
+        0,
+        180,
+        5
+      ],
+      "label": "Hover rotation angle"
+    },
+    {
+      "name": "hoverSpeed",
+      "key": "hover-speed",
+      "type": "int",
+      "default": 50,
+      "range": [
+        -999,
+        999,
+        1
+      ],
+      "label": "Hover animation speed"
+    },
+    {
+      "name": "orbitSpeed",
+      "key": "orbit-speed",
+      "type": "int",
+      "default": 0,
+      "range": [
+        -999,
+        999,
+        1
+      ],
+      "label": "Continuous rotation speed",
+      "unit": "°/s"
+    },
+    {
+      "name": "hoverOrbitSpeed",
+      "key": "hover-orbit-speed",
+      "type": "int",
+      "default": 0,
+      "range": [
+        -999,
+        999,
+        1
+      ],
+      "label": "Rotation speed on hover",
+      "unit": "°/s"
+    }
+  ],
+  "animations": [
+    {
+      "key": "none",
+      "id": 3,
+      "label": "No animation",
+      "duration": 0,
+      "curve": "none",
+      "fade": false
+    },
+    {
+      "key": "fade",
+      "id": 10,
+      "label": "Fade",
+      "duration": 180,
+      "curve": "cubic",
+      "fade": true
+    },
+    {
+      "key": "scale",
+      "id": 0,
+      "label": "Scale",
+      "duration": 220,
+      "curve": "cubic",
+      "fade": false
+    },
+    {
+      "key": "flow",
+      "id": 1,
+      "label": "Genie effect",
+      "duration": 340,
+      "curve": "linear",
+      "fade": false
+    },
+    {
+      "key": "lamp",
+      "id": 4,
+      "label": "Magic Lamp",
+      "duration": 340,
+      "curve": "linear",
+      "fade": false
+    },
+    {
+      "key": "fold",
+      "id": 5,
+      "label": "Fold",
+      "duration": 340,
+      "curve": "linear",
+      "fade": false
+    },
+    {
+      "key": "sheet",
+      "id": 8,
+      "label": "Sheet",
+      "duration": 340,
+      "curve": "linear",
+      "fade": false
+    },
+    {
+      "key": "unfold",
+      "id": 7,
+      "label": "Unfold from edge",
+      "duration": 340,
+      "curve": "linear",
+      "fade": false
+    }
+  ],
+  "hoverEffects": [
+    {
+      "key": "none",
+      "id": 0,
+      "label": "No effect",
+      "rotate": false,
+      "cards": false
+    },
+    {
+      "key": "rotate",
+      "id": 1,
+      "label": "Rotate on hover",
+      "rotate": true,
+      "cards": false
+    },
+    {
+      "key": "cards",
+      "id": 2,
+      "label": "Fan out cards",
+      "rotate": false,
+      "cards": true
+    },
+    {
+      "key": "rotate-cards",
+      "id": 3,
+      "label": "Rotate and fan out cards",
+      "rotate": true,
+      "cards": true
+    }
+  ],
+  "appearance": {
+    "dockOpacity": 0.1,
+    "popupOpacity": 0.26,
+    "glassOpacity": 0.26,
+    "popupColor": "#26262a",
+    "dockColor": "#787878",
+    "iconRotation": 0,
+    "alwaysStack": false,
+    "showLabel": false,
+    "wallpaper": "",
+    "backgroundOpacity": 0.26,
+    "blurStrength": 89
+  },
+  "layout": {
+    "maxColumns": 5,
+    "cellWidth": 104,
+    "padding": 16,
+    "radius": 20,
+    "blurRadius": 48,
+    "shadowSize": 18,
+    "previewDelay": 250,
+    "hoverDuration": 180,
+    "minimumMembers": 2,
+    "maxMiniatures": 5,
+    "circleScale": 0.86,
+    "hoverBezier": [
+      0.3333333333333333,
+      0,
+      0.6666666666666666,
+      1,
+      1,
+      1
+    ],
+    "maxPreviews": 4,
+    "orbitFrameInterval": 33,
+    "orbitMaxElapsed": 100,
+    "orbitResponseTime": 180,
+    "orbitStopThreshold": 0.05
+  },
+  "commands": [
+    "create",
+    "move",
+    "extract",
+    "pin",
+    "reorder",
+    "appearance",
+    "applyAppearance",
+    "undo",
+    "reconcile",
+    "importFolder",
+    "setFolderPinned"
+  ],
+  "capabilities": {
+    "gnome": {
+      "dockLabels": true,
+      "appGrid": true,
+      "existingFolders": true
+    },
+    "plasma": {
+      "dockLabels": false,
+      "appGrid": false,
+      "existingFolders": true
+    },
+    "xfce": {
+      "dockLabels": true,
+      "appGrid": false,
+      "snapshotGlass": true,
+      "existingFolders": true
+    }
+  },
+  "appearancePreferences": [
+    {
+      "name": "dockColor",
+      "type": "color",
+      "label": "Background color"
+    },
+    {
+      "name": "popupColor",
+      "type": "color",
+      "label": "Background color"
+    },
+    {
+      "name": "dockOpacity",
+      "type": "double",
+      "range": [
+        0,
+        1,
+        0.01
+      ],
+      "label": "Transparency"
+    },
+    {
+      "name": "popupOpacity",
+      "type": "double",
+      "range": [
+        0,
+        1,
+        0.01
+      ],
+      "label": "Transparency"
+    },
+    {
+      "name": "glassOpacity",
+      "type": "double",
+      "range": [
+        0,
+        1,
+        0.01
+      ],
+      "label": "Transparency"
+    },
+    {
+      "name": "backgroundOpacity",
+      "type": "double",
+      "range": [
+        0,
+        1,
+        0.01
+      ],
+      "label": "Transparency"
+    },
+    {
+      "name": "blurStrength",
+      "type": "int",
+      "range": [
+        0,
+        100,
+        1
+      ],
+      "label": "Background blur"
+    },
+    {
+      "name": "iconRotation",
+      "type": "int",
+      "range": [
+        0,
+        360,
+        1
+      ],
+      "label": "Icon rotation"
+    },
+    {
+      "name": "alwaysStack",
+      "type": "bool",
+      "label": "Always use card stack"
+    },
+    {
+      "name": "showLabel",
+      "type": "bool",
+      "label": "Label below the icon"
+    },
+    {
+      "name": "wallpaper",
+      "type": "path",
+      "maxLength": 4096,
+      "label": "Wallpaper"
+    },
+    {
+      "name": "wallpaperFolder",
+      "type": "path",
+      "maxLength": 4096
+    },
+    {
+      "name": "wallpaperName",
+      "type": "string",
+      "maxLength": 255
+    },
+    {
+      "name": "name",
+      "type": "name",
+      "maxLength": 80,
+      "label": "Name"
+    }
+  ],
+  "legacy": {
+    "blurStrength": 100,
+    "appearance": {
+      "dockOpacity": 0.2,
+      "popupOpacity": 0.98,
+      "glassOpacity": 0.42,
+      "backgroundOpacity": 0.42,
+      "showLabel": false,
+      "dockColor": "#263d4a"
+    }
+  }
+}

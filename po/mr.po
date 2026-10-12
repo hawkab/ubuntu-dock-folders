@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: mr\nLanguage: mr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: mr\nLanguage: mr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid "%s, percent"
@@ -76,7 +76,7 @@ msgid "Drag an icon onto another to create a folder. Reorder applications inside
 msgstr "फोल्डर तयार करण्यासाठी एक चिन्ह दुसऱ्यावर ओढा. फोल्डरमधील अॅप्सचा क्रम बदला किंवा त्यांना बाहेर ओढून डॉकवर परत आणा."
 
 msgid "Folder appearance"
-msgstr "फोल्डरचे दिसणे"
+msgstr "फोल्डरचे स्वरूप"
 
 msgid "Folder label size"
 msgstr "फोल्डर लेबलचा आकार"
@@ -208,3 +208,120 @@ msgstr "उघड्या विंडो"
 #, python-format
 msgid "Could not open %s"
 msgstr "%s उघडता आले नाही"
+
+msgid "Folder icon size"
+msgstr "फोल्डर चिन्हाचा आकार"
+
+
+msgid "No animation"
+msgstr "अॅनिमेशनशिवाय"
+
+msgid "Magic Lamp"
+msgstr "जादूचा दिवा"
+
+msgid "Fold"
+msgstr "घडी"
+
+
+msgid "Animation speed"
+msgstr "अॅनिमेशनचा वेग"
+
+msgid "Mini-icon size"
+msgstr "लहान चिन्हांचा आकार"
+
+msgid "Unfold from edge"
+msgstr "कडेपासून उलगडणे"
+
+msgid "Sheet"
+msgstr "पान (Sheet)"
+
+msgid "Icon rotation"
+msgstr "चिन्हांचे फिरवणे"
+
+msgid "Always use card stack"
+msgstr "नेहमी कार्डांचा ढीग वापरा"
+
+
+msgid "Fade"
+msgstr "हळूहळू दिसणे"
+
+msgid "On hover"
+msgstr "कर्सर ठेवल्यावर"
+
+msgid "No effect"
+msgstr "कोणताही प्रभाव नाही"
+
+msgid "Rotate by 30°"
+msgstr "30° फिरवा"
+
+msgid "Fan out cards"
+msgstr "कार्ड पसरवा"
+
+msgid "Open folder icon size"
+msgstr "उघडलेल्या फोल्डरमधील चिन्हांचा आकार"
+
+msgid "Rotate on hover"
+msgstr "माउस ठेवल्यावर फिरवा"
+
+msgid "Hover rotation angle"
+msgstr "माउस ठेवल्यावर फिरवण्याचा कोन"
+
+msgid "Hover animation speed"
+msgstr "माउस ठेवल्यावर ॲनिमेशनचा वेग"
+
+msgid "Rotate and fan out cards"
+msgstr "कार्ड फिरवा आणि पसरवा"
+
+msgid "Background blur"
+msgstr "पार्श्वभूमीचा धूसरपणा"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "0% वर पार्श्वभूमी स्पष्ट राहते. प्रत्येक फोल्डरची पारदर्शकता स्वतंत्रपणे ठरवता येते."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "पारदर्शकता पार्श्वभूमीच्या रंगावर परिणाम करते; धूसरपणा स्वतंत्र आहे."
+
+msgid "Apply to all folders…"
+msgstr "सर्व फोल्डरना लागू करा…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "इतर फोल्डरचे रूप बदलायचे?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "यामुळे इतर सर्व फोल्डरच्या रूपाची वैयक्तिक सेटिंग्ज बदलली जातील. नावे आणि ॲप्लिकेशन्स तशीच राहतील."
+
+msgid "Apply to all folders"
+msgstr "सर्व फोल्डरना लागू करा"
+
+msgid "Cancel"
+msgstr "रद्द करा"
+
+msgid "Existing folders"
+msgstr "विद्यमान फोल्डर"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "जतन केलेले गट किंवा GNOME च्या अ‍ॅप ग्रिडमधून फोल्डर निवडा"
+
+msgid "No folders available"
+msgstr "कोणतेही फोल्डर उपलब्ध नाहीत"
+
+msgid "Pin to panel"
+msgstr "पॅनेलवर पिन करा"
+
+msgid "Unpin from panel"
+msgstr "पॅनेलवरून पिन काढा"
+
+msgid "Allow customizing each folder separately"
+msgstr "प्रत्येक फोल्डरचे स्वरूप स्वतंत्रपणे बदलण्याची परवानगी द्या"
+
+msgid "Preview animation"
+msgstr "अ‍ॅनिमेशनचे पूर्वावलोकन"
+
+msgid "Continuous rotation speed"
+msgstr "सतत फिरण्याचा वेग"
+
+msgid "Rotation speed on hover"
+msgstr "पॉइंटर ठेवल्यावर फिरण्याचा वेग"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 संबंधित मोड बंद करतो. पॉइंटर वर असताना शून्यापेक्षा जास्त होव्हर वेग सतत फिरण्याच्या वेगाऐवजी वापरला जातो. ऋण वेग फिरण्याची दिशा उलटवतो."

@@ -7,30 +7,33 @@ export GSK_RENDERER = cairo
 export GDK_DEBUG = no-portals
 export GTK_A11Y = none
 export ADW_DISABLE_PORTAL = 1
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
 
 %:
 	dh $@
 
 override_dh_auto_build:
-	/usr/bin/python3 scripts/build.py --stage-only
+	/usr/bin/python3 scripts/debian_target.py build
 
 override_dh_auto_test:
-	dbus-run-session -- xvfb-run -a make test
-	/usr/bin/python3 scripts/test_shell.py
-	xvfb-run -a /usr/bin/python3 scripts/test_shell.py --client-backend x11
-	if gnome-shell --help | grep -q -- '--x11 '; then xvfb-run -a /usr/bin/python3 scripts/test_shell.py --backend x11; fi
-	appstreamcli validate --no-net build/package/usr/share/metainfo/*.metainfo.xml
-	desktop-file-validate build/package/usr/share/applications/*.desktop
+	/usr/bin/python3 scripts/debian_target.py check
 
 override_dh_auto_install:
-	mkdir -p debian/ubuntu-dock-folders
-	cp -a build/package/usr debian/ubuntu-dock-folders/
+	/usr/bin/python3 scripts/debian_target.py install
+
+override_dh_shlibdeps:
+	/usr/bin/python3 scripts/debian_target.py dependencies
 
 override_dh_auto_clean:
 	rm -rf build dist
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym
+
+override_dh_dwz:
+	:
 
 override_dh_compress:
 	dh_compress -Xdocs/

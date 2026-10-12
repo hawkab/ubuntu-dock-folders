@@ -1,0 +1,27 @@
+.TH UBUNTU-DOCK-FOLDERS-XFCE 1 "October 2026" "Ubuntu Dock Folders"
+.SH NAME
+ubuntu-dock-folders-xfce \- manage application folders on the Xfce panel
+.SH SYNOPSIS
+.B ubuntu-dock-folders-xfce enable
+.RI [ --panel " ID" ]
+.br
+.B ubuntu-dock-folders-xfce disable
+.SH DESCRIPTION
+Enable or remove the Dock Folders panel plugin for the logged-in Xfce user.
+Run it without sudo. The plugin selects X11 or Wayland when the panel starts.
+.SH COMMANDS
+.TP
+.B enable
+Add the plugin to an Xfce panel, replacing its tasklist when one is present.
+.TP
+.B disable
+Remove the plugin and restore its managed tasklist.
+Folder settings are retained. This does not remove the Debian package.
+.SH OPTIONS
+.TP
+.BI --panel " ID"
+Use the specified Xfce panel when enabling the plugin.
+.SH SEE ALSO
+.BR ubuntu-dock-folders (1)
+.br
+https://github.com/hawkab/ubuntu-dock-folders

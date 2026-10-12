@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: pt\nLanguage: pt\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: pt\nLanguage: pt\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid "%s, percent"
@@ -208,3 +208,120 @@ msgstr "Janelas abertas"
 #, python-format
 msgid "Could not open %s"
 msgstr "Não foi possível abrir %s"
+
+msgid "Folder icon size"
+msgstr "Tamanho do ícone da pasta"
+
+
+msgid "No animation"
+msgstr "Sem animação"
+
+msgid "Magic Lamp"
+msgstr "Lâmpada mágica"
+
+msgid "Fold"
+msgstr "Dobra"
+
+
+msgid "Animation speed"
+msgstr "Velocidade da animação"
+
+msgid "Mini-icon size"
+msgstr "Tamanho dos miniícones"
+
+msgid "Unfold from edge"
+msgstr "Desdobrar a partir da borda"
+
+msgid "Sheet"
+msgstr "Folha (Sheet)"
+
+msgid "Icon rotation"
+msgstr "Rotação dos ícones"
+
+msgid "Always use card stack"
+msgstr "Usar sempre uma pilha de cartões"
+
+
+msgid "Fade"
+msgstr "Aparecimento gradual"
+
+msgid "On hover"
+msgstr "Ao passar o cursor"
+
+msgid "No effect"
+msgstr "Sem efeito"
+
+msgid "Rotate by 30°"
+msgstr "Rodar 30°"
+
+msgid "Fan out cards"
+msgstr "Abrir cartões em leque"
+
+msgid "Open folder icon size"
+msgstr "Tamanho dos ícones na pasta aberta"
+
+msgid "Rotate on hover"
+msgstr "Girar ao passar o ponteiro"
+
+msgid "Hover rotation angle"
+msgstr "Ângulo de rotação ao passar o ponteiro"
+
+msgid "Hover animation speed"
+msgstr "Velocidade da animação ao passar o ponteiro"
+
+msgid "Rotate and fan out cards"
+msgstr "Girar e abrir os cartões em leque"
+
+msgid "Background blur"
+msgstr "Desfoque do fundo"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "Com 0% o fundo permanece nítido. A transparência é ajustada separadamente para cada pasta."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "A transparência afeta a cor do fundo; o desfoque é independente."
+
+msgid "Apply to all folders…"
+msgstr "Aplicar a todas as pastas…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "Substituir a aparência das outras pastas?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "As definições de aparência personalizadas de todas as outras pastas serão substituídas. Os nomes e as aplicações permanecerão iguais."
+
+msgid "Apply to all folders"
+msgstr "Aplicar a todas as pastas"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Existing folders"
+msgstr "Pastas existentes"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "Escolha grupos guardados ou pastas da grelha de aplicações do GNOME"
+
+msgid "No folders available"
+msgstr "Nenhuma pasta disponível"
+
+msgid "Pin to panel"
+msgstr "Fixar no painel"
+
+msgid "Unpin from panel"
+msgstr "Desafixar do painel"
+
+msgid "Allow customizing each folder separately"
+msgstr "Permitir personalizar a aparência de cada pasta individualmente"
+
+msgid "Preview animation"
+msgstr "Pré-visualizar animação"
+
+msgid "Continuous rotation speed"
+msgstr "Velocidade de rotação contínua"
+
+msgid "Rotation speed on hover"
+msgstr "Velocidade de rotação ao passar o ponteiro"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 desativa cada modo. Uma velocidade diferente de zero ao passar o ponteiro substitui a velocidade de rotação contínua. Velocidades negativas invertem o sentido de rotação."

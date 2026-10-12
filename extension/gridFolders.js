@@ -5,6 +5,7 @@ import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 import Shell from 'gi://Shell';
 import {pruneGroups} from './model.js';
+import {resolveFolders} from './core/folders.js';
 
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
@@ -48,26 +49,31 @@ export class AppGridFolders {
         }
     }
 
-    _read(settings) {
-        const categories = settings.get_strv('categories');
-        const excluded = settings.get_strv('excluded-apps');
+    _catalog() {
         const infos = Gio.AppInfo.get_all().filter(info => info.should_show() &&
             !info.get_id()?.startsWith('local.groups.'));
         const byId = new Map(infos.map(info => [info.get_id(), info]));
-        const automatic = infos.filter(info =>
-            (info.get_categories?.() ?? '').split(';').some(category => categories.includes(category)))
-            .map(info => info.get_id());
-        const apps = [...new Set([...settings.get_strv('apps'), ...automatic])]
-            .filter(id => byId.has(id) && !excluded.includes(id));
+        const entries = Object.fromEntries(infos.map(info => [info.get_id(),
+            {label:info.get_name(),categories:(info.get_categories?.() ?? '').split(';')}]));
+        return {entries,byId};
+    }
+
+    _read(settings, catalog = this._catalog()) {
+        const {entries,byId} = catalog;
         const raw = settings.get_string('name');
         const name = settings.get_boolean('translate')
             ? Shell.util_get_translated_folder_name(raw) ?? raw : raw;
-        return {name, apps, automatic, byId};
+        const [source] = resolveFolders([{id:'source',name,apps:settings.get_strv('apps'),
+            categories:settings.get_strv('categories'),excludedApps:settings.get_strv('excluded-apps')}],entries,true);
+        return {name, apps:source.apps.map(app => app.desktop), automatic:source.automatic, byId};
     }
 
     pull() {
         const groups = JSON.parse(this.settings.get_string('groups'));
         this._bind(groups);
+        const catalog = this.records.size ? this._catalog() : null;
+        const existing = new Map(Object.values(groups).flatMap(folder =>
+            folder.apps.map(entry => [entry.desktop, entry])));
         let changed = false;
         for (const group of Object.values(groups)) {
             if (!group.gridFolder)
@@ -78,12 +84,10 @@ export class AppGridFolders {
                 changed = true;
                 continue;
             }
-            const source = this._read(record.settings);
+            const source = this._read(record.settings,catalog);
             record.last = {name: source.name, apps: source.apps};
             if (group.name === source.name && same(group.apps.map(entry => entry.desktop), source.apps))
                 continue;
-            const existing = new Map(Object.values(groups).flatMap(folder =>
-                folder.apps.map(entry => [entry.desktop, entry])));
             group.name = source.name;
             group.apps = source.apps.map(id => existing.get(id) ??
                 {desktop: id, label: source.byId.get(id).get_name()});
@@ -108,15 +112,20 @@ export class AppGridFolders {
 
     push(groups) {
         this._bind(groups);
+        let catalog;
         this.writing = true;
         try {
             for (const group of Object.values(groups)) {
                 const record = this.records.get(group.gridFolder);
                 if (!record)
                     continue;
-                const source = this._read(record.settings);
-                const last = record.last ?? source;
                 const apps = group.apps.map(entry => entry.desktop);
+                if (record.last && group.name === record.last.name && same(apps,record.last.apps))
+                    continue;
+                const needsSource = !record.last || !same(apps,record.last.apps);
+                if (needsSource) catalog ??= this._catalog();
+                const source = needsSource ? this._read(record.settings,catalog) : null;
+                const last = record.last ?? source;
                 record.settings.delay();
                 if (group.name !== last.name) {
                     record.settings.set_string('name', group.name);

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: es\nLanguage: es\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: es\nLanguage: es\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, python-format
 msgid "%s, percent"
@@ -191,7 +191,7 @@ msgid "No app-grid folders"
 msgstr "No hay carpetas en la cuadrícula"
 
 msgid "Create a folder in Show Apps first"
-msgstr "Cree primero una carpeta en «Mostrar aplicaciones»"
+msgstr "Crea primero una carpeta en «Mostrar aplicaciones»"
 
 msgid "Folder updated"
 msgstr "Carpeta actualizada"
@@ -208,3 +208,120 @@ msgstr "Ventanas abiertas"
 #, python-format
 msgid "Could not open %s"
 msgstr "No se pudo abrir %s"
+
+msgid "Folder icon size"
+msgstr "Tamaño del icono de carpeta"
+
+
+msgid "No animation"
+msgstr "Sin animación"
+
+msgid "Magic Lamp"
+msgstr "Lámpara mágica"
+
+msgid "Fold"
+msgstr "Plegado"
+
+
+msgid "Animation speed"
+msgstr "Velocidad de animación"
+
+msgid "Mini-icon size"
+msgstr "Tamaño de los miniiconos"
+
+msgid "Unfold from edge"
+msgstr "Desplegar desde el borde"
+
+msgid "Sheet"
+msgstr "Hoja (Sheet)"
+
+msgid "Icon rotation"
+msgstr "Rotación de iconos"
+
+msgid "Always use card stack"
+msgstr "Usar siempre una pila de tarjetas"
+
+
+msgid "Fade"
+msgstr "Aparición gradual"
+
+msgid "On hover"
+msgstr "Al pasar el cursor"
+
+msgid "No effect"
+msgstr "Sin efecto"
+
+msgid "Rotate by 30°"
+msgstr "Girar 30°"
+
+msgid "Fan out cards"
+msgstr "Desplegar las tarjetas"
+
+msgid "Open folder icon size"
+msgstr "Tamaño de iconos en la carpeta abierta"
+
+msgid "Rotate on hover"
+msgstr "Girar al pasar el cursor"
+
+msgid "Hover rotation angle"
+msgstr "Ángulo de giro al pasar el cursor"
+
+msgid "Hover animation speed"
+msgstr "Velocidad de animación al pasar el cursor"
+
+msgid "Rotate and fan out cards"
+msgstr "Girar y desplegar las tarjetas"
+
+msgid "Background blur"
+msgstr "Desenfoque del fondo"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "Con 0% el fondo permanece nítido. La transparencia se ajusta por separado para cada carpeta."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "La transparencia afecta al color del fondo; el desenfoque es independiente."
+
+msgid "Apply to all folders…"
+msgstr "Aplicar a todas las carpetas…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "¿Reemplazar el aspecto de las demás carpetas?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "Esto sobrescribirá los ajustes de aspecto personalizados de todas las demás carpetas. Los nombres y las aplicaciones no cambiarán."
+
+msgid "Apply to all folders"
+msgstr "Aplicar a todas las carpetas"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Existing folders"
+msgstr "Carpetas existentes"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "Elija grupos guardados o carpetas de la cuadrícula de aplicaciones de GNOME"
+
+msgid "No folders available"
+msgstr "No hay carpetas disponibles"
+
+msgid "Pin to panel"
+msgstr "Anclar al panel"
+
+msgid "Unpin from panel"
+msgstr "Desanclar del panel"
+
+msgid "Allow customizing each folder separately"
+msgstr "Permitir personalizar la apariencia de cada carpeta por separado"
+
+msgid "Preview animation"
+msgstr "Vista previa de la animación"
+
+msgid "Continuous rotation speed"
+msgstr "Velocidad de rotación continua"
+
+msgid "Rotation speed on hover"
+msgstr "Velocidad de rotación al pasar el cursor"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 desactiva cada modo. Una velocidad distinta de cero al pasar el puntero sustituye la velocidad de rotación continua. Las velocidades negativas invierten el sentido de giro."

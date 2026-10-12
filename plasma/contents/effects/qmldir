@@ -1,0 +1,3 @@
+module DockFolders.Effects
+plugin dockfolderseffects
+classname DockEffectsPlugin

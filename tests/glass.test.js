@@ -2,6 +2,8 @@
 // Copyright 2026 Grigory Olshansky
 
 import assert from 'node:assert/strict';
+import {contract} from '../core/contract.js';
+import {surface, blurLevel} from '../core/preferences.js';
 import {readFileSync} from 'node:fs';
 import test from 'node:test';
 import {runInNewContext} from 'node:vm';
@@ -25,7 +27,7 @@ function fixture(allocation = [290, 253]) {
         destroy() { this.destroyed = true; }
     }
     const FolderRenderer = runInNewContext(`${source}\nFolderRenderer`, {
-        Extension: class {},
+        Extension: class {}, contract,
         RoundedBackdrop: class {},
         Shell: {BlurEffect: Actor, BlurMode: {ACTOR: 0}},
         Clutter: {Actor, Clone: Actor},
@@ -46,10 +48,14 @@ function fixture(allocation = [290, 253]) {
     });
     const renderer = new FolderRenderer();
     const menu = {isOpen: true, _useGlass: true,
-        actor: {x: 0, y: 0, get_allocation_box: () => ({x1: 66, y1: 38})}};
+        sourceActor: {has_allocation: () => true},
+        actor: {x: 0, y: 0, allocation: {x1: 66, y1: 38},
+            get_allocation_box: () => { throw new Error('Parent layout was forced'); }}};
     menu._glass = {
         visible: false, width: 0, height: 0, x: 6, y: 0,
-        get_allocation_box: () => ({x1: 6, y1: 0, get_size: () => allocation}),
+        has_allocation: () => true,
+        allocation: {x1: 6, y1: 0, get_size: () => allocation},
+        get_allocation_box: () => { throw new Error('Glass layout was forced'); },
         get_parent: () => menu.actor,
         add_child: () => {},
         add_effect_with_name: (name, effect) => effects.set(name, effect),
@@ -57,6 +63,30 @@ function fixture(allocation = [290, 253]) {
     };
     return {renderer, menu, effects, laters};
 }
+
+test('cached glass allocation never forces a pending dock or popup layout', () => {
+    const {renderer, menu, effects} = fixture();
+    menu.sourceActor.has_allocation = () => false;
+    menu._glass.has_allocation = () => false;
+    renderer._syncGlass(menu);
+    assert.ok(menu._glassClone);
+    assert.equal(effects.size, 2);
+    assert.equal(menu._glassClone.x, -72);
+    assert.equal(menu._glassClone.y, -38);
+});
+
+test('backdrop positioning ignores invalid cached geometry until allocation recovers', () => {
+    const {renderer, menu} = fixture();
+    renderer._syncGlass(menu);
+    menu.actor.allocation = {x1: NaN, y1: Infinity};
+    renderer._positionGlass(menu);
+    assert.equal(menu._glassClone.x, -72);
+    assert.equal(menu._glassClone.y, -38);
+    menu.actor.allocation = {x1: 80, y1: 45};
+    renderer._positionGlass(menu);
+    assert.equal(menu._glassClone.x, -86);
+    assert.equal(menu._glassClone.y, -45);
+});
 
 test('glass is restored when a reopened popup has its previous allocation but zero preferred size', () => {
     const {renderer, menu, effects, laters} = fixture();
@@ -106,4 +136,38 @@ test('disabling glass removes its backdrop and pending redraw', () => {
     assert.ok(clone.destroyed);
     assert.equal(effects.size, 0);
     assert.equal(laters.size, 0);
+});
+
+test('transparency never changes the independently selected blur', () => {
+    for (const blur of [0, 1, 25, 50, 75, 100])
+        for (let transparency = 0; transparency <= 100; transparency++) {
+            const value = surface({backgroundOpacity: 1 - transparency / 100},blur);
+            assert.equal(value.blurAmount, blur / 100);
+            assert.equal(value.backgroundOpacity, 1 - transparency / 100);
+        }
+});
+
+test('legacy appearance is retained until its transparency is adjusted', () => {
+    const group = {glassOpacity:.24, popupOpacity:.9};
+    assert.equal(surface(group,100,true).backgroundOpacity,.24);
+    assert.equal(surface(group,0,false).backgroundOpacity,.9);
+    assert.equal(surface({...group,backgroundOpacity:.17},0,true).backgroundOpacity,.17);
+    assert.equal(surface({...group,backgroundOpacity:.17},100,false).backgroundOpacity,.17);
+    assert.equal(blurLevel(-1,true),100);
+    assert.equal(blurLevel(-1,false),0);
+    assert.equal(blurLevel(50,false),50);
+});
+
+test('GNOME adjusts the backdrop radius while retaining full backdrop opacity', () => {
+    const {renderer, menu} = fixture();
+    menu._blurAmount = surface({backgroundOpacity: 0},50).blurAmount;
+    renderer._syncGlass(menu);
+    assert.equal(menu._glass.opacity, 255);
+    assert.equal(menu._blurEffect.radius, contract.layout.blurRadius / 2);
+    assert.ok(menu._glass.visible);
+    menu._blurAmount = 0;
+    menu._useGlass = false;
+    renderer._syncGlass(menu);
+    assert.equal(menu._glass.opacity, 255);
+    assert.equal(menu._glass.visible, false);
 });

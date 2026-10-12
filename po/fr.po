@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: fr\nLanguage: fr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: fr\nLanguage: fr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid "%s, percent"
@@ -208,3 +208,120 @@ msgstr "Fenêtres ouvertes"
 #, python-format
 msgid "Could not open %s"
 msgstr "Impossible d’ouvrir %s"
+
+msgid "Folder icon size"
+msgstr "Taille de l’icône du dossier"
+
+
+msgid "No animation"
+msgstr "Sans animation"
+
+msgid "Magic Lamp"
+msgstr "Lampe magique"
+
+msgid "Fold"
+msgstr "Pliage"
+
+
+msgid "Animation speed"
+msgstr "Vitesse d’animation"
+
+msgid "Mini-icon size"
+msgstr "Taille des mini-icônes"
+
+msgid "Unfold from edge"
+msgstr "Déplier depuis le bord"
+
+msgid "Sheet"
+msgstr "Feuille (Sheet)"
+
+msgid "Icon rotation"
+msgstr "Rotation des icônes"
+
+msgid "Always use card stack"
+msgstr "Toujours utiliser une pile de cartes"
+
+
+msgid "Fade"
+msgstr "Fondu"
+
+msgid "On hover"
+msgstr "Au survol"
+
+msgid "No effect"
+msgstr "Aucun effet"
+
+msgid "Rotate by 30°"
+msgstr "Tourner de 30°"
+
+msgid "Fan out cards"
+msgstr "Déployer les cartes"
+
+msgid "Open folder icon size"
+msgstr "Taille des icônes dans le dossier ouvert"
+
+msgid "Rotate on hover"
+msgstr "Pivoter au survol"
+
+msgid "Hover rotation angle"
+msgstr "Angle de rotation au survol"
+
+msgid "Hover animation speed"
+msgstr "Vitesse de l’animation au survol"
+
+msgid "Rotate and fan out cards"
+msgstr "Pivoter et déployer les cartes"
+
+msgid "Background blur"
+msgstr "Flou d’arrière-plan"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "À 0%, l’arrière-plan reste net. La transparence se règle séparément pour chaque dossier."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "La transparence agit sur la couleur de fond ; le flou est indépendant."
+
+msgid "Apply to all folders…"
+msgstr "Appliquer à tous les dossiers…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "Remplacer l’apparence des autres dossiers ?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "Les réglages d’apparence personnalisés de tous les autres dossiers seront remplacés. Les noms et les applications resteront inchangés."
+
+msgid "Apply to all folders"
+msgstr "Appliquer à tous les dossiers"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Existing folders"
+msgstr "Dossiers existants"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "Choisissez des groupes enregistrés ou des dossiers de la grille des applications GNOME"
+
+msgid "No folders available"
+msgstr "Aucun dossier disponible"
+
+msgid "Pin to panel"
+msgstr "Épingler au panneau"
+
+msgid "Unpin from panel"
+msgstr "Détacher du panneau"
+
+msgid "Allow customizing each folder separately"
+msgstr "Autoriser la personnalisation de chaque dossier séparément"
+
+msgid "Preview animation"
+msgstr "Aperçu de l’animation"
+
+msgid "Continuous rotation speed"
+msgstr "Vitesse de rotation continue"
+
+msgid "Rotation speed on hover"
+msgstr "Vitesse de rotation au survol"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 désactive chaque mode. Une vitesse non nulle au survol remplace la vitesse de rotation continue. Les vitesses négatives inversent le sens de rotation."

@@ -1,0 +1,15 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright 2026 Grigory Olshansky
+set -e
+[ -z "${DPKG_ROOT:-}" ] || exit 0
+case "$1" in
+    remove|deconfigure)
+        script=/usr/share/ubuntu-dock-folders/scripts/desktop_package_lifecycle.py
+        if [ ! -f "$script" ]; then
+            script=/usr/share/ubuntu-dock-folders/scripts/package_lifecycle.py
+        fi
+        python3 -I "$script"
+        ;;
+esac
+#DEBHELPER#

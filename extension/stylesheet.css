@@ -19,7 +19,7 @@
 .dock-group-app-label { font-size: 14px; text-align: center; height: 38px; color: #f6f5f4; }
 .dock-group-app-dot { width: 5px; height: 5px; border-radius: 5px; background-color: #ffffff; }
 .dock-group-dock-label { font-size: 10px; text-align: center; color: white; max-width: 68px; }
-.dock-group-light .dock-group-title, .dock-group-light .dock-group-app-label, .dock-group-light .dock-group-gear { color: #202124; }
-.dock-group-light .dock-group-app-dot { background-color: #202124; }
+.dock-group-light .dock-group-title, .dock-group-light .dock-group-app-label, .dock-group-light .dock-group-gear { color: #000000; }
+.dock-group-light .dock-group-app-dot { background-color: #000000; }
 .dock-group-drop-target { background-color: rgba(98,160,234,.30); box-shadow: inset 0 0 0 2px #62a0ea; border-radius: 18px; }
 .dock-group-window-previews .popup-menu-section { spacing: 12px; }

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: sv\nLanguage: sv\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: sv\nLanguage: sv\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid "%s, percent"
@@ -208,3 +208,120 @@ msgstr "Öppna fönster"
 #, python-format
 msgid "Could not open %s"
 msgstr "Kunde inte öppna %s"
+
+msgid "Folder icon size"
+msgstr "Mappikonens storlek"
+
+
+msgid "No animation"
+msgstr "Ingen animering"
+
+msgid "Magic Lamp"
+msgstr "Magisk lampa"
+
+msgid "Fold"
+msgstr "Vikning"
+
+
+msgid "Animation speed"
+msgstr "Animeringshastighet"
+
+msgid "Mini-icon size"
+msgstr "Storlek på miniikoner"
+
+msgid "Unfold from edge"
+msgstr "Vik ut från kanten"
+
+msgid "Sheet"
+msgstr "Ark (Sheet)"
+
+msgid "Icon rotation"
+msgstr "Ikonrotation"
+
+msgid "Always use card stack"
+msgstr "Använd alltid en kortstapel"
+
+
+msgid "Fade"
+msgstr "Tona in"
+
+msgid "On hover"
+msgstr "Vid hovring"
+
+msgid "No effect"
+msgstr "Ingen effekt"
+
+msgid "Rotate by 30°"
+msgstr "Rotera 30°"
+
+msgid "Fan out cards"
+msgstr "Sprid ut kort"
+
+msgid "Open folder icon size"
+msgstr "Ikonstorlek i öppen mapp"
+
+msgid "Rotate on hover"
+msgstr "Rotera vid hovring"
+
+msgid "Hover rotation angle"
+msgstr "Rotationsvinkel vid hovring"
+
+msgid "Hover animation speed"
+msgstr "Animationshastighet vid hovring"
+
+msgid "Rotate and fan out cards"
+msgstr "Rotera och veckla ut kort"
+
+msgid "Background blur"
+msgstr "Bakgrundsoskärpa"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "Vid 0% är bakgrunden skarp. Genomskinlighet ställs in separat för varje mapp."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "Genomskinlighet påverkar bakgrundsfärgen; oskärpan är oberoende."
+
+msgid "Apply to all folders…"
+msgstr "Tillämpa på alla mappar…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "Ersätt de andra mapparnas utseende?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "Detta skriver över de anpassade utseendeinställningarna för alla andra mappar. Namn och program förblir oförändrade."
+
+msgid "Apply to all folders"
+msgstr "Tillämpa på alla mappar"
+
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgid "Existing folders"
+msgstr "Befintliga mappar"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "Välj sparade grupper eller mappar från GNOME:s programrutnät"
+
+msgid "No folders available"
+msgstr "Inga mappar tillgängliga"
+
+msgid "Pin to panel"
+msgstr "Fäst på panelen"
+
+msgid "Unpin from panel"
+msgstr "Lossa från panelen"
+
+msgid "Allow customizing each folder separately"
+msgstr "Tillåt att varje mapps utseende anpassas separat"
+
+msgid "Preview animation"
+msgstr "Förhandsvisa animation"
+
+msgid "Continuous rotation speed"
+msgstr "Hastighet för kontinuerlig rotation"
+
+msgid "Rotation speed on hover"
+msgstr "Rotationshastighet vid hovring"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 stänger av respektive läge. En hastighet över noll vid hovring ersätter den kontinuerliga rotationshastigheten när pekaren är över ikonen. Negativa hastigheter vänder rotationsriktningen."

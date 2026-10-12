@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ml\nLanguage: ml\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ml\nLanguage: ml\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid "%s, percent"
@@ -208,3 +208,120 @@ msgstr "തുറന്ന ജാലകങ്ങൾ"
 #, python-format
 msgid "Could not open %s"
 msgstr "%s തുറക്കാനായില്ല"
+
+msgid "Folder icon size"
+msgstr "ഫോൾഡർ ഐക്കണിന്റെ വലുപ്പം"
+
+
+msgid "No animation"
+msgstr "ആനിമേഷൻ ഇല്ല"
+
+msgid "Magic Lamp"
+msgstr "മാന്ത്രിക വിളക്ക്"
+
+msgid "Fold"
+msgstr "മടക്കൽ"
+
+
+msgid "Animation speed"
+msgstr "ആനിമേഷൻ വേഗത"
+
+msgid "Mini-icon size"
+msgstr "ചെറിയ ഐക്കണുകളുടെ വലുപ്പം"
+
+msgid "Unfold from edge"
+msgstr "അരികിൽ നിന്ന് തുറക്കുക"
+
+msgid "Sheet"
+msgstr "പേജ് (Sheet)"
+
+msgid "Icon rotation"
+msgstr "ഐക്കണുകളുടെ തിരിവ്"
+
+msgid "Always use card stack"
+msgstr "എപ്പോഴും കാർഡ് അടുക്ക് ഉപയോഗിക്കുക"
+
+
+msgid "Fade"
+msgstr "സാവധാനം പ്രത്യക്ഷപ്പെടൽ"
+
+msgid "On hover"
+msgstr "കർസർ വയ്ക്കുമ്പോൾ"
+
+msgid "No effect"
+msgstr "പ്രഭാവമില്ല"
+
+msgid "Rotate by 30°"
+msgstr "30° തിരിക്കുക"
+
+msgid "Fan out cards"
+msgstr "കാർഡുകൾ വിരിക്കുക"
+
+msgid "Open folder icon size"
+msgstr "തുറന്ന ഫോൾഡറിലെ ഐക്കൺ വലുപ്പം"
+
+msgid "Rotate on hover"
+msgstr "മൗസ് എത്തുമ്പോൾ തിരിക്കുക"
+
+msgid "Hover rotation angle"
+msgstr "മൗസ് എത്തുമ്പോഴുള്ള തിരിവിന്റെ കോണം"
+
+msgid "Hover animation speed"
+msgstr "മൗസ് എത്തുമ്പോഴുള്ള അനിമേഷൻ വേഗം"
+
+msgid "Rotate and fan out cards"
+msgstr "കാർഡുകൾ തിരിക്കുകയും വിടർത്തുകയും ചെയ്യുക"
+
+msgid "Background blur"
+msgstr "പശ്ചാത്തല മങ്ങൽ"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "0% ആകുമ്പോൾ പശ്ചാത്തലം വ്യക്തമായിരിക്കും. ഓരോ ഫോൾഡറിന്റെയും സുതാര്യത പ്രത്യേകം ക്രമീകരിക്കാം."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "സുതാര്യത പശ്ചാത്തല നിറത്തെ ബാധിക്കുന്നു; മങ്ങൽ സ്വതന്ത്രമായി ക്രമീകരിക്കാം."
+
+msgid "Apply to all folders…"
+msgstr "എല്ലാ ഫോൾഡറുകളിലും പ്രയോഗിക്കുക…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "മറ്റ് ഫോൾഡറുകളുടെ രൂപം മാറ്റണോ?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "മറ്റ് എല്ലാ ഫോൾഡറുകളുടെയും രൂപത്തിനുള്ള ഇഷ്ടാനുസൃത ക്രമീകരണങ്ങൾ മാറ്റിസ്ഥാപിക്കും. പേരുകളും ആപ്ലിക്കേഷനുകളും മാറ്റമില്ലാതെ തുടരും."
+
+msgid "Apply to all folders"
+msgstr "എല്ലാ ഫോൾഡറുകളിലും പ്രയോഗിക്കുക"
+
+msgid "Cancel"
+msgstr "റദ്ദാക്കുക"
+
+msgid "Existing folders"
+msgstr "നിലവിലുള്ള ഫോൾഡറുകൾ"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "സൂക്ഷിച്ച ഗ്രൂപ്പുകളോ GNOME ആപ്പ് ഗ്രിഡിലെ ഫോൾഡറുകളോ തിരഞ്ഞെടുക്കുക"
+
+msgid "No folders available"
+msgstr "ഫോൾഡറുകളൊന്നും ലഭ്യമല്ല"
+
+msgid "Pin to panel"
+msgstr "പാനലിൽ പിൻ ചെയ്യുക"
+
+msgid "Unpin from panel"
+msgstr "പാനലിൽ നിന്ന് പിൻ നീക്കുക"
+
+msgid "Allow customizing each folder separately"
+msgstr "ഓരോ ഫോൾഡറിന്റെയും രൂപം പ്രത്യേകം മാറ്റാൻ അനുവദിക്കുക"
+
+msgid "Preview animation"
+msgstr "ആനിമേഷൻ പ്രിവ്യൂ"
+
+msgid "Continuous rotation speed"
+msgstr "തുടർച്ചയായ ഭ്രമണത്തിന്റെ വേഗം"
+
+msgid "Rotation speed on hover"
+msgstr "പോയിന്റർ വയ്ക്കുമ്പോഴുള്ള ഭ്രമണവേഗം"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 അതത് മോഡ് നിർത്തുന്നു. പോയിന്റർ മുകളിലായിരിക്കുമ്പോൾ പൂജ്യത്തേക്കാൾ കൂടുതലുള്ള ഹോവർ വേഗം തുടർച്ചയായ ഭ്രമണവേഗത്തിന് പകരം ഉപയോഗിക്കുന്നു. നെഗറ്റീവ് വേഗത ഭ്രമണദിശ മാറ്റുന്നു."

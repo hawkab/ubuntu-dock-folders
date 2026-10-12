@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: hu\nLanguage: hu\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: hu\nLanguage: hu\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid "%s, percent"
@@ -208,3 +208,120 @@ msgstr "Nyitott ablakok"
 #, python-format
 msgid "Could not open %s"
 msgstr "A(z) %s nem nyitható meg"
+
+msgid "Folder icon size"
+msgstr "Mappaikon mérete"
+
+
+msgid "No animation"
+msgstr "Animáció nélkül"
+
+msgid "Magic Lamp"
+msgstr "Varázslámpa"
+
+msgid "Fold"
+msgstr "Hajtogatás"
+
+
+msgid "Animation speed"
+msgstr "Animáció sebessége"
+
+msgid "Mini-icon size"
+msgstr "Miniikonok mérete"
+
+msgid "Unfold from edge"
+msgstr "Kibontás a szélétől"
+
+msgid "Sheet"
+msgstr "Lap (Sheet)"
+
+msgid "Icon rotation"
+msgstr "Ikonok forgatása"
+
+msgid "Always use card stack"
+msgstr "Mindig kártyapakli használata"
+
+
+msgid "Fade"
+msgstr "Áttűnés"
+
+msgid "On hover"
+msgstr "Rámutatáskor"
+
+msgid "No effect"
+msgstr "Nincs effektus"
+
+msgid "Rotate by 30°"
+msgstr "Elforgatás 30°-kal"
+
+msgid "Fan out cards"
+msgstr "Kártyák legyezőszerű kinyitása"
+
+msgid "Open folder icon size"
+msgstr "Ikonméret a megnyitott mappában"
+
+msgid "Rotate on hover"
+msgstr "Forgatás rámutatáskor"
+
+msgid "Hover rotation angle"
+msgstr "Forgatás szöge rámutatáskor"
+
+msgid "Hover animation speed"
+msgstr "Animáció sebessége rámutatáskor"
+
+msgid "Rotate and fan out cards"
+msgstr "Kártyák forgatása és szétnyitása"
+
+msgid "Background blur"
+msgstr "Háttér elmosása"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "0%-nál a háttér éles marad. Az átlátszóság mappánként külön állítható."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "Az átlátszóság a háttérszínt módosítja; az elmosás ettől független."
+
+msgid "Apply to all folders…"
+msgstr "Alkalmazás minden mappára…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "Lecseréli a többi mappa megjelenését?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "Ez felülírja az összes többi mappa egyéni megjelenési beállításait. A nevek és az alkalmazások változatlanok maradnak."
+
+msgid "Apply to all folders"
+msgstr "Alkalmazás minden mappára"
+
+msgid "Cancel"
+msgstr "Mégse"
+
+msgid "Existing folders"
+msgstr "Meglévő mappák"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "Válasszon mentett csoportokat vagy mappákat a GNOME alkalmazásrácsából"
+
+msgid "No folders available"
+msgstr "Nincsenek elérhető mappák"
+
+msgid "Pin to panel"
+msgstr "Rögzítés a panelen"
+
+msgid "Unpin from panel"
+msgstr "Leválasztás a panelről"
+
+msgid "Allow customizing each folder separately"
+msgstr "Az egyes mappák megjelenésének külön testreszabása"
+
+msgid "Preview animation"
+msgstr "Animáció előnézete"
+
+msgid "Continuous rotation speed"
+msgstr "Folyamatos forgatás sebessége"
+
+msgid "Rotation speed on hover"
+msgstr "Forgatás sebessége rámutatáskor"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "A 0 kikapcsolja az adott módot. Rámutatáskor a nem nulla rámutatási sebesség felváltja a folyamatos forgatás sebességét. A negatív sebességek megfordítják a forgásirányt."

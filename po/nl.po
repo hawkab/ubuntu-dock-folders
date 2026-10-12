@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: nl\nLanguage: nl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: nl\nLanguage: nl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid "%s, percent"
@@ -208,3 +208,120 @@ msgstr "Open vensters"
 #, python-format
 msgid "Could not open %s"
 msgstr "Kan %s niet openen"
+
+msgid "Folder icon size"
+msgstr "Mapicoongrootte"
+
+
+msgid "No animation"
+msgstr "Geen animatie"
+
+msgid "Magic Lamp"
+msgstr "Magische lamp"
+
+msgid "Fold"
+msgstr "Vouwen"
+
+
+msgid "Animation speed"
+msgstr "Animatiesnelheid"
+
+msgid "Mini-icon size"
+msgstr "Grootte van minipictogrammen"
+
+msgid "Unfold from edge"
+msgstr "Uitvouwen vanaf de rand"
+
+msgid "Sheet"
+msgstr "Vel (Sheet)"
+
+msgid "Icon rotation"
+msgstr "Pictogramrotatie"
+
+msgid "Always use card stack"
+msgstr "Altijd een stapel kaarten gebruiken"
+
+
+msgid "Fade"
+msgstr "Vloeiend verschijnen"
+
+msgid "On hover"
+msgstr "Bij aanwijzen"
+
+msgid "No effect"
+msgstr "Geen effect"
+
+msgid "Rotate by 30°"
+msgstr "30° draaien"
+
+msgid "Fan out cards"
+msgstr "Kaarten uitwaaieren"
+
+msgid "Open folder icon size"
+msgstr "Pictogramgrootte in geopende map"
+
+msgid "Rotate on hover"
+msgstr "Draaien bij aanwijzen"
+
+msgid "Hover rotation angle"
+msgstr "Draaihoek bij aanwijzen"
+
+msgid "Hover animation speed"
+msgstr "Animatiesnelheid bij aanwijzen"
+
+msgid "Rotate and fan out cards"
+msgstr "Kaarten draaien en uitwaaieren"
+
+msgid "Background blur"
+msgstr "Achtergrondvervaging"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "Bij 0% blijft de achtergrond scherp. Transparantie wordt voor elke map afzonderlijk ingesteld."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "Transparantie beïnvloedt de achtergrondkleur; vervaging staat daar los van."
+
+msgid "Apply to all folders…"
+msgstr "Toepassen op alle mappen…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "Uiterlijk van andere mappen vervangen?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "Dit overschrijft de aangepaste uiterlijkinstellingen van alle andere mappen. Namen en toepassingen blijven ongewijzigd."
+
+msgid "Apply to all folders"
+msgstr "Toepassen op alle mappen"
+
+msgid "Cancel"
+msgstr "Annuleren"
+
+msgid "Existing folders"
+msgstr "Bestaande mappen"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "Kies opgeslagen groepen of mappen uit het GNOME-toepassingenoverzicht"
+
+msgid "No folders available"
+msgstr "Geen mappen beschikbaar"
+
+msgid "Pin to panel"
+msgstr "Vastmaken aan het paneel"
+
+msgid "Unpin from panel"
+msgstr "Losmaken van het paneel"
+
+msgid "Allow customizing each folder separately"
+msgstr "Het uiterlijk van elke map afzonderlijk laten aanpassen"
+
+msgid "Preview animation"
+msgstr "Animatievoorbeeld"
+
+msgid "Continuous rotation speed"
+msgstr "Snelheid van doorlopend draaien"
+
+msgid "Rotation speed on hover"
+msgstr "Draaisnelheid bij aanwijzen"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 schakelt de betreffende modus uit. Een niet-nul snelheid bij aanwijzen vervangt de snelheid van de doorlopende rotatie. Negatieve snelheden keren de draairichting om."

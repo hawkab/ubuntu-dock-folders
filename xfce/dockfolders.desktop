@@ -1,0 +1,8 @@
+[Xfce Panel]
+Type=X-XFCE-PanelPlugin
+Name=Dock folders
+Comment=Application folders, appearance, and animation
+Icon=io.github.hawkab.UbuntuDockFolders
+X-XFCE-Module=dockfolders
+X-XFCE-API=2.0
+X-XFCE-Internal=FALSE

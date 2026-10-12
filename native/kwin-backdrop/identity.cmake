@@ -1,0 +1,8 @@
+set(DOCK_BACKDROP_DIGEST "")
+foreach(source backdrop.cpp gaussian.cpp gaussian.h contrast.cpp contrast.h compat.h metadata.json)
+    file(SHA256 "${CMAKE_CURRENT_LIST_DIR}/${source}" hash)
+    string(APPEND DOCK_BACKDROP_DIGEST "${hash}")
+endforeach()
+string(SHA256 DOCK_BACKDROP_DIGEST "${DOCK_BACKDROP_DIGEST}")
+string(SUBSTRING "${DOCK_BACKDROP_DIGEST}" 0 12 DOCK_BACKDROP_DIGEST)
+set(DOCK_BACKDROP_PLUGIN "dockfoldersbackdrop_${DOCK_BACKDROP_DIGEST}")

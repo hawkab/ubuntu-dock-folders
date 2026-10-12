@@ -2,5 +2,7 @@
   "name": "ubuntu-dock-folders",
   "private": true,
   "type": "module",
-  "scripts": {"test": "node --test tests/model.test.js"}
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  }
 }

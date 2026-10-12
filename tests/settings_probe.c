@@ -14,6 +14,48 @@ extern GtkWidget *gtk_widget_get_root(GtkWidget *);
 extern const char *gtk_window_get_title(GObject *);
 extern gboolean gtk_window_get_modal(GObject *);
 extern void gtk_window_destroy(GObject *);
+extern const char *gtk_buildable_get_buildable_id(GObject *);
+extern GListModel *gtk_stack_get_pages(GObject *);
+
+static GObject *find_control(GtkWidget *widget, const char *id) {
+    if (g_strcmp0(gtk_buildable_get_buildable_id(widget), id) == 0) return widget;
+    for (GtkWidget *child = gtk_widget_get_first_child(widget); child;
+         child = gtk_widget_get_next_sibling(child)) {
+        GObject *result = find_control(child, id);
+        if (result) return result;
+    }
+    return NULL;
+}
+
+static void check_controls(GObject *window) {
+    g_autofree char *directory = g_build_filename(g_getenv("DOCK_GROUPS_DATA"), "schemas", NULL);
+    g_autoptr(GSettingsSchemaSource) source = g_settings_schema_source_new_from_directory(
+        directory, g_settings_schema_source_get_default(), FALSE, NULL);
+    g_autoptr(GSettingsSchema) schema = g_settings_schema_source_lookup(
+        source, "org.gnome.shell.extensions.dock-groups", FALSE);
+    g_autoptr(GSettings) settings = g_settings_new_full(schema, NULL, NULL);
+    const char *names[] = {"group_icon_size_scale", "mini_icon_size_scale", "popup_icon_size_scale"};
+    const char *keys[] = {"group-icon-size", "mini-icon-size", "popup-icon-size"};
+    const int values[] = {185, 275, 88};
+    for (guint i = 0; i < G_N_ELEMENTS(names); i++) {
+        GObject *control = find_control(window, names[i]);
+        g_assert_nonnull(control);
+        g_autoptr(GObject) adjustment = NULL;
+        g_object_get(control, "adjustment", &adjustment, NULL);
+        g_object_set(adjustment, "value", (double) values[i], NULL);
+        g_assert_cmpint(g_settings_get_int(settings, keys[i]), ==, values[i]);
+    }
+    GObject *animation = find_control(window, "animation_row");
+    g_assert_nonnull(animation);
+    g_object_set(animation, "selected", 7u, NULL);
+    g_autofree char *mode = g_settings_get_string(settings, "animation");
+    g_assert_cmpstr(mode, ==, "unfold");
+    GObject *stack = find_control(window, "settings_stack");
+    g_assert_nonnull(stack);
+    g_autoptr(GListModel) pages = gtk_stack_get_pages(stack);
+    g_assert_cmpuint(g_list_model_get_n_items(pages), ==, 3);
+    g_print("DOCK_FOLDERS_SETTINGS_CONTROLS_OK\n");
+}
 static GObject *find_row(GtkWidget *widget) {
     if (g_object_class_find_property(G_OBJECT_GET_CLASS(widget), "title")) {
         char *title = NULL;
@@ -61,6 +103,7 @@ static gboolean check_panel(gpointer panel) {
         exit(1);
     }
     openings++;
+    check_controls(window);
     if (mode && openings == 1) {
         gtk_window_destroy(window);
         g_object_unref(window);

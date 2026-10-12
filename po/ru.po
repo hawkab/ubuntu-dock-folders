@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ru\nLanguage: ru\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ru\nLanguage: ru\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #, python-format
 msgid "%s, percent"
@@ -208,3 +208,120 @@ msgstr "Открытые окна"
 #, python-format
 msgid "Could not open %s"
 msgstr "Не удалось открыть %s"
+
+msgid "Folder icon size"
+msgstr "Размер значка папки"
+
+
+msgid "No animation"
+msgstr "Без анимации"
+
+msgid "Magic Lamp"
+msgstr "Волшебная лампа"
+
+msgid "Fold"
+msgstr "Складывание"
+
+
+msgid "Animation speed"
+msgstr "Скорость анимации"
+
+msgid "Mini-icon size"
+msgstr "Размер мини-значков"
+
+msgid "Unfold from edge"
+msgstr "Разворачивание от края"
+
+msgid "Sheet"
+msgstr "Лист (Sheet)"
+
+msgid "Icon rotation"
+msgstr "Поворот значков"
+
+msgid "Always use card stack"
+msgstr "Всегда использовать стопку карточек"
+
+
+msgid "Fade"
+msgstr "Плавное появление"
+
+msgid "On hover"
+msgstr "При наведении"
+
+msgid "No effect"
+msgstr "Без эффекта"
+
+msgid "Rotate by 30°"
+msgstr "Поворот на 30°"
+
+msgid "Fan out cards"
+msgstr "Раскрытие карточек"
+
+msgid "Open folder icon size"
+msgstr "Размер значков в раскрытой папке"
+
+msgid "Rotate on hover"
+msgstr "Поворот при наведении"
+
+msgid "Hover rotation angle"
+msgstr "Угол поворота при наведении"
+
+msgid "Hover animation speed"
+msgstr "Скорость анимации при наведении"
+
+msgid "Rotate and fan out cards"
+msgstr "Поворот и раскрытие карточек"
+
+msgid "Background blur"
+msgstr "Размытие фона"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "0% — чёткий фон. Прозрачность настраивается отдельно для каждой папки."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "Прозрачность влияет на цвет фона; размытие настраивается отдельно."
+
+msgid "Apply to all folders…"
+msgstr "Применить ко всем папкам…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "Заменить оформление остальных папок?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "Индивидуальные настройки оформления всех остальных папок будут заменены. Названия и состав приложений сохранятся."
+
+msgid "Apply to all folders"
+msgstr "Применить ко всем папкам"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Existing folders"
+msgstr "Существующие папки"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "Выберите сохранённые группы или папки из сетки приложений GNOME"
+
+msgid "No folders available"
+msgstr "Нет доступных папок"
+
+msgid "Pin to panel"
+msgstr "Закрепить на панели"
+
+msgid "Unpin from panel"
+msgstr "Открепить от панели"
+
+msgid "Allow customizing each folder separately"
+msgstr "Разрешить настраивать оформление каждой папки в отдельности"
+
+msgid "Preview animation"
+msgstr "Предпросмотр анимации"
+
+msgid "Continuous rotation speed"
+msgstr "Скорость постоянного вращения"
+
+msgid "Rotation speed on hover"
+msgstr "Скорость вращения при наведении"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 отключает соответствующий режим. При наведении ненулевая скорость заменяет скорость постоянного вращения. Отрицательная скорость меняет направление вращения."

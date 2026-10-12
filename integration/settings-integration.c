@@ -7,21 +7,15 @@
 #include <dlfcn.h>
 #include <gio/gio.h>
 #include <libintl.h>
+#include "preferences-host.h"
 
 #define GETTEXT_DOMAIN "ubuntu-dock-folders"
 #define _(text) dgettext(GETTEXT_DOMAIN, text)
 
 typedef GObject GtkWidget;
-typedef GObject GtkBuilder;
 extern GObject *gtk_widget_get_template_child(GtkWidget *, GType, const char *);
 extern GtkWidget *gtk_widget_get_root(GtkWidget *);
 extern GtkWidget *gtk_image_new_from_icon_name(const char *);
-extern GtkBuilder *gtk_builder_new(void);
-extern guint gtk_builder_add_from_file(GtkBuilder *, const char *, GError **);
-extern void gtk_builder_set_translation_domain(GtkBuilder *, const char *);
-extern GObject *gtk_builder_get_object(GtkBuilder *, const char *);
-extern void gtk_window_set_transient_for(GObject *, GObject *);
-extern void gtk_window_set_destroy_with_parent(GObject *, gboolean);
 extern void gtk_window_present(GObject *);
 extern void gtk_window_destroy(GObject *);
 extern GtkWidget *adw_action_row_new(void);
@@ -29,8 +23,6 @@ extern void adw_preferences_row_set_title(GObject *, const char *);
 extern void adw_action_row_set_subtitle(GObject *, const char *);
 extern void adw_action_row_add_suffix(GObject *, GtkWidget *);
 extern void adw_preferences_group_add(GObject *, GtkWidget *);
-extern void adw_combo_row_set_selected(GObject *, guint);
-extern guint adw_combo_row_get_selected(GObject *);
 
 __attribute__((constructor)) static void scope_preload(void) {
     const char *original = g_getenv("DOCK_GROUPS_PRELOAD_ORIGINAL");
@@ -39,37 +31,15 @@ __attribute__((constructor)) static void scope_preload(void) {
     g_unsetenv("DOCK_GROUPS_PRELOAD_ORIGINAL");
 }
 
-static GSettings *settings_new(void) {
-    const char *data = g_getenv("DOCK_GROUPS_DATA");
-    if (!data) return NULL;
-    g_autofree char *directory = g_build_filename(data, "schemas", NULL);
-    g_autoptr(GError) error = NULL;
-    g_autoptr(GSettingsSchemaSource) source = g_settings_schema_source_new_from_directory(
-        directory, g_settings_schema_source_get_default(), FALSE, &error);
-    if (!source) { g_warning("Dock Groups: %s", error->message); return NULL; }
-    g_autoptr(GSettingsSchema) schema = g_settings_schema_source_lookup(
-        source, "org.gnome.shell.extensions.dock-groups", FALSE);
-    return schema ? g_settings_new_full(schema, NULL, NULL) : NULL;
-}
-
-static void animation_changed(GObject *row, GParamSpec *pspec, GSettings *settings) {
-    (void) pspec;
-    g_settings_set_string(settings, "animation", adw_combo_row_get_selected(row) ? "flow" : "scale");
-}
-
 static void weak_ref_free(gpointer data) {
     g_weak_ref_clear(data);
     g_free(data);
 }
 
-static void open_grid_folders(GObject *row, gpointer unused) {
-    (void) row;
-    (void) unused;
-    g_autofree char *filename = g_build_filename(g_getenv("DOCK_GROUPS_DATA"), "app", "grid_folders.py", NULL);
-    const char *argv[] = {"/usr/bin/python3", filename, NULL};
-    g_autoptr(GError) error = NULL;
-    g_autoptr(GSubprocess) process = g_subprocess_newv(argv, G_SUBPROCESS_FLAGS_NONE, &error);
-    if (!process) g_warning("Dock Groups: %s", error->message);
+static void window_unrealized(GObject *window, GObject *row) {
+    (void) window;
+    GWeakRef *ref = g_object_get_data(row, "dock-groups-window");
+    if (ref) g_weak_ref_set(ref, NULL);
 }
 
 static void open_preferences(GObject *row, gpointer unused) {
@@ -84,41 +54,16 @@ static void open_preferences(GObject *row, gpointer unused) {
         g_autoptr(GObject) existing = g_weak_ref_get(window_ref);
         if (existing) { gtk_window_present(existing); return; }
     }
-    g_autoptr(GSettings) settings = settings_new();
-    if (!settings) return;
-    GtkBuilder *builder = gtk_builder_new();
-    gtk_builder_set_translation_domain(builder, GETTEXT_DOMAIN);
-    g_autoptr(GError) error = NULL;
-    if (!gtk_builder_add_from_file(builder, filename, &error)) {
-        g_warning("Dock Groups: %s", error->message);
-        g_object_unref(builder); return;
-    }
-    GObject *window = gtk_builder_get_object(builder, "preferences_window");
-    const char *keys[] = {"enabled", "customization", "glass"};
-    const char *ids[] = {"enabled_row", "customization_row", "glass_row"};
-    for (guint i = 0; i < G_N_ELEMENTS(keys); i++)
-        g_settings_bind(settings, keys[i], gtk_builder_get_object(builder, ids[i]), "active", G_SETTINGS_BIND_DEFAULT);
-    g_settings_bind(settings, "enabled", gtk_builder_get_object(builder, "customization_row"), "sensitive", G_SETTINGS_BIND_GET);
-    g_settings_bind(settings, "enabled", gtk_builder_get_object(builder, "glass_row"), "sensitive", G_SETTINGS_BIND_GET);
-    GObject *grid = gtk_builder_get_object(builder, "grid_folders_row");
-    g_settings_bind(settings, "enabled", grid, "sensitive", G_SETTINGS_BIND_GET);
-    g_signal_connect(grid, "activated", G_CALLBACK(open_grid_folders), NULL);
-    GObject *animation = gtk_builder_get_object(builder, "animation_row");
-    g_settings_bind(settings, "font-size", gtk_builder_get_object(builder, "font_size_row"), "value", G_SETTINGS_BIND_DEFAULT);
-    g_autofree char *value = g_settings_get_string(settings, "animation");
-    adw_combo_row_set_selected(animation, g_str_equal(value, "flow") ? 1 : 0);
-    g_signal_connect(animation, "notify::selected", G_CALLBACK(animation_changed), settings);
-    g_object_set_data_full(window, "dock-groups-settings", g_object_ref(settings), g_object_unref);
-    gtk_window_set_transient_for(window, gtk_widget_get_root(row));
-    gtk_window_set_destroy_with_parent(window, TRUE);
+    g_autoptr(GObject) window = dock_preferences_open(gtk_widget_get_root(row), g_getenv("DOCK_GROUPS_DATA"));
+    if (!window) return;
     if (!window_ref) {
         window_ref = g_new0(GWeakRef, 1);
         g_weak_ref_init(window_ref, NULL);
         g_object_set_data_full(row, "dock-groups-window", window_ref, weak_ref_free);
     }
     g_weak_ref_set(window_ref, window);
+    g_signal_connect_object(window, "unrealize", G_CALLBACK(window_unrealized), row, 0);
     gtk_window_present(window);
-    g_object_unref(builder);
 }
 
 static gboolean open_preferences_idle(gpointer row) {

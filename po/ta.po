@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 msgid ""
-msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-04 00:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ta\nLanguage: ta\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr "Project-Id-Version: ubuntu-dock-folders 1.0.0\nReport-Msgid-Bugs-To: https://github.com/hawkab/ubuntu-dock-folders/issues\nPO-Revision-Date: 2026-10-10 12:00+0300\nLast-Translator: Ubuntu Dock Folders contributors\nLanguage-Team: ta\nLanguage: ta\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid "%s, percent"
@@ -208,3 +208,120 @@ msgstr "திறந்த சாளரங்கள்"
 #, python-format
 msgid "Could not open %s"
 msgstr "%s திறக்க முடியவில்லை"
+
+msgid "Folder icon size"
+msgstr "கோப்புறைச் சின்னத்தின் அளவு"
+
+
+msgid "No animation"
+msgstr "அனிமேஷன் இல்லாமல்"
+
+msgid "Magic Lamp"
+msgstr "மந்திர விளக்கு"
+
+msgid "Fold"
+msgstr "மடிப்பு"
+
+
+msgid "Animation speed"
+msgstr "அனிமேஷன் வேகம்"
+
+msgid "Mini-icon size"
+msgstr "சிறிய சின்னங்களின் அளவு"
+
+msgid "Unfold from edge"
+msgstr "விளிம்பிலிருந்து விரித்தல்"
+
+msgid "Sheet"
+msgstr "தாள் (Sheet)"
+
+msgid "Icon rotation"
+msgstr "சின்னங்களின் சுழற்சி"
+
+msgid "Always use card stack"
+msgstr "எப்போதும் அட்டை அடுக்கைப் பயன்படுத்து"
+
+
+msgid "Fade"
+msgstr "மெதுவாகத் தோன்றுதல்"
+
+msgid "On hover"
+msgstr "சுட்டியை வைக்கும்போது"
+
+msgid "No effect"
+msgstr "விளைவு இல்லை"
+
+msgid "Rotate by 30°"
+msgstr "30° சுழற்று"
+
+msgid "Fan out cards"
+msgstr "அட்டைகளை விரி"
+
+msgid "Open folder icon size"
+msgstr "திறந்த கோப்புறையில் சின்னங்களின் அளவு"
+
+msgid "Rotate on hover"
+msgstr "சுட்டியை வைத்தால் சுழற்று"
+
+msgid "Hover rotation angle"
+msgstr "சுட்டியை வைக்கும்போது சுழற்சி கோணம்"
+
+msgid "Hover animation speed"
+msgstr "சுட்டியை வைக்கும்போது அசைவூட்ட வேகம்"
+
+msgid "Rotate and fan out cards"
+msgstr "அட்டைகளைச் சுழற்றி விரிக்கவும்"
+
+msgid "Background blur"
+msgstr "பின்னணி மங்கல்"
+
+msgid "0% keeps the background sharp. Transparency is adjusted separately for each folder."
+msgstr "0% இல் பின்னணி தெளிவாக இருக்கும். ஒவ்வொரு கோப்புறையின் ஒளிபுகும் தன்மையும் தனித்தனியாக அமைக்கப்படும்."
+
+msgid "Transparency affects the background color; blur is independent."
+msgstr "ஒளிபுகும் தன்மை பின்னணி நிறத்தை மாற்றுகிறது; மங்கல் தனியாக அமைக்கப்படும்."
+
+msgid "Apply to all folders…"
+msgstr "எல்லா கோப்புறைகளுக்கும் பயன்படுத்து…"
+
+msgid "Replace other folders’ appearance?"
+msgstr "மற்ற கோப்புறைகளின் தோற்றத்தை மாற்றவா?"
+
+msgid "This will overwrite the custom appearance settings of all other folders. Names and applications will stay the same."
+msgstr "இது மற்ற எல்லா கோப்புறைகளின் தனிப்பயன் தோற்ற அமைப்புகளையும் மாற்றிவிடும். பெயர்களும் பயன்பாடுகளும் மாறாது."
+
+msgid "Apply to all folders"
+msgstr "எல்லா கோப்புறைகளுக்கும் பயன்படுத்து"
+
+msgid "Cancel"
+msgstr "ரத்து செய்"
+
+msgid "Existing folders"
+msgstr "ஏற்கனவே உள்ள கோப்புறைகள்"
+
+msgid "Choose saved groups or folders from GNOME's app grid"
+msgstr "சேமித்த குழுக்கள் அல்லது GNOME செயலிக் கட்டத்திலுள்ள கோப்புறைகளைத் தேர்ந்தெடுக்கவும்"
+
+msgid "No folders available"
+msgstr "கோப்புறைகள் எதுவும் இல்லை"
+
+msgid "Pin to panel"
+msgstr "பலகத்தில் பொருத்து"
+
+msgid "Unpin from panel"
+msgstr "பலகத்திலிருந்து அகற்று"
+
+msgid "Allow customizing each folder separately"
+msgstr "ஒவ்வொரு கோப்புறையின் தோற்றத்தையும் தனித்தனியாக மாற்ற அனுமதி"
+
+msgid "Preview animation"
+msgstr "அசைவூட்ட முன்னோட்டம்"
+
+msgid "Continuous rotation speed"
+msgstr "தொடர் சுழற்சி வேகம்"
+
+msgid "Rotation speed on hover"
+msgstr "சுட்டியை வைத்திருக்கும்போது சுழற்சி வேகம்"
+
+msgid "0 disables each mode. A nonzero hover speed replaces continuous speed while hovered. Negative speeds reverse rotation."
+msgstr "0 அந்தந்த பயன்முறையை முடக்கும். சுட்டி மேலிருக்கும்போது பூஜ்ஜியமல்லாத வேகம் தொடர்ச்சியான சுழற்சி வேகத்திற்குப் பதிலாகப் பயன்படுத்தப்படும். எதிர்மறை வேகம் சுழற்சியின் திசையை மாற்றும்."

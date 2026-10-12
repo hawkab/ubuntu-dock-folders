@@ -9,8 +9,11 @@ import shutil
 import subprocess
 import tempfile
 import unittest
+import sys
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "scripts"))
+from session_runner import run_isolated
 
 
 class SettingsIntegrationTests(unittest.TestCase):
@@ -49,19 +52,21 @@ class SettingsIntegrationTests(unittest.TestCase):
             command = ["gnome-control-center", "ubuntu"]
             if mode == "cold":
                 command.append("dock-groups")
-            result = subprocess.run(
-                ["dbus-run-session", "--", "/bin/sh", "-c",
+            result = run_isolated(
+                ["/bin/sh", "-c",
                  'export DBUS_SYSTEM_BUS_ADDRESS="$DBUS_SESSION_BUS_ADDRESS"; exec "$@"',
                  "settings-test", "env",
                  f"LD_PRELOAD={probe}:{ROOT / 'build/integration/settings-integration.so'}",
                  *command],
-                env=env, capture_output=True, text=True, timeout=20,
+                env, 20, capture=True,
             )
-            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(result.returncode, 0, result.stdout)
             self.assertIn("DOCK_FOLDERS_SETTINGS_REMOVE_OK", result.stdout)
+            self.assertIn("DOCK_FOLDERS_SETTINGS_CONTROLS_OK", result.stdout)
+            self.assertNotIn("g_settings_bind: assertion", result.stdout)
             if mode:
                 self.assertIn("DOCK_FOLDERS_SETTINGS_LINK_OK", result.stdout)
-                self.assertNotIn("Invalid subpage", result.stderr)
+                self.assertNotIn("Invalid subpage", result.stdout)
             self.assertFalse((extension / "preferences.ui").exists())
 
 

@@ -1,0 +1,10 @@
+{
+    "KPlugin": {
+        "Name": "Dock folder background blur",
+        "Description": "Adjustable blur behind Dock Folders",
+        "Category": "Appearance",
+        "License": "GPL-3.0-or-later",
+        "Authors": [{"Name": "Grigory Olshansky"}],
+        "EnabledByDefault": false
+    }
+}

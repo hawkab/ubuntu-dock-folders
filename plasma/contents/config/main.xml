@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='utf-8'?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0 http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+  <kcfgfile name="" />
+  <group name="General">
+    <entry name="placementBefore" type="Int">
+      <default>-1</default>
+    </entry>
+    <entry name="placementWidget" type="Int">
+      <default>0</default>
+    </entry>
+    <entry name="glass" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="enabled" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="customization" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="blurStrength" type="Int">
+      <default>89</default>
+      <min>-1</min>
+      <max>100</max>
+    </entry>
+    <entry name="animation" type="Int">
+      <default>1</default>
+      <min>0</min>
+      <max>10</max>
+    </entry>
+    <entry name="animationSpeed" type="Int">
+      <default>180</default>
+      <min>50</min>
+      <max>200</max>
+    </entry>
+    <entry name="groupIconSize" type="Int">
+      <default>120</default>
+      <min>80</min>
+      <max>200</max>
+    </entry>
+    <entry name="groupMiniIconSize" type="Int">
+      <default>230</default>
+      <min>80</min>
+      <max>300</max>
+    </entry>
+    <entry name="popupIconSize" type="Int">
+      <default>56</default>
+      <min>32</min>
+      <max>96</max>
+    </entry>
+    <entry name="fontSize" type="Double">
+      <default>13</default>
+      <min>8</min>
+      <max>24</max>
+    </entry>
+    <entry name="hoverEffect" type="Int">
+      <default>0</default>
+      <min>0</min>
+      <max>3</max>
+    </entry>
+    <entry name="hoverAngle" type="Int">
+      <default>45</default>
+      <min>0</min>
+      <max>180</max>
+    </entry>
+    <entry name="hoverSpeed" type="Int">
+      <default>50</default>
+      <min>-999</min>
+      <max>999</max>
+    </entry>
+    <entry name="orbitSpeed" type="Int">
+      <default>0</default>
+      <min>-999</min>
+      <max>999</max>
+    </entry>
+    <entry name="hoverOrbitSpeed" type="Int">
+      <default>0</default>
+      <min>-999</min>
+      <max>999</max>
+    </entry>
+  </group>
+</kcfg>

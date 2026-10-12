@@ -1,0 +1,16 @@
+{
+  "KPackageStructure": "Plasma/Applet",
+  "KPlugin": {
+    "Id": "io.github.hawkab.DockFolders",
+    "Name": "Dock folders",
+    "Description": "Application folders, appearance, and animation",
+    "Icon": "folder-applications",
+    "Category": "Windows and Tasks",
+    "Version": "1.2.0",
+    "License": "GPL-3.0-or-later",
+    "Authors": [{"Name": "Grigory Olshansky", "Name[ru]": "Григорий Ольшанский", "Email": "hawkab@users.noreply.github.com"}],
+    "Website": "https://github.com/hawkab/ubuntu-dock-folders"
+  },
+  "X-Plasma-API-Minimum-Version": "6.6",
+  "X-Plasma-Provides": ["org.kde.plasma.multitasking"]
+}
