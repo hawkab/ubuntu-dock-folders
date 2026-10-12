@@ -8,6 +8,7 @@ import os
 import re
 import time
 from pathlib import Path
+from probe_log import records
 
 PROBE = '''
     property Window contrastBackground: Window {
@@ -78,8 +79,7 @@ def verify(output, destination):
     phases, counters = {}, {}
     deadline = time.monotonic() + 23
     while time.monotonic() < deadline:
-        for payload in re.findall(r"CONTRAST_PROBE (\{.*\})", Path(output.name).read_text()):
-            value = json.loads(payload)
+        for value in records(output.name, "CONTRAST_PROBE"):
             phase = value["phase"]
             if phase in phases: continue
             phases[phase] = value

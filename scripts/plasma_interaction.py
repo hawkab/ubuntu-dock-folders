@@ -8,6 +8,7 @@ import json
 import os
 import time
 from pathlib import Path
+from probe_log import records
 
 def interaction(output, connection, settings):
     import re
@@ -39,8 +40,8 @@ def interaction(output, connection, settings):
 
     def points():
         output.flush()
-        found = re.findall(r"NATIVE_GEOMETRY (\{.*\})", Path(output.name).read_text())
-        return json.loads(found[-1]) if found else {}
+        found = records(output.name, "NATIVE_GEOMETRY")
+        return found[-1] if found else {}
 
     def motion(point):
         xtest.XTestFakeMotionEvent(display, -1, round(point["x"]), round(point["y"]), 0)

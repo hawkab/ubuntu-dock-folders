@@ -123,8 +123,9 @@ def main():
             ImageGrab.grab(xdisplay=os.environ["DISPLAY"]).save(ROOT.parent / "parity-xfce-native-panel.png")
             check_installed(settings, wait_for)
             (apps / "test.files.desktop").unlink()
-            wait_for(lambda: settings.get_string("groups") == "{}", "Removed app was not reconciled")
-            assert settings.get_strv("xfce-favorites") == ["test.terminal.desktop"]
+            wait_for(lambda: settings.get_string("groups") == "{}" and
+                     settings.get_strv("xfce-favorites") == ["test.terminal.desktop"],
+                     "Removed app was not reconciled in groups and favorites")
             before = settings.get_string("groups")
             def cpu_ticks():
                 values = Path(f"/proc/{pid[0]}/stat").read_text().split(")", 1)[1].split()

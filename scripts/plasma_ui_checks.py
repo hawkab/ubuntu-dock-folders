@@ -3,11 +3,10 @@
 
 """Check popup focus, opacity, animation geometry, and panel icon sizing."""
 
-import json
 import os
-import re
 import time
 from pathlib import Path
+from probe_log import records
 
 PROBE = '''
     property int probeTick: 0
@@ -208,8 +207,7 @@ def verify(output, destination):
     deadline = time.monotonic() + 48
     while time.monotonic() < deadline:
         output.flush()
-        for payload in re.findall(r"UI_PROBE (\{.*\})", Path(output.name).read_text()):
-            value = json.loads(payload)
+        for value in records(output.name, "UI_PROBE"):
             phase = value["phase"]
             if phase in phases:
                 continue

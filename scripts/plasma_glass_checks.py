@@ -7,6 +7,7 @@ import json
 import os
 import time
 from pathlib import Path
+from probe_log import records
 
 PROBE = '''
     property Window backgroundProbe: Window {
@@ -169,12 +170,7 @@ def verify(output, destination):
     destination = Path(destination)
     backend = os.environ["DOCK_FOLDERS_TEST_PLASMA_BACKEND"]
     while time.monotonic() < deadline:
-        for line in Path(output.name).read_text().splitlines(keepends=True):
-            if not line.endswith("\n"):
-                continue
-            if "GLASS_PROBE " not in line:
-                continue
-            value = json.loads(line.split("GLASS_PROBE ", 1)[1])
+        for value in records(output.name, "GLASS_PROBE"):
             phase = value["phase"]
             if phase in phases:
                 continue
