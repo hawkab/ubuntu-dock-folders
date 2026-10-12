@@ -7,6 +7,7 @@ import json
 import os
 import time
 from PIL import Image, ImageChops, ImageGrab
+from gi.repository import Gio
 from xfce_pointer import Pointer
 
 COLORS = {"terminal": (245, 15, 25), "files": (15, 235, 35),
@@ -84,8 +85,11 @@ def check_installed(settings, wait, pointer=None, screenshot=None):
     finally:
         pointer.button(False)
         pointer.close()
-        settings.set_string("groups", groups)
-        settings.set_strv("xfce-favorites", favorites)
+        writer = Gio.Settings.new_full(settings.props.settings_schema, settings.props.backend, settings.props.path)
+        writer.delay()
+        writer.set_string("groups", groups)
+        writer.set_strv("xfce-favorites", favorites)
         for key, value in sizes.items():
-            settings.set_int(key, value)
+            writer.set_int(key, value)
+        writer.apply()
         time.sleep(.5)

@@ -35,7 +35,7 @@ def wait_for(check, message, seconds=8):
         if result:
             return result
         time.sleep(.1)
-    raise AssertionError(message)
+    raise AssertionError(message() if callable(message) else message)
 
 
 def controllers():
@@ -125,7 +125,8 @@ def main():
             (apps / "test.files.desktop").unlink()
             wait_for(lambda: settings.get_string("groups") == "{}" and
                      settings.get_strv("xfce-favorites") == ["test.terminal.desktop"],
-                     "Removed app was not reconciled in groups and favorites")
+                     lambda: "Removed app was not reconciled: " + settings.get_string("groups") +
+                     ", favorites=" + str(settings.get_strv("xfce-favorites")))
             before = settings.get_string("groups")
             def cpu_ticks():
                 values = Path(f"/proc/{pid[0]}/stat").read_text().split(")", 1)[1].split()
