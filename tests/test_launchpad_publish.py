@@ -9,6 +9,7 @@ import os
 import subprocess
 import sys
 import tempfile
+import urllib.error
 import unittest
 from pathlib import Path
 from contextlib import contextmanager
@@ -23,6 +24,47 @@ import launchpad_publish
 
 
 class LaunchpadPublishTests(unittest.TestCase):
+    def test_api_retries_transient_failures(self):
+        url = "https://example.invalid/source"
+        response = MagicMock()
+        response.__enter__.return_value = io.BytesIO(b'{"entries": []}')
+        failures = [TimeoutError("read timed out"),
+                    urllib.error.HTTPError(url, 503, "Unavailable", {}, None)]
+        with (
+            patch.object(launchpad_publish.urllib.request, "urlopen",
+                         side_effect=[*failures, response]) as request,
+            patch.object(launchpad_publish.time, "sleep") as sleep,
+        ):
+            self.assertEqual(launchpad_publish.launchpad_json(url), {"entries": []})
+        self.assertEqual(request.call_count, 3)
+        self.assertEqual([call.args[0] for call in sleep.call_args_list], [5, 10])
+
+    def test_api_network_retries_are_bounded(self):
+        for error in (TimeoutError("read timed out"), urllib.error.URLError("connection reset")):
+            with (
+                self.subTest(error=error),
+                patch.object(launchpad_publish.urllib.request, "urlopen", side_effect=error) as request,
+                patch.object(launchpad_publish.time, "sleep") as sleep,
+            ):
+                with self.assertRaises(type(error)):
+                    launchpad_publish.launchpad_json("https://example.invalid/source")
+            self.assertEqual(request.call_count, 3)
+            self.assertEqual(sleep.call_count, 2)
+
+    def test_api_permanent_http_errors_fail_without_retry(self):
+        for status in (400, 401, 403, 404):
+            error = urllib.error.HTTPError("https://example.invalid/source", status, "Rejected", {}, None)
+            self.addCleanup(error.close)
+            with (
+                self.subTest(status=status),
+                patch.object(launchpad_publish.urllib.request, "urlopen", side_effect=error) as request,
+                patch.object(launchpad_publish.time, "sleep") as sleep,
+            ):
+                with self.assertRaises(urllib.error.HTTPError):
+                    launchpad_publish.launchpad_json(error.url)
+            request.assert_called_once()
+            sleep.assert_not_called()
+
     def test_resume_uploads_only_the_missing_series(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

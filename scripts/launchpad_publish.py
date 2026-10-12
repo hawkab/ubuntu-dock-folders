@@ -9,6 +9,7 @@ import re
 import shutil
 import subprocess
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -19,11 +20,23 @@ import release_context as context
 from release_artifacts import source_uploads
 
 def launchpad_json(url):
+    """Read Launchpad JSON with bounded retries for temporary network failures."""
     request = urllib.request.Request(
         url, headers={"Cache-Control": "no-cache", "Pragma": "no-cache"}
     )
-    with urllib.request.urlopen(request, timeout=30) as response:
-        return json.load(response)
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                return json.load(response)
+        except urllib.error.HTTPError as error:
+            if error.code not in {429, 500, 502, 503, 504} or attempt == 2:
+                raise
+            error.close()
+        except (urllib.error.URLError, TimeoutError, ConnectionError):
+            if attempt == 2:
+                raise
+        print(f"Retrying Launchpad API request ({attempt + 2}/3)", flush=True)
+        time.sleep(5 * (attempt + 1))
 
 
 def launchpad_sources(settings, version, status=None):
