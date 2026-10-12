@@ -8,7 +8,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 from xml.etree import ElementTree as ET
 from gi.repository import GLib
 
@@ -18,6 +18,22 @@ import xfce_manage
 
 
 class XfceInstallTests(unittest.TestCase):
+    def test_absent_panel_is_not_started_during_restart(self):
+        with patch.object(xfce_manage, "panel_running", return_value=False), \
+                patch.object(xfce_manage.Gio, "bus_get_sync") as connect:
+            self.assertFalse(xfce_manage.restart_panel())
+            connect.assert_not_called()
+
+    def test_restart_targets_the_existing_panel_without_activation(self):
+        bus = Mock()
+        with patch.object(xfce_manage, "panel_running", return_value=True), \
+                patch.object(xfce_manage.Gio, "bus_get_sync", return_value=bus):
+            self.assertTrue(xfce_manage.restart_panel())
+        args = bus.call_sync.call_args.args
+        self.assertEqual(args[:4], ("org.xfce.Panel", "/org/xfce/Panel", "org.xfce.Panel", "Terminate"))
+        self.assertEqual(args[4].unpack(), (True,))
+        self.assertEqual(args[6], xfce_manage.Gio.DBusCallFlags.NO_AUTO_START)
+
     def test_wayland_reuses_existing_panel_slot_without_changing_settings(self):
         with patch.dict(xfce_manage.os.environ, {"XDG_SESSION_TYPE": "wayland"}), \
                 patch.object(xfce_manage, "properties", return_value={

@@ -107,6 +107,7 @@ def main():
                 except GLib.Error:
                     return False
             wait_for(available, "Xfconf did not start")
+            wait_for(xfce_manage.panel_running, "Xfce panel did not register its D-Bus service")
             if SOURCE:
                 xfce_manage.enable(SHARED)
             else:

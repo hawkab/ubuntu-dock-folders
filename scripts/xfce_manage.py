@@ -4,7 +4,6 @@
 """Activate the Xfce panel plugin and restore only the tasklist it replaced."""
 
 import json
-import subprocess
 import argparse
 import os
 from xml.etree import ElementTree as ET
@@ -16,6 +15,29 @@ from backup import DATA, backup, read_settings
 STATE = DATA / "xfce-panel.json"
 BUS = "org.xfce.Xfconf"
 PATH = "/org/xfce/Xfconf"
+PANEL_BUS = "org.xfce.Panel"
+
+
+def panel_running():
+    return Gio.bus_get_sync(Gio.BusType.SESSION, None).call_sync(
+        "org.freedesktop.DBus", "/org/freedesktop/DBus", "org.freedesktop.DBus", "NameHasOwner",
+        GLib.Variant("(s)", (PANEL_BUS,)), None, Gio.DBusCallFlags.NONE, 3000, None).unpack()[0]
+
+
+def restart_panel():
+    """Restart a running panel through D-Bus; return False when it is absent."""
+    if not panel_running():
+        return False
+    try:
+        Gio.bus_get_sync(Gio.BusType.SESSION, None).call_sync(
+            PANEL_BUS, "/org/xfce/Panel", PANEL_BUS, "Terminate", GLib.Variant("(b)", (True,)),
+            None, Gio.DBusCallFlags.NO_AUTO_START, 3000, None)
+    except GLib.Error as error:
+        if Gio.DBusError.get_remote_error(error) in (
+                "org.freedesktop.DBus.Error.ServiceUnknown", "org.freedesktop.DBus.Error.NameHasNoOwner"):
+            return False
+        raise
+    return True
 
 
 def call(method, parameters):
@@ -96,7 +118,7 @@ def enable(extension, backup_directory=None, panel_id=None):
         wanted.append(plugin)
     set_property(f"/plugins/plugin-{plugin}", GLib.Variant("s", "dockfolders"))
     set_property(key, GLib.Variant("av", [GLib.Variant("i", item) for item in wanted]))
-    subprocess.run(["xfce4-panel", "--restart"], check=True, timeout=15)
+    restart_panel()
     print(f"Enabled Dock folders in Xfce. Backup: {saved}")
 
 
@@ -136,7 +158,7 @@ def disable(restart=True):
         call("ResetProperty", GLib.Variant("(ssb)", ("xfce4-panel", f"/plugins/plugin-{plugin}", True)))
     STATE.unlink(missing_ok=True)
     if restart and owned:
-        subprocess.run(["xfce4-panel", "--restart"], check=True, timeout=15)
+        restart_panel()
     print("Removed Dock folders from the Xfce panel. Folder settings were retained.")
 
 
