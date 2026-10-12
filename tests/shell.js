@@ -162,7 +162,12 @@ export async function run() {
         await Scripting.sleep(400);
         record = [...folders._icons.values()].find(item => item.group.key === key && item.icon.mapped);
         assert(folders._openGroup(key), 'Could not open folder');
-        await until(() => record.menu.isOpen, `${animation} folder did not open after layout`);
+        await until(() => {
+            record = [...folders._icons.values()].find(item => item.group.key === key && item.icon.mapped);
+            return record?.menu.isOpen;
+        }, () => `${animation} folder did not open after layout: ` +
+            `open=${record?.menu.isOpen}, pending=${Boolean(record?.menu._pendingOpen)}, ` +
+            `destroyed=${record?.menu._destroying}, mapped=${record?.icon.mapped}`);
         assert(animation === 'none' ? !record.menu._timeline : record.menu._timeline,
             `${animation} animation mode was ignored: selected=${folders._settings.get_string('animation')}, ` +
             `enabled=${St.Settings.get().enable_animations}, destroyed=${record.menu._destroying}, open=${record.menu.isOpen}`);
