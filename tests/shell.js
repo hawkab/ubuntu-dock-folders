@@ -15,6 +15,7 @@ import {checkOrbitMotion} from './orbit_motion.js';
 import {checkFolderDetails} from './folder_details.js';
 import {checkWindowBehavior} from './window_behavior.js';
 import {checkGlassAllocation} from './glass_allocation.js';
+import {checkDragLifecycle} from './drag_lifecycle.js';
 
 function assert(value, message) {
     if (!value)
@@ -104,6 +105,12 @@ export async function run() {
     let record = [...folders._icons.values()].find(item => item.group.key === key && item.icon.mapped);
     assert(record.group.apps.length === 2, 'Grouping lost an application');
     assert(record.tiles.size === 2, 'Folder tiles were not rendered');
+    if (GLib.getenv('DOCK_FOLDERS_TEST_DRAG_ONLY')) {
+        await checkDragLifecycle(folders, third, until, assert);
+        GLib.Source.remove(keepAlive);
+        print(`DOCK_FOLDERS_SHELL_OK ${GLib.getenv('DOCK_FOLDERS_TEST_BACKEND')} drag`);
+        return;
+    }
     await checkFolderDetails(folders, record, until, assert);
     await checkFolderSwitch(folders, key, third, until, assert);
     record = [...folders._icons.values()].find(item => item.group.key === key && item.icon.mapped);
@@ -175,9 +182,9 @@ export async function run() {
             assert(record.menu._flowEffect, 'Genie deformation effect is missing');
         await until(() => {
             record = [...folders._icons.values()].find(item => item.group.key === key && item.icon.mapped);
-            return record?.menu.isOpen && !record.menu._timeline && record.menu.actor.mapped;
+            return record?.menu.isOpen && !record.menu._timeline && record.menu.actor.mapped &&
+                folders._animation._animationOrigin(record.menu);
         }, () => `${animation} animation did not complete: open=${record?.menu.isOpen}, mapped=${record?.menu.actor.mapped}, timeline=${record?.menu._timeline?.get_progress()}, opacity=${record?.menu.actor.opacity}, destroyed=${record?.menu._destroying}`);
-        assert(folders._animation._animationOrigin(record.menu), 'Animation has no valid dock origin');
         assert(record.menu.isOpen && record.menu.actor.mapped, 'Folder popup did not map');
         await until(() => record.menu._glassClone, 'Open folder did not restore its backdrop blur');
         assert(record.menu._glass.get_effect('dock-group-glass'), 'Glass blur is missing');
@@ -277,6 +284,8 @@ export async function run() {
     folders._openGroup(key);
     await Scripting.sleep(100);
 
+    await checkDragLifecycle(folders, third, until, assert);
+    record = [...folders._icons.values()].find(item => item.group.key === key && item.icon.mapped);
     const wmClass = await checkWindowBehavior({folders, key, helper, first, second, third, until, assert, record});
     await checkGlassAllocation(folders, key, third, until, assert);
     await checkPreferencesWindows(folders, extension.path, until, assert);

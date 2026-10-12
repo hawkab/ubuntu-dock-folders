@@ -25,6 +25,7 @@ def main():
     parser.add_argument("--settings-backend", choices=("keyfile", "dconf"), default="keyfile")
     parser.add_argument("--extension-dir", type=Path, help="Check an installed extension in the isolated session")
     parser.add_argument("--preferences-only", action="store_true", help="Check native settings windows and their dock tooltip")
+    parser.add_argument("--drag-only", action="store_true", help="Check native extraction, regrouping and drag cleanup")
     options = parser.parse_args()
     client = options.client_backend or options.backend
     help_text = subprocess.check_output(["gnome-shell", "--help"], text=True)
@@ -86,6 +87,8 @@ def main():
                    DOCK_FOLDERS_TEST_BACKEND=f"{options.backend}/{client}")
         if options.preferences_only:
             env["DOCK_FOLDERS_TEST_PREFERENCES_ONLY"] = "1"
+        if options.drag_only:
+            env["DOCK_FOLDERS_TEST_DRAG_ONLY"] = "1"
         env.pop("MUTTER_WM_CLASS_FILTER", None)
         for name in ("WAYLAND_DISPLAY", "DBUS_SESSION_BUS_ADDRESS"):
             env.pop(name, None)
@@ -110,7 +113,8 @@ def main():
         result.check_returncode()
         failures = ("Invalid value 'undefined' for property gicon", "Actor not in scroll view",
                     "clutter_actor_remove_child", "clutter_actor_set_allocation_internal",
-                    "cogl_framebuffer_set_viewport", "No signal connection")
+                    "cogl_framebuffer_set_viewport", "No signal connection", "has been already disposed",
+                    "Exception in callback for signal: drag-end")
         if any(message in result.stdout for message in failures):
             raise RuntimeError("The compositor reported an invalid icon or detached dock actor")
         if "DOCK_FOLDERS_SHELL_OK " not in result.stdout:

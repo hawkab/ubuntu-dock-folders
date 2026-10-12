@@ -38,6 +38,10 @@ export default class DockGroups extends FolderRenderer {
         this._feedback = new FolderFeedback(this);
         this._commands = new FolderCommands(this, {
             isAvailable: id => GioUnix.DesktopAppInfo.new(id) !== null,
+            resolveEntry: id => {
+                const info = GioUnix.DesktopAppInfo.new(id);
+                return info ? {desktop:id,label:info.get_name()} : null;
+            },
             makeSuffix: () => GLib.uuid_string_random().replaceAll('-', '').slice(0, 12),
             newFolderName: _('New Folder'), feedback: this._feedback,
             favorites: () => global.settings.get_strv('favorite-apps'),

@@ -8,7 +8,7 @@ import * as DND from 'resource:///org/gnome/shell/ui/dnd.js';
 
 /** Translate Shell drag events into folder commands. */
 export class DockDragDrop {
-    constructor(host) { this.host = host; }
+    constructor(host) { this.host = host; this.extractLayerSignal = 0; }
 
     _sourceEntry(source) {
         const host = this.host;
@@ -17,7 +17,7 @@ export class DockDragDrop {
         const id = source.app.get_id();
         if (id.startsWith('local.groups.'))
             return null;
-        return host._entryIds.get(id) ?? {desktop: id, label: source.app.get_name()};
+        return source.groupEntry ?? host._entryIds.get(id) ?? {desktop: id, label: source.app.get_name()};
     }
 
     _decorateDrop(icon, group, dash) {
@@ -65,6 +65,8 @@ export class DockDragDrop {
 
     _makeTileDraggable(button, entry, menu, dash) {
         const host = this.host;
+        let alive = true;
+        button.connect('destroy', () => { alive = false; });
         button.app = host._appSystem.lookup_app(entry.desktop);
         button.groupEntry = entry;
         button._delegate = button;
@@ -97,13 +99,13 @@ export class DockDragDrop {
         });
         draggable.connect('drag-end', () => {
             host._dragging = false;
-            button.opacity = 255;
+            if (alive) button.opacity = 255;
             host._dnd._removeExtractTargets();
             host._dnd._clearDropHighlight();
             Main.overview.endItemDrag(button);
-            if (host._configTimer)
+            if (!alive || host._configTimer)
                 return;
-            for (const child of button.get_parent().get_children())
+            for (const child of button.get_parent()?.get_children() ?? [])
                 child.remove_style_class_name('dock-group-drop-target');
         });
         draggable.connect('drag-cancelled', () => host._dnd._removeExtractTargets());
@@ -113,7 +115,9 @@ export class DockDragDrop {
         const host = this.host;
         host._dnd._removeExtractTargets();
         const layer = menu.actor.get_parent();
+        if (!layer) return;
         const dockPoint = (x, y) => {
+            if (host._extractLayer !== layer) return null;
             const [lx, ly] = layer.get_transformed_position();
             const [dx, dy] = dash.get_transformed_position();
             const [width, height] = dash.get_transformed_size();
@@ -133,6 +137,10 @@ export class DockDragDrop {
             },
         };
         host._extractLayer = layer;
+        this.extractLayerSignal = layer.connect('destroy', () => {
+            host._extractLayer = null;
+            this.extractLayerSignal = 0;
+        });
         for (const monitor of Main.layoutManager.monitors) {
             const rect = {x: monitor.x, y: monitor.y, width: monitor.width, height: monitor.height};
             const reserve = dash.iconSize + 32;
@@ -141,6 +149,9 @@ export class DockDragDrop {
             else if (dash._position === St.Side.TOP) { rect.y += reserve; rect.height -= reserve; }
             else rect.height -= reserve;
             const actor = new St.Widget({...rect, reactive: true});
+            actor.connect('destroy', () => {
+                host._extractTargets = host._extractTargets.filter(target => target !== actor);
+            });
             actor._delegate = {
                 handleDragOver: source => source?.groupEntry ? DND.DragMotionResult.MOVE_DROP : DND.DragMotionResult.CONTINUE,
                 acceptDrop: source => {
@@ -158,11 +169,14 @@ export class DockDragDrop {
 
     _removeExtractTargets() {
         const host = this.host;
-        if (host._extractLayer)
+        if (host._extractLayer) {
+            host._extractLayer.disconnect(this.extractLayerSignal);
             delete host._extractLayer._delegate;
+        }
+        this.extractLayerSignal = 0;
         host._extractLayer = null;
-        for (const actor of host._extractTargets ?? [])
-            actor.destroy();
+        const targets = host._extractTargets ?? [];
         host._extractTargets = [];
+        for (const actor of targets) actor.destroy();
     }
 }

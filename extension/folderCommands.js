@@ -10,11 +10,14 @@ export class FolderCommands {
     _execute(command, supplied = {}) {
         const host = this.host, groups = JSON.parse(host._settings.get_string('groups'));
         const favorites = this.ports.favorites();
-        const entries = Object.assign({}, supplied);
+        const entries = Object.fromEntries(Object.entries(supplied).filter(([id]) => this.ports.isAvailable(id)));
         for (const group of Object.values(groups)) for (const entry of group.apps)
             if (this.ports.isAvailable(entry.desktop)) entries[entry.desktop] = entry;
         for (const id of referencedDesktops({groups,favorites,undo:host._undo || null},command))
-            if (typeof id === 'string' && !id.startsWith('local.groups.') && this.ports.isAvailable(id)) entries[id] ||= {desktop:id,label:id};
+            if (!entries[id] && typeof id === 'string' && !id.startsWith('local.groups.')) {
+                const entry = this.ports.resolveEntry(id);
+                if (entry) entries[id] = entry;
+            }
         const result = transact({state:{groups,favorites,undo:host._undo || null},command,entries,token:this.ports.makeSuffix()});
         host._undo = result.state.undo;
         if (!result.changed) return false;
@@ -34,7 +37,7 @@ export class FolderCommands {
 
     _moveEntry(entry, key, before = null) {
         if (entry.group?.key !== key) this.host._view._closeMenus();
-        this._execute({operation:'move',desktop:entry.desktop,key,before});
+        this._execute({operation:'move',desktop:entry.desktop,key,before}, {[entry.desktop]:entry});
     }
 
     _createGroup(source, target) {

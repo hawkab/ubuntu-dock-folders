@@ -1,7 +1,7 @@
 Source: ubuntu-dock-folders
 Section: gnome
 Priority: optional
-Maintainer: Grigory Olshansky <hwakaba@ya.ru>
+Maintainer: Grigory Olshansky <14372308+hawkab@users.noreply.github.com>
 Build-Depends: debhelper-compat (= 13), fakeroot, gettext, gcc, pkg-config, apt-utils,
  libglib2.0-dev, gnome-shell (>= 46), gnome-shell (<< 47) | gnome-shell (>= 50), gnome-shell (<< 51),
  gnome-control-center, gnome-shell-extension-ubuntu-dock, dconf-cli, libgl1-mesa-dri, xwayland,
