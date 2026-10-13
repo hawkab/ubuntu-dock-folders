@@ -26,6 +26,8 @@ def main():
     parser.add_argument("--extension-dir", type=Path, help="Check an installed extension in the isolated session")
     parser.add_argument("--preferences-only", action="store_true", help="Check native settings windows and their dock tooltip")
     parser.add_argument("--drag-only", action="store_true", help="Check native extraction, regrouping and drag cleanup")
+    parser.add_argument("--dock-position", choices=("LEFT", "RIGHT", "TOP", "BOTTOM"))
+    parser.add_argument("--drag-apps", nargs=2, metavar=("SOURCE", "TARGET"), help="Installed desktop IDs for the drag check")
     options = parser.parse_args()
     client = options.client_backend or options.backend
     help_text = subprocess.check_output(["gnome-shell", "--help"], text=True)
@@ -76,6 +78,7 @@ def main():
             f"groups='{json.dumps(groups)}'\n"
             "[org/gnome/shell/extensions/dash-to-dock]\n"
             "dock-fixed=true\nautohide=false\nintellihide=false\nshow-trash=false\nshow-mounts=false\n"
+            + (f"dock-position='{options.dock_position}'\n" if options.dock_position else "")
         )
         env = dict(os.environ, HOME=str(home), XDG_RUNTIME_DIR=str(runtime),
                    PATH=str(ROOT / "build/package/usr/bin") + os.pathsep + os.environ.get("PATH", ""),
@@ -89,6 +92,8 @@ def main():
             env["DOCK_FOLDERS_TEST_PREFERENCES_ONLY"] = "1"
         if options.drag_only:
             env["DOCK_FOLDERS_TEST_DRAG_ONLY"] = "1"
+        if options.drag_apps:
+            env["DOCK_FOLDERS_TEST_DRAG_APPS"] = json.dumps(options.drag_apps)
         env.pop("MUTTER_WM_CLASS_FILTER", None)
         for name in ("WAYLAND_DISPLAY", "DBUS_SESSION_BUS_ADDRESS"):
             env.pop(name, None)

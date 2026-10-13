@@ -111,6 +111,11 @@
     <content_attribute id="violence-slavery">none</content_attribute>
   </content_rating>
   <releases>
+    <release version="1.2.2" date="2026-10-13">
+      <description>
+        <p>Restore application grouping when existing GNOME Dock icons have no folder drop targets.</p>
+      </description>
+    </release>
     <release version="1.2.1" date="2026-10-12">
       <description>
         <p>Fix GNOME drag cleanup when a folder is rebuilt. Keep application names when adding launchers to folders.</p>

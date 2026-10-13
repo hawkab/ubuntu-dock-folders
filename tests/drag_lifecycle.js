@@ -5,6 +5,7 @@ import Clutter from 'gi://Clutter';
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 import * as Scripting from 'resource:///org/gnome/shell/ui/scripting.js';
+import {DockDash} from 'file:///usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com/dash.js';
 
 /** Extract and regroup applications, including destruction during an active drag. */
 export async function checkDragLifecycle(folders, third, until, assert) {
@@ -14,7 +15,10 @@ export async function checkDragLifecycle(folders, third, until, assert) {
     const backend = global.stage.context?.get_backend() ?? Clutter.get_default_backend();
     const pointer = backend.get_default_seat().create_virtual_device(Clutter.InputDeviceType.POINTER_DEVICE);
     let pressed = false;
-    const noIcon = {desktop:'local.test.NoIcon.desktop',label:'No icon'};
+    const appIds = JSON.parse(GLib.getenv('DOCK_FOLDERS_TEST_DRAG_APPS') ?? 'null');
+    if (appIds) third = {desktop:appIds[0],label:folders._appSystem.lookup_app(appIds[0])?.get_name()};
+    const targetId = appIds?.[1] ?? 'local.test.NoIcon.desktop';
+    const noIcon = {desktop:targetId,label:folders._appSystem.lookup_app(targetId)?.get_name() ?? 'No icon'};
     const recordFor = key => [...folders._icons.values()].find(item => item.group.key === key && item.icon.mapped);
     const motion = async (x,y) => {
         pointer.notify_absolute_motion(GLib.get_monotonic_time(),x,y);
@@ -62,13 +66,50 @@ export async function checkDragLifecycle(folders, third, until, assert) {
             if (!rebuild) {
                 assert(!folders._groups[key], 'Extracting from two applications did not dissolve the folder');
                 assert(global.settings.get_strv('favorite-apps').includes(third.desktop), 'Extracted application was not pinned');
-                const icons = folders._dock._docks()[0].dash.getAppIcons();
+                const dash = folders._dock._docks()[0].dash;
+                const create = DockDash.prototype._createAppItem;
+                const redisplay = DockDash.prototype._redisplay;
+                DockDash.prototype._createAppItem = folders._originalCreate;
+                DockDash.prototype._redisplay = folders._originalRedisplay;
+                try {
+                    dash.resetAppIcons();
+                } finally {
+                    DockDash.prototype._createAppItem = create;
+                    DockDash.prototype._redisplay = redisplay;
+                }
+                const icons = dash.getAppIcons();
                 const source = icons.find(item => item.app.get_id() === third.desktop);
                 const target = icons.find(item => item.app.get_id() === noIcon.desktop);
                 assert(source && target, 'Extracted applications did not return to the dock');
-                folders._commands._createGroup(folders._dnd._sourceEntry(source),folders._dnd._sourceEntry(target));
+                assert(!folders._dropIcons.has(target), 'Existing-icon fixture already handles grouping');
+                dash._redisplay();
+                const handleDragOver = target.handleDragOver;
+                dash._redisplay();
+                assert(dash.getAppIcons().includes(target) && target.handleDragOver === handleDragOver,
+                    'Dock refresh rebuilt an application or replaced its drag handler');
+                await Scripting.sleep(500);
+                let started = false;
+                const begin = source._draggable.connect('drag-begin', () => { started = true; });
+                const [sx,sy] = source.get_transformed_position();
+                const [sw,sh] = source.get_transformed_size();
+                await motion(sx+sw/2,sy+sh/2);
+                pointer.notify_button(GLib.get_monotonic_time(),1,Clutter.ButtonState.PRESSED);
+                pressed = true;
+                await Scripting.sleep(50);
+                await motion(sx+sw/2+30,sy+sh/2);
+                await until(() => started, 'Dock application did not start dragging');
+                const [tx,ty] = target.get_transformed_position();
+                const [tw,th] = target.get_transformed_size();
+                await motion(tx+tw/2,ty+th/2);
+                assert(target.has_style_class_name('dock-group-drop-target'),
+                    'Dock application did not accept the grouping drag');
+                pointer.notify_button(GLib.get_monotonic_time(),1,Clutter.ButtonState.RELEASED);
+                pressed = false;
+                source._draggable.disconnect(begin);
+                await until(() => folders._entryIds.get(third.desktop)?.group.apps.some(app => app.desktop === noIcon.desktop),
+                    'Dragging one dock application onto another did not form a group');
                 key = folders._entryIds.get(third.desktop).group.key;
-                assert(folders._groups[key].apps.find(app => app.desktop === third.desktop).label === third.desktop.replace('.desktop',''),
+                assert(folders._groups[key].apps.find(app => app.desktop === third.desktop).label === folders._appSystem.lookup_app(third.desktop).get_name(),
                     'Regrouping used the desktop filename instead of the application name');
             }
         }

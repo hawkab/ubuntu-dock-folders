@@ -1,3 +1,10 @@
+ubuntu-dock-folders (1.2.2-1ubuntu24.04.1) noble; urgency=medium
+
+  * Restore folder drop targets for existing GNOME Dock icons.
+  * Test extraction and regrouping with native pointer events.
+
+ -- Grigory Olshansky <14372308+hawkab@users.noreply.github.com>  Tue, 13 Oct 2026 23:25:45 +0300
+
 ubuntu-dock-folders (1.2.1-1ubuntu24.04.1) noble; urgency=high
 
   * Release drag targets when a GNOME folder is rebuilt during a drag.

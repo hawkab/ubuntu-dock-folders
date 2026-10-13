@@ -80,6 +80,17 @@ export class DockAdapter {
         }
     }
 
+    _decorateIcon(icon, dash) {
+        const host = this.host;
+        if (!host._settings.get_boolean('enabled') || host._dropIcons.has(icon))
+            return;
+        const group = Object.values(host._groups).find(
+            candidate => candidate.desktopId === icon.app.get_id());
+        host._dnd._decorateDrop(icon, group, dash);
+        if (group)
+            host._view._decorate(icon, group, dash);
+    }
+
     /** Stack edited folder titles in the preferences icon's tooltip. */
     _decoratePreferences(item, app) {
         const tracked = new Set();
@@ -118,7 +129,10 @@ export class DockAdapter {
             this._appSystem.get_running = () => extension._getRunning().filter(
                 app => !extension._windowsAdapter._isHidden(app));
             try {
-                return extension._dock._withFavorites(() => extension._originalRedisplay.apply(this, args));
+                const result = extension._dock._withFavorites(() => extension._originalRedisplay.apply(this, args));
+                for (const icon of this.getAppIcons())
+                    extension._dock._decorateIcon(icon, this);
+                return result;
             } finally {
                 this._appSystem.get_running = originalGetRunning;
             }
@@ -127,17 +141,11 @@ export class DockAdapter {
             const item = extension._originalCreate.call(this, app);
             if (app.get_id() === 'io.github.hawkab.UbuntuDockFolders.desktop')
                 extension._dock._decoratePreferences(item, app);
-            const group = Object.values(extension._groups).find(
-                candidate => candidate.desktopId === app.get_id());
-            if (extension._settings.get_boolean('enabled')) {
-                try {
-                    extension._dnd._decorateDrop(item.child, group, this);
-                    if (group)
-                        extension._view._decorate(item.child, group, this);
-                } catch (error) {
-                    item.destroy();
-                    throw error;
-                }
+            try {
+                extension._dock._decorateIcon(item.child, this);
+            } catch (error) {
+                item.destroy();
+                throw error;
             }
             return item;
         };

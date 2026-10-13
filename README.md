@@ -107,8 +107,8 @@ UQAHqYcL2i1sls0c_R9o22r-m3zORIg2bzCC1gGW4rjK94G9
 
 | Package | Desktop versions | Sessions |
 | --- | --- | --- |
-| 1.2.1 for Ubuntu 24.04 | GNOME 46 with Ubuntu Dock | Wayland, X11 |
-| 1.2.1 for Ubuntu 26.04 | GNOME 50 with Ubuntu Dock, KDE Plasma 6.6+, Xfce 4.20+ | Wayland; X11 on KDE and Xfce |
+| 1.2.2 for Ubuntu 24.04 | GNOME 46 with Ubuntu Dock | Wayland, X11 |
+| 1.2.2 for Ubuntu 26.04 | GNOME 50 with Ubuntu Dock, KDE Plasma 6.6+, Xfce 4.20+ | Wayland; X11 on KDE and Xfce |
 
 Install from the [signed APT repository](https://hawkab.github.io/apt/):
 
