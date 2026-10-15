@@ -19,7 +19,6 @@ def main():
     parser.add_argument("--publish", action="store_true")
     parser.add_argument("--prepared", type=Path)
     parser.add_argument("--binaries", type=Path, help="Checked CI packages for all supported Ubuntu suites")
-    parser.add_argument("--wait-seconds", type=int, default=1200)
     parser.add_argument("--source-root", type=Path, default=context.ROOT, help="Clean checkout of the signed release tag")
     args = parser.parse_args()
     context.ROOT = args.source_root.resolve()
@@ -84,7 +83,7 @@ def main():
     run("gh", "release", "edit", tag, "--repo", settings["github_repository"], "--draft=false")
     print(f"Published {tag}: GitHub Releases and {settings['apt_url']}; source submitted to Launchpad", flush=True)
     for upload in source_uploads(manifest):
-        wait_launchpad(settings | {"suite": upload["suite"]}, upload["version"], args.wait_seconds)
+        wait_launchpad(settings | {"suite": upload["suite"]}, upload["version"])
     print(f"Published {tag}: GitHub Releases, Launchpad PPA and {settings['apt_url']}", flush=True)
 
 

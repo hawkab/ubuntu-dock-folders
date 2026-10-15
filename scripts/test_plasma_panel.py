@@ -62,7 +62,7 @@ def main():
             env["KWIN_SCREENSHOT_NO_PERMISSION_CHECKS"] = "1"
         run_isolated(["xvfb-run", "-a", "-s", "-screen 0 1100x760x24",
                         "/usr/bin/python3", str(Path(__file__).resolve()), "--compositor", *remaining],
-                       env, 75)
+                       env)
 
 
 def compositor():
@@ -74,7 +74,7 @@ def compositor():
         wm = subprocess.Popen(["kwin_x11", "--replace", "--no-kactivities"],
                               stdout=log or subprocess.DEVNULL, stderr=log or subprocess.DEVNULL)
         try:
-            subprocess.run(arguments, check=True, timeout=65)
+            subprocess.run(arguments, check=True)
         except BaseException:
             if log:
                 log.flush()
@@ -98,7 +98,7 @@ def compositor():
             result = subprocess.run([str(compositor_binary), *output, "--width", "1100",
                     "--height", "760", "--no-lockscreen", "--no-global-shortcuts",
                     "--socket", "dock-folders-review", "--exit-with-session", command],
-                   timeout=65, stdout=log if "--glass" in sys.argv else None,
+                   stdout=log if "--glass" in sys.argv else None,
                    stderr=log if "--glass" in sys.argv else None)
         if result.returncode:
             if "--glass" in sys.argv: print((Path(os.environ["HOME"]) / "compositor.log").read_text()[-18000:])

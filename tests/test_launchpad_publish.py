@@ -125,10 +125,9 @@ class LaunchpadPublishTests(unittest.TestCase):
         with (
             patch.object(launchpad_publish, "launchpad_sources", side_effect=sources),
             patch.object(launchpad_publish, "launchpad_json", side_effect=response),
-            patch.object(launchpad_publish.time, "monotonic", side_effect=lambda: now[0]),
             patch.object(launchpad_publish.time, "sleep", side_effect=sleep),
         ):
-            launchpad_publish.wait_launchpad(settings, "9.8.7", 60)
+            launchpad_publish.wait_launchpad(settings, "9.8.7")
         self.assertEqual(now[0], 90)
 
 
@@ -219,7 +218,7 @@ class LaunchpadPublishTests(unittest.TestCase):
                     self.assertEqual(launchpad_publish.launchpad_binary_published(source, settings), expected)
 
 
-    def test_launchpad_progress_renews_stage_timeout(self):
+    def test_launchpad_waits_through_build_and_binary_import(self):
         now = [0]
         source = {"self_link": "https://example.invalid/source", "status": "Published", "source_package_version": "1.0.4"}
         settings = {"suite": "noble", "architecture": "amd64"}
@@ -244,29 +243,61 @@ class LaunchpadPublishTests(unittest.TestCase):
         with (
             patch.object(launchpad_publish, "launchpad_sources", return_value=[source]),
             patch.object(launchpad_publish, "launchpad_json", side_effect=response),
-            patch.object(launchpad_publish.time, "monotonic", side_effect=lambda: now[0]),
             patch.object(launchpad_publish.time, "sleep", side_effect=sleep),
         ):
-            launchpad_publish.wait_launchpad(settings, "1.0.4", 60)
+            launchpad_publish.wait_launchpad(settings, "1.0.4")
         self.assertEqual(now[0], 90)
 
 
-    def test_launchpad_stalled_stage_still_times_out(self):
+    def test_launchpad_queue_has_no_publication_deadline(self):
         now = [0]
         source = {"self_link": "https://example.invalid/source", "status": "Published", "source_package_version": "1.0.4"}
+        settings = {"suite": "noble", "architecture": "amd64"}
+        binary = {
+            "binary_package_name": release_context.PACKAGE,
+            "binary_package_version": "1.0.4",
+            "distro_arch_series_link": "https://api.launchpad.net/1.0/ubuntu/noble/amd64",
+            "status": "Published",
+        }
 
         def sleep(seconds):
-            now[0] += seconds
+            self.assertEqual(seconds, 30)
+            now[0] += 24 * 60 * 60
+
+        def response(url):
+            if url.endswith("getBuilds"):
+                return {"entries": [{"buildstate": "Needs building" if now[0] == 0 else "Successfully built"}]}
+            return {"entries": [binary]}
 
         with (
             patch.object(launchpad_publish, "launchpad_sources", return_value=[source]),
-            patch.object(launchpad_publish, "launchpad_json", return_value={"entries": [{"buildstate": "Currently building"}]}),
-            patch.object(launchpad_publish.time, "monotonic", side_effect=lambda: now[0]),
+            patch.object(launchpad_publish, "launchpad_json", side_effect=response),
             patch.object(launchpad_publish.time, "sleep", side_effect=sleep),
         ):
-            with self.assertRaisesRegex(ValueError, "Launchpad build pending"):
-                launchpad_publish.wait_launchpad({}, "1.0.4", 60)
-        self.assertEqual(now[0], 60)
+            launchpad_publish.wait_launchpad(settings, "1.0.4")
+        self.assertEqual(now[0], 24 * 60 * 60)
+
+    def test_publication_wait_survives_temporary_api_outages(self):
+        for error in (TimeoutError("read timed out"), urllib.error.URLError("connection reset"),
+                      urllib.error.HTTPError("https://example.invalid/source", 503, "Unavailable", {}, None)):
+            with (
+                self.subTest(error=error),
+                patch.object(launchpad_publish, "launchpad_progress", side_effect=[error, (4, True)]),
+                patch.object(launchpad_publish.time, "sleep") as sleep,
+            ):
+                launchpad_publish.wait_launchpad({"suite": "noble"}, "1.0.4")
+            sleep.assert_called_once_with(30)
+
+    def test_publication_wait_reports_permanent_api_errors(self):
+        error = urllib.error.HTTPError("https://example.invalid/source", 403, "Forbidden", {}, None)
+        self.addCleanup(error.close)
+        with (
+            patch.object(launchpad_publish, "launchpad_progress", side_effect=error),
+            patch.object(launchpad_publish.time, "sleep") as sleep,
+        ):
+            with self.assertRaises(urllib.error.HTTPError):
+                launchpad_publish.wait_launchpad({"suite": "noble"}, "1.0.4")
+        sleep.assert_not_called()
 
 
     def test_launchpad_build_failure_is_reported_immediately(self):
@@ -276,5 +307,5 @@ class LaunchpadPublishTests(unittest.TestCase):
             patch.object(launchpad_publish.time, "sleep") as sleep,
         ):
             with self.assertRaisesRegex(ValueError, "Failed to build"):
-                launchpad_publish.wait_launchpad({}, "1.0.4", 60)
+                launchpad_publish.wait_launchpad({}, "1.0.4")
         sleep.assert_not_called()

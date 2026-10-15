@@ -85,6 +85,17 @@ while True: time.sleep(.05)
             service = home / "data/dbus-1/services/org.freedesktop.secrets.service"
             self.assertIn("Exec=/bin/false", service.read_text())
 
+    def test_session_has_no_deadline_unless_requested(self):
+        with tempfile.TemporaryDirectory() as directory:
+            env = dict(os.environ, HOME=directory, XDG_DATA_HOME=str(Path(directory) / "data"),
+                       DOCK_FOLDERS_TEST_TIMEOUT="0.001")
+            result = run_isolated(
+                ["/usr/bin/python3", "-c",
+                 "import os,time; time.sleep(.1); print(os.environ.get('DOCK_FOLDERS_TEST_TIMEOUT'))"],
+                env, capture=True,
+            )
+            self.assertEqual(result.stdout.strip(), "None")
+
     def test_real_home_is_rejected_before_starting_a_desktop(self):
         with self.assertRaisesRegex(ValueError, "temporary home"):
             run_isolated(["/usr/bin/true"], dict(os.environ, HOME=str(Path.home())), 5)

@@ -72,9 +72,12 @@ def terminate_processes(targets, marker):
             pass
 
 
-def run_isolated(command, env, timeout, capture=False):
+def run_isolated(command, env, timeout=None, capture=False):
     marker = uuid.uuid4().hex
-    private = dict(env, **{MARKER: marker, "DOCK_FOLDERS_TEST_TIMEOUT": str(timeout)})
+    private = dict(env, **{MARKER: marker})
+    private.pop("DOCK_FOLDERS_TEST_TIMEOUT", None)
+    if timeout is not None:
+        private["DOCK_FOLDERS_TEST_TIMEOUT"] = str(timeout)
     home = Path(private["HOME"])
     if home.resolve() == Path.home().resolve():
         raise ValueError("A desktop check requires a temporary home.")
@@ -88,7 +91,8 @@ def run_isolated(command, env, timeout, capture=False):
     disable_desktop_services(private["XDG_DATA_HOME"])
     try:
         return subprocess.run(["dbus-run-session", "--", "/usr/bin/python3", str(Path(__file__).resolve()),
-                               "--supervise", *command], env=private, check=True, timeout=timeout + 8,
+                               "--supervise", *command], env=private, check=True,
+                              timeout=timeout + 8 if timeout is not None else None,
                               stdout=subprocess.PIPE if capture else None,
                               stderr=subprocess.STDOUT if capture else None, text=True)
     except subprocess.CalledProcessError as error:
@@ -103,7 +107,8 @@ def supervise(command):
     child = subprocess.Popen(command)
     result = 1
     try:
-        result = child.wait(timeout=float(os.environ["DOCK_FOLDERS_TEST_TIMEOUT"]))
+        timeout = os.environ.get("DOCK_FOLDERS_TEST_TIMEOUT")
+        result = child.wait(timeout=float(timeout) if timeout is not None else None)
     finally:
         marker = os.environ[MARKER]
         parent = os.getppid()

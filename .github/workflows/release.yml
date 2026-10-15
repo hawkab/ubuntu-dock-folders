@@ -32,7 +32,6 @@ jobs:
     needs: validate
     if: ${{ !cancelled() && (needs.validate.result == 'success' || (needs.validate.result == 'skipped' && inputs.checked_run)) }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 360
     environment: release
     steps:
       - name: Check out publisher
@@ -82,7 +81,7 @@ jobs:
           LAUNCHPAD_UPLOAD_TRANSPORT: sftp
           LAUNCHPAD_SSH_KEY: ${{ runner.temp }}/launchpad-upload
           APT_DEPLOY_KEY: ${{ runner.temp }}/apt-deploy
-        run: /usr/bin/python3 publisher/scripts/release.py --source-root "$GITHUB_WORKSPACE/source" --binaries "$RUNNER_TEMP/checked-binaries" --publish --wait-seconds 10800
+        run: /usr/bin/python3 publisher/scripts/release.py --source-root "$GITHUB_WORKSPACE/source" --binaries "$RUNNER_TEMP/checked-binaries" --publish
       - name: Retain release artifacts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

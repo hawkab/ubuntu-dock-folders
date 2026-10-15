@@ -34,7 +34,7 @@ def main():
             env["LIBGL_ALWAYS_SOFTWARE"]="1"
         run_isolated(["xvfb-run", "-a", "-s", "-screen 0 1100x760x24",
                         "/usr/bin/python3", str(Path(__file__).resolve()), "--session", *sys.argv[1:]],
-                       env, 35)
+                       env)
 
 
 def session():

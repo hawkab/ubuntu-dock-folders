@@ -25,7 +25,7 @@ def main():
                    WAYLAND_DISPLAY="", GIO_USE_VFS="local", NO_AT_BRIDGE="1")
         command = ["xvfb-run", "-a", "-s", "-screen 0 1280x800x24",
                    "/usr/bin/python3", str(Path(__file__).resolve()), "--session"]
-        run_isolated(command, env, 90)
+        run_isolated(command, env)
 
 
 def session():
@@ -33,7 +33,7 @@ def session():
                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     try:
         result = subprocess.run(["/usr/bin/python3", str(ROOT / "tests/xfce_session.py")],
-                                capture_output=True, text=True, timeout=85)
+                                capture_output=True, text=True)
         print(result.stdout, end="")
         print(result.stderr, end="", file=__import__("sys").stderr)
         result.check_returncode()

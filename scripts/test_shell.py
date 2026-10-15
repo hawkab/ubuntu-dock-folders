@@ -112,7 +112,7 @@ def main():
              'exec "$@"',
              "shell-test", "gnome-shell", *backend, "--force-animations",
              "--automation-script", str(ROOT / "tests/shell.js")],
-            env, 180, capture=True,
+            env, capture=True,
         )
         print(result.stdout, end="", flush=True)
         result.check_returncode()

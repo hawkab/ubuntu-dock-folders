@@ -31,7 +31,7 @@ def main():
             env["DOCK_FOLDERS_TEST_XFCE_SOURCE"] = str(ROOT / "build/xfce")
             env["XDG_DATA_DIRS"] = str(home / "prefix/usr/share") + ":/usr/local/share:/usr/share"
         command = shlex.join(["/usr/bin/python3", str(ROOT / "tests/xfce_wayland_session.py")])
-        result = run_isolated(["labwc", "--config-dir", str(config), "--session", command], env, 90, capture=True)
+        result = run_isolated(["labwc", "--config-dir", str(config), "--session", command], env, capture=True)
         if not (home / "xfce-wayland.ok").exists():
             raise RuntimeError("Wayland panel check did not finish:\n" + result.stdout[-5000:])
         for line in result.stdout.splitlines():

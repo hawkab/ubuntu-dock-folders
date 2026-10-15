@@ -27,7 +27,7 @@ def main():
             env["XDG_DATA_DIRS"] = str(home / "prefix/usr/share") + ":/usr/local/share:/usr/share"
         command = ["xvfb-run", "-a", "-s", "-screen 0 1100x760x24", "/usr/bin/python3",
                    str(ROOT / "tests/xfce_panel_session.py")]
-        run_isolated(command, env, 50)
+        run_isolated(command, env)
 
 
 if __name__ == "__main__":

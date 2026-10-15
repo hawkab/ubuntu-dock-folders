@@ -19,6 +19,9 @@ from apt_repo import run, sha256
 import release_context as context
 from release_artifacts import source_uploads
 
+TEMPORARY_HTTP_ERRORS = {429, 500, 502, 503, 504}
+
+
 def launchpad_json(url):
     """Read Launchpad JSON with bounded retries for temporary network failures."""
     request = urllib.request.Request(
@@ -29,7 +32,7 @@ def launchpad_json(url):
             with urllib.request.urlopen(request, timeout=30) as response:
                 return json.load(response)
         except urllib.error.HTTPError as error:
-            if error.code not in {429, 500, 502, 503, 504} or attempt == 2:
+            if error.code not in TEMPORARY_HTTP_ERRORS or attempt == 2:
                 raise
             error.close()
         except (urllib.error.URLError, TimeoutError, ConnectionError):
@@ -152,43 +155,47 @@ def launchpad_binary_published(source, settings):
     return any(binary["status"] == "Published" for binary in launchpad_binaries(source, settings))
 
 
-def wait_launchpad(settings, version, timeout):
-    if timeout <= 0:
-        raise ValueError("Launchpad stage timeout must be positive")
-    deadline = time.monotonic() + timeout
+def launchpad_progress(settings, version):
+    """Return publication progress and whether the target binary is published."""
+    progress = 0
+    sources = launchpad_sources(settings, version) or launchpad_sources(settings, version, "Pending")
+    for source in sources:
+        progress = max(progress, 1)
+        builds = launchpad_json(source["self_link"] + "?ws.op=getBuilds")["entries"]
+        statuses = {build["buildstate"] for build in builds}
+        if statuses & {"Failed to build", "Dependency wait", "Chroot problem", "Failed to upload"}:
+            raise ValueError("Launchpad build needs attention: " + ", ".join(sorted(statuses)))
+        if "Currently building" in statuses:
+            progress = max(progress, 2)
+        if builds and statuses == {"Successfully built"}:
+            progress = max(progress, 3)
+            binaries = launchpad_binaries(source, settings)
+            if binaries:
+                progress = max(progress, 4)
+            if source["status"] == "Published" and any(binary["status"] == "Published" for binary in binaries):
+                return progress, True
+    return progress, False
+
+
+def wait_launchpad(settings, version):
+    """Wait for publication; fail only on a build error or permanent API error."""
     stage = -1
     labels = ("source acceptance", "build queue", "build", "binary import", "binary publication")
-    while time.monotonic() < deadline:
-        progress = 0
-        sources = launchpad_sources(settings, version) or launchpad_sources(settings, version, "Pending")
-        for source in sources:
-            progress = max(progress, 1)
-            builds = launchpad_json(source["self_link"] + "?ws.op=getBuilds")["entries"]
-            statuses = {build["buildstate"] for build in builds}
-            if statuses & {
-                "Failed to build",
-                "Dependency wait",
-                "Chroot problem",
-                "Failed to upload",
-            }:
-                raise ValueError("Launchpad build needs attention: " + ", ".join(sorted(statuses)))
-            if "Currently building" in statuses:
-                progress = max(progress, 2)
-            if builds and statuses == {"Successfully built"}:
-                progress = max(progress, 3)
-                binaries = launchpad_binaries(source, settings)
-                if binaries:
-                    progress = max(progress, 4)
-                if source["status"] == "Published" and any(
-                    binary["status"] == "Published" for binary in binaries
-                ):
-                    print(f"Launchpad {settings['suite']} binary published", flush=True)
-                    return
-        if progress > stage:
-            stage = progress
-            deadline = time.monotonic() + timeout
-            print(f"Waiting for Launchpad {labels[stage]} [{settings.get('suite', '')}] (up to {timeout}s)", flush=True)
-        time.sleep(min(30, max(0, deadline - time.monotonic())))
-    raise ValueError(
-        f"Launchpad {labels[stage]} pending; resume with the same --prepared directory"
-    )
+    while True:
+        try:
+            progress, published = launchpad_progress(settings, version)
+        except urllib.error.HTTPError as error:
+            if error.code not in TEMPORARY_HTTP_ERRORS:
+                raise
+            print(f"Launchpad API unavailable ({error.code}); publication is still pending", flush=True)
+            error.close()
+        except (urllib.error.URLError, TimeoutError, ConnectionError) as error:
+            print(f"Launchpad API unavailable ({error}); publication is still pending", flush=True)
+        else:
+            if published:
+                print(f"Launchpad {settings['suite']} binary published", flush=True)
+                return
+            if progress > stage:
+                stage = progress
+                print(f"Waiting for Launchpad {labels[stage]} [{settings.get('suite', '')}]", flush=True)
+        time.sleep(30)

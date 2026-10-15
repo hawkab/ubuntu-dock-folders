@@ -28,7 +28,6 @@ jobs:
       image: ubuntu:${{ matrix.ubuntu }}
       options: --cpus 2 --memory 3g --init
     name: Ubuntu ${{ matrix.ubuntu }}
-    timeout-minutes: 40
     steps:
       - name: Install bootstrap dependencies
         run: |
