@@ -13,6 +13,7 @@ import {settingsPreview, settingsPreviewFrame} from '../core/settingsPreview.js'
 import {folderInteraction} from '../core/folderInteraction.js';
 import {orbitVelocity, orbitFrame, orbitHoverFrame, orbitMiniatures} from '../core/orbit.js';
 import {folderChanges} from '../core/changes.js';
+import {pwaIndex, matchPwa} from '../core/windowIdentity.js';
 
 const stream = new Gio.DataInputStream({base_stream:new GioUnix.InputStream({fd:0,close_fd:false})});
 const frameSources = new Map();
@@ -20,6 +21,8 @@ const frameSources = new Map();
 /** Serve the portable API to GTK adapters until their input pipe closes. */
 function dispatch(request) {
     const value = request.value;
+    if (request.method === 'pwaIndex') return pwaIndex(value);
+    if (request.method === 'matchPwa') return matchPwa(value.index,value.classes,value.fallback);
     if (request.method === 'registerFrame') {
         frameSources.set(value.id,value);
         if (frameSources.size > 64) frameSources.delete(frameSources.keys().next().value);

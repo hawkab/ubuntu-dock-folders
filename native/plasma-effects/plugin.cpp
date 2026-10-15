@@ -3,6 +3,7 @@
 
 #include "windoweffects.h"
 #include "backdropblur.h"
+#include "taskidentity.h"
 #include <QQmlExtensionPlugin>
 #include <qqml.h>
 
@@ -16,6 +17,7 @@ public:
     {
         qmlRegisterType<WindowEffects>(uri, 1, 0, "WindowEffects");
         qmlRegisterType<BackdropBlur>(uri, 1, 0, "BackdropBlur");
+        qmlRegisterType<TaskIdentity>(uri, 1, 0, "TaskIdentity");
     }
 };
 

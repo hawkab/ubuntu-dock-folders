@@ -7,6 +7,8 @@
 import QtQuick
 import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
+import "../effects" as Effects
+import "Core.js" as Core
 
 Item {
     id: strip
@@ -60,7 +62,9 @@ Item {
                     required property var model
                     required property int index
                     property int row: index
-                    property string desktop: strip.controller.canonical(model.LauncherUrlWithoutIcon || model.AppId)
+                    property string desktop: Core.matchPwa(strip.controller.state.pwas || {},
+                        Array.from(identity.classes).concat([model.AppId]),
+                        strip.controller.canonical(model.LauncherUrlWithoutIcon || model.AppId))
                     property bool running: model.IsWindow
                     property bool active: model.IsActive
                     property var ids: model.WinIdList || []
@@ -73,6 +77,12 @@ Item {
                     onRunningChanged: strip.controller.scheduleTasks()
                     onActiveChanged: strip.controller.scheduleTasks()
                     onDesktopChanged: strip.controller.scheduleTasks()
+                    Effects.TaskIdentity {
+                        id: identity
+                        enabled: task.running && Object.keys(strip.controller.state.pwas || {}).length > 0
+                        windowIds: task.ids
+                        hint: String(task.model.AppId || "") + String(task.model.LauncherUrlWithoutIcon || "")
+                    }
                     Loader {
                         id: visual
                         anchors.fill: parent

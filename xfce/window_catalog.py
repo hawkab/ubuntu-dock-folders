@@ -7,8 +7,9 @@ from gi.repository import Gio, GLib
 
 
 class WindowCatalog:
-    def __init__(self, changed):
+    def __init__(self, changed, core):
         self.changed = changed
+        self.core = core
         self.records, self.catalog, self.groups, self.class_ids = {}, {}, {}, {}
         self.signals, self.timer = [], 0
         self.monitor = Gio.AppInfoMonitor.get()
@@ -24,14 +25,21 @@ class WindowCatalog:
         self.queue()
 
     def refresh_catalog(self):
+        from application_identity import pwa_entries
         self.catalog = {info.get_id(): info for info in Gio.AppInfo.get_all()
                         if info.get_id() and not info.get_id().startswith("local.groups.")}
+        self.pwa_entries = pwa_entries(self.catalog.values())
         self.index_classes()
 
     def index_classes(self):
+        members = {entry["desktop"] for group in self.groups.values() for entry in group["apps"]}
+        self.pwas = self.core.call("pwaIndex", [dict(entry, preferred=entry["desktop"] in members)
+                                              for entry in self.pwa_entries])
         self.class_ids = {}
         for desktop, info in self.catalog.items():
-            names = [desktop.removesuffix(".desktop"), info.get_name(), info.get_executable()]
+            names = [desktop.removesuffix(".desktop")]
+            if not desktop.startswith("chrome-"):
+                names.extend([info.get_name(), info.get_executable()])
             if hasattr(info, "get_startup_wm_class"):
                 names.insert(0, info.get_startup_wm_class())
             for name in names:
@@ -65,11 +73,27 @@ class WindowCatalog:
         return GLib.SOURCE_REMOVE
 
     def desktop(self, window):
-        for name in (window.get_class_instance_name(), window.get_class_group_name()):
+        names = (window.get_class_instance_name(), window.get_class_group_name())
+        pwa = self.pwa_desktop(names)
+        if pwa is not None:
+            return pwa
+        for name in names:
             if name and name.lower() in self.class_ids:
                 return self.class_ids[name.lower()]
         group = window.get_class_group_name() or window.get_name()
         return "wm:" + group.lower()
+
+    def pwa_desktop(self, names):
+        """Look up native PWA classes in the cached shared index."""
+        weak = None
+        for name in names:
+            key = (name or "").removesuffix(".desktop")
+            if key in self.pwas:
+                desktop = self.pwas[key] or "wm:" + key
+                if not key.startswith("crx_"):
+                    return desktop
+                weak = desktop
+        return weak
 
     def close(self):
         if self.timer:

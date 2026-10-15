@@ -13,7 +13,7 @@ add_custom_command(OUTPUT wayland-blur-client.h wayland-blur-protocol.c
     COMMAND ${WAYLAND_SCANNER} client-header ${CMAKE_CURRENT_SOURCE_DIR}/blur.xml wayland-blur-client.h
     COMMAND ${WAYLAND_SCANNER} private-code ${CMAKE_CURRENT_SOURCE_DIR}/blur.xml wayland-blur-protocol.c
     DEPENDS blur.xml)
-add_library(dockfolderseffects MODULE plugin.cpp windoweffects.cpp backdropblur.cpp waylandblur.cpp
+add_library(dockfolderseffects MODULE plugin.cpp windoweffects.cpp backdropblur.cpp waylandblur.cpp taskidentity.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-blur-protocol.c)
 target_include_directories(dockfolderseffects PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 target_compile_definitions(dockfolderseffects PRIVATE DOCK_BACKDROP_PLUGIN_ID="${DOCK_BACKDROP_PLUGIN}")

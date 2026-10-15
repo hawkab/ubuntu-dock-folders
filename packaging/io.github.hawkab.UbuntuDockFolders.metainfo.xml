@@ -111,6 +111,11 @@
     <content_attribute id="violence-slavery">none</content_attribute>
   </content_rating>
   <releases>
+    <release version="1.2.3" date="2026-10-15">
+      <description>
+        <p>Keep Chrome PWA windows attached to their launchers after profile changes in GNOME, KDE Plasma and Xfce.</p>
+      </description>
+    </release>
     <release version="1.2.2" date="2026-10-13">
       <description>
         <p>Restore application grouping when existing GNOME Dock icons have no folder drop targets.</p>

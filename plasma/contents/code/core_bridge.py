@@ -41,7 +41,7 @@ def invoke(method, value):
     """Call one exported portable API through the isolated Qt worker."""
     global _worker
     exported = {"transaction":"transact", "folderCatalog":"folderCatalog", "folderCommand":"folderCommand",
-                "folderChanges":"describeChanges"}[method]
+                "folderChanges":"describeChanges", "pwaIndex":"pwaIndex"}[method]
     if _worker is None or _worker.closed:
         _worker = CoreRuntime(CONTENTS,[str(CONTENTS / "code/dock-folders-core-runner"),
                                        str(CONTENTS / "core/engine.js"),"--server"])

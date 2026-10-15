@@ -247,6 +247,7 @@ export default class DockGroups extends FolderRenderer {
                 }
                 for (const dock of this._dock._docks())
                     dock.dash._redisplay();
+                this._dock.pwas.update();
                 for (const record of this._icons.values()) {
                     const {icon, dots, group} = record;
                     if (!icon.mapped || !icon.get_stage())

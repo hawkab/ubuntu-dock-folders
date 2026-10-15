@@ -13,6 +13,7 @@ from gi.repository import Gio, GioUnix, GLib
 from core_bridge import execute, invoke, close as close_core
 from folder_library import FolderLibrary
 from images import image_info, file_digest
+from application_identity import pwa_entries
 
 BUS = "io.github.hawkab.DockFolders.Plasma"
 PATH = "/io/github/hawkab/DockFolders"
@@ -97,8 +98,13 @@ class FolderService:
         self.groups, self.favorites, self.undo = state["groups"], state["favorites"], state.get("undo")
         return result["changed"]
 
-    def clean(self):
+    def clean(self, refresh_catalog=True):
         self.app_metadata.clear()
+        if refresh_catalog:
+            self.pwa_entries = pwa_entries(Gio.AppInfo.get_all())
+        members = {entry["desktop"] for group in self.groups.values() for entry in group["apps"]}
+        self.pwas = invoke("pwaIndex", [dict(entry, preferred=entry["desktop"] in members)
+                                        for entry in self.pwa_entries])
         changed = self.transaction({"operation": "reconcile"})
         if changed:
             self.folder_catalog_dirty = True
@@ -120,7 +126,7 @@ class FolderService:
         try:
             changed = self.load()
             if getattr(self,"catalog_dirty",True) or changed:
-                self.clean()
+                self.clean(getattr(self,"catalog_dirty",True))
                 self.catalog_dirty = False
             state = self.state()
             if getattr(self,"folder_catalog_dirty",True):
@@ -157,7 +163,7 @@ class FolderService:
         aliases = {alias: entry["desktop"] for group in self.groups.values() for entry in group["apps"]
                    for alias in entry.get("aliases", [])}
         return json.dumps({"groups": self.groups, "favorites": self.favorites, "apps": apps,
-                           "aliases": aliases, "undo": self.undo is not None}, ensure_ascii=False)
+                           "aliases": aliases, "pwas": getattr(self,"pwas",{}), "undo": self.undo is not None}, ensure_ascii=False)
 
     def edit(self, request):
         if not isinstance(request, dict):

@@ -49,7 +49,7 @@ class Controller(LauncherButtons, DragController, PreviewController, FolderContr
         self.render_count = 0
         self.closed = False
         self.command_buffer = b""
-        self.tracker = WindowTracker(self.windows_changed)
+        self.tracker = WindowTracker(self.windows_changed, self.state.core)
         self.tracker.set_groups(self.state.groups)
         self.tracker.signals.append((self.tracker.screen,
             self.tracker.screen.connect("active-window-changed", self.focus_changed)))

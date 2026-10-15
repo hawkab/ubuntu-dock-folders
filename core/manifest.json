@@ -7,13 +7,14 @@
     "changes.js": "77f881019147d4177441824110c840c538f2b8e9c337a5830975c1d6cb2ea5ef",
     "contract.js": "a4cc40d83fee53909dd5a65491ed5a31095d87c08979814c6e769930dc0ab141",
     "contract.json": "89196104f7795cf8dc13bcd656d16d94cb082ff530f1badd46846a360ac55d9e",
-    "engine.js": "9e5c81a3a41ce69ee75cf8ca9d64388a40d6fe4b45318adda29115f017c9184c",
+    "engine.js": "d0f10343a05196c3c621fc52ef58bb3dca539a97f4a6bd480a1979f2d126d2a2",
     "folderInteraction.js": "70da46b91f62a3f31d7ae171fee09a5f56bd66eaf78d0e122c394f15e6c5ac60",
     "folders.js": "93ea27e07093d719aa2660f0a81ade030c903879763caa58920067d008c637b6",
     "iconGeometry.js": "49f602f3b49512edddd7c05a69e805cce6979d497aa6f559389c8111aa7f54f2",
     "model.js": "bae30aaaed59b8de72dd772fe0051f4d564f3b2fcca6f822d164fe3ed128df35",
     "orbit.js": "256c57e7ab7da05ef34000aa18843e06e5dc33f2513772f7f35edb6f96435389",
     "preferences.js": "524ffd1f075ff1bdad5261acbcab3d86028fc7aab303b406ff6b973feb6f1aa2",
-    "settingsPreview.js": "caec3b42e3bfd1931be2ea53bfbd6e1a0d8880e5a4e6c278c1396f297b5f8fe7"
+    "settingsPreview.js": "caec3b42e3bfd1931be2ea53bfbd6e1a0d8880e5a4e6c278c1396f297b5f8fe7",
+    "windowIdentity.js": "efa328c15c2c25ddc4c41198efb1419db302ca8763b6f75d445a6d4952c6449d"
   }
 }

@@ -44,9 +44,9 @@ class WaylandWindow:
 
 
 class WaylandTracker(WindowCatalog):
-    def __init__(self, changed):
+    def __init__(self, changed, core):
         self.screen = Xfw.Screen.get_default()
-        super().__init__(changed)
+        super().__init__(changed, core)
 
     def refresh_windows(self):
         windows = {window: window for window in self.screen.get_windows()}
@@ -62,6 +62,9 @@ class WaylandTracker(WindowCatalog):
                 self.records[identity] = (WaylandWindow(window), signals)
 
     def desktop(self, window):
+        pwa = self.pwa_desktop(window.window.get_class_ids())
+        if pwa is not None:
+            return pwa
         for name in window.window.get_class_ids():
             if name and name.removesuffix(".desktop").lower() in self.class_ids:
                 return self.class_ids[name.removesuffix(".desktop").lower()]

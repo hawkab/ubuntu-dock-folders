@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import test from 'node:test';
 import {runInNewContext} from 'node:vm';
+import {pwaIndex} from '../core/windowIdentity.js';
 import {folderChanges} from '../core/changes.js';
 
 const source = ['groupStore', 'dockDragDrop'].map(name =>
@@ -15,6 +16,8 @@ function extensionFor(onFavorites = () => {}) {
     const adapters = runInNewContext(`${source}\n({GroupStore, DockDragDrop})`, {
         FolderRenderer: class {},
         folderChanges,
+        pwaIndex,
+        Gio: {AppInfo: {get_all: () => []}},
         GioUnix: {DesktopAppInfo: {new: () => null}},
         global: {settings: {set_strv: onFavorites}},
         St: {Side: {LEFT: 0, RIGHT: 1}},

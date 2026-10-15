@@ -10,11 +10,11 @@ from window_catalog import WindowCatalog
 
 
 class X11Tracker(WindowCatalog):
-    def __init__(self, changed):
+    def __init__(self, changed, core):
         Wnck.set_client_type(Wnck.ClientType.PAGER)
         self.screen = Wnck.Screen.get_default()
         self.screen.force_update()
-        super().__init__(changed)
+        super().__init__(changed, core)
 
     def refresh_windows(self):
         windows = {window.get_xid(): window for window in self.screen.get_windows()}

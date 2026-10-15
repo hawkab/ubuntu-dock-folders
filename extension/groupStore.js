@@ -7,6 +7,7 @@ import GLib from 'gi://GLib';
 import {gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
 import {quoteDesktopArgument} from './model.js';
 import {folderChanges} from './core/changes.js';
+import {pwaIndex} from './core/windowIdentity.js';
 
 /** Load folder settings, reconcile applications, and synchronize launchers. */
 export class GroupStore {
@@ -53,10 +54,20 @@ export class GroupStore {
 
     _indexGroups(force = false) {
         const host = this.host;
+        if (force || !this.pwaEntries) {
+            this.pwaEntries = Gio.AppInfo.get_all().filter(info => info.get_id()?.startsWith('chrome-')).map(info => {
+                let argv = [];
+                try { [, argv] = GLib.shell_parse_argv(info.get_commandline() || ''); } catch (_) {}
+                return {desktop:info.get_id(),argv};
+            });
+        }
         const signature = JSON.stringify(Object.entries(host._groups).map(([key,group]) =>
             [key,group.id,group.apps.map(entry => [entry.desktop,entry.aliases,entry.wmClasses])]));
         if (!force && this.indexed === signature) return;
         this.indexed = signature;
+        const members = new Set(Object.values(host._groups).flatMap(group => group.apps.map(entry => entry.desktop)));
+        host._pwas = pwaIndex(this.pwaEntries.map(entry => ({...entry,preferred:members.has(entry.desktop)})));
+        host._pwaDesktops = new Set(Object.values(host._pwas).filter(Boolean));
         host._entryIds = new Map();
         host._classes = new Map();
         for (const [key, group] of Object.entries(host._groups)) {

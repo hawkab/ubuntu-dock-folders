@@ -20,10 +20,10 @@ def desktop_info(desktop):
         return None
 
 
-def WindowTracker(changed):
+def WindowTracker(changed, core):
     """Return a tracker for the actual display, including Xwayland applications."""
     if Gdk.Display.get_default().__gtype__.name == "GdkWaylandDisplay":
         from wayland_windows import WaylandTracker
-        return WaylandTracker(changed)
+        return WaylandTracker(changed, core)
     from x11_windows import X11Tracker
-    return X11Tracker(changed)
+    return X11Tracker(changed, core)

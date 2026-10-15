@@ -1,3 +1,11 @@
+ubuntu-dock-folders (1.2.3-1ubuntu24.04.1) noble; urgency=medium
+
+  * Match Chrome PWA windows after launch-profile changes on all desktops.
+  * Keep PWA running indicators and activation separate from browser windows.
+  * Allow native compositor checks to finish on slower package builders.
+
+ -- Grigory Olshansky <14372308+hawkab@users.noreply.github.com>  Thu, 15 Oct 2026 16:05:33 +0300
+
 ubuntu-dock-folders (1.2.2-1ubuntu24.04.1) noble; urgency=medium
 
   * Restore folder drop targets for existing GNOME Dock icons.

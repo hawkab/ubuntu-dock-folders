@@ -9,12 +9,14 @@ import * as Dash from 'resource:///org/gnome/shell/ui/dash.js';
 import {DockManager} from 'file:///usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com/docking.js';
 import {DockDash} from 'file:///usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com/dash.js';
 import {FolderDetails} from './folderDetails.js';
+import {PwaDock} from './pwaDock.js';
 
 /** Adapt Ubuntu Dock lifecycle, favorites, and application delegates. */
 export class DockAdapter {
     constructor(host) {
         this.host = host;
         this.details = new FolderDetails(host);
+        this.pwas = new PwaDock(host);
     }
 
     _favoriteMap(original) {
@@ -82,6 +84,7 @@ export class DockAdapter {
 
     _decorateIcon(icon, dash) {
         const host = this.host;
+        this.pwas.decorate(icon);
         if (!host._settings.get_boolean('enabled') || host._dropIcons.has(icon))
             return;
         const group = Object.values(host._groups).find(
@@ -126,8 +129,7 @@ export class DockAdapter {
         host._originalCreate = DockDash.prototype._createAppItem;
         DockDash.prototype._redisplay = function (...args) {
             const originalGetRunning = this._appSystem.get_running;
-            this._appSystem.get_running = () => extension._getRunning().filter(
-                app => !extension._windowsAdapter._isHidden(app));
+            this._appSystem.get_running = () => extension._windowsAdapter.runningApplications();
             try {
                 const result = extension._dock._withFavorites(() => extension._originalRedisplay.apply(this, args));
                 for (const icon of this.getAppIcons())

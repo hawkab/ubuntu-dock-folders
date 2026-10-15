@@ -5,6 +5,7 @@ import {applicationIds, moveEntry, pruneGroups, removeUnavailableEntries} from '
 import {contract} from './contract.js';
 export {folderCatalog, folderCommand} from './folders.js';
 export {folderInteraction} from './folderInteraction.js';
+export {pwaIndex} from './windowIdentity.js';
 import {folderChanges} from './changes.js';
 import {surface} from './preferences.js';
 import {appearanceValue, setAppearance, newFolder} from './appearance.js';

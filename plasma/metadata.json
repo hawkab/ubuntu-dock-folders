@@ -6,7 +6,7 @@
     "Description": "Application folders, appearance, and animation",
     "Icon": "folder-applications",
     "Category": "Windows and Tasks",
-    "Version": "1.2.2",
+    "Version": "1.2.3",
     "License": "GPL-3.0-or-later",
     "Authors": [{"Name": "Grigory Olshansky", "Name[ru]": "Григорий Ольшанский", "Email": "hawkab@users.noreply.github.com"}],
     "Website": "https://github.com/hawkab/ubuntu-dock-folders"

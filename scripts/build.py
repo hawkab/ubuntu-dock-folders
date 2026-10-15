@@ -67,6 +67,7 @@ def build():
         "folderDetails.js",
         "dockDragDrop.js",
         "dockWindows.js",
+        "pwaDock.js",
         "folderView.js",
         "folderAnimation.js", "animationGeometry.js", "iconGeometry.js", "folderHover.js",
         "core", "adapters", "settingsPreview.js", "previewPaint.js", "existingFolders.js", "windowLifecycle.js",

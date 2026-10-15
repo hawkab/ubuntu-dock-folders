@@ -47,7 +47,7 @@ def build():
     declarations = (ROOT / "core/contract.js").read_text().replace("export const ", "var ")
     icons = (ROOT / "core/iconGeometry.js").read_text().replace("import {contract} from './contract.js';", "").replace("export function ", "function ")
     (output / "contents/ui/IconGeometry.js").write_text(declarations + "\n" + icons)
-    preferences = "\n".join((ROOT / "core" / name).read_text() for name in ("appearance.js", "preferences.js", "orbit.js", "applications.js", "settingsPreview.js", "folderInteraction.js"))
+    preferences = "\n".join((ROOT / "core" / name).read_text() for name in ("appearance.js", "preferences.js", "orbit.js", "applications.js", "windowIdentity.js", "settingsPreview.js", "folderInteraction.js"))
     preferences = re.sub(r"^(?:import .*|export \{.*)\n", "", preferences, flags=re.MULTILINE).replace("export function ", "function ")
     preferences=preferences.replace('miniIconLayout(', 'Geometry.miniIconLayout(')
     preferences=preferences.replace('deform(', 'AnimationGeometry.deform(')

@@ -52,7 +52,7 @@ spec.loader.exec_module(service)
 state=service.FolderService.__new__(service.FolderService)
 state.timer=123
 state.load=lambda:None
-def failure():raise RuntimeError('Qt worker stopped')
+def failure(*_args):raise RuntimeError('Qt worker stopped')
 state.clean=failure
 try:state.flush()
 except RuntimeError:pass
@@ -62,7 +62,7 @@ with patch.object(service.GLib,'idle_add',return_value=124) as schedule:
  state.queue()
  schedule.assert_called_once_with(state.flush)
 assert state.timer==124
-state.clean=lambda:False
+state.clean=lambda *_args:False
 state.state=lambda:'recovered'
 state.folder_revision=0
 state.connection=None
