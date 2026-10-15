@@ -82,7 +82,7 @@ jobs:
           LAUNCHPAD_UPLOAD_TRANSPORT: sftp
           LAUNCHPAD_SSH_KEY: ${{ runner.temp }}/launchpad-upload
           APT_DEPLOY_KEY: ${{ runner.temp }}/apt-deploy
-        run: /usr/bin/python3 publisher/scripts/release.py --source-root "$GITHUB_WORKSPACE/source" --binaries "$RUNNER_TEMP/checked-binaries" --publish --wait-seconds 3600
+        run: /usr/bin/python3 publisher/scripts/release.py --source-root "$GITHUB_WORKSPACE/source" --binaries "$RUNNER_TEMP/checked-binaries" --publish --wait-seconds 10800
       - name: Retain release artifacts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
