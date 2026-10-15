@@ -30,7 +30,7 @@ jobs:
       ref: ${{ inputs.tag || github.ref }}
   publish:
     needs: validate
-    if: ${{ always() && (needs.validate.result == 'success' || (needs.validate.result == 'skipped' && inputs.checked_run)) }}
+    if: ${{ !cancelled() && (needs.validate.result == 'success' || (needs.validate.result == 'skipped' && inputs.checked_run)) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     environment: release
