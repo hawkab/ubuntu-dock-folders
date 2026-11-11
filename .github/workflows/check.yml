@@ -16,6 +16,8 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-24.04
+    env:
+      APT_CONFIG: /tmp/ubuntu-dock-folders-apt.conf
     strategy:
       fail-fast: false
       matrix:
@@ -31,8 +33,26 @@ jobs:
     steps:
       - name: Install bootstrap dependencies
         run: |
+          . /etc/os-release
+          mirror=https://azure.archive.ubuntu.com/ubuntu/
+          if [ ! -s /etc/ssl/certs/ca-certificates.crt ]; then
+            mirror=http://azure.archive.ubuntu.com/ubuntu/
+          fi
+          cat > "$APT_CONFIG.sources" <<EOF
+          Types: deb
+          URIs: $mirror
+          Suites: $VERSION_CODENAME $VERSION_CODENAME-updates $VERSION_CODENAME-security
+          Components: main restricted universe multiverse
+          Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+          EOF
+          cat > "$APT_CONFIG" <<EOF
+          Dir::Etc::sourcelist "$APT_CONFIG.sources";
+          Dir::Etc::sourceparts "-";
+          APT::Update::Error-Mode "any";
+          EOF
           apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates git dpkg-dev python3-debian
+          sed -i 's|http://azure.archive.ubuntu.com|https://azure.archive.ubuntu.com|' "$APT_CONFIG.sources"
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           ref: ${{ inputs.ref || github.ref }}
