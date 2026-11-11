@@ -12,7 +12,7 @@ from apt_repo import run
 import release_context as context
 from release_artifacts import source_uploads, build_release, verify_release
 from launchpad_publish import upload_launchpad, wait_launchpad
-from release_publish import publish_apt, publish_github
+from release_publish import find_github_release, publish_apt, publish_github
 
 
 def publish_release(directory, manifest, settings, env):
@@ -43,21 +43,8 @@ def main():
     directory = args.prepared.resolve() if args.prepared else None
     if directory is None and args.publish:
         tag = "v" + context.changelog("Version").split("-")[0]
-        existing = subprocess.run(
-            [
-                "gh",
-                "release",
-                "view",
-                tag,
-                "--repo",
-                settings["github_repository"],
-                "--json",
-                "assets",
-            ],
-            capture_output=True,
-            text=True,
-        )
-        if existing.returncode == 0:
+        existing = find_github_release(settings["github_repository"], tag)
+        if existing is not None:
             directory = context.ROOT / "dist/releases" / tag.removeprefix("v")
             directory.mkdir(parents=True, exist_ok=True)
             if not any(directory.iterdir()):

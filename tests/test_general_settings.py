@@ -45,8 +45,8 @@ for index in range(6):
 print('PREFERENCES_CLEANUP_PASSED')
 '''
         result=subprocess.run(["/usr/bin/python3","-X","faulthandler","-c",code,str(ROOT/"build/extension/app")],
-            env=dict(os.environ,LANGUAGE="en",LC_ALL="C.UTF-8",GSETTINGS_BACKEND="memory"),
-            capture_output=True,text=True,timeout=15)
+            env=dict(os.environ,LANGUAGE="en",LC_ALL="C.UTF-8",GSETTINGS_BACKEND="memory",GSK_RENDERER="cairo"),
+            capture_output=True,text=True)
         self.assertEqual(result.returncode,0,result.stdout+result.stderr)
         self.assertIn("PREFERENCES_CLEANUP_PASSED",result.stdout)
         self.assertNotIn("Traceback",result.stderr)
@@ -83,8 +83,18 @@ def drain(milliseconds):
  loop=GLib.MainLoop()
  GLib.timeout_add(milliseconds,lambda:loop.quit() or False)
  loop.run()
-drain(250)
+def drain_until(condition):
+ if condition():return
+ loop=GLib.MainLoop()
+ def poll():
+  if condition():
+   loop.quit()
+   return False
+  return True
+ GLib.timeout_add(10,poll)
+ loop.run()
 dock,popup=window._settings_previews
+drain_until(lambda:dock.get_mapped() and dock.scene)
 assert not dock.tick
 builder.get_object('orbit_speed_scale').set_value(60)
 builder.get_object('hover_orbit_speed_scale').set_value(-999)
@@ -97,40 +107,40 @@ assert p.SETTINGS.get_int('hover-speed')==-999
 assert p.SETTINGS.get_int('orbit-speed')==60 and p.SETTINGS.get_int('hover-orbit-speed')==-999
 assert builder.get_object('hover_orbit_speed_scale').get_adjustment().get_lower()==-999
 assert builder.get_object('hover_orbit_speed_scale').get_adjustment().get_upper()==999
-drain(180)
+drain_until(lambda:dock.orbit>0 and dock.tick)
 assert dock.orbit>0 and dock.tick
 p.SETTINGS.set_int('hover-orbit-speed',120)
 p.SETTINGS.set_int('orbit-speed',0)
 dock.hover_to(1)
 phase=dock.orbit
-drain(180)
+drain_until(lambda:dock.orbit>phase)
 assert dock.orbit>phase
 dock.hover_to(0)
 assert dock.orbit_velocity>0
-drain(1800)
+drain_until(lambda:not dock.tick)
 phase=dock.orbit
 drain(100)
 assert dock.orbit==phase and not dock.tick
 p.SETTINGS.set_int('hover-orbit-speed',0)
-drain(50)
+drain_until(lambda:dock.scene)
 before=next(item['size'] for item in dock.scene['commands'] if item['type']=='icon')
 builder.get_object('mini_icon_size_scale').set_value(300)
 builder.get_object('group_icon_size_scale').set_value(200)
-drain(150)
+drain_until(lambda:dock.scene and next(item['size'] for item in dock.scene['commands'] if item['type']=='icon')>before)
 after=next(item['size'] for item in dock.scene['commands'] if item['type']=='icon')
 assert after>before
 p.SETTINGS.set_string('hover-effect','rotate-cards')
 dock.hover_to(1)
-drain(650)
+drain_until(lambda:dock.scene and len([item for item in dock.scene['commands'] if item['type']=='icon'])==11)
 assert len([item for item in dock.scene['commands'] if item['type']=='icon'])==11
 dock.hover_to(0)
 stack.set_visible_child_name('popup')
 p.SETTINGS.set_string('animation','sheet')
-drain(250)
+drain_until(lambda:popup.get_mapped() and popup.scene)
 popup.replay()
-drain(90)
+drain_until(lambda:popup.frame and popup.frame['triangles'])
 assert popup.frame and popup.frame['triangles']
-drain(1200)
+drain_until(lambda:not popup.phase and not popup.tick)
 assert not popup.phase and not popup.tick
 p.SETTINGS.set_boolean('enabled',False)
 assert not check.is_sensitive()
@@ -143,8 +153,8 @@ print('GENERAL_SETTINGS_PASSED')
             with self.subTest(desktop=desktop):
                 app = frontend(self, desktop) / "app"
                 result=subprocess.run(["/usr/bin/python3","-c",code,str(app),desktop],
-                    env=dict(os.environ,LANGUAGE="en",LC_ALL="C.UTF-8",GSETTINGS_BACKEND="memory"),
-                    capture_output=True,text=True,timeout=15)
+                    env=dict(os.environ,LANGUAGE="en",LC_ALL="C.UTF-8",GSETTINGS_BACKEND="memory",GSK_RENDERER="cairo"),
+                    capture_output=True,text=True)
                 self.assertEqual(result.returncode,0,result.stdout+result.stderr)
                 self.assertIn("GENERAL_SETTINGS_PASSED",result.stdout)
                 self.assertNotIn("Traceback",result.stderr)

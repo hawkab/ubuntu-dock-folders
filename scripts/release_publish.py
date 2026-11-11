@@ -5,14 +5,42 @@
 
 import json
 import os
+import re
 import shlex
 import subprocess
 import tempfile
+import time
 from pathlib import Path
 
 from apt_repo import run, sha256, update_archive
 
 import release_context as context
+
+
+def github_json(*arguments, allow_missing=False):
+    """Read GitHub metadata, retrying temporary transport failures."""
+    command = ["gh", *arguments]
+    delay = 5
+    while True:
+        result = subprocess.run(command, capture_output=True, text=True)
+        if result.returncode == 0:
+            return json.loads(result.stdout)
+        error = result.stderr or ""
+        if allow_missing and error.strip().lower() == "release not found":
+            return None
+        if not re.search(r"error connecting|timed out|connection reset|temporary failure|"
+                         r"TLS handshake|HTTP (429|500|502|503|504)|API rate limit exceeded", error, re.I):
+            raise subprocess.CalledProcessError(result.returncode, command, result.stdout, error)
+        print(f"GitHub API unavailable; retrying in {delay}s", flush=True)
+        time.sleep(delay)
+        delay = min(delay * 2, 300)
+
+
+def find_github_release(repository, tag):
+    """Return REST release metadata, including draft asset digests."""
+    release = github_json("release", "view", tag, "--repo", repository, "--json", "apiUrl", allow_missing=True)
+    return github_json("api", release["apiUrl"]) if release is not None else None
+
 
 def apt_git_environment():
     env = os.environ.copy()
@@ -76,12 +104,8 @@ def publish_apt(directory, settings, env):
 def publish_github(directory, manifest, settings):
     repository = settings["github_repository"]
     tag = "v" + manifest["upstream"]
-    lookup = subprocess.run(
-        ["gh", "release", "view", tag, "--repo", repository, "--json", "isDraft,assets"],
-        capture_output=True,
-        text=True,
-    )
-    if lookup.returncode:
+    existing = find_github_release(repository, tag)
+    if existing is None:
         notes = (
             f"Ubuntu Dock Folders {manifest['upstream']}\n\n"
             "Ubuntu 24.04: GNOME 46. Ubuntu 26.04: GNOME 50, KDE Plasma 6.6 and Xfce 4.20.\n\n"
@@ -110,7 +134,7 @@ def publish_github(directory, manifest, settings):
             )
         assets = {}
     else:
-        assets = {asset["name"]: asset for asset in json.loads(lookup.stdout)["assets"]}
+        assets = {asset["name"]: asset for asset in existing["assets"]}
     for file in sorted(directory.iterdir()):
         if file.name in assets:
             digest = assets[file.name].get("digest")
