@@ -1,3 +1,12 @@
+ubuntu-dock-folders (1.2.4-1ubuntu24.04.1) noble; urgency=medium
+
+  * Fix GNOME autostart in systemd-managed desktop sessions.
+  * Skip autostart when the package executable has been removed.
+  * Test session startup conditions for GNOME, KDE Plasma and Xfce.
+  * Remove overall test and Launchpad publication deadlines.
+
+ -- Grigory Olshansky <14372308+hawkab@users.noreply.github.com>  Wed, 11 Nov 2026 16:29:30 +0300
+
 ubuntu-dock-folders (1.2.3-1ubuntu24.04.1) noble; urgency=medium
 
   * Match Chrome PWA windows after launch-profile changes on all desktops.

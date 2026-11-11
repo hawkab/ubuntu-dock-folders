@@ -55,8 +55,8 @@ def install_dispatcher(stage, root=ROOT):
     autostart = stage / "etc/xdg/autostart/ubuntu-dock-folders.desktop"
     autostart.parent.mkdir(parents=True)
     autostart.write_text("[Desktop Entry]\nType=Application\nName=Ubuntu Dock Folders\n"
-        "Exec=ubuntu-dock-folders session\nOnlyShowIn=GNOME;KDE;XFCE;\n"
-        "X-GNOME-Autostart-Phase=Applications\nNoDisplay=true\n")
+        "Exec=ubuntu-dock-folders session\nTryExec=ubuntu-dock-folders\n"
+        "OnlyShowIn=GNOME;KDE;XFCE;\nNoDisplay=true\n")
     (stage / "usr/share/ubuntu-dock-folders/desktops.json").write_text(json.dumps({
         "desktops": ["gnome", "plasma", "xfce"], "sessions": ["x11", "wayland"]}) + "\n")
     control = stage / "DEBIAN"
