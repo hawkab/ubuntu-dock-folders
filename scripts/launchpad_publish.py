@@ -18,6 +18,7 @@ from apt_repo import run, sha256
 
 import release_context as context
 from release_artifacts import source_uploads
+from launchpad_transport import sftp_session
 
 TEMPORARY_HTTP_ERRORS = {429, 500, 502, 503, 504}
 
@@ -87,7 +88,8 @@ def upload_launchpad_source(directory, upload, settings, env):
         raise ValueError("Source changes file contains no artifacts")
     transport = os.environ.get("LAUNCHPAD_UPLOAD_TRANSPORT", settings["launchpad_transport"])
     if transport == "ftp":
-        for attempt in range(3):
+        delay = 5
+        while True:
             try:
                 output = run(
                     "dput", "-P", "-U",
@@ -103,10 +105,13 @@ def upload_launchpad_source(directory, upload, settings, env):
                     r"internal server error|timed out|connection (reset|refused)|"
                     r"temporary failure|\b(421|425|426|450|451|452)\b", output, re.I,
                 )
-                if not transient or attempt == 2:
+                if not transient:
                     raise
+                if re.search(r"Uploading\s+" + re.escape(changes.name) + r":", output):
+                    raise ValueError("Launchpad source submission is uncertain; check acceptance before resubmitting") from error
                 print(f"Retrying Launchpad upload for {upload['suite']}", flush=True)
-                time.sleep(15 * (attempt + 1))
+                time.sleep(delay)
+                delay = min(delay * 2, 300)
                 if launchpad_sources(settings, upload["version"]) or launchpad_sources(settings, upload["version"], "Pending"):
                     break
         print(f"Source submitted for {upload['suite']}; Launchpad acceptance/build is pending", flush=True)
@@ -121,23 +126,12 @@ def upload_launchpad_source(directory, upload, settings, env):
 
 
 def upload_sftp(files, settings, identity):
-    import paramiko
-
     incoming = f"~{settings['launchpad_owner']}/ubuntu/{settings['launchpad_archive']}"
-    with paramiko.SSHClient() as client:
-        client.load_host_keys(str(context.ROOT / "packaging/launchpad-known-hosts"))
-        client.set_missing_host_key_policy(paramiko.RejectPolicy())
-        client.connect(
-            "ppa.launchpad.net", username=settings["launchpad_owner"],
-            key_filename=str(identity), allow_agent=False, look_for_keys=False,
-            timeout=15, auth_timeout=15, banner_timeout=15,
-        )
-        with client.open_sftp() as remote:
-            remote.get_channel().settimeout(120)
-            for file in files:
-                with file.open("rb") as source, remote.open(f"{incoming}/{file.name}", "wb") as target:
-                    shutil.copyfileobj(source, target, 128 * 1024)
-                print(f"Uploaded {file.name}", flush=True)
+    with sftp_session(settings, identity) as remote:
+        for file in files:
+            with file.open("rb") as source, remote.open(f"{incoming}/{file.name}", "wb") as target:
+                shutil.copyfileobj(source, target, 128 * 1024)
+            print(f"Uploaded {file.name}", flush=True)
 
 
 def launchpad_binaries(source, settings):

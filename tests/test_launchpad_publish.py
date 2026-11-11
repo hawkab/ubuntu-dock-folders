@@ -133,11 +133,12 @@ class LaunchpadPublishTests(unittest.TestCase):
         self.assertEqual(now[0], 90)
 
 
-    def test_upload_retries_server_errors_but_rejects_permanent_errors(self):
-        for message, failures, attempts, success in (
-            ("550 Requested action not taken: internal server error\n", 1, 2, True),
-            ("550 Requested action not taken: internal server error\n", 3, 3, False),
-            ("Invalid signature\n", 1, 1, False),
+    def test_ftp_recovers_only_before_source_submission(self):
+        for message, failures, attempts, expected_error in (
+            ("550 Requested action not taken: internal server error\n", 1, 2, None),
+            ("550 Requested action not taken: internal server error\n", 8, 9, None),
+            ("Invalid signature\n", 1, 1, subprocess.CalledProcessError),
+            ("Uploading source.changes: timed out\n", 1, 1, ValueError),
         ):
             with self.subTest(message=message, failures=failures), tempfile.TemporaryDirectory() as temporary:
                 root = Path(temporary)
@@ -148,7 +149,7 @@ class LaunchpadPublishTests(unittest.TestCase):
                 text = f"Checksums-Sha256:\n {apt_repo.sha256(payload)} {payload.stat().st_size} {payload.name}\n\n"
                 settings = {"launchpad_transport": "ftp", "launchpad_owner": "example", "launchpad_archive": "folders"}
                 responses = [text] + [subprocess.CalledProcessError(1, "dput", output=message)] * failures
-                if success:
+                if expected_error is None:
                     responses.append("Successfully uploaded packages.\n")
                 with (
                     patch.dict(os.environ, {"LAUNCHPAD_UPLOAD_TRANSPORT": "ftp"}),
@@ -156,10 +157,10 @@ class LaunchpadPublishTests(unittest.TestCase):
                     patch.object(launchpad_publish, "run", side_effect=responses) as run,
                     patch.object(launchpad_publish.time, "sleep") as sleep,
                 ):
-                    if success:
+                    if expected_error is None:
                         launchpad_publish.upload_launchpad_source(root, upload, settings, {})
                     else:
-                        with self.assertRaises(subprocess.CalledProcessError):
+                        with self.assertRaises(expected_error):
                             launchpad_publish.upload_launchpad_source(root, upload, settings, {})
                 self.assertEqual(len([c for c in run.call_args_list if c.args[0] == "dput"]), attempts)
                 self.assertEqual(sleep.call_count, attempts - 1)
@@ -174,8 +175,8 @@ class LaunchpadPublishTests(unittest.TestCase):
             identity = root / "upload-key"
             settings = {"launchpad_owner": "example", "launchpad_archive": "folders"}
             paramiko = MagicMock()
-            client = paramiko.SSHClient.return_value.__enter__.return_value
-            remote = client.open_sftp.return_value.__enter__.return_value
+            client = paramiko.SSHClient.return_value
+            remote = client.open_sftp.return_value
             sent = []
 
             @contextmanager
