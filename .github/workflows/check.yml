@@ -49,7 +49,12 @@ jobs:
           Dir::Etc::sourcelist "$APT_CONFIG.sources";
           Dir::Etc::sourceparts "-";
           APT::Update::Error-Mode "any";
+          Acquire::ForceIPv4 "true";
           EOF
+          until getent ahostsv4 azure.archive.ubuntu.com; do
+            echo "Waiting for Ubuntu mirror DNS resolution"
+            sleep 30
+          done
           apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates git dpkg-dev python3-debian
           sed -i 's|http://azure.archive.ubuntu.com|https://azure.archive.ubuntu.com|' "$APT_CONFIG.sources"

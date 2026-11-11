@@ -63,7 +63,12 @@ jobs:
           Dir::Etc::sourcelist "$APT_CONFIG.sources";
           Dir::Etc::sourceparts "-";
           APT::Update::Error-Mode "any";
+          Acquire::ForceIPv4 "true";
           EOF
+          until getent ahostsv4 azure.archive.ubuntu.com; do
+            echo "Waiting for Ubuntu mirror DNS resolution"
+            sleep 30
+          done
           sudo env APT_CONFIG="$APT_CONFIG" apt-get update
           sudo env APT_CONFIG="$APT_CONFIG" apt-get install -y --no-install-recommends build-essential debhelper fakeroot devscripts dput git gnupg python3-debian python3-yaml python3-paramiko apt-utils appstream appstream-compose desktop-file-utils librsvg2-common
       - name: Verify reused checks
