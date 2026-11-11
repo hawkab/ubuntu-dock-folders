@@ -55,12 +55,48 @@ jobs:
           APT::Update::Error-Mode "any";
           Acquire::ForceIPv4 "true";
           EOF
+          cat > "$APT_CONFIG.retry" <<'APT_RETRY'
+          #!/bin/sh
+          set -u
+          export LC_ALL=C DEBIAN_FRONTEND=noninteractive
+          log=$(mktemp)
+          trap 'rm -f "$log"' EXIT
+          delay=5
+          while :; do
+            if apt-get "$@" > "$log" 2>&1; then
+              cat "$log"
+              exit 0
+            else
+              status=$?
+            fi
+            cat "$log"
+            if ! awk '
+              /^E: Failed to fetch / {
+                if ($0 ~ /(Temporary failure resolving|Could not resolve|Could not connect|Unable to connect|Connection (failed|timed out|reset|refused)|Network is unreachable|Error reading from server|50[0234] (Internal Server Error|Bad Gateway|Service Unavailable|Gateway Time-out)|429 Too Many Requests)/)
+                  transient = 1
+                else
+                  permanent = 1
+                next
+              }
+              /^E: (Some index files failed to download|Unable to fetch some archives)/ { next }
+              /^E:/ { permanent = 1 }
+              END { exit permanent || !transient }
+            ' "$log"; then
+              exit "$status"
+            fi
+            echo "APT network unavailable; retrying in ${delay}s"
+            sleep "$delay"
+            delay=$((delay * 2))
+            if [ "$delay" -gt 300 ]; then delay=300; fi
+          done
+          APT_RETRY
+          chmod 700 "$APT_CONFIG.retry"
           until getent ahostsv4 azure.archive.ubuntu.com; do
             echo "Waiting for Ubuntu mirror DNS resolution"
             sleep 30
           done
-          apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates git dpkg-dev python3-debian
+          "$APT_CONFIG.retry" update
+          "$APT_CONFIG.retry" install -y --no-install-recommends ca-certificates git dpkg-dev python3-debian
           sed -i 's|http://azure.archive.ubuntu.com|https://azure.archive.ubuntu.com|' "$APT_CONFIG.sources"
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
@@ -72,7 +108,7 @@ jobs:
       - name: Configure target and install build dependencies
         run: |
           /usr/bin/python3 scripts/debian_target.py configure --suite ${{ matrix.suite }}
-          DEBIAN_FRONTEND=noninteractive apt-get build-dep -y --no-install-recommends .
+          "$APT_CONFIG.retry" build-dep -y --no-install-recommends .
           useradd --create-home --uid 1001 builder
           chown -R builder:builder "$(dirname "$GITHUB_WORKSPACE")"
       - name: Build Debian package and run native checks
