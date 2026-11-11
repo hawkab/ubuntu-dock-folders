@@ -23,23 +23,24 @@ TEMPORARY_HTTP_ERRORS = {429, 500, 502, 503, 504}
 
 
 def launchpad_json(url):
-    """Read Launchpad JSON with bounded retries for temporary network failures."""
+    """Read Launchpad JSON, backing off while its service is unavailable."""
     request = urllib.request.Request(
         url, headers={"Cache-Control": "no-cache", "Pragma": "no-cache"}
     )
-    for attempt in range(3):
+    delay = 5
+    while True:
         try:
             with urllib.request.urlopen(request, timeout=30) as response:
                 return json.load(response)
         except urllib.error.HTTPError as error:
-            if error.code not in TEMPORARY_HTTP_ERRORS or attempt == 2:
+            if error.code not in TEMPORARY_HTTP_ERRORS:
                 raise
             error.close()
         except (urllib.error.URLError, TimeoutError, ConnectionError):
-            if attempt == 2:
-                raise
-        print(f"Retrying Launchpad API request ({attempt + 2}/3)", flush=True)
-        time.sleep(5 * (attempt + 1))
+            pass
+        print(f"Launchpad API unavailable; retrying in {delay}s", flush=True)
+        time.sleep(delay)
+        delay = min(delay * 2, 300)
 
 
 def launchpad_sources(settings, version, status=None):

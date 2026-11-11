@@ -14,6 +14,20 @@ from release_artifacts import source_uploads, build_release, verify_release
 from launchpad_publish import upload_launchpad, wait_launchpad
 from release_publish import publish_apt, publish_github
 
+
+def publish_release(directory, manifest, settings, env):
+    """Publish independent channels before waiting for Launchpad."""
+    tag = "v" + manifest["upstream"]
+    publish_github(directory, manifest, settings)
+    publish_apt(directory, settings, env)
+    run("gh", "release", "edit", tag, "--repo", settings["github_repository"], "--draft=false")
+    print(f"Published {tag}: GitHub Releases and {settings['apt_url']}; Launchpad is pending", flush=True)
+    upload_launchpad(directory, manifest, settings, env)
+    for upload in source_uploads(manifest):
+        wait_launchpad(settings | {"suite": upload["suite"]}, upload["version"])
+    print(f"Published {tag}: GitHub Releases, Launchpad PPA and {settings['apt_url']}", flush=True)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--publish", action="store_true")
@@ -77,14 +91,7 @@ def main():
         raise ValueError("Version tag must point to the prepared commit")
     run("gpg", "--batch", "--import", context.ROOT / "provenance/signer.asc", env=env)
     run("git", "verify-tag", tag, cwd=context.ROOT, env=env)
-    publish_github(directory, manifest, settings)
-    upload_launchpad(directory, manifest, settings, env)
-    publish_apt(directory, settings, env)
-    run("gh", "release", "edit", tag, "--repo", settings["github_repository"], "--draft=false")
-    print(f"Published {tag}: GitHub Releases and {settings['apt_url']}; source submitted to Launchpad", flush=True)
-    for upload in source_uploads(manifest):
-        wait_launchpad(settings | {"suite": upload["suite"]}, upload["version"])
-    print(f"Published {tag}: GitHub Releases, Launchpad PPA and {settings['apt_url']}", flush=True)
+    publish_release(directory, manifest, settings, env)
 
 
 if __name__ == "__main__":

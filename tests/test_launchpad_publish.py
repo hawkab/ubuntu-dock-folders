@@ -39,17 +39,19 @@ class LaunchpadPublishTests(unittest.TestCase):
         self.assertEqual(request.call_count, 3)
         self.assertEqual([call.args[0] for call in sleep.call_args_list], [5, 10])
 
-    def test_api_network_retries_are_bounded(self):
+    def test_api_recovers_after_a_prolonged_network_outage(self):
         for error in (TimeoutError("read timed out"), urllib.error.URLError("connection reset")):
+            response = MagicMock()
+            response.__enter__.return_value = io.BytesIO(b'{"entries": []}')
             with (
                 self.subTest(error=error),
-                patch.object(launchpad_publish.urllib.request, "urlopen", side_effect=error) as request,
+                patch.object(launchpad_publish.urllib.request, "urlopen",
+                             side_effect=[error] * 8 + [response]) as request,
                 patch.object(launchpad_publish.time, "sleep") as sleep,
             ):
-                with self.assertRaises(type(error)):
-                    launchpad_publish.launchpad_json("https://example.invalid/source")
-            self.assertEqual(request.call_count, 3)
-            self.assertEqual(sleep.call_count, 2)
+                self.assertEqual(launchpad_publish.launchpad_json("https://example.invalid/source"), {"entries": []})
+            self.assertEqual(request.call_count, 9)
+            self.assertEqual([call.args[0] for call in sleep.call_args_list], [5, 10, 20, 40, 80, 160, 300, 300])
 
     def test_api_permanent_http_errors_fail_without_retry(self):
         for status in (400, 401, 403, 404):
